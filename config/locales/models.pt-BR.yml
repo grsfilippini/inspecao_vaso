@@ -1,0 +1,24 @@
+'pt-BR':
+  # Definindo o i18n para o active record
+  activerecord:
+    # Para os modelos
+    models:
+      admin:
+        one: Administrador
+        other: Administradores
+      user:
+        one: Usuário
+        other: Usuários
+    # Para os atributos
+    attributes: #Atributos por exemplo da base de dados, onde define o email
+      admin:
+        id: Código
+        email: Email
+        created_at: Criado em
+        updated_at: Atualizado em
+      user:
+        id: Código
+        email: Email
+        created_at: Criado em
+        updated_at: Atualizado em
+      
