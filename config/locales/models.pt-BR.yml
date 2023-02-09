@@ -14,11 +14,15 @@
       admin:
         id: Código
         email: Email
+        nome: Nome
+        password: Senha
+        password_confirmation: Confirmação da senha
         created_at: Criado em
         updated_at: Atualizado em
       user:
         id: Código
         email: Email
+        nome: Nome
         created_at: Criado em
         updated_at: Atualizado em
       

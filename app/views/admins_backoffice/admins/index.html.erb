@@ -1,0 +1,43 @@
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800">Lista de Administradores</h1>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover">    
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nome completo</th>
+                <th>Usuário</th>
+                <th>
+                    <%= link_to  new_admins_backoffice_admin_path, class:"btn btn-success btn-circle btn-sm" do %>
+                        <i class="fas fa-plus"></i>
+                    <% end %>
+                </th>
+            </tr>
+        </thead>
+        <tbody> 
+            <% @admins.each do |admin|%>                                                                              
+                <tr>
+                    <td><%= admin.id %></td>
+                    <td><%= admin.nome %></td>
+                    <td><%= admin.email %></td>
+                    <td style="width: 100px">
+                        <!-- <a href="#" class="btn btn-info btn-circle btn-sm"> <i class="fas fa-edit"></i> </a> -->
+                        <%= link_to edit_admins_backoffice_admin_path(admin.id), class:"btn btn-info btn-circle btn-sm" do %> 
+                            <i class="fas fa-edit"></i>
+                        <%end%>
+                        <%= link_to admins_backoffice_admin_path(admin.id), method: :delete, class:"btn btn-danger btn-circle btn-sm", data: { confirm: "Deseja realmente excluir o administrador?"} do %>
+                            <i class="fas fa-minus"></i> 
+                        <%end%>
+                    </td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+
+    <%= paginate @admins %>
+    
+</div>
+    

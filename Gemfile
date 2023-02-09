@@ -19,7 +19,7 @@ gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem 'turbolinks', '~> 5'
+#gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
@@ -36,9 +36,20 @@ gem 'jbuilder', '~> 2.5'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
-gem 'devise'
-gem 'rails-i18n', '~> 5.1' # For 5.0.x, 5.1.x and 5.2.x
-gem 'tty-spinner'
+gem 'devise' # Usado para gerenciar usuários (incluindo admin, user, ...)
+gem 'rails-i18n', '~> 5.1' # For 5.0.x, 5.1.x and 5.2.x, Trata da internacionalização de linguagem e outros aspectos regionais
+gem 'tty-spinner' # Gem que tem o spinner (pequeno catavento) usado no console para funcionar como temporizador
+gem 'faker' # Gem para inserir dados fakes no banco de dados teste
+#gem 'pry-rails' # Gem para melhorar as saídas do ruby console
+# Uso do pry-rails dentro do console rails, ex.: Admin.all
+gem 'awesome_print' # Gem para melhorar as saídas do ruby console. Aplica cores, e orgniza informações
+# Uso do awesome_print dentro do console rails, ex.: ap Admin.all
+
+# kaminari é uma gem para paginação em páginas html muito extensas, ver uso no https://github.com/rails-camp/kaminari-gem-walkthrough tutorial completo ao final da página
+# Para usar esta gem, deve-se ler a documentação, tem ajustes no controler, na view e no model (este último caso queira generalizar a paginação dentro do model)
+# Pode-se ajustar a paginação diretamente no controler .per(5), ver a documentação.
+gem 'kaminari'
+gem 'kaminari-i18n', '~> 0.3.2' # Gem que ajusta o i18n para o kaminari em qualquer lingua
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
