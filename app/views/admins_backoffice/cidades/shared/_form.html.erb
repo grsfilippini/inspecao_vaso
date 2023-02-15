@@ -1,0 +1,31 @@
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800"> <%= action_messege %> </h1>
+</div>
+
+<!-- Se tiver algum erro dentro de @admin, erro devido a processo de salvamento por exemplo, entra no alerta abaixo -->
+<% if @cidade.errors.any? %>
+    <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>        
+        <ul>
+            <% @cidade.errors.full_messages.each do |message| %>
+            <li> <%= message -%> </li>
+            <% end %>
+        </ul>
+    </div>
+<% end %>
+
+<%= form_with(model: [ :admins_backoffice, @cidade ], local: true) do |form| %>
+
+    <div class="form-group row">                
+        <div class="col-sm-6 mb-3 mb-sm-0">
+            <%= tag.div tag.p('ATENÇÃO entre no seguinte modelo: CIDADE/UF')%>
+            <%= form.label :Cidade %>
+            <%= form.text_field :Cidade, placeholder: 'Entre o nome da cidade'%>
+        </div>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Gravar</button>
+
+    <hr>    
+<% end %>

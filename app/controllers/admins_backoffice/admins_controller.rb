@@ -8,7 +8,7 @@ class AdminsBackoffice::AdminsController < AdminsBackofficeController
   
   def index
     # Variável de seção, @admins estará disponível na view index
-    @admins = Admin.all.page(params[:page]).per(5)
+    @admins = Admin.all.order(:nome).page(params[:page]).per(5)
   end
 
   # Para chegar aqui, precisamos de uma rota que nos traga até aqui
@@ -64,6 +64,7 @@ class AdminsBackoffice::AdminsController < AdminsBackofficeController
 
   
   def params_admin
+    puts params
     # Resgata os parâmetros enviados pela internet (formulário)
     # Deve-se permitir os campos desejados. Assim não serão aceitos campos extras (questão de segurança)
     params.require(:admin).permit(:nome, :email, :password, :password_confirmation)

@@ -46,7 +46,7 @@
             <li class="nav-item">                
                 <%= link_to admins_backoffice_welcome_index_path, class:"nav-link" do %>
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>#Painel#</span>
+                    <span>##Painel</span>
                 <% end %>
             </li>
 
@@ -54,7 +54,7 @@
             <li class="nav-item">
                 <%= link_to admins_backoffice_admins_path, class:"nav-link" do %>
                     <i class="fas fa-fw fa-users"></i>
-                    <span>#Administradores#</span>
+                    <span>##Administradores</span>
                 <% end %>
                 <!-- <a class="nav-link" href="index.html">
                     <i class="fas fa-fw fa-users"></i>
@@ -66,23 +66,30 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Interface
+                Sistema
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Components</span>
+                    <i class="fas fa-tags fa-cog"></i>
+                    <span>##Empresas ...</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item" href="buttons.html">Buttons</a>
-                        <a class="collapse-item" href="cards.html">Cards</a>
+                        <!--<h6 class="collapse-header">Pessoas:</h6>-->                        
+                        <%= link_to admins_backoffice_cadastro_corps_path, class:"collapse-item" do %>
+                            ##Corporação
+                        <%end%>
+                        <%= link_to admins_backoffice_cadastros_path, class:"collapse-item" do %>
+                            ##Cadastro
+                        <%end%>
+                        <%= link_to admins_backoffice_cidades_path, class:"collapse-item" do %>
+                            ##Cidade
+                        <%end%>
                     </div>
-                </div>
+                </div>                
             </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
@@ -351,7 +358,7 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    #Sair#
+                                    ##Sair
                                 </a>
                             </div>
                         </li>

@@ -1,2 +1,0 @@
-class Corp < ApplicationRecord
-end

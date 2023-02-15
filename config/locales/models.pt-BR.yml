@@ -9,12 +9,23 @@
       user:
         one: Usuário
         other: Usuários
+      cadastro_corp:
+        one: Corporação
+        other: Corporações
+      cidade:
+        one: Cidade
+        other: Cidades
+      cadastro:
+        one: Cadastro
+        other: Cadastros
     # Para os atributos
     attributes: #Atributos por exemplo da base de dados, onde define o email
       admin:
         id: Código
         email: Email
         nome: Nome
+        nome_completo: Nome completo
+        usuario: Usuário
         password: Senha
         password_confirmation: Confirmação da senha
         created_at: Criado em
@@ -25,4 +36,14 @@
         nome: Nome
         created_at: Criado em
         updated_at: Atualizado em
+      cidade:
+        cidade: Cidade
+      cadastro_corp:
+        corporacao: Corporação        
+      cadastro:
+        eh_fabricante: É fabricante
+        eh_empresa_inspetora: É empresa inspetora
+        REGIAO: Região
+        CORP: Corporação
+        nome_curto: Nome curto
       

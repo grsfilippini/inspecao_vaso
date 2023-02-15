@@ -1,0 +1,111 @@
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800"> <%= action_messege %> </h1>
+</div>
+
+<!-- Se tiver algum erro dentro de @admin, erro devido a processo de salvamento por exemplo, entra no alerta abaixo -->
+<% if @cadastro.errors.any? %>
+    <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>        
+        <ul>
+            <% @cadastro.errors.full_messages.each do |message| %>
+            <li> <%= message -%> </li>
+            <% end %>
+        </ul>
+    </div>
+<% end %>
+
+<%= form_with(model: [ :admins_backoffice, @cadastro ], local: true) do |form| %>
+
+    <div class="form-group row">        
+        <div class="col-sm-6 mb-3 mb-sm-0">                                           
+            <%= form.label :CORP %>
+            <%= form.collection_select :CORP, @cadastrocorps, :ID, :CORPORACAO, { include_blank: true }, class:'form-control form-control-sm' %>
+        </div>
+        <div class="col-sm-6 mb-3 mb-sm-0">
+            <%= form.label :REGIAO %>
+            <%= form.text_field :REGIAO, placeholder: 'Entre a região, caso a corporação seja dividida em regiões', class:'form-control form-control-sm'%>
+        </div>
+        <div class="col-sm-6 mb-3 mb-sm-0">                                           
+            <%= form.label :eh_fabricante %>
+            <%= form.check_box :eh_fabricante %>
+        </div>
+        <div class="col-sm-6 mb-3 mb-sm-0">                                           
+            <%= form.label :eh_empresa_inspetora %>
+            <%= form.check_box :eh_empresa_inspetora %>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-6 mb-3 mb-sm-0">
+            <%= form.label :nome %>
+            <%= form.text_field :nome,  placeholder: 'Entre o nome da empresa', class:'form-control form-control-sm'%>
+        </div>
+        <div class="col-sm-6 mb-3 mb-sm-0">
+            <%= form.label :nome_curto %>
+            <%= form.text_field :nome_curto, placeholder: 'Entre o nome abreviado da empresa', class:'form-control form-control-sm'%>
+        </div>
+
+        <div class="col-sm-6 mb-3 mb-sm-0">
+            <%= form.label :cnpj %>
+            <%= form.text_field :cnpj, placeholder: 'Entre o CNPJ da empresa', class:'form-control form-control-sm'%>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-6 mb-3 mb-sm-0">
+            <%= form.label "Logradouro" %>
+            <%= form.text_field :endereco, placeholder: 'Entre o endereço', class:'form-control form-control-sm'%>
+        </div>
+
+        <div class="col-sm-6 mb-3 mb-sm-0">            
+            <%= form.label "Número" %>
+            <%= form.number_field :NUMERO, placeholder: '', class:'form-control form-control-sm'%>
+        </div>        
+
+        <div class="col-sm-6 mb-3 mb-sm-0">
+            <%= form.label :bairro %>
+            <%= form.text_field :bairro, placeholder: 'Entre o endereço', class:'form-control form-control-sm'%>
+        </div>
+
+        <div class="col-sm-6 mb-3 mb-sm-0">
+            <%= form.label :cidade %>
+            <%#= form.text_field :cidade, placeholder: 'Entre a cidade'%>            
+            <%= form.collection_select :cidade, @cidades, :Cidade, :Cidade, { include_blank: true } , class:'form-control form-control-sm'%>
+        </div>
+
+        <div class="col-sm-6 mb-3 mb-sm-0">
+            <%= form.label :cep %>
+            <%= form.text_field :cep, placeholder: 'Entre o CEP', class:'form-control form-control-sm'%>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-6 mb-3 mb-sm-0">
+            <%= form.label :contato %>
+            <%= form.text_field :contato, placeholder: 'Entre o nome do contato', class:'form-control form-control-sm'%>
+        </div>    
+        <div class="col-sm-6 mb-3 mb-sm-0">
+            <%= form.label :fone %>
+            <%= form.text_field :fone, placeholder: 'Entre o fone', class:'form-control form-control-sm'%>
+        </div>
+        <div class="col-sm-6 mb-3 mb-sm-0">
+            <%= form.label :website %>
+            <%= form.text_field :website, placeholder: 'Entre endereço do sítio da web da empresa', class:'form-control form-control-sm'%>
+        </div>
+        
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-6 mb-3 mb-sm-0">
+            <%= form.label :observacoes %>
+            <%= form.text_area :observacoes, placeholder: 'Entre o nome do contato', rows: 3, class:'form-control form-control-sm'%>
+        </div>    
+        
+        
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Gravar</button>
+
+    <hr>    
+<% end %>

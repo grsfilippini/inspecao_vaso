@@ -12,7 +12,10 @@ Rails.application.routes.draw do
     resources :admins, except: [:delete] # Chama procedimentos dos administradores
     # only diz para gerar somente as rotas especificadas
     # , except: [:destroy, :new] -> diz para não criar as rotas especificadas
-    # , only: [:destroy, :new] -> diz para criar as rotas especificadas
+    # , only: [:destroy, :new] -> diz para criar as rotas especificadas        
+    resources :cadastro_corps
+    resources :cadastros
+    resources :cidades
   end
 
   namespace :site do

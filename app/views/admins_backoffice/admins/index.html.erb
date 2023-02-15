@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">Lista de Administradores</h1>
+    <h1 class="h3 mb-4 text-gray-800"><%= t('mensagens.lista_de', model: @admins.model_name.human(count: @admins.count)) %></h1>
 </div>
 
 <div class="table-responsive">
@@ -8,8 +8,8 @@
         <thead>
             <tr>
                 <th>#</th>
-                <th>Nome completo</th>
-                <th>Usuário</th>
+                <th><%= traduz_atributos_humanos(@admins, :nome_completo) %> </th> 
+                <th><%= traduz_atributos_humanos(@admins, :usuario) %> </th>                
                 <th>
                     <%= link_to  new_admins_backoffice_admin_path, class:"btn btn-success btn-circle btn-sm" do %>
                         <i class="fas fa-plus"></i>
@@ -28,7 +28,9 @@
                         <%= link_to edit_admins_backoffice_admin_path(admin.id), class:"btn btn-info btn-circle btn-sm" do %> 
                             <i class="fas fa-edit"></i>
                         <%end%>
-                        <%= link_to admins_backoffice_admin_path(admin.id), method: :delete, class:"btn btn-danger btn-circle btn-sm", data: { confirm: "Deseja realmente excluir o administrador?"} do %>
+                        <%= link_to admins_backoffice_admin_path(admin.id), 
+                                    method: :delete, class:"btn btn-danger btn-circle btn-sm", 
+                                    data: { confirm: t('mensagens.confirmar_exclusao', item: admin.nome)} do %>
                             <i class="fas fa-minus"></i> 
                         <%end%>
                     </td>

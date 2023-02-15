@@ -1,0 +1,6 @@
+'pt-BR':
+  mensagens:
+    lista_de: Lista de %{model}
+    confirmar_exclusao: Você deseja realmente excluir %{item}?
+    editando: Editando %{model}
+    inserindo: Inserindo %{model}

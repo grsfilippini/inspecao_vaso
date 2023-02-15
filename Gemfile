@@ -40,7 +40,7 @@ gem 'devise' # Usado para gerenciar usuários (incluindo admin, user, ...)
 gem 'rails-i18n', '~> 5.1' # For 5.0.x, 5.1.x and 5.2.x, Trata da internacionalização de linguagem e outros aspectos regionais
 gem 'tty-spinner' # Gem que tem o spinner (pequeno catavento) usado no console para funcionar como temporizador
 gem 'faker' # Gem para inserir dados fakes no banco de dados teste
-#gem 'pry-rails' # Gem para melhorar as saídas do ruby console
+gem 'pry-rails', :group => :development # Gem para melhorar as saídas do ruby console
 # Uso do pry-rails dentro do console rails, ex.: Admin.all
 gem 'awesome_print' # Gem para melhorar as saídas do ruby console. Aplica cores, e orgniza informações
 # Uso do awesome_print dentro do console rails, ex.: ap Admin.all
