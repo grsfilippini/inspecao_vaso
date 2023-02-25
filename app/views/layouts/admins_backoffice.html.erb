@@ -43,7 +43,7 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item">                
+            <li class="nav-item active">                
                 <%= link_to admins_backoffice_welcome_index_path, class:"nav-link" do %>
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>##Painel</span>
@@ -66,20 +66,48 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Sistema
+                Cadastros
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-tags fa-cog"></i>
-                    <span>##Empresas ...</span>
+                    <i class="fas fa-tag fa-cog"></i>
+                    <span>##Equipamentos</span>
                 </a>
+                <!--Adicionar "show" junto à class da div abaixo para que ao abrir o menu inicie expandido -->
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <!--<h6 class="collapse-header">Pessoas:</h6>-->                        
-                        <%= link_to admins_backoffice_cadastro_corps_path, class:"collapse-item" do %>
+                        <h6 class="collapse-header">Vasos e disp. de seg.:</h6>
+                        <%= link_to admins_backoffice_corps_path, class:"collapse-item" do %>
+                            Vasos
+                        <%end%>
+                        <%= link_to admins_backoffice_cadastros_path, class:"collapse-item" do %>
+                            Válvula de segurança
+                        <%end%>
+                        <%= link_to admins_backoffice_cidades_path, class:"collapse-item" do %>
+                            Série vaso MTP
+                        <%end%>
+                        <%= link_to admins_backoffice_cidades_path, class:"collapse-item" do %>
+                            Série válvula seg. MTPDS
+                        <%end%>
+                    </div>
+                </div>                
+            </li>
+
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne"
+                    aria-expanded="true" aria-controls="collapseOne">
+                    <i class="fas fa-tag fa-cog"></i>
+                    <span>##Empresas</span>
+                </a>
+                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Empresas e afins:</h6>
+                        <%= link_to admins_backoffice_corps_path, class:"collapse-item" do %>
                             ##Corporação
                         <%end%>
                         <%= link_to admins_backoffice_cadastros_path, class:"collapse-item" do %>
@@ -92,21 +120,32 @@
                 </div>                
             </li>
 
+            <!-- Nav Item - Tables -->
+            <li class="nav-item">
+                <a class="nav-link" href="tables.html">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>ART</span></a>
+            </li>
+
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-wrench"></i>
-                    <span>Utilities</span>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse3"
+                    aria-expanded="true" aria-controls="collapse3">
+                    <i class="fas fa-fw fa-tags"></i>
+                    <span>##Demais cadastros </span>
                 </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                <div id="collapse3" class="collapse" aria-labelledby="heading3"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Colors</a>
-                        <a class="collapse-item" href="utilities-border.html">Borders</a>
-                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                        <a class="collapse-item" href="utilities-other.html">Other</a>
+                        <!--<h6 class="collapse-header">Custom Utilities:</h6>-->                        
+                        <%= link_to admins_backoffice_catnr13s_path, class:"collapse-item" do %>
+                            ##Categoria NR13
+                        <%end%>
+                        <%= link_to admins_backoffice_finalidade_do_vasos_path, class:"collapse-item" do %>
+                            ##Finalidade do vaso
+                        <%end%>
+                        <a class="collapse-item" href="utilities-animation.html">...</a>
+                        <a class="collapse-item" href="utilities-other.html">...</a>
                     </div>
                 </div>
             </li>
@@ -116,17 +155,17 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Addons
+                Inspeções
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
                     aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Pages</span>
                 </a>
-                <div id="collapsePages" class="collapse show" aria-labelledby="headingPages"
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Login Screens:</h6>
@@ -405,7 +444,7 @@
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
                     <!-- <a class="btn btn-primary" href="login.html">Logout</a> -->
-                    <%= link_to destroy_admin_session_path, class:"btn btn-primary", method: :delete do %>                        
+                    <%= link_to destroy_admin_session_path, class:"btn btn-primary", method: :delete do %>
                         Sair
                     <% end %>
                 </div>

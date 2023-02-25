@@ -13,9 +13,11 @@ Rails.application.routes.draw do
     # only diz para gerar somente as rotas especificadas
     # , except: [:destroy, :new] -> diz para não criar as rotas especificadas
     # , only: [:destroy, :new] -> diz para criar as rotas especificadas        
-    resources :cadastro_corps
+    resources :corps
     resources :cadastros
     resources :cidades
+    resources :catnr13s
+    resources :finalidade_do_vasos
   end
 
   namespace :site do

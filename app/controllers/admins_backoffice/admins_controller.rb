@@ -7,6 +7,12 @@ class AdminsBackoffice::AdminsController < AdminsBackofficeController
   before_action :set_admin, only: [:edit, :update, :destroy]
   
   def index
+    # Libere a linha abaixo para aparecer um console de debuguer no navegador
+    #console
+    # Trata-se do web console
+    # No código html, usar 
+    #<%console%>
+    
     # Variável de seção, @admins estará disponível na view index
     @admins = Admin.all.order(:nome).page(params[:page]).per(5)
   end

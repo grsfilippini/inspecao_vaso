@@ -20,32 +20,32 @@
     <div class="form-group row">
         <div class="col-sm-6 mb-3 mb-sm-0">
             <%= form.label :nome %>
-            <%= form.text_field :nome, class: "form-control", placeholder: 'Entre o nome do administrador'%>            
+            <%= form.text_field :nome, class: "form-control", placeholder: t('placeholders.entre_nome_administrador')%>
         </div>        
     </div>
     
     <div class="form-group row">
         <div class="col-sm-6 mb-3 mb-sm-0">
             <%= form.label :email %>
-            <%= form.text_field :email, class: "form-control", placeholder: 'Entre o email do administrador'%>
+            <%= form.text_field :email, class: "form-control", placeholder: t('placeholders.entre_email_administrador')%>
         </div>
     </div>
 
     <div class="form-group row">
         <div class="col-sm-6 mb-3 mb-sm-0">
             <%= form.label :password %>
-            <%= form.password_field :password, class: "form-control", placeholder: 'Entre a senha do administrador'%>
+            <%= form.password_field :password, class: "form-control", placeholder: t('placeholders.entre_senha_administrador')%>
         </div>
     </div>
 
     <div class="form-group row">
         <div class="col-sm-6 mb-3 mb-sm-0">
             <%= form.label :password_confirmation %>
-            <%= form.password_field :password_confirmation, class: "form-control", placeholder: 'Entre a confirmação da senha do administrador'%>
+            <%= form.password_field :password_confirmation, class: "form-control", placeholder: t('placeholders.entre_confsenha_administrador')%>
         </div>        
     </div>
 
-    <button type="submit" class="btn btn-primary">Gravar</button>
+    <button type="submit" class="btn btn-primary"><%= t('botoes.gravar')%></button>
 
     <hr>    
 <% end %>

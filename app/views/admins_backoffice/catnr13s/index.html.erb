@@ -1,0 +1,42 @@
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800"><%= t('mensagens.lista_de', model: @catnr13s.model_name.human(count: @catnr13s.count)) %></h1>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover">    
+        <thead>
+            <tr>
+                <th>#</th>                
+                <th><%= traduz_atributos_humanos(@catnr13s, :categoria) %> </th>
+                <th>
+                    <%= link_to  new_admins_backoffice_catnr13_path, class:"btn btn-success btn-circle btn-sm" do %>
+                        <i class="fas fa-plus"></i>
+                    <% end %>
+                </th>
+            </tr>
+        </thead>
+        <tbody> 
+            <% @catnr13s.each do |cat|%>                                                                              
+                <tr>
+                    <td><%= cat.id %></td>
+                    <td><%= cat.categoria %></td>
+
+                    <td style="width: 100px">
+                        <%= link_to edit_admins_backoffice_catnr13_path(cat.id), class:"btn btn-info btn-circle btn-sm" do %> 
+                            <i class="fas fa-edit"></i>
+                        <%end%>
+                        <%= link_to admins_backoffice_catnr13_path(cat.id),
+                                    method: :delete, class:"btn btn-danger btn-circle btn-sm", 
+                                    data: { confirm: t('mensagens.confirmar_exclusao', item: cat.categoria)} do %>
+                            <i class="fas fa-minus"></i> 
+                        <%end%>
+                    </td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+
+    <%= paginate @catnr13s %>
+    
+</div>

@@ -9,7 +9,7 @@
       user:
         one: Usuário
         other: Usuários
-      cadastro_corp:
+      corp:
         one: Corporação
         other: Corporações
       cidade:
@@ -18,6 +18,12 @@
       cadastro:
         one: Cadastro
         other: Cadastros
+      catnr13:
+        one: Categoria NR13
+        other: Categorias NR13
+      finalidade_do_vaso:
+        one: Finalidade do vaso
+        other: Finalidades dos vasos
     # Para os atributos
     attributes: #Atributos por exemplo da base de dados, onde define o email
       admin:
@@ -38,7 +44,7 @@
         updated_at: Atualizado em
       cidade:
         cidade: Cidade
-      cadastro_corp:
+      corp:
         corporacao: Corporação        
       cadastro:
         eh_fabricante: É fabricante
@@ -46,4 +52,8 @@
         REGIAO: Região
         CORP: Corporação
         nome_curto: Nome curto
+      catnr13:
+        categoria_descricao: Categoria
+      finalidade_do_vaso:
+        finalidade_do_vaso: Finalidade do vaso
       

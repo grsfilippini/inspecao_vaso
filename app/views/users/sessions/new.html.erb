@@ -1,26 +1,33 @@
-<h2>Entrada de usuário</h2>
+<div>  
+  <a class="hiddenanchor" id="signin"></a>
+  <div class="login_wrapper">
+    <div class="animate form login_form">
+      <section class="login_content">
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+          <h1>Entrada de usuário</h1>
+          <div>            
+            <%= f.email_field :email, autofocus: true, class:"form-control", placeholder:"Username" %>
+          </div>
+          <div>            
+            <%= f.password_field :password, class:"form-control", placeholder:"Senha" %>
+          </div>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+          <% if devise_mapping.rememberable? %>
+            <div class="custom-control custom-checkbox small" style="float: left;" >
+              <%= f.check_box :remember_me, class: "custom-control-input" %>
+              <%= f.label :remember_me, class:"custom-control-label" %>
+            </div>
+          <% end %>
+
+          <div>            
+            <%= f.submit "Entrar", class:"btn btn-default btn-success submit", style:"float: none; margin-left: 0px; width: 100%" %>
+          </div>
+
+          <div class="clearfix"></div>
+
+          <div class="separator"></div>
+        <%end%>
+      </section>
+    </div>    
   </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
-
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
-    </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
-<% end %>
-
-<%= render "users/shared/links" %>
+</div>

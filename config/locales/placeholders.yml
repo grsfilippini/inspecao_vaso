@@ -1,0 +1,23 @@
+'pt-BR':
+  placeholders:
+    entre_nome_administrador: Entre com o nome do administrador
+    entre_email_administrador: Entre com o email do administrador
+    entre_senha_administrador: Entre com a senha do administrador
+    entre_confsenha_administrador: Entre com a confirmação de senha do administrador
+    entre_nome_corporacao: Entre com o nome da corporação
+    entre_regiao: Entre a região, caso a corporação seja dividida em regiões
+    entre_nome_empresa: Entre o nome da empresa
+    entre_nome_curto_empresa: Entre o nome curto (abreviado) da empresa
+    entre_cnpj_empresa: Entre o CNPJ da empresa
+    entre_logradouro_empresa: Entre o logradouro (rua, avenida ...)
+    entre_bairro_empresa: Entre com o bairro/distrito da empresa
+    entre_cep_empresa: Entre o CEP
+    entre_contato_empresa: Entre o nome do contato
+    entre_fone_empresa: Entre o fone
+    entre_website_empresa: Entre endereço do sítio da web da empresa
+    entre_observacoes_pertinentes: Entre observações pertinentes sobre a empresa
+    entre_nome cidade: Entre o nome da cidade
+    instrucoes_nome cidade: ATENÇÃO entre no seguinte modelo-> NOME CIDADE/UF
+    instrucoes_entrar_categoria_nr13: ATENÇÃO, entre apenas com a categoria, ex. "IV". Não faça descrições próprias neste campo.
+    entre_categoria: ex. III
+    entre_a_finalide_do_vaso: Entre com a finalidade do vaso

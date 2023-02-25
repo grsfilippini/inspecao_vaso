@@ -15,83 +15,14 @@ ActiveRecord::Schema.define(version: 2023_02_15_125948) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "CADASTRO_CORP", primary_key: "ID", id: :serial, force: :cascade do |t|
-    t.string "CORPORACAO", limit: 100, null: false
-  end
-
-  create_table "CATEGORIA_NR13", primary_key: "ID", id: :serial, force: :cascade do |t|
-    t.string "categoria_descricao", limit: 25, null: false
-  end
-
-  create_table "CERTIFICADO_AFERICAO", primary_key: "ID", id: :serial, force: :cascade do |t|
-    t.integer "EMPRESA_AFERIDORA"
-    t.float "TEMPERATURA"
-    t.integer "LIQUIDO"
-    t.integer "FABRICANTE"
-    t.integer "MODELO"
-    t.string "NUM_SERIE", limit: 20
-    t.integer "TIPO_MANOMETRO"
-    t.float "FUNDO_DE_ESCALA"
-    t.float "MENOR_DIVISAO"
-    t.integer "CLASSE_EXATIDAO"
-    t.float "CARGA_LEITURA1"
-    t.float "CARGA_LEITURA2"
-    t.float "CARGA_LEITURA3"
-    t.float "CARGA_LEITURA4"
-    t.float "CARGA_LEITURA5"
-    t.float "DESCARGA_LEITURA1"
-    t.float "DESCARGA_LEITURA2"
-    t.float "DESCARGA_LEITURA3"
-    t.float "DESCARGA_LEITURA4"
-    t.float "DESCARGA_LEITURA5"
-    t.integer "VASO_PRESSAO"
-    t.date "DATA_AFERICAO"
-  end
-
-  create_table "CIDADE", primary_key: "ID", id: :serial, force: :cascade do |t|
-    t.string "NOME", limit: 120
-    t.integer "ESTADO"
-  end
-
   create_table "CIDADES", primary_key: "ID", id: :serial, force: :cascade do |t|
     t.string "Cidade", limit: 50, null: false
     t.string "EstadoOuProvincia", limit: 20, null: false
     t.index ["Cidade", "EstadoOuProvincia"], name: "CIDADE_UF"
   end
 
-  create_table "CLASSE_EXATIDAO", primary_key: "ID", id: :serial, force: :cascade do |t|
-    t.string "DESCRICAO", limit: 50
-  end
-
-  create_table "ESTADO", primary_key: "ID", id: :serial, force: :cascade do |t|
-    t.string "NOME", limit: 75
-    t.string "UF", limit: 5
-    t.integer "PAIS"
-  end
-
   create_table "FINALIDADE_DO_VASO", id: :serial, force: :cascade do |t|
     t.string "finalidade_do_vaso", limit: 100, null: false
-  end
-
-  create_table "FLUIDOCALIBRACAOVSEG", primary_key: "fluidocalibracaovseg_id", id: :integer, default: -> { "nextval('\"FLUIDOCALIBRACAOVSEG_id_seq\"'::regclass)" }, force: :cascade do |t|
-    t.string "descricao", limit: 100, null: false
-  end
-
-  create_table "FLUIDO_SERVICO", primary_key: "ID", id: :serial, force: :cascade do |t|
-    t.string "FLUIDO_SERVICO", limit: 40, null: false
-  end
-
-  create_table "INSTRUMETO_PADRAO", primary_key: "instrumentopadrao_id", id: :integer, default: -> { "nextval('\"INSTRUMENTO_PADRAO_ID_seq\"'::regclass)" }, force: :cascade do |t|
-    t.string "descricao", limit: 100, null: false
-    t.string "nome_curto", limit: 100, null: false
-  end
-
-  create_table "LIQUIDO", primary_key: "ID", id: :serial, force: :cascade do |t|
-    t.string "DESCRICAO", limit: 50
-  end
-
-  create_table "MATERIAL", primary_key: "ID", id: :serial, force: :cascade do |t|
-    t.string "MATERIAL", limit: 90
   end
 
   create_table "MEDIDA_ESPESSURA_VASO", primary_key: "ID", id: :serial, force: :cascade do |t|
@@ -111,30 +42,6 @@ ActiveRecord::Schema.define(version: 2023_02_15_125948) do
     t.integer "empresainspetora_id", default: 52, null: false
     t.float "esp_min_corpo"
     t.float "esp_min_tampo"
-  end
-
-  create_table "MGR_tipo_ambiente_instalacao", id: :integer, default: -> { "nextval('tipo_ambiente_instalacao_id_seq'::regclass)" }, force: :cascade do |t|
-    t.string "descricao_ambiente", limit: 100, null: false
-  end
-
-  create_table "MTP_NUMSERIE", primary_key: "ID", id: :serial, force: :cascade do |t|
-    t.string "NUMSERIE", limit: 6, null: false
-    t.integer "VASO"
-  end
-
-  create_table "MTP_NUMSERIE_DISPSEG", id: :serial, force: :cascade do |t|
-    t.string "numxserie", limit: 100, null: false
-    t.integer "dispseguranca_id"
-  end
-
-  create_table "PAIS", primary_key: "ID", id: :serial, force: :cascade do |t|
-    t.string "PAISNOME", limit: 50, null: false
-    t.string "PAISNAME", limit: 50
-  end
-
-  create_table "POTENCIAL_RISCO", id: :serial, force: :cascade do |t|
-    t.integer "potencial_risco"
-    t.string "descricao", limit: 45
   end
 
   create_table "RELATORIO_INSPECAO", primary_key: "ID", id: :serial, force: :cascade do |t|
@@ -351,39 +258,6 @@ ActiveRecord::Schema.define(version: 2023_02_15_125948) do
     t.integer "art_id", default: 0, null: false
   end
 
-  create_table "ROTEIRO_INSPECAO", primary_key: "ID", id: :serial, force: :cascade do |t|
-    t.integer "RELATORIO"
-    t.string "CONTATO_TECNICO", limit: 20
-    t.string "CONTATO_TECNICO_FONE", limit: 16
-    t.text "OBSERVACOES_DURANTE_INSPECAO"
-    t.boolean "BTIROU_FOTO_ANTES", null: false
-    t.boolean "BTIROU_FOTO_DURANTE_TH"
-    t.boolean "BTIROU_FOTO_APOS"
-    t.boolean "BTIROU_FOTO_DOCORPO_VASO"
-    t.boolean "BTIROU_FOTO_DA_INSTALACAO"
-    t.boolean "BTIROU_DIMENSOES_VASO"
-    t.boolean "BMEDIU_ESPESSURA_PAREDES_VASO"
-    t.boolean "BINSPECAO_INTERNA_TIROU_FOTOS"
-    t.date "DATA"
-    t.time "HORA"
-    t.text "MEDIDAS_ESPESSURA_DURANTE_INSPECAO"
-    t.text "ELEMENTOS_TROCADOS"
-    t.boolean "B_LANCADO_RELATORIO"
-  end
-
-  create_table "TIPO_DISPOSITIVO_SEGURANCA", primary_key: "ID", id: :serial, force: :cascade do |t|
-    t.string "NOME", limit: 50, null: false
-    t.string "DESCRICAO", limit: 100
-  end
-
-  create_table "TIPO_INSPECAO", primary_key: "ID", id: :serial, force: :cascade do |t|
-    t.string "INSPECAO", limit: 100
-  end
-
-  create_table "TIPO_MANOMETRO", primary_key: "ID", id: :serial, force: :cascade do |t|
-    t.string "DESCRICAO", limit: 50
-  end
-
   create_table "admins", force: :cascade do |t|
     t.string "nome", null: false
     t.string "email", default: "", null: false
@@ -414,7 +288,6 @@ ActiveRecord::Schema.define(version: 2023_02_15_125948) do
     t.string "nome_curto", limit: 50, null: false
     t.string "cnpj", limit: 18, null: false
     t.string "cidade", limit: 60
-    t.string "estado", limit: 25
     t.string "endereco", limit: 75
     t.string "cep", limit: 10
     t.string "email", limit: 40
@@ -430,30 +303,69 @@ ActiveRecord::Schema.define(version: 2023_02_15_125948) do
     t.decimal "NUMERO", precision: 10
   end
 
-  create_table "classe_fluido", id: :serial, force: :cascade do |t|
-    t.string "classe_fluido", limit: 1, null: false
+  create_table "catnr13s", id: :integer, default: -> { "nextval('\"CATEGORIA_NR13_ID_seq\"'::regclass)" }, force: :cascade do |t|
+    t.string "categoria", limit: 25, null: false
+  end
+
+  create_table "classe_fluidos", id: :integer, default: -> { "nextval('classe_fluido_id_seq'::regclass)" }, force: :cascade do |t|
+    t.string "classe", limit: 1, null: false
     t.string "descricao", limit: 250
   end
 
-  create_table "codigo_construcao", id: :serial, force: :cascade do |t|
+  create_table "codigo_construcaos", id: :integer, default: -> { "nextval('codigo_construcao_id_seq'::regclass)" }, force: :cascade do |t|
     t.string "codigo", limit: 50, null: false
   end
 
-  create_table "dispsegurancas", primary_key: "dispseg_id", id: :integer, default: -> { "nextval('dispsegurancas_id_seq'::regclass)" }, force: :cascade do |t|
-    t.string "num_serie", limit: 100, null: false
-    t.integer "fabricante_id", default: 67, null: false
-    t.integer "modelodispseg_id", default: 2, null: false
-    t.string "castelo", limit: 100
-    t.string "bitola", limit: 100
-    t.index ["modelodispseg_id"], name: "fki_dispsegurancas_TIPO_DISPOSITIVO_SEGURANCA_ID_fkey"
+  create_table "corps", id: :integer, default: -> { "nextval('\"CADASTRO_CORP_ID_seq\"'::regclass)" }, force: :cascade do |t|
+    t.string "nome", limit: 100, null: false
   end
 
-  create_table "normas_mte", id: :serial, force: :cascade do |t|
-    t.string "norma_mte", limit: 30, null: false
+  create_table "disp_segurancas", id: :integer, default: -> { "nextval('dispsegurancas_id_seq'::regclass)" }, force: :cascade do |t|
+    t.string "serie", limit: 100, null: false
+    t.integer "cadastro_id", default: 67, null: false
+    t.integer "tipo_dispositivo_seguranca_id", default: 2, null: false
+    t.string "castelo", limit: 100
+    t.string "bitola", limit: 100
+    t.index ["tipo_dispositivo_seguranca_id"], name: "fki_dispsegurancas_TIPO_DISPOSITIVO_SEGURANCA_ID_fkey"
+  end
+
+  create_table "fluido_calibracao_valv_segs", id: :integer, default: -> { "nextval('\"FLUIDOCALIBRACAOVSEG_id_seq\"'::regclass)" }, force: :cascade do |t|
+    t.string "descricao", limit: 100, null: false
+  end
+
+  create_table "fluido_servicos", id: :integer, default: -> { "nextval('\"FLUIDO_SERVICO_ID_seq\"'::regclass)" }, force: :cascade do |t|
+    t.string "descricao", limit: 40, null: false
+  end
+
+  create_table "instrumento_padraos", id: :integer, default: -> { "nextval('\"INSTRUMENTO_PADRAO_ID_seq\"'::regclass)" }, force: :cascade do |t|
+    t.string "descricao", limit: 100, null: false
+    t.string "nome_curto", limit: 100, null: false
+  end
+
+  create_table "liquidos", id: :integer, default: -> { "nextval('\"LIQUIDO_ID_seq\"'::regclass)" }, force: :cascade do |t|
+    t.string "descricao", limit: 50
+  end
+
+  create_table "materials", id: :integer, default: -> { "nextval('\"MATERIAL_ID_seq\"'::regclass)" }, force: :cascade do |t|
+    t.string "descricao", limit: 90
+  end
+
+  create_table "mte_normas", id: :integer, default: nil, force: :cascade do |t|
+    t.string "norma", limit: 25
     t.string "descricao", limit: 100
   end
 
-  create_table "profissional_habilitado", id: :serial, force: :cascade do |t|
+  create_table "mtp_num_series", id: :integer, default: -> { "nextval('\"MTP_NUMSERIE_ID_seq\"'::regclass)" }, force: :cascade do |t|
+    t.string "serie", limit: 6, null: false
+    t.integer "vaso_id"
+  end
+
+  create_table "mtpds_num_series", id: :integer, default: -> { "nextval('\"MTP_NUMSERIE_DISPSEG_id_seq\"'::regclass)" }, force: :cascade do |t|
+    t.string "serie", limit: 100, null: false
+    t.integer "disp_seguranca_id"
+  end
+
+  create_table "phs", id: :integer, default: -> { "nextval('profissional_habilitado_id_seq'::regclass)" }, force: :cascade do |t|
     t.string "nome", limit: 50, null: false
     t.string "crea", limit: 20, null: false
     t.string "endereco", limit: 75
@@ -468,15 +380,29 @@ ActiveRecord::Schema.define(version: 2023_02_15_125948) do
     t.string "email", limit: 80
   end
 
-  create_table "tipo_compressor", primary_key: "ID", id: :integer, default: -> { "nextval('tipo_compressor_id_seq'::regclass)" }, force: :cascade do |t|
+  create_table "potencial_riscos", id: :integer, default: -> { "nextval('\"POTENCIAL_RISCO_id_seq\"'::regclass)" }, force: :cascade do |t|
+    t.integer "potencial_risco"
+    t.string "descricao", limit: 45
+  end
+
+  create_table "tipo_compressors", id: :integer, default: -> { "nextval('tipo_compressor_id_seq'::regclass)" }, force: :cascade do |t|
     t.string "tipo_compressor", limit: 25, null: false
   end
 
-  create_table "tipo_dreno", primary_key: "ID", id: :integer, default: -> { "nextval('tipo_dreno_id_seq'::regclass)" }, force: :cascade do |t|
+  create_table "tipo_dispositivo_segurancas", id: :integer, default: -> { "nextval('\"TIPO_DISPOSITIVO_SEGURANCA_ID_seq\"'::regclass)" }, force: :cascade do |t|
+    t.string "nome", limit: 50, null: false
+    t.string "descricao", limit: 100
+  end
+
+  create_table "tipo_drenos", id: :integer, default: -> { "nextval('tipo_dreno_id_seq'::regclass)" }, force: :cascade do |t|
     t.string "tipo_dreno", limit: 25, null: false
   end
 
-  create_table "tipo_vaso", id: :serial, force: :cascade do |t|
+  create_table "tipo_inspecaos", id: :integer, default: -> { "nextval('\"TIPO_INSPECAO_ID_seq\"'::regclass)" }, force: :cascade do |t|
+    t.string "nome", limit: 100
+  end
+
+  create_table "tipo_vasos", id: :integer, default: -> { "nextval('tipo_vaso_id_seq'::regclass)" }, force: :cascade do |t|
     t.string "tipo_vaso", limit: 45, null: false
   end
 
@@ -493,7 +419,7 @@ ActiveRecord::Schema.define(version: 2023_02_15_125948) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "vaso_pressao", primary_key: "ID", id: :integer, default: -> { "nextval('vaso_pressao_id_seq'::regclass)" }, force: :cascade do |t|
+  create_table "vasos", id: :integer, default: -> { "nextval('vaso_pressao_id_seq'::regclass)" }, force: :cascade do |t|
     t.integer "fabricante", null: false
     t.string "num_serie", limit: 15, null: false
     t.integer "categoria", default: 5, null: false
@@ -537,42 +463,35 @@ ActiveRecord::Schema.define(version: 2023_02_15_125948) do
     t.float "diametro_externo_corpo"
   end
 
-  add_foreign_key "CERTIFICADO_AFERICAO", "\"CLASSE_EXATIDAO\"", column: "CLASSE_EXATIDAO", primary_key: "ID", name: "sys_fk_393"
-  add_foreign_key "CERTIFICADO_AFERICAO", "\"LIQUIDO\"", column: "LIQUIDO", primary_key: "ID", name: "sys_fk_387"
-  add_foreign_key "CERTIFICADO_AFERICAO", "\"TIPO_MANOMETRO\"", column: "TIPO_MANOMETRO", primary_key: "ID", name: "sys_fk_390"
-  add_foreign_key "CERTIFICADO_AFERICAO", "cadastros", column: "EMPRESA_AFERIDORA", name: "sys_fk_384"
-  add_foreign_key "CERTIFICADO_AFERICAO", "vaso_pressao", column: "VASO_PRESSAO", primary_key: "ID", name: "sys_fk_373"
-  add_foreign_key "CIDADE", "\"ESTADO\"", column: "ESTADO", primary_key: "ID", name: "sys_fk_579"
-  add_foreign_key "ESTADO", "\"PAIS\"", column: "PAIS", primary_key: "ID", name: "sys_fk_587"
-  add_foreign_key "MEDIDA_ESPESSURA_VASO", "\"INSTRUMETO_PADRAO\"", column: "instrumentopadrao_id", primary_key: "instrumentopadrao_id", name: "MEDIDA_ESPESSURA_VASO_instrumentopadrao_id_fkey"
-  add_foreign_key "MEDIDA_ESPESSURA_VASO", "\"INSTRUMETO_PADRAO\"", column: "instrumentopadrao_id", primary_key: "instrumentopadrao_id", name: "MEDIDA_ESPESSURA_VASO_instrumentopadrao_id_fkey1"
   add_foreign_key "MEDIDA_ESPESSURA_VASO", "cadastros", column: "empresainspetora_id", name: "MEDIDA_ESPESSURA_VASO_empresainspetora_id_fkey"
-  add_foreign_key "MEDIDA_ESPESSURA_VASO", "vaso_pressao", column: "VASO", primary_key: "ID", name: "MEDIDA_ESPESSURA_VASO_VASO_fkey"
-  add_foreign_key "MEDIDA_ESPESSURA_VASO", "vaso_pressao", column: "VASO", primary_key: "ID", name: "MEDIDA_ESPESSURA_VASO_VASO_fkey1"
-  add_foreign_key "RELATORIO_INSPECAO", "\"MGR_tipo_ambiente_instalacao\"", column: "tipo_ambiente_instalacao_vaso_pressao", name: "sys_fk_219"
-  add_foreign_key "RELATORIO_INSPECAO", "\"TIPO_INSPECAO\"", column: "TIPO_INSPECAO", primary_key: "ID", name: "sys_fk_334"
+  add_foreign_key "MEDIDA_ESPESSURA_VASO", "instrumento_padraos", column: "instrumentopadrao_id", name: "MEDIDA_ESPESSURA_VASO_instrumentopadrao_id_fkey"
+  add_foreign_key "MEDIDA_ESPESSURA_VASO", "instrumento_padraos", column: "instrumentopadrao_id", name: "MEDIDA_ESPESSURA_VASO_instrumentopadrao_id_fkey1"
+  add_foreign_key "MEDIDA_ESPESSURA_VASO", "vasos", column: "VASO", name: "MEDIDA_ESPESSURA_VASO_VASO_fkey"
+  add_foreign_key "MEDIDA_ESPESSURA_VASO", "vasos", column: "VASO", name: "MEDIDA_ESPESSURA_VASO_VASO_fkey1"
+  add_foreign_key "RELATORIO_INSPECAO", "ambiente_insts", column: "tipo_ambiente_instalacao_vaso_pressao", name: "RELATORIO_INSPECAO_tipo_ambiente_instalacao_vaso_pressao_fkey"
   add_foreign_key "RELATORIO_INSPECAO", "cadastros", column: "id_empresa_inspetora", name: "sys_fk_187"
   add_foreign_key "RELATORIO_INSPECAO", "cadastros", column: "id_empresa_vaso_instalado", name: "sys_fk_181"
-  add_foreign_key "RELATORIO_INSPECAO", "profissional_habilitado", column: "idph", name: "sys_fk_178"
-  add_foreign_key "RELATORIO_INSPECAO", "vaso_pressao", column: "id_vaso_pressao", primary_key: "ID", name: "RELATORIO_INSPECAO_id_vaso_pressao_fkey"
-  add_foreign_key "RELATORIO_INSPECAO", "vaso_pressao", column: "id_vaso_pressao", primary_key: "ID", name: "sys_fk_175"
-  add_foreign_key "RELATORIO_INSP_VAL_SEG_E_ALIVIO", "\"FLUIDOCALIBRACAOVSEG\"", column: "fluido_calibracao_id", primary_key: "fluidocalibracaovseg_id", name: "RELATORIO_INSP_VAL_SEG_E_ALIVIO_fluido_calibracao_id_fkey"
-  add_foreign_key "RELATORIO_INSP_VAL_SEG_E_ALIVIO", "\"INSTRUMETO_PADRAO\"", column: "manometro_padrao_id", primary_key: "instrumentopadrao_id", name: "RELATORIO_INSP_VAL_SEG_E_ALIVIO_manometro_padrao_id_fkey"
+  add_foreign_key "RELATORIO_INSPECAO", "phs", column: "idph", name: "sys_fk_178"
+  add_foreign_key "RELATORIO_INSPECAO", "tipo_inspecaos", column: "TIPO_INSPECAO", name: "sys_fk_334"
+  add_foreign_key "RELATORIO_INSPECAO", "vasos", column: "id_vaso_pressao", name: "RELATORIO_INSPECAO_id_vaso_pressao_fkey"
+  add_foreign_key "RELATORIO_INSPECAO", "vasos", column: "id_vaso_pressao", name: "sys_fk_175"
   add_foreign_key "RELATORIO_INSP_VAL_SEG_E_ALIVIO", "cadastros", name: "RELATORIO_INSP_VAL_SEG_E_ALIVIO_cadastro_id_fkey"
   add_foreign_key "RELATORIO_INSP_VAL_SEG_E_ALIVIO", "cadastros", name: "RELATORIO_INSP_VAL_SEG_E_ALIVIO_cadastro_id_fkey1"
-  add_foreign_key "RELATORIO_INSP_VAL_SEG_E_ALIVIO", "vaso_pressao", column: "vaso_pressao_protegido_id", primary_key: "ID", name: "RELATORIO_INSP_VAL_SEG_E_ALIVIO_vaso_pressao_protegido_id_fkey"
-  add_foreign_key "cadastros", "\"CADASTRO_CORP\"", column: "CORP", primary_key: "ID", name: "sys_fk_634"
-  add_foreign_key "dispsegurancas", "\"TIPO_DISPOSITIVO_SEGURANCA\"", column: "modelodispseg_id", primary_key: "ID", name: "dispsegurancas_modelodispseg_id_fkey"
-  add_foreign_key "dispsegurancas", "cadastros", column: "fabricante_id", name: "dispsegurancas_fabricante_id_fkey"
-  add_foreign_key "vaso_pressao", "\"CATEGORIA_NR13\"", column: "categoria", primary_key: "ID", name: "sys_fk_86"
-  add_foreign_key "vaso_pressao", "\"FLUIDO_SERVICO\"", column: "FKTIPO_FLUIDO_SERVICO_ATUAL", primary_key: "ID", name: "sys_fk_249"
-  add_foreign_key "vaso_pressao", "\"MATERIAL\"", column: "FKMATERIAL_CORPO_VASO", primary_key: "ID", name: "sys_fk_324"
-  add_foreign_key "vaso_pressao", "\"POTENCIAL_RISCO\"", column: "FKTIPO_POTENCIAL_RISCONR13", name: "sys_fk_255"
-  add_foreign_key "vaso_pressao", "\"TIPO_DISPOSITIVO_SEGURANCA\"", column: "FKTIPO_DISPOSITIVO_SEGURANCA", primary_key: "ID", name: "sys_fk_312"
-  add_foreign_key "vaso_pressao", "cadastros", column: "fabricante", name: "sys_fk_56"
-  add_foreign_key "vaso_pressao", "classe_fluido", column: "FKTIPO_CLASSE_FLUIDO_ATUAL", name: "sys_fk_286"
-  add_foreign_key "vaso_pressao", "codigo_construcao", column: "idcodigo_construcao", name: "sys_fk_145"
-  add_foreign_key "vaso_pressao", "tipo_compressor", column: "tipo_compressor", primary_key: "ID", name: "sys_fk_89"
-  add_foreign_key "vaso_pressao", "tipo_dreno", column: "tipo_dreno", primary_key: "ID", name: "sys_fk_79"
-  add_foreign_key "vaso_pressao", "tipo_vaso", column: "tipo_vaso", name: "sys_fk_117"
+  add_foreign_key "RELATORIO_INSP_VAL_SEG_E_ALIVIO", "fluido_calibracao_valv_segs", column: "fluido_calibracao_id", name: "RELATORIO_INSP_VAL_SEG_E_ALIVIO_fluido_calibracao_id_fkey"
+  add_foreign_key "RELATORIO_INSP_VAL_SEG_E_ALIVIO", "instrumento_padraos", column: "manometro_padrao_id", name: "RELATORIO_INSP_VAL_SEG_E_ALIVIO_manometro_padrao_id_fkey"
+  add_foreign_key "RELATORIO_INSP_VAL_SEG_E_ALIVIO", "vasos", column: "vaso_pressao_protegido_id", name: "RELATORIO_INSP_VAL_SEG_E_ALIVIO_vaso_pressao_protegido_id_fkey"
+  add_foreign_key "cadastros", "corps", column: "CORP", name: "sys_fk_634"
+  add_foreign_key "disp_segurancas", "cadastros", name: "dispsegurancas_fabricante_id_fkey"
+  add_foreign_key "disp_segurancas", "tipo_dispositivo_segurancas", name: "dispsegurancas_modelodispseg_id_fkey"
+  add_foreign_key "vasos", "cadastros", column: "fabricante", name: "sys_fk_56"
+  add_foreign_key "vasos", "catnr13s", column: "categoria", name: "sys_fk_86"
+  add_foreign_key "vasos", "classe_fluidos", column: "FKTIPO_CLASSE_FLUIDO_ATUAL", name: "sys_fk_286"
+  add_foreign_key "vasos", "codigo_construcaos", column: "idcodigo_construcao", name: "sys_fk_145"
+  add_foreign_key "vasos", "fluido_servicos", column: "FKTIPO_FLUIDO_SERVICO_ATUAL", name: "sys_fk_249"
+  add_foreign_key "vasos", "materials", column: "FKMATERIAL_CORPO_VASO", name: "sys_fk_324"
+  add_foreign_key "vasos", "potencial_riscos", column: "FKTIPO_POTENCIAL_RISCONR13", name: "sys_fk_255"
+  add_foreign_key "vasos", "tipo_compressors", column: "tipo_compressor", name: "sys_fk_89"
+  add_foreign_key "vasos", "tipo_dispositivo_segurancas", column: "FKTIPO_DISPOSITIVO_SEGURANCA", name: "sys_fk_312"
+  add_foreign_key "vasos", "tipo_drenos", column: "tipo_dreno", name: "sys_fk_79"
+  add_foreign_key "vasos", "tipo_vasos", column: "tipo_vaso", name: "sys_fk_117"
 end

@@ -24,7 +24,7 @@
         </div>
         <div class="col-sm-6 mb-3 mb-sm-0">
             <%= form.label :REGIAO %>
-            <%= form.text_field :REGIAO, placeholder: 'Entre a região, caso a corporação seja dividida em regiões', class:'form-control form-control-sm'%>
+            <%= form.text_field :REGIAO, placeholder: t('placeholders.entre_regiao'), class:'form-control form-control-sm'%>
         </div>
         <div class="col-sm-6 mb-3 mb-sm-0">                                           
             <%= form.label :eh_fabricante %>
@@ -39,23 +39,23 @@
     <div class="form-group row">
         <div class="col-sm-6 mb-3 mb-sm-0">
             <%= form.label :nome %>
-            <%= form.text_field :nome,  placeholder: 'Entre o nome da empresa', class:'form-control form-control-sm'%>
+            <%= form.text_field :nome,  placeholder: t('placeholders.entre_nome_empresa'), class:'form-control form-control-sm'%>
         </div>
         <div class="col-sm-6 mb-3 mb-sm-0">
             <%= form.label :nome_curto %>
-            <%= form.text_field :nome_curto, placeholder: 'Entre o nome abreviado da empresa', class:'form-control form-control-sm'%>
+            <%= form.text_field :nome_curto, placeholder: t('placeholders.entre_nome_curto_empresa'), class:'form-control form-control-sm'%>
         </div>
 
         <div class="col-sm-6 mb-3 mb-sm-0">
             <%= form.label :cnpj %>
-            <%= form.text_field :cnpj, placeholder: 'Entre o CNPJ da empresa', class:'form-control form-control-sm'%>
+            <%= form.text_field :cnpj, placeholder: t('placeholders.entre_cnpj_empresa'), class:'form-control form-control-sm'%>
         </div>
     </div>
 
     <div class="form-group row">
         <div class="col-sm-6 mb-3 mb-sm-0">
             <%= form.label "Logradouro" %>
-            <%= form.text_field :endereco, placeholder: 'Entre o endereço', class:'form-control form-control-sm'%>
+            <%= form.text_field :endereco, placeholder: t('placeholders.entre_logradouro_empresa'), class:'form-control form-control-sm'%>
         </div>
 
         <div class="col-sm-6 mb-3 mb-sm-0">            
@@ -65,7 +65,7 @@
 
         <div class="col-sm-6 mb-3 mb-sm-0">
             <%= form.label :bairro %>
-            <%= form.text_field :bairro, placeholder: 'Entre o endereço', class:'form-control form-control-sm'%>
+            <%= form.text_field :bairro, placeholder: t('placeholders.entre_bairro_empresa'), class:'form-control form-control-sm'%>
         </div>
 
         <div class="col-sm-6 mb-3 mb-sm-0">
@@ -76,22 +76,22 @@
 
         <div class="col-sm-6 mb-3 mb-sm-0">
             <%= form.label :cep %>
-            <%= form.text_field :cep, placeholder: 'Entre o CEP', class:'form-control form-control-sm'%>
+            <%= form.text_field :cep, placeholder: t('placeholders.entre_cep_empresa'), class:'form-control form-control-sm'%>
         </div>
     </div>
 
     <div class="form-group row">
         <div class="col-sm-6 mb-3 mb-sm-0">
             <%= form.label :contato %>
-            <%= form.text_field :contato, placeholder: 'Entre o nome do contato', class:'form-control form-control-sm'%>
+            <%= form.text_field :contato, placeholder: t('placeholders.entre_contato_empresa'), class:'form-control form-control-sm'%>
         </div>    
         <div class="col-sm-6 mb-3 mb-sm-0">
             <%= form.label :fone %>
-            <%= form.text_field :fone, placeholder: 'Entre o fone', class:'form-control form-control-sm'%>
+            <%= form.text_field :fone, placeholder: t('placeholders.entre_fone_empresa'), class:'form-control form-control-sm'%>
         </div>
         <div class="col-sm-6 mb-3 mb-sm-0">
             <%= form.label :website %>
-            <%= form.text_field :website, placeholder: 'Entre endereço do sítio da web da empresa', class:'form-control form-control-sm'%>
+            <%= form.text_field :website, placeholder: t('placeholders.entre_website_empresa'), class:'form-control form-control-sm'%>
         </div>
         
     </div>
@@ -99,13 +99,13 @@
     <div class="form-group row">
         <div class="col-sm-6 mb-3 mb-sm-0">
             <%= form.label :observacoes %>
-            <%= form.text_area :observacoes, placeholder: 'Entre o nome do contato', rows: 3, class:'form-control form-control-sm'%>
+            <%= form.text_area :observacoes, placeholder: t('placeholders.entre_observacoes_pertinentes'), rows: 3, class:'form-control form-control-sm'%>
         </div>    
         
         
     </div>
     
-    <button type="submit" class="btn btn-primary">Gravar</button>
+    <button type="submit" class="btn btn-primary"><%=t('botoes.gravar')%></button>
 
     <hr>    
 <% end %>
