@@ -4,23 +4,23 @@
 </div>
 
 <!-- Se tiver algum erro dentro de @admin, erro devido a processo de salvamento por exemplo, entra no alerta abaixo -->
-<% if @finalidade_do_vaso.errors.any? %>
+<% if @finalidade_vaso.errors.any? %>
     <div class="alert alert-danger alert-dismissable">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>        
         <ul>
-            <% @finalidade_do_vaso.errors.full_messages.each do |message| %>
+            <% @finalidade_vaso.errors.full_messages.each do |message| %>
             <li> <%= message -%> </li>
             <% end %>
         </ul>
     </div>
 <% end %>
 
-<%= form_with(model: [ :admins_backoffice, @finalidade_do_vaso ], local: true) do |form| %>
+<%= form_with(model: [ :admins_backoffice, @finalidade_vaso ], local: true) do |form| %>
 
     <div class="form-group row">                
         <div class="col-sm-6 mb-3 mb-sm-0">            
-            <%= form.label :finalidade_do_vaso %>
-            <%= form.text_field :finalidade_do_vaso, placeholder: t('placeholders.entre_a_finalide_do_vaso')%>
+            <%= form.label :finalidade %>
+            <%= form.text_field :finalidade, placeholder: t('placeholders.entre_a_finalide_do_vaso')%>
         </div>
     </div>
     

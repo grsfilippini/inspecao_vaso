@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     resources :cadastros
     resources :cidades
     resources :catnr13s
-    resources :finalidade_do_vasos
+    resources :finalidade_vasos
   end
 
   namespace :site do

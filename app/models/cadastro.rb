@@ -8,5 +8,5 @@ class Cadastro < ApplicationRecord
     validates :cnpj, presence: true
     validates :CORP, presence: true
     
-    belongs_to :cadastro_corp, foreign_key: 'CORP'
+    belongs_to :corp, foreign_key: 'CORP'
 end

@@ -21,7 +21,7 @@
       catnr13:
         one: Categoria NR13
         other: Categorias NR13
-      finalidade_do_vaso:
+      finalidade_vaso:
         one: Finalidade do vaso
         other: Finalidades dos vasos
     # Para os atributos
@@ -44,6 +44,7 @@
         updated_at: Atualizado em
       cidade:
         cidade: Cidade
+        nome: Cidade
       corp:
         corporacao: Corporação        
       cadastro:
@@ -54,6 +55,6 @@
         nome_curto: Nome curto
       catnr13:
         categoria_descricao: Categoria
-      finalidade_do_vaso:
-        finalidade_do_vaso: Finalidade do vaso
+      finalidade_vaso:
+        finalidade: Finalidade do vaso
       

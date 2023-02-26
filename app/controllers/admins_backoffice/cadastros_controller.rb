@@ -5,7 +5,7 @@ class AdminsBackoffice::CadastrosController < AdminsBackofficeController
     def index
       # O includes abaixo inclui na query a busca por cadastro_corp
       # Se não for usado, e usar diretamente na view da index, ele fará a cada cadastro uma nova query para buscar a corporação
-      @cadastros = Cadastro.includes(:cadastro_corp)
+      @cadastros = Cadastro.includes(:corp)
                            .all
                            .order(:nome_curto)
                            .page(params[:page])
@@ -60,7 +60,7 @@ class AdminsBackoffice::CadastrosController < AdminsBackofficeController
 
     def get_cidades_corps
       @cidades = Cidade.all
-      @cadastrocorps = CadastroCorp.all
+      @corps = Corp.all
     end
   
   end

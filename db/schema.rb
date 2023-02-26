@@ -15,16 +15,6 @@ ActiveRecord::Schema.define(version: 2023_02_15_125948) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "CIDADES", primary_key: "ID", id: :serial, force: :cascade do |t|
-    t.string "Cidade", limit: 50, null: false
-    t.string "EstadoOuProvincia", limit: 20, null: false
-    t.index ["Cidade", "EstadoOuProvincia"], name: "CIDADE_UF"
-  end
-
-  create_table "FINALIDADE_DO_VASO", id: :serial, force: :cascade do |t|
-    t.string "finalidade_do_vaso", limit: 100, null: false
-  end
-
   create_table "MEDIDA_ESPESSURA_VASO", primary_key: "ID", id: :serial, force: :cascade do |t|
     t.integer "VASO", null: false
     t.float "esp_casco_1"
@@ -307,6 +297,10 @@ ActiveRecord::Schema.define(version: 2023_02_15_125948) do
     t.string "categoria", limit: 25, null: false
   end
 
+  create_table "cidades", id: :integer, default: -> { "nextval('\"CIDADES_ID_seq\"'::regclass)" }, force: :cascade do |t|
+    t.string "nome", limit: 50, null: false
+  end
+
   create_table "classe_fluidos", id: :integer, default: -> { "nextval('classe_fluido_id_seq'::regclass)" }, force: :cascade do |t|
     t.string "classe", limit: 1, null: false
     t.string "descricao", limit: 250
@@ -327,6 +321,10 @@ ActiveRecord::Schema.define(version: 2023_02_15_125948) do
     t.string "castelo", limit: 100
     t.string "bitola", limit: 100
     t.index ["tipo_dispositivo_seguranca_id"], name: "fki_dispsegurancas_TIPO_DISPOSITIVO_SEGURANCA_ID_fkey"
+  end
+
+  create_table "finalidade_vasos", id: :integer, default: -> { "nextval('\"FINALIDADE_DO_VASO_id_seq\"'::regclass)" }, force: :cascade do |t|
+    t.string "finalidade", limit: 100, null: false
   end
 
   create_table "fluido_calibracao_valv_segs", id: :integer, default: -> { "nextval('\"FLUIDOCALIBRACAOVSEG_id_seq\"'::regclass)" }, force: :cascade do |t|

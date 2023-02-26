@@ -2,7 +2,7 @@ class AdminsBackoffice::CidadesController < AdminsBackofficeController
     before_action :set_cidade, only: [:edit, :update, :destroy]
     
     def index
-      @cidades = Cidade.all.order(:Cidade).page(params[:page]).per(50)
+      @cidades = Cidade.all.order(:nome).page(params[:page]).per(50)
     end
   
     def new
@@ -44,7 +44,7 @@ class AdminsBackoffice::CidadesController < AdminsBackofficeController
     
     def params_cidade
       puts params
-      params.require(:cidade).permit(:Cidade)
+      params.require(:cidade).permit(:nome)
     end
   
     def set_cidade

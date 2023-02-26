@@ -22,7 +22,7 @@
                 <tr>
                     <td><%= cad.id %></td>
                     <td><%= cad.nome_curto.truncate(30) %></td>
-                    <td><%= cad.cadastro_corp.CORPORACAO %></td>
+                    <td><%= cad.corp.nome %></td>
 
                     <td style="width: 100px">
                         <%= link_to edit_admins_backoffice_cadastro_path(cad.id), class:"btn btn-info btn-circle btn-sm" do %> 

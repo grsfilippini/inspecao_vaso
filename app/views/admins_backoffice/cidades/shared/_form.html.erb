@@ -3,6 +3,7 @@
     <h1 class="h3 mb-4 text-gray-800"> <%= action_messege %> </h1>
 </div>
 
+
 <!-- Se tiver algum erro dentro de @admin, erro devido a processo de salvamento por exemplo, entra no alerta abaixo -->
 <% if @cidade.errors.any? %>
     <div class="alert alert-danger alert-dismissable">
@@ -20,8 +21,8 @@
     <div class="form-group row">                
         <div class="col-sm-6 mb-3 mb-sm-0">
             <%= tag.div tag.p(t('placeholders.instrucoes_nome cidade'))%>
-            <%= form.label :Cidade %>
-            <%= form.text_field :Cidade, placeholder: t('placeholders.entre_nome cidade')%>
+            <%= form.label :nome %>
+            <%= form.text_field :nome, placeholder: t('placeholders.entre_nome cidade')%>
         </div>
     </div>
     
