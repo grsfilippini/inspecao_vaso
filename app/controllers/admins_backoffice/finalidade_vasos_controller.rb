@@ -37,7 +37,8 @@ class AdminsBackoffice::FinalidadeVasosController < AdminsBackofficeController
         render :index
       end
     end
-  
+
+    
   
     private
   

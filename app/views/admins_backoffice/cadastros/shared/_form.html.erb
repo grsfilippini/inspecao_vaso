@@ -19,12 +19,12 @@
 
     <div class="form-group row">        
         <div class="col-sm-6 mb-3 mb-sm-0">                                           
-            <%= form.label :CORP %>
-            <%= form.collection_select :CORP, @cadastrocorps, :ID, :CORPORACAO, { include_blank: true }, class:'form-control form-control-sm' %>
+            <%= form.label :corp_id %>
+            <%= form.collection_select :corp_id, @corps, :id, :nome, { include_blank: true }, class:'form-control form-control-sm' %>
         </div>
         <div class="col-sm-6 mb-3 mb-sm-0">
-            <%= form.label :REGIAO %>
-            <%= form.text_field :REGIAO, placeholder: t('placeholders.entre_regiao'), class:'form-control form-control-sm'%>
+            <%= form.label :regiao %>
+            <%= form.text_field :regiao, placeholder: t('placeholders.entre_regiao'), class:'form-control form-control-sm'%>
         </div>
         <div class="col-sm-6 mb-3 mb-sm-0">                                           
             <%= form.label :eh_fabricante %>
@@ -60,7 +60,7 @@
 
         <div class="col-sm-6 mb-3 mb-sm-0">            
             <%= form.label "Número" %>
-            <%= form.number_field :NUMERO, placeholder: '', class:'form-control form-control-sm'%>
+            <%= form.number_field :numero, placeholder: '', class:'form-control form-control-sm'%>
         </div>        
 
         <div class="col-sm-6 mb-3 mb-sm-0">
@@ -71,7 +71,7 @@
         <div class="col-sm-6 mb-3 mb-sm-0">
             <%= form.label :cidade %>
             <%#= form.text_field :cidade, placeholder: 'Entre a cidade'%>            
-            <%= form.collection_select :cidade, @cidades, :Cidade, :Cidade, { include_blank: true } , class:'form-control form-control-sm'%>
+            <%= form.collection_select :cidade, @cidades, :nome, :nome, { include_blank: true } , class:'form-control form-control-sm'%>
         </div>
 
         <div class="col-sm-6 mb-3 mb-sm-0">

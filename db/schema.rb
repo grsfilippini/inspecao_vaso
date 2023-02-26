@@ -288,9 +288,9 @@ ActiveRecord::Schema.define(version: 2023_02_15_125948) do
     t.boolean "eh_fabricante", default: false, null: false
     t.string "bairro", limit: 60
     t.boolean "eh_empresa_inspetora", default: false, null: false
-    t.string "REGIAO", limit: 15, default: "-", null: false
-    t.integer "CORP", default: 3, null: false
-    t.decimal "NUMERO", precision: 10
+    t.string "regiao", limit: 15, default: "-", null: false
+    t.integer "corp_id", default: 3, null: false
+    t.decimal "numero", precision: 10
   end
 
   create_table "catnr13s", id: :integer, default: -> { "nextval('\"CATEGORIA_NR13_ID_seq\"'::regclass)" }, force: :cascade do |t|
@@ -478,7 +478,7 @@ ActiveRecord::Schema.define(version: 2023_02_15_125948) do
   add_foreign_key "RELATORIO_INSP_VAL_SEG_E_ALIVIO", "fluido_calibracao_valv_segs", column: "fluido_calibracao_id", name: "RELATORIO_INSP_VAL_SEG_E_ALIVIO_fluido_calibracao_id_fkey"
   add_foreign_key "RELATORIO_INSP_VAL_SEG_E_ALIVIO", "instrumento_padraos", column: "manometro_padrao_id", name: "RELATORIO_INSP_VAL_SEG_E_ALIVIO_manometro_padrao_id_fkey"
   add_foreign_key "RELATORIO_INSP_VAL_SEG_E_ALIVIO", "vasos", column: "vaso_pressao_protegido_id", name: "RELATORIO_INSP_VAL_SEG_E_ALIVIO_vaso_pressao_protegido_id_fkey"
-  add_foreign_key "cadastros", "corps", column: "CORP", name: "sys_fk_634"
+  add_foreign_key "cadastros", "corps", name: "sys_fk_634"
   add_foreign_key "disp_segurancas", "cadastros", name: "dispsegurancas_fabricante_id_fkey"
   add_foreign_key "disp_segurancas", "tipo_dispositivo_segurancas", name: "dispsegurancas_modelodispseg_id_fkey"
   add_foreign_key "vasos", "cadastros", column: "fabricante", name: "sys_fk_56"

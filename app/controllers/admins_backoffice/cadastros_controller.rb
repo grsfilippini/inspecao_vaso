@@ -51,7 +51,7 @@ class AdminsBackoffice::CadastrosController < AdminsBackofficeController
     
     def params_cadastro
       puts params
-      params.require(:cadastro).permit(:id, :nome, :nome_curto, :cnpj, :ie, :cidade, :estado, :endereco, :cep, :email, :fone, :contato, :website, :observacoes, :eh_fabricante, :bairro, :eh_empresa_inspetora, :REGIAO, :PAIS, :CORP, :NUMERO)
+      params.require(:cadastro).permit(:id, :nome, :nome_curto, :cnpj, :cidade, :endereco, :cep, :email, :fone, :contato, :website, :observacoes, :eh_fabricante, :bairro, :eh_empresa_inspetora, :regiao, :corp_id, :numero)
     end
   
     def set_cadastro

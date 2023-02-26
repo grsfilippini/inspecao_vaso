@@ -50,8 +50,8 @@
       cadastro:
         eh_fabricante: É fabricante
         eh_empresa_inspetora: É empresa inspetora
-        REGIAO: Região
-        CORP: Corporação
+        regiao: Região
+        corp_id: Corporação
         nome_curto: Nome curto
       catnr13:
         categoria_descricao: Categoria
