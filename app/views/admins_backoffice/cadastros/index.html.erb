@@ -8,6 +8,7 @@
         <thead>
             <tr>
                 <th>#</th>
+                <th>Usuário</th>
                 <th><%= traduz_atributos_humanos(@cadastros, :nome_curto) %> </th>
                 <th><%= traduz_atributos_humanos(@cadastros, :corp_id) %> </th>
                 <th>
@@ -21,6 +22,11 @@
             <% @cadastros.each do |cad|%>                                                                              
                 <tr>
                     <td><%= cad.id %></td>
+                    <% if !cad.user.blank? %>
+                        <td><%= cad.user.nome_completo.truncate(30) %></td>
+                    <% else %>
+                        <td>Sem usuário</td>
+                    <% end %>
                     <td><%= cad.nome_curto.truncate(30) %></td>
                     <td><%= cad.corp.nome %></td>
 

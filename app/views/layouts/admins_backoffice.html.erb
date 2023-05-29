@@ -31,13 +31,13 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <%= link_to admin_path, class:"sidebar-brand d-flex align-items-center justify-content-center" do %>            
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-clipboard"></i>                     
                     <!-- <%= image_tag 'undraw_profile.svg' %> -->
                 </div>
-                <div class="sidebar-brand-text mx-3">Backoffice Administrativo</div>
-            </a>
+                <div class="sidebar-brand-text mx-3">Backoffice Administrativo</div>            
+            <%end%>
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
@@ -46,7 +46,7 @@
             <li class="nav-item active">                
                 <%= link_to admins_backoffice_welcome_index_path, class:"nav-link" do %>
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>##Painel</span>
+                    <span>Painel</span>
                 <% end %>
             </li>
 
@@ -54,11 +54,48 @@
             <li class="nav-item">
                 <%= link_to admins_backoffice_admins_path, class:"nav-link" do %>
                     <i class="fas fa-fw fa-users"></i>
-                    <span>##Administradores</span>
+                    <span>Administradores</span>
                 <% end %>
-                <!-- <a class="nav-link" href="index.html">
+            </li>
+            
+            <!-- Nav Item - Usuários -->
+            <li class="nav-item">
+                <%= link_to admins_backoffice_users_path, class:"nav-link" do %>
                     <i class="fas fa-fw fa-users"></i>
-                    <span>#Administradores#</span></a> -->
+                    <span>Usuários</span>
+                <% end %>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Empresa Inspetora
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse4"
+                    aria-expanded="true" aria-controls="collapse4">
+                    <i class="fas fa-tag fa-cog"></i>
+                    <span>Cadastros</span>
+                </a>
+                <!--Adicionar "show" junto à class da div abaixo para que ao abrir o menu inicie expandido -->
+                <div id="collapse4" class="collapse" aria-labelledby="heading4" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Cadastros:</h6>
+                        <%= link_to admins_backoffice_phs_path, class:"collapse-item" do %>
+                            (Empresa inspetora)
+                        <%end%>
+                        <%= link_to admins_backoffice_phs_path, class:"collapse-item" do %>
+                            Profissional habilitado
+                        <%end%>
+                        <%= link_to admins_backoffice_instrumento_padraos_path, class:"collapse-item" do %>
+                            Instrumentos padrões
+                        <%end%>
+                    </div>
+                </div>                
             </li>
 
             <!-- Divider -->
@@ -74,23 +111,26 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-tag fa-cog"></i>
-                    <span>##Equipamentos</span>
+                    <span>Equipamentos</span>
                 </a>
                 <!--Adicionar "show" junto à class da div abaixo para que ao abrir o menu inicie expandido -->
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Vasos e disp. de seg.:</h6>
-                        <%= link_to admins_backoffice_corps_path, class:"collapse-item" do %>
+                        <%= link_to admins_backoffice_vasos_path, class:"collapse-item" do %>
                             Vasos
+                        <%end%>                        
+                        <%= link_to admins_backoffice_disp_segurancas_path, class:"collapse-item" do %>
+                            Dispositivo de segurança
                         <%end%>
-                        <%= link_to admins_backoffice_cadastros_path, class:"collapse-item" do %>
-                            Válvula de segurança
-                        <%end%>
-                        <%= link_to admins_backoffice_cidades_path, class:"collapse-item" do %>
+                        <%= link_to admins_backoffice_mtp_num_series_index_path, class:"collapse-item" do %>
                             Série vaso MTP
                         <%end%>
-                        <%= link_to admins_backoffice_cidades_path, class:"collapse-item" do %>
+                        <%= link_to admins_backoffice_mtpds_num_series_index_path, class:"collapse-item" do %>
                             Série válvula seg. MTPDS
+                        <%end%>
+                        <%= link_to admins_backoffice_fluido_servicos_path, class:"collapse-item" do %>
+                            Fluído de serviço no vaso
                         <%end%>
                     </div>
                 </div>                
@@ -102,29 +142,58 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne"
                     aria-expanded="true" aria-controls="collapseOne">
                     <i class="fas fa-tag fa-cog"></i>
-                    <span>##Empresas</span>
+                    <span>Empresas</span>
                 </a>
                 <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Empresas e afins:</h6>
                         <%= link_to admins_backoffice_corps_path, class:"collapse-item" do %>
-                            ##Corporação
+                            Corporação
                         <%end%>
                         <%= link_to admins_backoffice_cadastros_path, class:"collapse-item" do %>
-                            ##Cadastro
+                            Cadastro
                         <%end%>
                         <%= link_to admins_backoffice_cidades_path, class:"collapse-item" do %>
-                            ##Cidade
+                            Cidade
                         <%end%>
                     </div>
                 </div>                
             </li>
-
-            <!-- Nav Item - Tables -->
+            
+            <!-- Nav Item - ART -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <%= link_to admins_backoffice_arts_path, class:"nav-link" do %>
                     <i class="fas fa-fw fa-table"></i>
-                    <span>ART</span></a>
+                    <span>ART's</span>
+                <% end %>
+            </li>
+
+
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse5"
+                    aria-expanded="true" aria-controls="collapse5">
+                    <i class="fas fa-fw fa-tags"></i>
+                    <span>NR13 </span>
+                </a>
+                <div id="collapse5" class="collapse" aria-labelledby="heading5"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <!--<h6 class="collapse-header">Custom Utilities:</h6>-->                        
+                        <%= link_to admins_backoffice_catnr13s_path, class:"collapse-item" do %>
+                            Categoria NR13
+                        <%end%>
+                        <%= link_to admins_backoffice_classe_fluidos_path, class:"collapse-item" do %>
+                            Classe de fluido NR13
+                        <%end%>
+                        <%= link_to admins_backoffice_potencial_riscos_path, class:"collapse-item" do %>
+                            Potencial de risco NR13
+                        <%end%>
+                        
+                        <a class="collapse-item" href="utilities-animation.html">...</a>
+                        <a class="collapse-item" href="utilities-other.html">...</a>
+                    </div>
+                </div>
             </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
@@ -132,18 +201,43 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse3"
                     aria-expanded="true" aria-controls="collapse3">
                     <i class="fas fa-fw fa-tags"></i>
-                    <span>##Demais cadastros </span>
+                    <span>Demais cadastros </span>
                 </a>
                 <div id="collapse3" class="collapse" aria-labelledby="heading3"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <!--<h6 class="collapse-header">Custom Utilities:</h6>-->                        
-                        <%= link_to admins_backoffice_catnr13s_path, class:"collapse-item" do %>
-                            ##Categoria NR13
-                        <%end%>
+                        <!--<h6 class="collapse-header">Custom Utilities:</h6>-->                                               
                         <%= link_to admins_backoffice_finalidade_vasos_path, class:"collapse-item" do %>
-                            ##Finalidade do vaso
+                            Finalidade do vaso
                         <%end%>
+                        <%= link_to admins_backoffice_tipo_compressors_path, class:"collapse-item" do %>
+                            Tipo compressor
+                        <%end%>
+                        <%= link_to admins_backoffice_tipo_drenos_path, class:"collapse-item" do %>
+                            Tipo dreno
+                        <%end%>
+                        <%= link_to admins_backoffice_ambiente_insts_path, class:"collapse-item" do %>
+                            Ambiente instalação
+                        <%end%>                        
+                        <%= link_to admins_backoffice_codigo_construcaos_path, class:"collapse-item" do %>
+                            Código de construção
+                        <%end%>
+                        <%= link_to admins_backoffice_tipo_dispositivo_segurancas_path, class:"collapse-item" do %>
+                            Tipo de dispositivo de segurança
+                        <%end%>
+                        <%= link_to admins_backoffice_fluido_calibracao_valv_segs_path, class:"collapse-item" do %>
+                            Fluído p/ calibração de disp. de seg.
+                        <%end%>
+                        <%= link_to admins_backoffice_materials_path, class:"collapse-item" do %>
+                            Material para fabricação
+                        <%end%>
+                        <%= link_to admins_backoffice_tipo_inspecaos_path, class:"collapse-item" do %>
+                            Tipo de inspeção
+                        <%end%>
+                        <%= link_to admins_backoffice_tipo_vasos_path, class:"collapse-item" do %>
+                            Tipo de vaso
+                        <%end%>
+                        
                         <a class="collapse-item" href="utilities-animation.html">...</a>
                         <a class="collapse-item" href="utilities-other.html">...</a>
                     </div>
@@ -155,7 +249,7 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Inspeções
+                (Inspeções)
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
@@ -163,7 +257,7 @@
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
                     aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
-                    <span>Pages</span>
+                    <span>(Pages)</span>
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages"
                     data-parent="#accordionSidebar">
@@ -184,7 +278,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="tables.html">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
+                    <span>(Tables)</span></a>
             </li>
 
             <!-- Divider -->
@@ -210,21 +304,7 @@
                     <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
-                    </button>
-
-                    <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                    </button>                  
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -253,15 +333,15 @@
                             </div>
                         </li>
 
-                        <!-- Nav Item - Alerts -->
+                        <!-- Nav Item - Alerts --
                         <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-bell fa-fw"></i>
-                                <!-- Counter - Alerts -->
+                                !-- Counter - Alerts --
                                 <span class="badge badge-danger badge-counter">3+</span>
                             </a>
-                            <!-- Dropdown - Alerts -->
+                            !-- Dropdown - Alerts --
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="alertsDropdown">
                                 <h6 class="dropdown-header">
@@ -303,16 +383,17 @@
                                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
                             </div>
                         </li>
+                        -->
 
-                        <!-- Nav Item - Messages -->
+                        <!-- Nav Item - Messages --
                         <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-envelope fa-fw"></i>
-                                <!-- Counter - Messages -->
+                                !-- Counter - Messages --
                                 <span class="badge badge-danger badge-counter">7</span>
                             </a>
-                            <!-- Dropdown - Messages -->
+                            !-- Dropdown - Messages --
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="messagesDropdown">
                                 <h6 class="dropdown-header">
@@ -320,7 +401,7 @@
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <!-- <img class="rounded-circle" src="img/undraw_profile_1.svg" alt="..."> -->
+                                        !-- <img class="rounded-circle" src="img/undraw_profile_1.svg" alt="..."> --
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div class="font-weight-bold">
@@ -331,8 +412,8 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <!-- <img class="rounded-circle" src="img/undraw_profile_2.svg" 
-                                            alt="..."> -->
+                                        !-- <img class="rounded-circle" src="img/undraw_profile_2.svg" 
+                                            alt="..."> --
                                         <div class="status-indicator"></div>
                                     </div>
                                     <div>
@@ -343,8 +424,8 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <!-- <img class="rounded-circle" src="img/undraw_profile_3.svg"
-                                            alt="..."> -->
+                                        !-- <img class="rounded-circle" src="img/undraw_profile_3.svg"
+                                            alt="..."> --
                                         <div class="status-indicator bg-warning"></div>
                                     </div>
                                     <div>
@@ -368,6 +449,7 @@
                                 <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
                             </div>
                         </li>
+                        -->
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -384,20 +466,22 @@
                                 aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
+                                    (Profile)
                                 </a>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
+                                    (Settings)
                                 </a>
+                                <!--
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Activity Log
                                 </a>
+                                -->
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    ##Sair
+                                    Sair
                                 </a>
                             </div>
                         </li>

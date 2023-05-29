@@ -1,0 +1,43 @@
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800"><%= t('mensagens.lista_de', model: @mtpds_num_series.model_name.human(count: @mtpds_num_series.count)) %> </h1>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover">    
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Núm. série MTPDS </th>
+                <th>Fab. do disp. seg.</th>                
+                <th>
+                    <%= link_to  new_admins_backoffice_mtpds_num_series_path, class:"btn btn-success btn-circle btn-sm" do %>
+                        <i class="fas fa-plus"></i>
+                    <% end %>
+                </th>
+            </tr>
+        </thead>
+        <tbody> 
+            <% @mtpds_num_series.each do |a|%>
+                <tr>
+                    <td><%= a.id %></td>
+                    <td><%= a.serie %></td>
+                    <td><%= a.disp_seguranca.cadastro.nome_curto %></td>                    
+                    <td style="width: 100px">
+                        <%= link_to edit_admins_backoffice_mtpds_num_series_path(a.id), class:"btn btn-info btn-circle btn-sm" do %> 
+                            <i class="fas fa-edit"></i>
+                        <%end%>
+                        <%= link_to admins_backoffice_mtpds_num_series_path(a.id), 
+                                    method: :delete, class:"btn btn-danger btn-circle btn-sm", 
+                                    data: { confirm: t('mensagens.confirmar_exclusao', item: a.serie)} do %>
+                            <i class="fas fa-minus"></i> 
+                        <%end%>
+                    </td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+
+    <%= paginate @mtpds_num_series %>
+
+</div>

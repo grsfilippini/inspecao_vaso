@@ -24,6 +24,63 @@
       finalidade_vaso:
         one: Finalidade do vaso
         other: Finalidades dos vasos
+      vaso:
+        one: Vaso
+        other: Vasos
+      tipo_compressor:
+        one: Tipo compressor
+        other: Tipos de compressor
+      tipo_dreno:
+        one: Tipo dreno
+        other: Tipos de dreno
+      ambiente_inst:
+        one: Ambiente de instalação
+        other: Ambientes de instalação
+      ph:
+        one: Profissional habilitado
+        other: Profissionais habilitados
+      art:
+        one: ART
+        other: ART's
+      classe_fluido:
+        one: Classe de fluido
+        other: Classes de fluidos
+      codigo_construcao:
+        one: Código de construção
+        other: Códigos de construção
+      tipo_dispositivo_seguranca:
+        one: Tipo de dispositivo de segurança
+        other: Tipos de dispositivo de segurança
+      disp_seguranca:
+        one: Dispositivo de segurança
+        other: Dispositivos de segurança
+      fluido_calibracao_valv_seg:
+        one: Fluído para calibração
+        other: Fluídos para calibração
+      fluido_servico:
+        one: Fluído de serviço
+        other: Fluídos de serviço
+      instrumento_padrao:
+        one: Instrumento padrão
+        other: Instrumentos padrões
+      material:
+        one: Material
+        other: Materiais
+      mtp_num_serie:
+        one: Número de série
+        other: Números de série
+      mtpds_num_serie:
+        one: Número de série
+        other: Números de série
+      potencial_risco:
+        one: Potencial de risco
+        other: Potenciais de risco
+      tipo_inspecao:
+        one: Tipo de inspeção
+        other: Tipos de inspeção
+      tipo_vaso:
+        one: Tipo de vaso
+        other: Tipos de vaso
     # Para os atributos
     attributes: #Atributos por exemplo da base de dados, onde define o email
       admin:
@@ -40,6 +97,8 @@
         id: Código
         email: Email
         nome: Nome
+        password: Senha
+        password_confirmation: Confirmação da senha
         created_at: Criado em
         updated_at: Atualizado em
       cidade:
@@ -57,4 +116,67 @@
         categoria_descricao: Categoria
       finalidade_vaso:
         finalidade: Finalidade do vaso
-      
+      vaso:
+        fabricante_id: Fabricante
+        num_serie: Número de série
+        proprietaria_id: Proprietária
+        catnr13_id: Categoria NR13
+        dt_fabricacao_reconstituicao: Data fabric./reconstituição
+        volume: Volume
+        tipo_dreno: Tipo de dreno
+        p_inf_operacao_fabricante: Pressão inferior operação fabricante
+        p_sup_operacao_fabricante: Pressão superior operação fabricante
+        pmta_original: PMTA original
+        pth_original: PTH original
+        pmta_atual: PMTA atual
+        pth_atual: PTH atual
+        observacoes: Observações
+        user_id: Usuário
+      tipo_compressor:
+        tipo_compressor: Tipo compressor
+      tipo_dreno:
+        tipo_dreno: Tipo dreno
+      ambiente_inst:
+        ambiente_inst: Ambiente de instalação
+      ph:
+        nome: Nome
+      art:
+        art: ART
+        ph: PH
+        cadastro: Cliente
+      classe_fluido:
+        classe: Classe
+        descricao: Descrição
+      codigo_construcao:
+        codigo: Código
+      tipo_dispositivo_seguranca:
+        nome: Nome
+        descricao: Descrição
+      disp_seguranca:
+        serie: Série
+        cadastro: Proprietário
+        tipo_dispositivo_seguranca: Tipo de dispositivo de segurança
+        castelo: Castelo
+        bitola: Bitola
+      fluido_calibracao_valv_seg:
+        descricao: Descrição
+      fluido_servico:
+        descricao: Descrição
+      instrumento_padrao:
+        descricao: Descrição
+        nome_curto: Nome
+      material:
+        descricao: Descrição
+      mtp_num_serie:
+        serie: Número de série
+        vaso: Vaso
+      mtpds_num_serie:
+        serie: Número de série
+        disp_seguranca: Dispositivo de segurança
+      potencial_risco:
+        potencial_risco: Potencial de risco
+        descricao: Descrição
+      tipo_inspecao:
+        nome: Nome
+      tipo_vaso:
+        tipo_vaso: Tipo de vaso

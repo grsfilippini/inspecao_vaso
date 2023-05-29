@@ -1,0 +1,57 @@
+<br>
+<br>
+<br>      
+
+<div class="jumbotron d-flex" style="padding: 1rem; align-items: center;">
+  
+  <% if params[:termo].present? %>
+    <%="(#{@count_vasos}) Resultados para a busca de \"#{params[:termo]}\"..."%>&nbsp;&nbsp;&nbsp;
+  <% elsif params[:fabricante_id].present? %>    
+    <%="(#{@count_vasos}) Resultados para fabricante \"#{@fab_atual.nome_curto}\"..."%>&nbsp;&nbsp;&nbsp;
+  <% elsif params[:proprietaria_id].present? %>
+    <%="(#{@count_vasos}) Resultados para proprietaria \"#{@prop_atual.nome_curto}\"..."%>&nbsp;&nbsp;&nbsp;
+  <% elsif params[:corporacao_id].present? %>
+    <%="(#{@count_vasos}) Resultados para corporação \"#{@corp_atual.nome}\"..."%>&nbsp;&nbsp;&nbsp;  
+  <% else %>   
+    (<%= @count_vasos %>) &nbsp; Últimos vasos cadastrados... &nbsp;&nbsp;&nbsp;
+  <% end %>  
+  
+  <%= form_with url: site_pesq_fab_prop_path, local: true, method: :get, class: 'float-right' do |f| %>
+    <%= label_tag 'name', 'Fab.' %>
+    <%= f.collection_select :fabricante_id, @fabricantes, :id, :nome_curto, {include_blank: true }, {style: "width: 120px;"} %>
+    <%= label_tag 'name', 'Prop.' %>
+    <%= f.collection_select :proprietaria_id, @proprietarias, :id, :nome_curto, {include_blank: true }, {style: "width: 120px;"} %>
+    <%= label_tag 'name', 'Corp.' %>
+    <%= f.collection_select :corporacao_id, @corps, :id, :nome, {include_blank: true }, {style: "width: 120px;"} %>
+    <%= f.submit "Filtrar", class:"btn btn-primary", style: "align-items: center;" %>
+  <% end %>
+  
+</div>
+
+<% @vasos.each do |v| %>
+  <!-- Com o local: true o form abaixo chama a view em html, sem o true chama a view em js -->
+  <%= form_with url: site_relatorios_vaso_path, remote: true do |form|%>
+    <div class="card">
+      <div class="card-header">
+        <p>          
+          <span class="badge badge-info"><%= v.fabricante.nome_curto %></span>
+          &nbsp; - &nbsp; # &nbsp; <%= v.num_serie %>
+          <%= number_field_tag 'vaso', v.id, style: "width: 70px; border: none; text-align: right;", readonly: true %>          
+        </p>
+      </div>
+      <div class="card-body">
+        <center> <h5 class="card-title"><%= v.proprietaria.nome_curto %></h5> </center>
+        <p class="card-text">Cat.: <%= v.catnr13.categoria %></p>
+        <p class="card-text">Vol.: <%= v.volume %> [m<sup>3</sup>]</p>
+        <p class="card-text">PMTA: <%= v.pmta_atual %> &nbsp; [MPa]</p>
+        <p class="card-text">Relatório inicial: <%= v.relatorio_ini_id %></p>        
+        <%= form.submit "Último relatório", class:"btn btn-primary", id: "submit_#{v.id}" %>
+        &nbsp;&nbsp;
+        <%= label_tag 'name', '', id: "data_ultimo_rel_#{v.id}" %>
+      </div>
+    </div>  
+    <br>
+  <% end %>
+<% end %>
+
+<%= paginate @vasos %>

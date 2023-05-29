@@ -1,4 +1,97 @@
-<h1>UsersBackoffice::Welcome#index</h1>
-<p>Find me in app/views/users_backoffice/welcome/index.html.erb</p>
+<h1>Estatísticas de uso</h1>
 
-<p> <%= link_to 'Fazer logoff [Usuário]', destroy_user_session_path, method: :delete %> </p>
+<div class="panel panel-default" style="width: calc(40% - 20px); float: left;">
+  <!-- Default panel contents -->
+  <div class="panel-heading">CADASTROS</div>
+  <div class="panel-body">
+    <p>Abaixo são listadas as quantidades cadastros inseridos durante o uso do sistema.</p>
+  </div>
+
+  <!-- Table -->
+  <table class="table" style="width: 70%;">
+    <thead>
+      <tr>
+        <th style="text-align: right;">Cadastro de</th>
+        <th style="text-align: left;">Quantidade</th>        
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th style="text-align: right;">Clientes:</td>
+        <td><%= @num_clientes %></td>
+      </tr>
+      <tr>
+        <th style="text-align: right;">Corporações:</td>
+        <td><%= @num_corps %></td>
+      </tr>
+      <tr>
+        <th style="text-align: right;">Vasos:</td>
+        <td><%= @num_vasos %></td>
+      </tr>
+      <tr>
+        <th style="text-align: right;">Disp. Seg.:</td>
+        <td><%= @num_disp_seg %></td>
+      </tr>
+      <tr>
+        <th style="text-align: right;">Instrumentos Padrão:</td>
+        <td><%= @num_instrumentos_padrao %></td>
+      </tr>
+      <tr>
+        <th style="text-align: right;">Fabricantes:</td>
+        <td><%= @num_fabricantes %></td>
+      </tr>
+      <tr>
+        <th style="text-align: right;">Prof. Habilitado:</td>
+        <td><%= @num_phs %></td>
+      </tr>      
+    </tbody>
+  </table>
+</div>
+
+<div class="panel panel-default" style="width: calc(40% - 20px); float: left;">
+  <!-- Default panel contents -->
+  <div class="panel-heading">EMISSÃO</div>
+  <div class="panel-body">
+    <p>Abaixo são listadas as quantidades de relatórios/documentos gerados durante o uso do sistema.</p>
+  </div>
+
+  <!-- Table -->
+  <table class="table"  style="width: 70%;">
+    <thead>
+      <tr>
+        <th style="text-align: right;">Emissão de</th>
+        <th style="text-align: left;">Quantidade</th>        
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th style="text-align: right;">ART:</td>
+        <td><%= @num_arts %></td>        
+      </tr>
+      <tr>
+        <th style="text-align: right;">Rel. Insp. Inicial:</td>
+        <td><%= @num_rel_insp_inicial %></td>
+      </tr>
+      <tr>
+        <th style="text-align: right;">Rel. Insp. Periódica:</td>
+        <td><%= @num_rel_insp_periodica %></td>
+      </tr>
+      <tr>
+        <th style="text-align: right;">Rel. Insp. Outras:</td>
+        <td><%= @num_rel_insp_outras %></td>
+      </tr>
+      <tr>
+        <th style="text-align: right;">Rel. Espessura Parede:</td>
+        <td><%= @num_rel_esp_vaso %></td>
+      </tr>
+      <tr>
+        <th style="text-align: right;">Rel. Disp. Segurança:</td>
+        <td><%= @num_rel_disp_seg %></td>
+      </tr>      
+      <tr>
+        <th style="text-align: right;">Cert. Cal. Disp. Segurança:</td>
+        <td><%= @num_cert_cal_disp_seg %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

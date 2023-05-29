@@ -1,4 +1,73 @@
-<h1>AdminsBackoffice::Welcome#index</h1>
-<p>Find me in app/views/admins_backoffice/welcome/index.html.erb</p>
+<h1>Estatísticas de uso</h1>
 
-<p> <%= link_to 'Fazer logoff [Administrador]', destroy_admin_session_path, method: :delete %> </p>
+<div class="panel panel-default" style="width: calc(40% - 20px); float: left;">
+  <!-- Default panel contents -->
+  <div class="panel-heading">CADASTROS</div>
+  <div class="panel-body">
+    <p></p>
+  </div>
+
+  <!-- Table -->
+  <table class="table" style="width: 70%;">
+    <thead>
+      <tr>
+        <th style="text-align: right;">Cadastro de</th>
+        <th style="text-align: left;">Quantidade</th>        
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th style="text-align: right;">Usuários:</td>
+        <td id="cel_total_usuarios"><%= @total_usuarios %></td>
+      </tr>
+      <tr>
+        <th style="text-align: right;">Cadastros:</td>
+        <td id="cel_total_cadastros"><%= @total_cadastros %></td>
+      </tr>
+      <tr>
+        <th style="text-align: right;">Vasos:</td>
+        <td id="cel_total_vasos"><%= @total_vasos %></td>
+      </tr>
+      <tr>
+        <th style="text-align: right;">Disp. Seg.:</td>
+        <td id="cel_total_dispsegs"><%= @total_dispseg %></td>
+      </tr>      
+    </tbody>
+  </table>
+</div>
+
+<div class="panel panel-default" style="width: calc(40% - 20px); float: left;">
+  <!-- Default panel contents -->
+  <div class="panel-heading">EMISSÃO</div>
+  <div class="panel-body">
+    <p></p>
+  </div>
+
+  <!-- Table -->
+  <table class="table"  style="width: 70%;">
+    <thead>
+      <tr>
+        <th style="text-align: right;">Emissão de</th>
+        <th style="text-align: left;">Quantidade</th>        
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th style="text-align: right;">Relatório:</td>
+        <td id="cel_total_relatorios"><%= @total_relatorios %></td>        
+      </tr>
+      <tr>
+        <th style="text-align: right;">Espessura vaso:</td>
+        <td id="cel_total_espessura_vasos"><%= @total_espessura_vaso %></td>
+      </tr>
+      <tr>
+        <th style="text-align: right;">Rel. Disp. Segurança:</td>
+        <td id="cel_total_rel_dispsegs"><%= @total_rel_dispseg %></td>
+      </tr>            
+    </tbody>
+  </table>
+</div>
+
+<%= form_with url: admins_backoffice_ajusta_estatisticas_path, remote: true do |form|%>
+  <%= form.submit "Atualiza com a base de dados", class:"btn btn-primary" %>
+<% end %>

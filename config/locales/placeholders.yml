@@ -21,3 +21,7 @@
     instrucoes_entrar_categoria_nr13: ATENÇÃO, entre apenas com a categoria, ex. "IV". Não faça descrições próprias neste campo.
     entre_categoria: ex. III
     entre_a_finalide_do_vaso: Entre com a finalidade do vaso
+    entre_descricao_tipo_compressor: Entre com o tipo de compressor
+    entre_descricao_tipo_dreno: Entre com o tipo de dreno
+    entre_descricao_ambiente_instalacao: Entre com a descrição do ambiente de instalação
+    entre_nome_do_ph: Entre com o nome do profissional habilitado

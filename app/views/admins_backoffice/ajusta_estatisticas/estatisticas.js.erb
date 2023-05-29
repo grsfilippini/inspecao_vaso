@@ -1,0 +1,27 @@
+// Atualiza campos na página de estatísticas sem dar um refresh no html
+var cel_usuarios = document.getElementById("cel_total_usuarios");
+var cel_cadastros = document.getElementById("cel_total_cadastros");
+var cel_vasos = document.getElementById("cel_total_vasos");
+var cel_dispsegs = document.getElementById("cel_total_dispsegs");
+var cel_relatorios = document.getElementById("cel_total_relatorios");
+var cel_espessura_vasos = document.getElementById("cel_total_espessura_vasos");
+var cel_rel_dispsegs = document.getElementById("cel_total_rel_dispsegs");
+
+cel_usuarios.textContent = "<%= @num_usuarios %>";
+cel_cadastros.textContent = "<%= @num_cadastros %>";
+cel_vasos.textContent = "<%= @num_vasos %>";
+cel_dispsegs.textContent = "<%= @num_dispsegs %>";
+cel_relatorios.textContent = "<%= @num_relatorios %>";
+cel_espessura_vasos.textContent = "<%= @num_espessura_vasos %>";
+cel_rel_dispsegs.textContent = "<%= @num_rel_dispsegs %>";
+// Mensagem em JS
+$.bootstrapGrowl("Atualizado com sucesso!", {
+    ele: 'body', // which element to append to
+    type: 'success', // (null, 'info', 'error', 'success')
+    offset: {from: 'top', amount: 20}, // 'top', or 'bottom'
+    align: 'right', // ('left', 'right', or 'center')
+    width: 250, // (integer, or 'auto')
+    delay: 4000,
+    allow_dismiss: true,
+    stackup_spacing: 10 // spacing between consecutively stacked growls.
+});

@@ -21,6 +21,7 @@ class AdminsBackoffice::CadastrosController < AdminsBackofficeController
       if @cadastro.save
         redirect_to admins_backoffice_cadastros_path, notice: "Cadastro criado com sucesso!"    
       else
+        get_cidades_corps
         render :new
       end
     end
@@ -33,6 +34,7 @@ class AdminsBackoffice::CadastrosController < AdminsBackofficeController
       if @cadastro.update(params_cadastro)
         redirect_to admins_backoffice_cadastros_path, notice: "Cadastro atualizado com sucesso!"    
       else
+        get_cidades_corps
         render :edit
       end
     end
@@ -51,7 +53,24 @@ class AdminsBackoffice::CadastrosController < AdminsBackofficeController
     
     def params_cadastro
       puts params
-      params.require(:cadastro).permit(:id, :nome, :nome_curto, :cnpj, :cidade, :endereco, :cep, :email, :fone, :contato, :website, :observacoes, :eh_fabricante, :bairro, :eh_empresa_inspetora, :regiao, :corp_id, :numero)
+      params.require(:cadastro).permit(:nome,
+                                       :nome_curto,
+                                       :cnpj,
+                                       :cidade,
+                                       :endereco,
+                                       :cep,
+                                       :email,
+                                       :fone,
+                                       :contato,
+                                       :website,
+                                       :observacoes,
+                                       :eh_fabricante,
+                                       :bairro,
+                                       :eh_empresa_inspetora,
+                                       :regiao,
+                                       :corp_id,
+                                       :numero,
+                                       :user_id)
     end
   
     def set_cadastro
@@ -60,7 +79,8 @@ class AdminsBackoffice::CadastrosController < AdminsBackofficeController
 
     def get_cidades_corps
       @cidades = Cidade.all
-      @corps = Corp.all
+      @corps   = Corp.all
+      @users   = User.order(:nome).order(:sobrenome)
     end
   
   end

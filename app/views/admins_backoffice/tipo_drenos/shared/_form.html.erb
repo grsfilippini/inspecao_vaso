@@ -1,0 +1,30 @@
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800"> <%= action_messege %> </h1>
+</div>
+
+<!-- Se tiver algum erro dentro de @tipo_dreno, erro devido a processo de salvamento por exemplo, entra no alerta abaixo -->
+<% if @tipo_dreno.errors.any? %>
+    <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>        
+        <ul>
+            <% @tipo_dreno.errors.full_messages.each do |message| %>
+            <li> <%= message -%> </li>
+            <% end %>
+        </ul>
+    </div>
+<% end %>
+
+<%= form_with(model: [ :admins_backoffice, @tipo_dreno ], local: true) do |form| %>
+    
+    <div class="form-group row">
+        <div class="col-sm-6 mb-3 mb-sm-0">
+            <%= form.label :tipo_dreno %>
+            <%= form.text_field :tipo_dreno, placeholder: t('placeholders.entre_descricao_tipo_dreno')%>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary"><%=t('botoes.gravar')%></button>
+
+    <hr>    
+<% end %>

@@ -7,7 +7,8 @@
     <table class="table table-striped table-bordered table-hover">    
         <thead>
             <tr>
-                <th>#</th>                
+                <th>#</th>
+                <th>Usuário</th>
                 <th><%= traduz_atributos_humanos(@corps, :corporacao) %> </th>
                 <th>
                     <%= link_to  new_admins_backoffice_corp_path, class:"btn btn-success btn-circle btn-sm" do %>
@@ -20,6 +21,11 @@
             <% @corps.each do |corp|%>                                                                              
                 <tr>
                     <td><%= corp.id %></td>
+                    <% if !corp.user.blank? %>
+                        <td><%= corp.user.nome_completo.truncate(30) %></td>
+                    <% else %>
+                        <td>Sem usuário</td>
+                    <% end %>
                     <td><%= corp.nome %></td>                    
                     <td style="width: 100px">
                         <!-- <a href="#" class="btn btn-info btn-circle btn-sm"> <i class="fas fa-edit"></i> </a> -->

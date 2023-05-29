@@ -1,0 +1,38 @@
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800"> <%= action_messege %> </h1>
+</div>
+
+<!-- Se tiver algum erro dentro de @mtpds_num_serie, erro devido a processo de salvamento por exemplo, entra no alerta abaixo -->
+<% if @mtpds_num_serie.errors.any? %>
+    <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>        
+        <ul>
+            <% @mtpds_num_serie.errors.full_messages.each do |message| %>
+            <li> <%= message -%> </li>
+            <% end %>
+        </ul>
+    </div>
+<% end %>
+
+<%= form_with(model: [ :admins_backoffice, @mtpds_num_serie ], local: true, url: admins_backoffice_mtpds_num_series_index_path) do |form| %>
+
+    <div class="form-group row">        
+        <div class="col-sm-6 mb-3 mb-sm-0">
+            <%= form.label :serie %>
+            <%= form.text_field :serie %>
+        </div>
+        <div class="col-sm-6 mb-3 mb-sm-0">                                           
+            <%= form.label :disp_seguranca_id %>            
+            <%= form.collection_select :disp_seguranca_id, @disp_segurancas, :id, :serie %>
+        </div>                
+    </div>
+
+    <div class="form-group row">
+        
+    </div>    
+    
+    <button type="submit" class="btn btn-primary"><%=t('botoes.gravar')%></button>
+
+    <hr>    
+<% end %>

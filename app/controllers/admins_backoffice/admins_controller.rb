@@ -45,7 +45,12 @@ class AdminsBackoffice::AdminsController < AdminsBackofficeController
   def update        
     # Faz o update no registro 
     if @admin.update(params_admin)
-      # Se form bem sucedido vai para o caminho especificado, no caso o index de backoffice admins
+      # Chama o AdminMailer (Classe) no método alterou_email e envia na hora (deliver_now) o email padrão
+      # definido em views/admin_mailer, tanto em html, como em texto
+      AdminMailer.alterou_email(current_admin, @admin).deliver_now
+      # Se for bem sucedido, faz login novamente com a nova senha
+      sign_in(@admin, bypass: true)
+      # Se for bem sucedido vai para o caminho especificado, no caso o index de backoffice admins
       redirect_to admins_backoffice_admins_path, notice: "Administrador atualizado com sucesso!"    
     else
       # renderiza novamente o form de edição, chamando o procedimento edit (acima neste código)

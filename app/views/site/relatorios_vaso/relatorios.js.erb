@@ -1,0 +1,34 @@
+var elemento = document.getElementById("submit_<%= @vaso.id %>");
+var lbl = document.getElementById("data_ultimo_rel_<%= @vaso.id %>");
+
+<% if @relatorio != nil %>
+    elemento.classList.remove('btn-default');
+    elemento.classList.add('btn-success');
+    lbl.textContent = "<%= @relatorio.id %> em <%= @relatorio.data_relatorio %>";
+    // Mensagem em JS
+    $.bootstrapGrowl("Relatório " + <%= @relatorio.id %> + " encontrado!", {
+        ele: 'body', // which element to append to
+        type: 'success', // (null, 'info', 'error', 'success')
+        offset: {from: 'top', amount: 20}, // 'top', or 'bottom'
+        align: 'right', // ('left', 'right', or 'center')
+        width: 250, // (integer, or 'auto')
+        delay: 4000,
+        allow_dismiss: true,
+        stackup_spacing: 10 // spacing between consecutively stacked growls.
+    });
+<% else %>
+    elemento.classList.remove('btn-default');
+    elemento.classList.add('btn-danger');
+    lbl.textContent = "Não existe relatório";
+    // Mensagem em JS
+    $.bootstrapGrowl("Nenhum relatório encontrado!", {
+        ele: 'body', // which element to append to
+        type: 'danger', // (null, 'info', 'error', 'success')
+        offset: {from: 'top', amount: 20}, // 'top', or 'bottom'
+        align: 'right', // ('left', 'right', or 'center')
+        width: 250, // (integer, or 'auto')
+        delay: 4000,
+        allow_dismiss: true,
+        stackup_spacing: 10 // spacing between consecutively stacked growls.
+    });
+<% end %>

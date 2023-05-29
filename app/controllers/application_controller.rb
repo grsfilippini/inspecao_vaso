@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::Base
+    
     layout :layout_by_resource
+    before_action :set_global_params
 
 
     protected
@@ -12,5 +14,9 @@ class ApplicationController < ActionController::Base
         else
             "application"
         end
+    end
+    
+    def set_global_params
+        $global_params = params
     end
 end

@@ -5,4 +5,5 @@ class Corp < ApplicationRecord
     validates :nome, presence: true
 
     has_many :cadastros#, foreign_key: 'corp_id'
+    belongs_to :user
 end

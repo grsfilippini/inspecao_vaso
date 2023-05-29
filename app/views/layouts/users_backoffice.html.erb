@@ -12,7 +12,20 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag    'application' %>
-    <%= stylesheet_link_tag    'users_backoffice' %>    
+    <%= stylesheet_link_tag    'users_backoffice' %>
+    
+    <!-- Usado na página de estatísticas do usuário -->
+    <style>
+      table {
+        width: 100%;
+      }
+    
+      td:first-child,
+      th:first-child {
+        width: 70%;
+      }
+    </style>
+    
   </head>
 
   <body class="nav-md">
@@ -21,38 +34,62 @@
         <div class="col-md-3 left_col menu_fixed">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
+
+              <%= link_to inicio_path, class: "site_title" do %>                
+                <%= image_tag "logo_mantinsp.png", style: "max-width: 50px; max-height: auto;" %>
+                <%= content_tag :span, "Mantinsp" %>
+              <% end %>
             </div>
 
             <div class="clearfix"></div>
 
             <!-- menu profile quick info -->
             <div class="profile clearfix">
-              <div class="profile_pic">                
-                <%= image_tag 'img.jpg', alt:"...", class:"img-circle profile_img" %>
+              <div class="profile_pic">                                
+                <%= link_to image_tag(avatar_url, alt:"...", class:"img-circle profile_img", id: "imgAvatarLg"), '#', "data-toggle": "modal", href: "#avatarModal" %>
               </div>
               <div class="profile_info">
-                <span>Welcome,</span>
-                <h2>John Doe</h2>
+                <span>Seja bem-vindo,</span>
+                <% if current_user.nome_completo.blank? %>
+                  <h2>Visitante</h2>    
+                <% else %>
+                  <h2><%= current_user.nome_completo %></h2>
+                <% end %>
               </div>
             </div>
             <!-- /menu profile quick info -->
-
+                        
             <br />
 
             <!-- sidebar menu -->
-            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">              
+              
               <div class="menu_section">
-                <h3>General</h3>
                 <ul class="nav side-menu">
-                  <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                  <li>                    
+                    <%= link_to users_backoffice_welcome_index_path do %>
+                      <i class="fa fa-home"></i> Início
+                    <% end %>
+                  </li>                  
+                  <li>                    
+                    <%= link_to users_backoffice_perfil_path do %>
+                      <i class="fa fa-user"></i> Dados do perfil
+                    <% end %>
+                  </li>                  
+                </ul>
+              </div>
+              
+              <div class="menu_section">
+                <h3>(General)</h3>
+                <ul class="nav side-menu">
+                  <li><a><i class="fa fa-home"></i> (Home) <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="index.html">Dashboard</a></li>
                       <li><a href="index2.html">Dashboard2</a></li>
                       <li><a href="index3.html">Dashboard3</a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-edit"></i> (Forms) <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="form.html">General Form</a></li>
                       <li><a href="form_advanced.html">Advanced Components</a></li>
@@ -62,104 +99,10 @@
                       <li><a href="form_buttons.html">Form Buttons</a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-desktop"></i> UI Elements <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="general_elements.html">General Elements</a></li>
-                      <li><a href="media_gallery.html">Media Gallery</a></li>
-                      <li><a href="typography.html">Typography</a></li>
-                      <li><a href="icons.html">Icons</a></li>
-                      <li><a href="glyphicons.html">Glyphicons</a></li>
-                      <li><a href="widgets.html">Widgets</a></li>
-                      <li><a href="invoice.html">Invoice</a></li>
-                      <li><a href="inbox.html">Inbox</a></li>
-                      <li><a href="calendar.html">Calendar</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="tables.html">Tables</a></li>
-                      <li><a href="tables_dynamic.html">Table Dynamic</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-bar-chart-o"></i> Data Presentation <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="chartjs.html">Chart JS</a></li>
-                      <li><a href="chartjs2.html">Chart JS2</a></li>
-                      <li><a href="morisjs.html">Moris JS</a></li>
-                      <li><a href="echarts.html">ECharts</a></li>
-                      <li><a href="other_charts.html">Other Charts</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-clone"></i>Layouts <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="fixed_sidebar.html">Fixed Sidebar</a></li>
-                      <li><a href="fixed_footer.html">Fixed Footer</a></li>
-                    </ul>
-                  </li>
                 </ul>
-              </div>
-              <div class="menu_section">
-                <h3>Live On</h3>
-                <ul class="nav side-menu">
-                  <li><a><i class="fa fa-bug"></i> Additional Pages <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="e_commerce.html">E-commerce</a></li>
-                      <li><a href="projects.html">Projects</a></li>
-                      <li><a href="project_detail.html">Project Detail</a></li>
-                      <li><a href="contacts.html">Contacts</a></li>
-                      <li><a href="profile.html">Profile</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-windows"></i> Extras <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="page_403.html">403 Error</a></li>
-                      <li><a href="page_404.html">404 Error</a></li>
-                      <li><a href="page_500.html">500 Error</a></li>
-                      <li><a href="plain_page.html">Plain Page</a></li>
-                      <li><a href="login.html">Login Page</a></li>
-                      <li><a href="pricing_tables.html">Pricing Tables</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-sitemap"></i> Multilevel Menu <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                        <li><a href="#level1_1">Level One</a>
-                        <li><a>Level One<span class="fa fa-chevron-down"></span></a>
-                          <ul class="nav child_menu">
-                            <li class="sub_menu"><a href="level2.html">Level Two</a>
-                            </li>
-                            <li><a href="#level2_1">Level Two</a>
-                            </li>
-                            <li><a href="#level2_2">Level Two</a>
-                            </li>
-                          </ul>
-                        </li>
-                        <li><a href="#level1_2">Level One</a>
-                        </li>
-                    </ul>
-                  </li>                  
-                  <li><a href="javascript:void(0)"><i class="fa fa-laptop"></i> Landing Page <span class="label label-success pull-right">Coming Soon</span></a></li>
-                </ul>
-              </div>
-
+              </div>              
             </div>
-            <!-- /sidebar menu -->
-
-            <!-- /menu footer buttons -->
-            <div class="sidebar-footer hidden-small">
-              <a data-toggle="tooltip" data-placement="top" title="Settings">
-                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="Lock">
-                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
-                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-              </a>
-            </div>
-            <!-- /menu footer buttons -->
+            <!-- /sidebar menu -->            
           </div>
         </div>
 
@@ -173,25 +116,22 @@
                 <ul class=" navbar-right">
                   <li class="nav-item dropdown open" style="padding-left: 15px;">
                     <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                      <%= image_tag 'img.jpg', alt:"" %>
+                      <%= image_tag(avatar_url, alt:"", id: "imgAvatarSm") %>
                       <%= current_user.email %>
                     </a>
-                    <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item"  href="javascript:;"> Profile</a>
+                    <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">                        
                         <a class="dropdown-item"  href="javascript:;">
-                          <span class="badge bg-red pull-right">50%</span>
-                          <span>Settings</span>
-                        </a>
-                      <a class="dropdown-item"  href="javascript:;">Help</a>                      
-                      
+                          <span>(Settings)</span>
+                        </a>                      
                         <%= link_to destroy_user_session_path, class:"dropdown-item", method: :delete do %>
-                          #Sair#
+                          Sair
                           <i class="fa fa-sign-out pull-right"></i>
                         <% end %>                      
 
                     </div>
                   </li>
   
+                  <!--
                   <li role="presentation" class="nav-item dropdown open">
                     <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
                       <i class="fa fa-envelope-o"></i>
@@ -263,7 +203,7 @@
                         </div>
                       </li>
                     </ul>
-                  </li>
+                  </li> -->
                 </ul>
               </nav>
             </div>
@@ -274,10 +214,7 @@
         <div class="right_col" role="main">
           <div class="">
             <div class="page-title">
-              <div class="title_left">
-                <h1> LAYOUT USERS BACKOFFICE </h1>
-                <%= yield %>
-              </div>
+              <%= yield %>
             </div>
           </div>
         </div>
@@ -286,7 +223,7 @@
         <!-- footer content -->
         <footer>
           <div class="pull-right">
-            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+            MANTINSP - Mantendo sua inspeção em dia
           </div>
           <div class="clearfix"></div>
         </footer>
@@ -294,7 +231,53 @@
       </div>
     </div>
 
+
+    <!-- Modal -->
+    <div class="modal fade" id="avatarModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <!-- a opção model:, serve para extrair o modelo do qual deseja-se que o formulário seja. 
+               No caso abaixo, o current_user servirá apenas para extrair o model, ou seja, os campos. -->
+          <%= form_with(url: users_backoffice_perfil_path, model: current_user, autocomplete: "off", local: false, html: { method: :patch }) do |form| %>
+            <div class="modal-header">
+              <h4 class="modal-title">Foto usuário</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>            
+            </div>
+            <div class="modal-body">
+              <%= form.fields_for :perfil_usuario do |perfil_form| %>
+                <div class="form-group">
+                    <%= perfil_form.label :avatar %>
+                    <%= image_tag(avatar_url, alt:"...", class:"img-circle profile_img", id:"AvatarModal") %>
+                    <%= perfil_form.file_field :avatar %>
+                </div>
+              <% end %>
+            </div>
+            <div class="modal-footer">              
+              <%= form.submit("Enviar", class: "btn btn-primary") %>
+            </div>
+          <% end %>  
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
     <%= javascript_include_tag 'application' %>
-    <%= javascript_include_tag 'users_backoffice' %>    
+    <%= javascript_include_tag 'users_backoffice' %>
+    
+    <%if notice %>
+        <%= javascript_tag do %>
+            $.bootstrapGrowl("<%= notice %>", {
+            ele: 'body', // which element to append to
+            type: 'success', // (null, 'info', 'error', 'success')
+            offset: {from: 'top', amount: 20}, // 'top', or 'bottom'
+            align: 'right', // ('left', 'right', or 'center')
+            width: 250, // (integer, or 'auto')
+            delay: 4000,
+            allow_dismiss: true,
+            stackup_spacing: 10 // spacing between consecutively stacked growls.
+            });
+        <%end%>
+    <%end%>
+    
   </body>
 </html>
