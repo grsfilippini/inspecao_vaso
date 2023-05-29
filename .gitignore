@@ -26,3 +26,11 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 /nbproject/private/
+
+# Ignore database.yml
+# descomentar quando o tipo de base de dados é diferente no servidor em relação a máquina de desenvolvimento
+# Exemplo: Na máquina de desenvolvimento usa-se o SQLite e no servidor o Postgresql
+# Como desenvolvi tudo em Postgresql e no servidor é igual não é para ignorar este arquivo.
+# Como a configuração do servidor tem outras confifgurações, no servidor será criado manualmente.
+/config/database.yml
+

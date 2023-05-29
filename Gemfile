@@ -51,6 +51,9 @@ gem 'awesome_print' # Gem para melhorar as saídas do ruby console. Aplica cores
 gem 'kaminari'
 gem 'kaminari-i18n', '~> 0.3.2' # Gem que ajusta o i18n para o kaminari em qualquer lingua
 
+# Compressor de assets
+gem 'terser'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]  
