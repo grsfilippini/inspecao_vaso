@@ -52,13 +52,13 @@
                 <tr>
                     <td><%= v.id %></td>
                     <% if !v.user.blank? %>
-                        <td><%= v.user.nome_completo.truncate(30) %></td>
+                        <td><%= v.user.nome_completo.truncate(10) %></td>
                     <% else %>
                         <td>Sem usuário</td>
                     <% end %>
                     <td><%= v.num_serie %></td>
                     <td><%= v.fabricante.nome_curto.truncate(30) %></td>
-                    <td><%= v.proprietaria.nome_curto.truncate(30) %></td>
+                    <td><%= v.proprietaria.nome_curto %></td>
 
                     <td style="width: 100px">
                         <%= link_to edit_admins_backoffice_vaso_path(v.id), class:"btn btn-info btn-circle btn-sm" do %> 

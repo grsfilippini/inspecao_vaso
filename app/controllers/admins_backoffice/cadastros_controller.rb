@@ -5,11 +5,12 @@ class AdminsBackoffice::CadastrosController < AdminsBackofficeController
     def index
       # O includes abaixo inclui na query a busca por cadastro_corp
       # Se não for usado, e usar diretamente na view da index, ele fará a cada cadastro uma nova query para buscar a corporação
-      @cadastros = Cadastro.includes(:corp)
+      @cadastros = Cadastro.includes(:corp, :user)
                            .all
                            .order(:nome_curto)
                            .page(params[:page])
                            .per(50)
+      @corps = Corp.all.order(:nome)
     end
   
     def new
@@ -45,6 +46,18 @@ class AdminsBackoffice::CadastrosController < AdminsBackofficeController
       else
         render :index
       end
+    end
+  
+    def pesquisa
+      @cadastros = Cadastro.pesquisa_nome_corp(params[:page], params[:termo_nome], params[:corp_id])
+      
+      #@cadastros = Cadastro.includes(:corp, :user)
+      #                     .all
+      #                     .order(:nome_curto)
+      #                     .page(params[:page])
+      #                     .per(50)
+      
+      @corps = Corp.all.order(:nome)
     end
   
   

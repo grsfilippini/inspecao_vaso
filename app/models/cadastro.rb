@@ -19,6 +19,27 @@ class Cadastro < ApplicationRecord
     # Callback method, RoR
     after_create :seta_estatistica
     after_destroy :dec_estatistica
+        
+    # ***************************************************
+    # Método de classe, pode ser chamado sem instanciar    
+    # ***************************************************    
+    def self.pesquisa_nome_corp(page, termo_nome, corp_id)                      
+        if corp_id.blank?
+           includes(:corp, :user)
+          .where("lower(nome_curto) LIKE ?", "%#{termo_nome.downcase}%")
+          .order(:nome_curto)
+          .page(page)
+          .per(50)
+        else
+           includes(:corp, :user)           
+          .where("lower(nome_curto) LIKE ?", "%#{termo_nome.downcase}%")
+          .where(corp_id: corp_id)
+          .order(:nome_curto)
+          .page(page)
+          .per(50)          
+        end
+    end
+    
     
     private
     
