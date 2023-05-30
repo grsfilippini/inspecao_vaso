@@ -1,6 +1,7 @@
 class AdminsBackoffice::VasosController < AdminsBackofficeController
     before_action :set_vaso, only: [:edit, :update, :destroy]
     before_action :get_relacoes, only: [:new, :edit]
+    after_action :get_relacoes_cad_corp, only: [:index, :pesquisa]
     
     def index
       # O includes abaixo inclui na query a busca por cadastro_corp
@@ -10,7 +11,7 @@ class AdminsBackoffice::VasosController < AdminsBackofficeController
                    .order(:num_serie)
                    .page(params[:page])
                    .per(100)
-      @proprietarios = Cadastro.where(eh_fabricante: false, eh_empresa_inspetora: false)
+      @proprietarios = Cadastro.where(eh_fabricante: false, eh_empresa_inspetora: false).order(:nome_curto)
       @corps = Corp.all.order(:nome)
     end
   
@@ -60,21 +61,15 @@ class AdminsBackoffice::VasosController < AdminsBackofficeController
     def pesquisa
       # O includes abaixo inclui na query a busca por cadastro_corp
       # Se não for usado, e usar diretamente na view da index, ele fará a cada cadastro uma nova query para buscar a corporação
-      #@vasos =Vaso.includes(:proprietaria,  :fabricante, :user)            
-      #      .where(proprietaria_id: params[:proprietaria_id])
-      #      .order(:num_serie)
-      #      .page(params[:page])
-      #      .per(10)
-      #@vasos = Vaso.joins(proprietaria: :corp).where(corps: {id: params[:corp_id]})
-      #             .order(:num_serie)
-      #             .page(params[:page])
-      #             .per(10)
       @vasos = Vaso.pesquisa_serie_prop(params[:page], params[:num_serie], params[:proprietaria_id], params[:corp_id])
       #@vasos = Vaso.all.page(params[:page]).per(10)
       
-      @proprietarios = Cadastro.where(eh_fabricante: false, eh_empresa_inspetora: false)
+      @proprietarios = Cadastro.where(eh_fabricante: false, eh_empresa_inspetora: false).order(:nome_curto)
       @corps = Corp.all.order(:nome)
     end
+    
+    
+    
     
     
     private
@@ -143,6 +138,11 @@ class AdminsBackoffice::VasosController < AdminsBackofficeController
       @tipo_dispositivo_segurancas = TipoDispositivoSeguranca.order(:descricao)
       @materials          = Material.order(:descricao)
       @users              = User.order(:nome).order(:sobrenome)
+    end
+    
+    def get_relacoes_cad_corp
+      #@proprietarios = Cadastro.where(eh_fabricante: false, eh_empresa_inspetora: false).order(:nome_curto)
+      #@corps = Corp.all.order(:nome)      
     end
     
 end
