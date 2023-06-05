@@ -49,8 +49,8 @@
             <%= form.text_field :bairro %>
         </div>        
         <div class="col-sm-6 mb-3 mb-sm-0">
-            <%= form.label :cidade %>
-            <%= form.text_field :cidade %>
+            <%= form.label :cidade %>            
+            <%= form.collection_select :cidade_id, @cidades, :id, :nome, {}, { style: 'width: 300px;' } %>
         </div>
         <div class="col-sm-6 mb-3 mb-sm-0">
             <%= form.label :uf %>

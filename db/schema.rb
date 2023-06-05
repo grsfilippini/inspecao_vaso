@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_15_004757) do
+ActiveRecord::Schema.define(version: 2023_06_05_145727) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_repack"
@@ -76,7 +76,6 @@ ActiveRecord::Schema.define(version: 2023_05_15_004757) do
     t.string "nome_curto", limit: 50, null: false
     t.string "cnpj", limit: 18, null: false
     t.string "ie", limit: 12
-    t.string "cidade", limit: 60, null: false
     t.string "endereco", limit: 75
     t.string "cep", limit: 10
     t.string "email", limit: 40
@@ -91,7 +90,8 @@ ActiveRecord::Schema.define(version: 2023_05_15_004757) do
     t.integer "corp_id", default: 3, null: false
     t.decimal "numero", precision: 10
     t.bigint "user_id"
-    t.index ["cidade"], name: "fki_cidade"
+    t.bigint "cidade_id"
+    t.index ["cidade_id"], name: "index_cadastros_on_cidade_id"
     t.index ["user_id"], name: "index_cadastros_on_user_id"
   end
 
@@ -216,6 +216,8 @@ ActiveRecord::Schema.define(version: 2023_05_15_004757) do
     t.string "rg", limit: 20
     t.string "email", limit: 80
     t.bigint "user_id"
+    t.bigint "cidade_id"
+    t.index ["cidade_id"], name: "index_phs_on_cidade_id"
     t.index ["user_id"], name: "index_phs_on_user_id"
   end
 
@@ -250,13 +252,13 @@ ActiveRecord::Schema.define(version: 2023_05_15_004757) do
     t.integer "ph_id", default: 0, null: false
     t.integer "art_id", default: 0, null: false
     t.bigint "user_id"
+    t.bigint "cidade_id"
+    t.index ["cidade_id"], name: "index_relatorio_dispsegs_on_cidade_id"
     t.index ["user_id"], name: "index_relatorio_dispsegs_on_user_id"
   end
 
   create_table "relatorios", id: :integer, default: -> { "nextval('\"RELATORIO_INSPECAO_ID_seq\"'::regclass)" }, force: :cascade do |t|
-    t.bigint "art", default: 0, null: false
     t.integer "ph_id", default: 0, null: false
-    t.string "cidade_relatorio", limit: 50, null: false
     t.date "data_relatorio", default: -> { "CURRENT_DATE" }, null: false
     t.integer "vaso_id", null: false
     t.integer "proprietaria_id", null: false
@@ -430,6 +432,10 @@ ActiveRecord::Schema.define(version: 2023_05_15_004757) do
     t.integer "possui_acesso_visual_externo", default: 1
     t.integer "fluido_servico_id", default: 0
     t.bigint "user_id"
+    t.bigint "art_id"
+    t.bigint "cidade_id"
+    t.index ["art_id"], name: "index_relatorios_on_art_id"
+    t.index ["cidade_id"], name: "index_relatorios_on_cidade_id"
     t.index ["user_id"], name: "index_relatorios_on_user_id"
   end
 
@@ -527,7 +533,7 @@ ActiveRecord::Schema.define(version: 2023_05_15_004757) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "arts", "users"
-  add_foreign_key "cadastros", "cidades", column: "cidade", primary_key: "nome", name: "cidade"
+  add_foreign_key "cadastros", "cidades"
   add_foreign_key "cadastros", "corps", name: "sys_fk_634"
   add_foreign_key "cadastros", "users"
   add_foreign_key "codigo_construcaos", "users"
@@ -543,16 +549,20 @@ ActiveRecord::Schema.define(version: 2023_05_15_004757) do
   add_foreign_key "espessura_vasos", "vasos", name: "MEDIDA_ESPESSURA_VASO_VASO_fkey1"
   add_foreign_key "instrumento_padraos", "users"
   add_foreign_key "perfil_usuarios", "users"
+  add_foreign_key "phs", "cidades"
   add_foreign_key "phs", "users"
   add_foreign_key "relatorio_dispsegs", "cadastros", name: "RELATORIO_INSP_VAL_SEG_E_ALIVIO_cadastro_id_fkey"
   add_foreign_key "relatorio_dispsegs", "cadastros", name: "RELATORIO_INSP_VAL_SEG_E_ALIVIO_cadastro_id_fkey1"
+  add_foreign_key "relatorio_dispsegs", "cidades"
   add_foreign_key "relatorio_dispsegs", "fluido_calibracao_valv_segs", name: "RELATORIO_INSP_VAL_SEG_E_ALIVIO_fluido_calibracao_id_fkey"
   add_foreign_key "relatorio_dispsegs", "instrumento_padraos", name: "RELATORIO_INSP_VAL_SEG_E_ALIVIO_manometro_padrao_id_fkey"
   add_foreign_key "relatorio_dispsegs", "users"
   add_foreign_key "relatorio_dispsegs", "vasos", name: "RELATORIO_INSP_VAL_SEG_E_ALIVIO_vaso_pressao_protegido_id_fkey"
   add_foreign_key "relatorios", "ambiente_insts", column: "tipo_ambiente_instalacao_vaso_pressao", name: "RELATORIO_INSPECAO_tipo_ambiente_instalacao_vaso_pressao_fkey"
+  add_foreign_key "relatorios", "arts"
   add_foreign_key "relatorios", "cadastros", column: "inspetora_id", name: "sys_fk_187"
   add_foreign_key "relatorios", "cadastros", column: "proprietaria_id", name: "sys_fk_181"
+  add_foreign_key "relatorios", "cidades"
   add_foreign_key "relatorios", "phs", name: "sys_fk_178"
   add_foreign_key "relatorios", "tipo_inspecaos", name: "sys_fk_334"
   add_foreign_key "relatorios", "users"

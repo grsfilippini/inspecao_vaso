@@ -1,5 +1,6 @@
 class AdminsBackoffice::PhsController < AdminsBackofficeController
-    before_action :set_ph, only: [:edit, :update, :destroy]    
+    before_action :set_ph, only: [:edit, :update, :destroy]
+    before_action :get_relacoes, only: [:edit, :new]
     
     def index
       # O includes abaixo inclui na query a busca por ph      
@@ -42,10 +43,13 @@ class AdminsBackoffice::PhsController < AdminsBackofficeController
   
     private
   
+    def get_relacoes
+      @cidades = Cidade.all
+    end
     
     def params_ph
       puts params
-      params.require(:ph).permit(:id, :nome, :crea, :endereco, :cidade, :uf, :fone, :cep, :titulo, :bairro, :cpf, :rg, :email)
+      params.require(:ph).permit(:id, :nome, :crea, :endereco, :cidade_id, :uf, :fone, :cep, :titulo, :bairro, :cpf, :rg, :email)
     end
   
     def set_ph

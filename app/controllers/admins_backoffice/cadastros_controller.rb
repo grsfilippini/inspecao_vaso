@@ -69,7 +69,7 @@ class AdminsBackoffice::CadastrosController < AdminsBackofficeController
       params.require(:cadastro).permit(:nome,
                                        :nome_curto,
                                        :cnpj,
-                                       :cidade,
+                                       :cidade_id,
                                        :endereco,
                                        :cep,
                                        :email,

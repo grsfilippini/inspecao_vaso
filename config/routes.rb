@@ -41,6 +41,7 @@ Rails.application.routes.draw do
     resources :tipo_inspecaos
     resources :tipo_vasos
     resources :users
+    resources :relatorios
   end
 
   namespace :site do
