@@ -128,10 +128,7 @@
                         <%end%>
                         <%= link_to admins_backoffice_mtpds_num_series_index_path, class:"collapse-item" do %>
                             Série válvula seg. MTPDS
-                        <%end%>
-                        <%= link_to admins_backoffice_fluido_servicos_path, class:"collapse-item" do %>
-                            Fluído de serviço no vaso
-                        <%end%>
+                        <%end%>                        
                     </div>
                 </div>                
             </li>
@@ -223,10 +220,10 @@
                             Código de construção
                         <%end%>
                         <%= link_to admins_backoffice_tipo_dispositivo_segurancas_path, class:"collapse-item" do %>
-                            Tipo de dispositivo de segurança
+                            Tipo de disp. de segurança
                         <%end%>
                         <%= link_to admins_backoffice_fluido_calibracao_valv_segs_path, class:"collapse-item" do %>
-                            Fluído p/ calibração de disp. de seg.
+                            Fluído calibração disp.seg.
                         <%end%>
                         <%= link_to admins_backoffice_materials_path, class:"collapse-item" do %>
                             Material para fabricação
@@ -236,6 +233,9 @@
                         <%end%>
                         <%= link_to admins_backoffice_tipo_vasos_path, class:"collapse-item" do %>
                             Tipo de vaso
+                        <%end%>
+                        <%= link_to admins_backoffice_fluido_servicos_path, class:"collapse-item" do %>
+                            Fluído de serviço no vaso
                         <%end%>
                         
                         <a class="collapse-item" href="utilities-animation.html">...</a>
@@ -261,11 +261,20 @@
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages"
                     data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">                        
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <%= link_to admins_backoffice_relatorio_em_aberto_path, class:"collapse-item" do %>
+                            Relatórios em aberto
+                        <%end%>
+                        <%= link_to admins_backoffice_relatorio_para_impressao_path, class:"collapse-item" do %>
+                            Relatórios a imprimir
+                        <%end%>                        
                         <%= link_to admins_backoffice_relatorios_path, class:"collapse-item" do %>
                             Relatórios concluídos
                         <%end%>
-                        <a class="collapse-item" href="#">(Relatórios em aberto)</a>                        
+                        <div class="collapse-divider"></div>
+                        <%= link_to '#', class:"collapse-item" do %>
+                            Iniciar inspeção
+                        <%end%>
                     </div>
                 </div>
             </li>
