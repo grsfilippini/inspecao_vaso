@@ -44,6 +44,7 @@ Rails.application.routes.draw do
     resources :relatorios
     get 'relatorio_para_impressao', to: 'relatorios#para_imprimir'
     get 'relatorio_em_aberto', to: 'relatorios#em_aberto'
+    get 'pesquisa_relatorio', to: 'relatorios#pesquisa'
   end
 
   namespace :site do

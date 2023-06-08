@@ -1,5 +1,29 @@
-<div class="col-lg-12">
-    <h1 class="h3 mb-4 text-gray-800">Lista de Relatórios -  <%= @nome_rel %> </h1>
+<div class="col-lg-12">    
+    <%= form_with(url:admins_backoffice_pesquisa_relatorio_path, local: true, method: :get, class: "d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search") do |form| %>    
+        <div class="form-group row">
+            <div class="col-lg-4">
+                <h1 class="h3 mb-4 text-gray-800">Lista de Relatórios -  <%= @nome_rel %> - <%= @relatorios.total_count %> </h1>
+            </div>
+            
+            <div class="col-lg-2">
+                <div class="input-group">      
+                    <%= form.text_field :num_serie, class:"form-control bg-light border-0 small", placeholder: "# série...", style: "width: 150px;" %>
+                </div>
+            </div>
+            
+            <div class="col-lg-3">                    
+                <div class="input-group">                    
+                    <%= form.collection_select :proprietaria_id, @proprietarias, :id, :nome_curto, {include_blank: true }, {style: "width: 150px;", class:"form-control"} %>
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fas fa-search fa-sm"></i>
+                        </button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    <%end%>
 </div>
 
 <div class="table-responsive">

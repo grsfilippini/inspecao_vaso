@@ -59,7 +59,33 @@ class Relatorio < ApplicationRecord
       .limit(50)
       .page(page)
       .per(20)  
-  end    
+  end
+    
+  # ***************************************************
+  # Método de classe, pode ser chamado sem instanciar    
+  # ***************************************************    
+  def self.pesquisa_serie_prop(page, num_serie, proprietaria_id)    
+    if !proprietaria_id.blank?      
+      joins(:vaso)
+      .includes(:user, :proprietaria, :vaso)
+      .where("lower(vasos.num_serie) LIKE ?", "%#{num_serie.downcase}%" )
+      .where(b_rascunho: false, proprietaria_id: proprietaria_id)      
+      .order(id: :desc)      
+      .page(page)
+      .per(20)        
+    else
+      joins(:vaso)
+      .includes(:user, :proprietaria, :vaso)
+      .where("lower(vasos.num_serie) LIKE ?", "%#{num_serie.downcase}%" )
+      .where(b_rascunho: false)      
+      .order(id: :desc)      
+      .page(page)
+      .per(20)        
+      
+    end
+  end
+  
+  
   
   private
   
