@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_06_05_145727) do
+ActiveRecord::Schema.define(version: 2023_06_11_145452) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_repack"
@@ -206,7 +206,6 @@ ActiveRecord::Schema.define(version: 2023_06_05_145727) do
     t.string "nome", limit: 50, null: false
     t.string "crea", limit: 20, null: false
     t.string "endereco", limit: 75
-    t.string "cidade", limit: 60
     t.string "uf", limit: 20
     t.string "fone", limit: 65
     t.string "cep", limit: 20
@@ -252,8 +251,6 @@ ActiveRecord::Schema.define(version: 2023_06_05_145727) do
     t.integer "ph_id", default: 0, null: false
     t.integer "art_id", default: 0, null: false
     t.bigint "user_id"
-    t.bigint "cidade_id"
-    t.index ["cidade_id"], name: "index_relatorio_dispsegs_on_cidade_id"
     t.index ["user_id"], name: "index_relatorio_dispsegs_on_user_id"
   end
 
@@ -434,8 +431,12 @@ ActiveRecord::Schema.define(version: 2023_06_05_145727) do
     t.bigint "user_id"
     t.bigint "art_id"
     t.bigint "cidade_id"
+    t.bigint "ambiente_inst_id"
+    t.bigint "tipo_dreno_id"
+    t.index ["ambiente_inst_id"], name: "index_relatorios_on_ambiente_inst_id"
     t.index ["art_id"], name: "index_relatorios_on_art_id"
     t.index ["cidade_id"], name: "index_relatorios_on_cidade_id"
+    t.index ["tipo_dreno_id"], name: "index_relatorios_on_tipo_dreno_id"
     t.index ["user_id"], name: "index_relatorios_on_user_id"
   end
 
@@ -553,17 +554,18 @@ ActiveRecord::Schema.define(version: 2023_06_05_145727) do
   add_foreign_key "phs", "users"
   add_foreign_key "relatorio_dispsegs", "cadastros", name: "RELATORIO_INSP_VAL_SEG_E_ALIVIO_cadastro_id_fkey"
   add_foreign_key "relatorio_dispsegs", "cadastros", name: "RELATORIO_INSP_VAL_SEG_E_ALIVIO_cadastro_id_fkey1"
-  add_foreign_key "relatorio_dispsegs", "cidades"
   add_foreign_key "relatorio_dispsegs", "fluido_calibracao_valv_segs", name: "RELATORIO_INSP_VAL_SEG_E_ALIVIO_fluido_calibracao_id_fkey"
   add_foreign_key "relatorio_dispsegs", "instrumento_padraos", name: "RELATORIO_INSP_VAL_SEG_E_ALIVIO_manometro_padrao_id_fkey"
   add_foreign_key "relatorio_dispsegs", "users"
   add_foreign_key "relatorio_dispsegs", "vasos", name: "RELATORIO_INSP_VAL_SEG_E_ALIVIO_vaso_pressao_protegido_id_fkey"
+  add_foreign_key "relatorios", "ambiente_insts"
   add_foreign_key "relatorios", "ambiente_insts", column: "tipo_ambiente_instalacao_vaso_pressao", name: "RELATORIO_INSPECAO_tipo_ambiente_instalacao_vaso_pressao_fkey"
   add_foreign_key "relatorios", "arts"
   add_foreign_key "relatorios", "cadastros", column: "inspetora_id", name: "sys_fk_187"
   add_foreign_key "relatorios", "cadastros", column: "proprietaria_id", name: "sys_fk_181"
   add_foreign_key "relatorios", "cidades"
   add_foreign_key "relatorios", "phs", name: "sys_fk_178"
+  add_foreign_key "relatorios", "tipo_drenos"
   add_foreign_key "relatorios", "tipo_inspecaos", name: "sys_fk_334"
   add_foreign_key "relatorios", "users"
   add_foreign_key "relatorios", "vasos", name: "RELATORIO_INSPECAO_id_vaso_pressao_fkey"

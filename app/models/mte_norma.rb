@@ -1,0 +1,2 @@
+class MteNorma < ApplicationRecord
+end
