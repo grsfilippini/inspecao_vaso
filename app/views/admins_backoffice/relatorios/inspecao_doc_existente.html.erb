@@ -1,0 +1,101 @@
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800"> Inspecionando Documentos Existentes </h1>
+</div>
+
+<!-- Se tiver algum erro dentro de @admin, erro devido a processo de salvamento por exemplo, entra no alerta abaixo -->
+<% if @relatorio.errors.any? %>
+    <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>        
+        <ul>
+            <% @relatorio.errors.full_messages.each do |message| %>
+            <li> <%= message -%> </li>
+            <% end %>
+        </ul>
+    </div>
+<% end %>
+
+
+<!-- CONTAINER PARA O FORM -->
+<div class="container">
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+                <!-- div class="col-lg-5 d-none d-lg-block bg-register-image"></div -->
+                
+                <div class="col-lg-12">
+                    <div class="p-5">
+                        <!--div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                        </div-->
+                       
+                        <%= form_with(model: [ :admins_backoffice, @relatorio ], local: true, :html => { :multipart => true }) do |form| %>
+                            <span class="badge badge-light" style="font-size: 1.1em;">Relatório</span>
+                            <span class="badge badge-info badge-lg" style="font-size: 1.1em;"><%= @relatorio.id %></span>
+                            <span class="badge badge-light badge-lg" style="font-size: 1.1em;"><%= @relatorio.vaso.fabricante.nome_curto %></span>
+                            <span class="badge badge-light badge-lg" style="font-size: 1.1em;"><%= @relatorio.vaso.num_serie %></span>
+                            <span class="badge badge-light badge-lg" style="font-size: 1.1em;"><%= @relatorio.vaso.proprietaria.nome_curto %></span>
+                             
+                            <div class="form-group row"> 
+                            
+                            </div>
+                            <div class="form-group row"> 
+                                <div class="form-check col-sm-2 mb-0 mb-sm-0">
+                                    <%= form.check_box :bexiste_prontuario, class: "form-check-input", id: "ProntuarioCheckbox" %>
+                                    <%= form.label :bexiste_prontuario, "Prontuário", class: "form-check-label", for: "ProntuarioCheckbox" %>
+                                </div>
+                                <div class="form-check col-sm-2 mb-0 mb-sm-0">                                    
+                                    <%= form.check_box :bprontuario_digital, class: "form-check-input", id: "ProntuarioDigitalCheckbox", disabled: !@relatorio.bprontuario_digital %>
+                                    <%= form.label :bprontuario_digital, "Digital", class: "form-check-label", for: "ProntuarioDigitalCheckbox" %>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row"> 
+                                <%= form.label :foi_executada_inspecao_inicial, 'Inspeção inicial', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="btn-group col-sm-10 mb-0 mb-sm-0" data-toggle="buttons">
+                                    <% options = { "Não" => 0, "Sim" => 1, "Dispensado" => 2, "1a inspeção" => 3 } %>
+                                    <% options.each do |label, value| %>
+                                        <label class="btn btn-primary">
+                                            <%= radio_button_tag :foi_executada_inspecao_inicial, value %>
+                                            <%= label %>
+                                        </label>
+                                    <% end %>
+                                </div>
+                            </div>
+                                                      
+                                                                                                             
+                            <hr>
+                            
+                            <%= button_tag "Gravar e Voltar", type: "submit", class: "btn btn-primary", name: "btn_gravar_voltar" %>
+                            <%= button_tag "Gravar e Sair", type: "submit", class: "btn btn-primary", name: "btn_gravar_sair" %>
+                            <%= button_tag "Gravar e Avançar", type: "submit", class: "btn btn-primary", name: "btn_gravar_avancar" %>
+                                                        
+                        <% end %>                                                                     
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- FIM DO CONTAINER DO FORM -->
+
+<script>
+    // Obtém referências aos elementos dos checkboxes
+    var prontuarioCheckbox = document.getElementById("ProntuarioCheckbox");
+    var prontuarioDigitalCheckbox = document.getElementById("ProntuarioDigitalCheckbox");
+    
+    // Adiciona um ouvinte de eventos ao primeiro checkbox
+    prontuarioCheckbox.addEventListener("change", function() {
+      // Verifica se o primeiro checkbox está marcado
+      if (prontuarioCheckbox.checked) {
+        // Habilita e desmarca o segundo checkbox
+        prontuarioDigitalCheckbox.disabled = false;
+        prontuarioDigitalCheckbox.checked = false;
+      } else {
+        // Desabilita e desmarca o segundo checkbox
+        prontuarioDigitalCheckbox.disabled = true;
+        prontuarioDigitalCheckbox.checked = false;
+      }
+    });
+</script>

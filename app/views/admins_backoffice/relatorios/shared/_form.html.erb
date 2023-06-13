@@ -32,75 +32,78 @@
 
                         <%= form_with(model: [ :admins_backoffice, @relatorio ], local: true, :html => { :multipart => true }) do |form| %>
                             
-                            <div class="form-group row">     
-                                <div class="col-sm-4 mb-3 mb-sm-0">
-                                    <%= form.label :user_id, "Usuário: " %>
-                                    <%= form.collection_select(:user_id, @users, :id, :nome_completo, { include_blank: true }, {selected: nil, class: 'select-width-170' }) %>
+                            <div class="form-group row">
+                                <%= form.label :user_id, "User ", {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="col-sm-3 mb-0 mb-sm-0">                                    
+                                    <%= form.collection_select(:user_id, @users, :id, :nome_completo, { include_blank: true }, {selected: nil, class: 'select-width-150 form-control' }) %>
                                 </div>
                                 
-                                <div class="col-sm-4 mb-3 mb-sm-0">
-                                    <%= form.label :b_rascunho, 'Em aberto' %>
-                                    <%= form.check_box :b_rascunho %>
+                                <div class="form-check col-sm-0 mb-0 mb-sm-0">
                                 </div>
                                 
-                                <div class="col-sm-4 mb-3 mb-sm-0">
-                                    <%= form.label :tipo_inspecao, 'Inspeção:' %>
-                                    <%= form.collection_select(:tipo_inspecao_id, @tipo_inspecaos, :id, :nome, { include_blank: true}, {class: 'select-width-170' }) %>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group row">         
-                                <div class="col-sm-4 mb-3 mb-sm-0">
-                                    <%= form.label :art_id, 'ART:' %>                                    
-                                    <%= form.collection_select(:art_id, @arts, :id, lambda { |art| "#{art.art} - #{art.cadastro.nome_curto}" }, { include_blank: true, selected: nil}, {class: 'select-width-200' }) %>
-                                </div>
-                                
-                                <div class="col-sm-4 mb-3 mb-sm-0">
-                                    <%= form.label :ph_id, 'Proficional:' %>                                    
-                                    <%= form.collection_select(:ph_id, @phs, :id, :nome, { include_blank: true, selected: nil}, {class: 'select-width-170' }) %>
-                                </div>
-                                
-                                <div class="col-sm-4 mb-3 mb-sm-0">
-                                    <%= form.label :cidade_id, 'Cidade:' %>                                    
-                                    <%= form.collection_select(:cidade_id, @cidades, :id, :nome, { include_blank: true, selected: nil}, {class: 'select-width-170' }) %>
+                                <div class="form-check col-sm-4 mb-0 mb-sm-0">
+                                    <%= form.check_box :b_rascunho, class: "form-check-input", id: "RascunhoCheckbox" %>
+                                    <%= form.label :b_rascunho, "Em aberto", class: "form-check-label", for: "RascunhoCheckbox" %>
                                 </div>
                             </div>
                             
                             <div class="form-group row">
-                                <div class="col-sm-4 mb-3 mb-sm-0">
-                                    <%= form.label :data_relatorio, 'Data:' %>
-                                    <%= form.date_field :data_relatorio, value: Date.current %>
-                                </div>
-                            
-                                <div class="col-sm-4 mb-3 mb-sm-0">
-                                    <%#= form.label :vaso_id, 'Vaso:' %>                                    
-                                    <%= form.collection_select(:vaso_id, @vasos, :id, lambda { |vaso| "#{vaso.num_serie} - #{vaso.fabricante.nome_curto}" }, { include_blank: 'Selecione um vaso' }) %>
+                                <%#= form.label :tipo_inspecao, 'Inspeção:', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="col-sm-4 mb-0 mb-sm-0">                                    
+                                    <%= form.collection_select(:tipo_inspecao_id, @tipo_inspecaos, :id, :nome, {include_blank: 'Selecione um vaso'}, {class: 'select-width-150 form-control' }) %>
                                 </div>
                                 
-                                <div class="col-sm-4 mb-3 mb-sm-0">                                    
-                                    <%= form.collection_select(:finalidade_vaso_id, @finalidade_vasos, :id, :finalidade, { include_blank: 'Selecione a finalidade' }) %>
+                                <%= form.label :art_id, 'ART', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="col-sm-3 mb-0 mb-sm-0">                                    
+                                    <%= form.collection_select(:art_id, @arts, :id, lambda { |art| "#{art.art} - #{art.cadastro.nome_curto}" }, { include_blank: true, selected: nil}, {class: 'select-width-150 form-control' }) %>
                                 </div>
+                                
+                                <%= form.label :ph_id, 'PH', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="col-sm-3 mb-0 mb-sm-0">                                    
+                                    <%= form.collection_select(:ph_id, @phs, :id, :nome, { include_blank: true, selected: nil}, {class: 'select-width-150 form-control' }) %>
+                                </div>                                
+                                
+                            </div>
+                            
+                            <div class="form-group row">
+                                <%= form.label :cidade_id, 'Cidade', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="col-sm-3 mb-0 mb-sm-0">            
+                                    <%= form.collection_select(:cidade_id, @cidades, :id, :nome, { include_blank: 'Selecione uma cidade'}, {class: 'select-width-150 form-control' }) %>
+                                </div>
+                                
+                                <%= form.label :data_relatorio, 'Data', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="col-sm-3 mb-0 mb-sm-0">                                    
+                                    <%= form.date_field :data_relatorio, value: Date.current, class: "form-control" %>
+                                </div>
+                            
+                                <%= form.label :vaso_id, 'Vaso', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="col-sm-3 mb-0 mb-sm-0">                                    
+                                    <%= form.collection_select(:vaso_id, @vasos, :id, lambda { |vaso| "#{vaso.num_serie} - #{vaso.fabricante.nome_curto}" }, { include_blank: 'Selecione um vaso' }, {class: 'select-width-150 form-control' }) %>
+                                </div>                                
                             </div>
                                 
                             <div class="form-group row">
-                                <div class="col-sm-4 mb-3 mb-sm-0">
-                                    <%= form.label :proprietaria_id, 'Proprietária:' %>                                    
-                                    <%= form.collection_select(:proprietaria_id, @proprietarias, :id, :nome_curto, { include_blank: true, selected: nil}, {class: 'select-width-170' }) %>
+                                <%#= form.label :finalidade_vaso_id, 'Finalidade', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="col-sm-4 mb-0 mb-sm-0">                                    
+                                    <%= form.collection_select(:finalidade_vaso_id, @finalidade_vasos, :id, :finalidade, { include_blank: 'Selecione a finalidade' }, {class: 'select-width-150 form-control' }) %>
+                                </div>                                
+
+                                <%#= form.label :proprietaria_id, 'Proprietária', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="col-sm-4 mb-0 mb-sm-0">
+                                    <%= form.collection_select(:proprietaria_id, @proprietarias, :id, :nome_curto, { include_blank: 'Selecione o proprietário'}, {class: 'select-width-150 form-control' }) %>
                                 </div>
-                            
-                                <div class="col-sm-4 mb-3 mb-sm-0">
-                                    <%= form.label :inspetora_id, 'Inspetora:' %>                                    
-                                    <%= form.collection_select(:inspetora_id, @inspetoras, :id, :nome_curto, { include_blank: true}, {class: 'select-width-170' }) %>
+                                
+                                <%#= form.label :inspetora_id, 'Inspetora', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="col-sm-4 mb-0 mb-sm-0">                                    
+                                    <%= form.collection_select(:inspetora_id, @inspetoras, :id, :nome_curto, { include_blank: 'Selecione a empresa inspetora'}, {class: 'select-width-150 form-control' }) %>
                                 </div>
                             </div>
-                                
-                            <p><b>IDENTIFICAÇÃO DO VASO</b></p>
-                            
-                           
+                                                                                 
                             <hr>
                             
-                            <button type="submit" class="btn btn-primary"><%=t('botoes.gravar')%></button>
-                            
+                            <%= button_tag "Criar", type: "submit", class: "btn btn-primary", name: "btn_criar" %>
+                            <%= button_tag "Criar e Iniciar Inspeção", type: "submit", class: "btn btn-primary", name: "btn_iniciar_inspecao" %>
+                                                        
                         <% end %>                                                                     
                         
                     </div>

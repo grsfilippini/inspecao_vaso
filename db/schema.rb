@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_06_11_145452) do
+ActiveRecord::Schema.define(version: 2023_06_11_154224) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_repack"
@@ -326,7 +326,6 @@ ActiveRecord::Schema.define(version: 2023_06_11_145452) do
     t.boolean "bpossui_placa_dolocal_deinstalacao", default: false, null: false
     t.boolean "belementos_facilmente_acessiveis_drenosrespiroseoutros", default: true, null: false
     t.boolean "bpossui_manometro_ousimilar", default: true, null: false
-    t.integer "tipo_ambiente_instalacao_vaso_pressao", default: 2, null: false
     t.integer "tipo_cobetura", default: 1, null: false
     t.boolean "bdispoe_duassaidas_amplas_sinalizadas_desobstruidas", default: true, null: false
     t.boolean "bdispor_acesso_facil_seguro_paraoperacao_manutencao", default: true, null: false
@@ -351,7 +350,6 @@ ActiveRecord::Schema.define(version: 2023_06_11_145452) do
     t.string "manometro_observacoes", limit: 100
     t.string "dispositivoseg_observacoes", limit: 100
     t.float "dispositivoseg_pabertura", default: 0.0, null: false
-    t.integer "tipo_acionamentodreno", default: 0, null: false
     t.boolean "bdreno_inclinacao_positiva", default: true, null: false
     t.string "dreno_observacoes", limit: 100
     t.float "dreno_qtdadeliquido_drenado", default: 0.0, null: false
@@ -431,8 +429,8 @@ ActiveRecord::Schema.define(version: 2023_06_11_145452) do
     t.bigint "user_id"
     t.bigint "art_id"
     t.bigint "cidade_id"
-    t.bigint "ambiente_inst_id"
-    t.bigint "tipo_dreno_id"
+    t.integer "ambiente_inst_id", default: 2
+    t.integer "tipo_dreno_id", default: 0
     t.index ["ambiente_inst_id"], name: "index_relatorios_on_ambiente_inst_id"
     t.index ["art_id"], name: "index_relatorios_on_art_id"
     t.index ["cidade_id"], name: "index_relatorios_on_cidade_id"
@@ -559,7 +557,6 @@ ActiveRecord::Schema.define(version: 2023_06_11_145452) do
   add_foreign_key "relatorio_dispsegs", "users"
   add_foreign_key "relatorio_dispsegs", "vasos", name: "RELATORIO_INSP_VAL_SEG_E_ALIVIO_vaso_pressao_protegido_id_fkey"
   add_foreign_key "relatorios", "ambiente_insts"
-  add_foreign_key "relatorios", "ambiente_insts", column: "tipo_ambiente_instalacao_vaso_pressao", name: "RELATORIO_INSPECAO_tipo_ambiente_instalacao_vaso_pressao_fkey"
   add_foreign_key "relatorios", "arts"
   add_foreign_key "relatorios", "cadastros", column: "inspetora_id", name: "sys_fk_187"
   add_foreign_key "relatorios", "cadastros", column: "proprietaria_id", name: "sys_fk_181"

@@ -5,24 +5,28 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
     @relatorios = Relatorio.relatorios_concluidos(params[:page])
     @nome_rel = 'Concluídos'
     @proprietarias = Cadastro.where(eh_fabricante: false, eh_empresa_inspetora: false).order(:nome_curto)
+    @em_aberto = FALSE
   end
   
   def para_imprimir
     @relatorios = Relatorio.relatorios_para_imprimir(params[:page])
     @nome_rel = 'para Impressão'
     @proprietarias = Cadastro.where(eh_fabricante: false, eh_empresa_inspetora: false).order(:nome_curto)
+    @em_aberto = FALSE
   end
   
   def em_aberto
     @relatorios = Relatorio.relatorios_em_aberto(params[:page])
     @nome_rel = 'em Aberto (rascunho)'
     @proprietarias = Cadastro.where(eh_fabricante: false, eh_empresa_inspetora: false).order(:nome_curto)
+    @em_aberto = TRUE
   end
 
   def pesquisa    
     @relatorios = Relatorio.pesquisa_serie_prop(params[:page], params[:num_serie], params[:proprietaria_id])
     @nome_rel = 'Concluídos (pesquisa)'
-    @proprietarias = Cadastro.where(eh_fabricante: false, eh_empresa_inspetora: false).order(:nome_curto)    
+    @proprietarias = Cadastro.where(eh_fabricante: false, eh_empresa_inspetora: false).order(:nome_curto)
+    @em_aberto = FALSE
   end
   
   def new
@@ -32,13 +36,37 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
   def create      
     @relatorio = Relatorio.new(params_relatorio)    
     if @relatorio.save
-      redirect_to admins_backoffice_relatorios_path, notice: "Relatório criado com sucesso!"
+      #params[:id] = @relatorio.id
+      #puts '********************************************'
+      #puts params
+      if params[:btn_criar]
+        redirect_to admins_backoffice_relatorio_em_aberto_path, notice: "Relatório criado com sucesso!"
+      else
+        redirect_to admins_backoffice_inspecao_doc_existente_path(id: @relatorio.id), notice: "Relatório criado com sucesso! Iniciando a inspeção."
+      end
     else
       get_relacoes
       render :new
     end
   end
+
+  def inspecao_doc_existente
+    #puts '********************************************'
+    #puts params
+    @relatorio = Relatorio.find(params[:id])    
+  end
   
+  def update
+      puts '********************************************'
+      puts params
+      @relatorio = Relatorio.find(params[:id])
+      if @relatorio.update(params_relatorio)
+        redirect_to admins_backoffice_relatorio_em_aberto_path, notice: "Vaso atualizado com sucesso!"
+      else
+        #get_relacoes
+        render :inspecao_doc_existente
+      end
+    end
   
   
   private
@@ -56,10 +84,13 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
                                         :proprietaria_id,                                   
                                         :inspetora_id,
                                         
-                                        :tipo_ambiente_instalacao_vaso_pressao,
-                                        :tipo_acionamentodreno
+                                        :bexiste_prontuario,
+                                        :bprontuario_digital,
+                                        :foi_executada_inspecao_inicial,
                                         
-                                   
+                                        :tipo_dreno_id,
+                                        :ambiente_inst_id
+                                        
     #t.integer "tipo_acesso_interno", default: 1, null: false
     #t.text "metodo_alternativo_exame_interno"
     #t.integer "tipo_apresenta_sinais_reparo", default: 0, null: false
@@ -91,9 +122,7 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
     #t.string "codigo_usado_inspecao", limit: 35, default: "-x-x-x-x-x-x-x-x-x-x-x-x-x-x-"
     #t.string "norma_brasileira_construcao", limit: 35, default: "-x-x-x-x-x-x-x-x-x-x-x-x-x-x-"
     #t.string "norma_brasileira_inspecao", limit: 35, default: "ABNT NBR 15417:2007"
-    #t.boolean "bexiste_prontuario", default: false, null: false
-    #t.boolean "bprontuario_digital", default: false, null: false
-    #t.integer "foi_executada_inspecao_inicial", default: 1, null: false
+        
     #t.boolean "bpossui_registro_seguranca", default: true, null: false
     #t.boolean "btem_data_instalacao_no_reg_seguranca", default: false, null: false
     #t.boolean "bexiste_desenho_plaqueta_identif_vaso", default: true
@@ -254,7 +283,7 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
       @vasos              = Vaso.includes(:fabricante).order(:num_serie)
       @finalidade_vasos   = FinalidadeVaso.all
       @proprietarias      = Cadastro.order(:nome_curto)
-      @inspetoras         = Cadastro.where(eh_empresa_inspetora: true).order(:nome_curto)
+      @inspetoras         = Cadastro.where(eh_empresa_inspetora: true).order(:nome_curto)      
     end
   
 end

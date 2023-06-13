@@ -36,8 +36,10 @@
                 <th>Fabricante</th>
                 <th>Proprietaria</th>
                 <th>
-                    <%= link_to new_admins_backoffice_relatorio_path, class:"btn btn-success btn-circle btn-sm" do %>
-                        <i class="fas fa-plus"></i>
+                    <% if @em_aberto  %>
+                        <%= link_to new_admins_backoffice_relatorio_path, class:"btn btn-success btn-circle btn-sm" do %>
+                            <i class="fas fa-plus"></i>
+                        <% end %>
                     <% end %>
                 </th>
             </tr>
@@ -56,14 +58,16 @@
                     <td><%= r.proprietaria.nome_curto %></td>
 
                     <td style="width: 100px">
-                        <%= link_to edit_admins_backoffice_relatorio_path(r.id), class:"btn btn-info btn-circle btn-sm" do %> 
-                            <i class="fas fa-edit"></i>
-                        <%end%>
-                        <%= link_to admins_backoffice_relatorio_path(r.id), 
-                                    method: :delete, class:"btn btn-danger btn-circle btn-sm", 
-                                    data: { confirm: t('mensagens.confirmar_exclusao', item: r.id)} do %>
-                            <i class="fas fa-minus"></i> 
-                        <%end%>
+                        <% if @em_aberto  %>
+                            <%= link_to edit_admins_backoffice_relatorio_path(r.id), class:"btn btn-info btn-circle btn-sm" do %> 
+                                <i class="fas fa-edit"></i>
+                            <%end%>
+                            <%= link_to admins_backoffice_relatorio_path(r.id), 
+                                        method: :delete, class:"btn btn-danger btn-circle btn-sm", 
+                                        data: { confirm: t('mensagens.confirmar_exclusao', item: r.id)} do %>
+                                <i class="fas fa-minus"></i> 
+                            <%end%>
+                        <% end %>
                     </td>
                 </tr>
             <% end %>

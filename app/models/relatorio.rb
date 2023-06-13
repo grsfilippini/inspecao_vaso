@@ -16,8 +16,8 @@ class Relatorio < ApplicationRecord
   belongs_to :vaso  
   belongs_to :proprietaria,  class_name: 'Cadastro'
   belongs_to :inspetora, class_name: 'Cadastro'
-  belongs_to :tipo_ambiente_instalacao_vaso_pressao, class_name: 'AmbienteInst'
-  belongs_to :tipo_acionamentodreno, class_name: 'TipoDreno'
+  #belongs_to :ambiente_inst
+  #belongs_to :tipo_dreno
   belongs_to :ph
   belongs_to :finalidade_vaso
   belongs_to :fluido_servico
