@@ -1,4 +1,5 @@
 class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
+  before_action :set_relatorio, only: [:edit, :update, :destroy, :inspecao_doc_existente, :inspecao_verif_iniciais]
   before_action :get_relacoes, only: [:new, :edit]
   
   def index
@@ -33,6 +34,9 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
     @relatorio = Relatorio.new     
   end
 
+  def edit # Ação de edição    
+  end
+
   def create      
     @relatorio = Relatorio.new(params_relatorio)    
     if @relatorio.save
@@ -50,18 +54,27 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
     end
   end
 
-  def inspecao_doc_existente
-    #puts '********************************************'
-    #puts params
-    @relatorio = Relatorio.find(params[:id])    
+  def inspecao_doc_existente    
   end
   
-  def update
-      puts '********************************************'
-      puts params
-      @relatorio = Relatorio.find(params[:id])
-      if @relatorio.update(params_relatorio)
-        redirect_to admins_backoffice_relatorio_em_aberto_path, notice: "Vaso atualizado com sucesso!"
+  def inspecao_verif_iniciais
+    @fluido_servicos = FluidoServico.order(:descricao)
+  end
+  
+  def update      
+      if @relatorio.update(params_relatorio)        
+        if params[:btn_gravar_sair]
+          redirect_to admins_backoffice_relatorio_em_aberto_path, notice: "Relatório atualizado com sucesso!"
+        # Início da inspeção
+        elsif params[:btn_insp_inicio]
+          redirect_to edit_admins_backoffice_relatorio_path(@relatorio.id), notice: "Relatório atualizado com sucesso!"        
+        # Documentação existente
+        elsif params[:btn_doc_existente]
+          redirect_to admins_backoffice_inspecao_doc_existente_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para documentação existente."
+        # Verificações iniciais  
+        elsif params[:btn_verif_iniciais]
+          redirect_to admins_backoffice_inspecao_verif_iniciais_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para verificações iniciais."
+        end
       else
         #get_relacoes
         render :inspecao_doc_existente
@@ -70,6 +83,9 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
   
   
   private
+    def set_relatorio
+      @relatorio = Relatorio.find(params[:id])      
+    end
    
     def params_relatorio
       params.require(:relatorio).permit(:user_id,
@@ -84,22 +100,57 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
                                         :proprietaria_id,                                   
                                         :inspetora_id,
                                         
+                                        # Docs existentes
                                         :bexiste_prontuario,
                                         :bprontuario_digital,
                                         :foi_executada_inspecao_inicial,
+                                        :bpossui_registro_seguranca,
+                                        :btem_data_instalacao_no_reg_seguranca,
+                                        :bpossui_laudo_teste_hidrostatico,
+                                        :bpossui_mapa_medicao_espessura,
+                                        :bpossui_programacao_inspecoes,
+                                        :bexiste_inspecao_periodica_interna_externa_teste_hidrostatico,
+                                        :bexiste_inspecao_reconstituicao_prontuario,
+                                        :bpossui_plaqueta_identificacao_fabricante_vaso,
+                                        :bpossui_plaqueta_identificacao_nr13_dovaso,
+                                        :bexiste_desenho_plaqueta_identif_vaso,
+                                        :possui_relatorios_inspecao,
+                                        :possui_certif_calibracao_dispositivos_seguranca,
+                                        # pouco usados
+                                        :bexiste_memorial_calculo_teste_hidrostatico,
+                                        :bexiste_inspecao_problema_operacional,
+                                        :bexiste_inspecao_alteracao_operacional,
+                                        :bexiste_inspecao_de_alteracao,
+                                        :bexiste_inspecao_de_reparo,
+                                        :bexiste_inspecao_deretorno_ouparada_deoperacao,
+                                        :tem_operador_qualificado_operacao,
+                                        :bexiste_desenho_conjunto_geral,
+                                        :bexiste_desenho_detalhes_de_todos_elementos,
+                                        :bexiste_projeto_instalacao_geral_localizacao_vasos,
+                                        :bexiste_projeto_instalacao_individual_dovaso,
+                                        
+                                        # Verificações iniciais
+                                        :recomendacoes_insp_anterior_foram_realizadas,
+                                        :bvaso_emoperacao_mesmocom_deterioracao_atestada,
+                                        :fluido_servico_id,
+                                        :tipo_apresenta_sinais_reparo,
+                                        :data_reparos_alteracoes,
+                                        :reparos_observados,
+                                        :tipo_fixacao_vaso,
+                                        :tipo_houve_alteracao_local_instalacao,
+                                        :b_vaso_inativo_mais_doze_meses,
+                                        :tipo_acesso_interno,
+                                        :metodo_alternativo_exame_interno,
+                                        :possui_acesso_visual_externo,
+                                        :possui_respiro,
+                                        :possui_indicador_nivel,
+                                        :possui_indicador_temperatura,
+                                            
                                         
                                         :tipo_dreno_id,
-                                        :ambiente_inst_id
-                                        
-    #t.integer "tipo_acesso_interno", default: 1, null: false
-    #t.text "metodo_alternativo_exame_interno"
-    #t.integer "tipo_apresenta_sinais_reparo", default: 0, null: false
-    #t.text "reparos_observados"
-    #t.integer "tipo_fixacao_vaso", default: 0, null: false
-    #t.integer "tipo_houve_alteracao_local_instalacao", default: 0, null: false
-    #t.boolean "possui_respiro", default: false, null: false
-    #t.boolean "possui_indicador_nivel", default: false, null: false
-    #t.boolean "possui_indicador_temperatura", default: false, null: false
+                                        :ambiente_inst_id                                       
+        
+    
     #t.boolean "insp_contratada_vaso_externa", default: true, null: false
     #t.boolean "insp_contratada_vaso_interna", default: false, null: false
     #t.boolean "insp_contratada_vaso_teste_hidrostatico", default: false, null: false
@@ -122,36 +173,11 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
     #t.string "codigo_usado_inspecao", limit: 35, default: "-x-x-x-x-x-x-x-x-x-x-x-x-x-x-"
     #t.string "norma_brasileira_construcao", limit: 35, default: "-x-x-x-x-x-x-x-x-x-x-x-x-x-x-"
     #t.string "norma_brasileira_inspecao", limit: 35, default: "ABNT NBR 15417:2007"
-        
-    #t.boolean "bpossui_registro_seguranca", default: true, null: false
-    #t.boolean "btem_data_instalacao_no_reg_seguranca", default: false, null: false
-    #t.boolean "bexiste_desenho_plaqueta_identif_vaso", default: true
-    #t.boolean "bexiste_desenho_conjunto_geral", default: false, null: false
-    #t.boolean "bexiste_desenho_detalhes_de_todos_elementos", default: false, null: false
-    #t.boolean "bexiste_memorial_calculo_teste_hidrostatico", default: false, null: false
-    #t.boolean "bexiste_inspecao_periodica_interna_externa_teste_hidrostatico", default: true, null: false
-    #t.boolean "bexiste_inspecao_problema_operacional", default: false, null: false
-    #t.boolean "bexiste_inspecao_alteracao_operacional", default: false, null: false
-    #t.boolean "bexiste_inspecao_de_alteracao", default: false, null: false
-    #t.boolean "bexiste_inspecao_de_reparo", default: false, null: false
-    #t.boolean "bexiste_inspecao_reconstituicao_prontuario", default: false, null: false
-    #t.boolean "bexiste_inspecao_deretorno_ouparada_deoperacao", default: false, null: false
-    #t.boolean "bexiste_projeto_instalacao_individual_dovaso", default: false, null: false
-    #t.boolean "bexiste_projeto_instalacao_geral_localizacao_vasos", default: false, null: false
-    #t.integer "tem_operador_qualificado_operacao", default: 2, null: false
-    #t.boolean "bpossui_laudo_teste_hidrostatico", default: true, null: false
-    #t.integer "possui_certif_calibracao_dispositivos_seguranca", default: 2, null: false
-    #t.integer "possui_relatorios_inspecao", default: 1, null: false
-    #t.boolean "bpossui_programacao_inspecoes", default: true, null: false
-    #t.integer "recomendacoes_insp_anterior_foram_realizadas", default: 1
-    #t.boolean "bpossui_mapa_medicao_espessura", default: false, null: false
-    #t.boolean "bpossui_plaqueta_identificacao_fabricante_vaso", default: true, null: false
-    #t.boolean "bpossui_plaqueta_identificacao_nr13_dovaso", default: true, null: false
+      
     #t.boolean "bmanometro_ehmantido_calibrado_eemboas_condicoes_operacao", default: true, null: false
     #t.boolean "bpressostato_ehmantido_calibrado_eemboas_condicoes_operacao", default: true, null: false
     #t.boolean "boutros_elementos_controle_ehmantido_calib_eemboas_condicoes_op", default: true, null: false
-    #t.string "anotacoes_elementos_controle_calibrados_eemboas_condicoes_opera", limit: 100
-    #t.boolean "bvaso_emoperacao_mesmocom_deterioracao_atestada", default: false, null: false
+    #t.string "anotacoes_elementos_controle_calibrados_eemboas_condicoes_opera", limit: 100    
     #t.boolean "bpossui_placa_dolocal_deinstalacao", default: false, null: false
     #t.boolean "belementos_facilmente_acessiveis_drenosrespiroseoutros", default: true, null: false
     #t.boolean "bpossui_manometro_ousimilar", default: true, null: false
@@ -204,8 +230,7 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
     #t.boolean "basconexoes_acessorios_apresentamvazamentos", default: false, null: false
     #t.boolean "baspartes_moveis_estao_protegidas", default: true, null: false
     #t.boolean "bdreno_existe", default: true, null: false
-    
-    #t.date "data_reparos_alteracoes"
+        
     #t.text "recomendacoes_ao_usuario"
     #t.text "intervencoes_feitas_pelo_ph"
     #t.boolean "belaborado_reg_seg", default: false, null: false
@@ -253,13 +278,192 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
     #t.boolean "b_laudoth_eh_2avia", default: false, null: false
     #t.string "nova_venda_obs", limit: 120
     #t.boolean "nova_venda_aguarda_resposta", default: false, null: false
+    #t.boolean "nova_venda_fora_lista", default: false, null: false      
+    
+                                  )                                  
+    end
+    
+    #t.integer "ph_id", default: 0, null: false
+    #t.date "data_relatorio", default: -> { "CURRENT_DATE" }, null: false
+    #t.integer "vaso_id", null: false
+    #t.integer "proprietaria_id", null: false
+    #t.integer "inspetora_id", default: 52, null: false
+    #t.integer "tipo_acesso_interno", default: 1, null: false
+    #t.text "metodo_alternativo_exame_interno"
+    #t.integer "tipo_apresenta_sinais_reparo", default: 0, null: false
+    #t.text "reparos_observados"
+    #t.integer "tipo_fixacao_vaso", default: 0, null: false
+    #t.integer "tipo_houve_alteracao_local_instalacao", default: 0, null: false
+    #t.boolean "possui_respiro", default: false, null: false
+    #t.boolean "possui_indicador_nivel", default: false, null: false
+    #t.boolean "possui_indicador_temperatura", default: false, null: false
+    #t.boolean "insp_contratada_vaso_externa", default: true, null: false
+    #t.boolean "insp_contratada_vaso_interna", default: false, null: false
+    #t.boolean "insp_contratada_vaso_teste_hidrostatico", default: false, null: false
+    #t.boolean "insp_contratada_vaso_mapa_espessura", default: false, null: false
+    #t.boolean "insp_contratada_vaso_inicial", default: false, null: false
+    #t.boolean "insp_contratada_vaso_problema_operacional", default: false, null: false
+    #t.boolean "insp_contratada_vaso_alteracao_operacional", default: false, null: false
+    #t.boolean "insp_contratada_vaso_alteracao_estrutural", default: false, null: false
+    #t.boolean "insp_contratada_vaso_alteracao_reparo", default: false, null: false
+    #t.boolean "insp_contratada_vaso_reconstituicao_prontuario", default: false, null: false
+    #t.boolean "insp_contratada_vaso_paradaretorno_operacao", default: false, null: false
+    #t.boolean "insp_contratada_vaso_projeto_instalacao_geral", default: false, null: false
+    #t.boolean "insp_contratada_vaso_projeto_instalacao_dovaso_individual", default: false, null: false
+    #t.boolean "insp_contratada_valvsegpop_interna", default: false, null: false
+    #t.boolean "insp_contratada_valvsegpop_externa", default: true, null: false
+    #t.boolean "insp_pressostato", default: true, null: false
+    #t.boolean "insp_manometro", default: true, null: false
+    #t.boolean "insp_dreno", default: true, null: false
+    #t.integer "mte_norma_id", default: 1, null: false
+    #t.string "codigo_usado_inspecao", limit: 35, default: "-x-x-x-x-x-x-x-x-x-x-x-x-x-x-"
+    #t.string "norma_brasileira_construcao", limit: 35, default: "-x-x-x-x-x-x-x-x-x-x-x-x-x-x-"
+    #t.string "norma_brasileira_inspecao", limit: 35, default: "ABNT NBR 15417:2007"
+    #t.boolean "bexiste_prontuario", default: true, null: false
+    #t.boolean "bprontuario_digital", default: false, null: false
+    #t.integer "foi_executada_inspecao_inicial", default: 0, null: false
+    #t.boolean "bpossui_registro_seguranca", default: true, null: false
+    #t.boolean "btem_data_instalacao_no_reg_seguranca", default: false, null: false
+    #t.boolean "bexiste_desenho_plaqueta_identif_vaso", default: true
+    #t.boolean "bexiste_desenho_conjunto_geral", default: false, null: false
+    #t.boolean "bexiste_desenho_detalhes_de_todos_elementos", default: false, null: false
+    #t.boolean "bexiste_memorial_calculo_teste_hidrostatico", default: false, null: false
+    #t.boolean "bexiste_inspecao_periodica_interna_externa_teste_hidrostatico", default: true, null: false
+    #t.boolean "bexiste_inspecao_problema_operacional", default: false, null: false
+    #t.boolean "bexiste_inspecao_alteracao_operacional", default: false, null: false
+    #t.boolean "bexiste_inspecao_de_alteracao", default: false, null: false
+    #t.boolean "bexiste_inspecao_de_reparo", default: false, null: false
+    #t.boolean "bexiste_inspecao_reconstituicao_prontuario", default: false, null: false
+    #t.boolean "bexiste_inspecao_deretorno_ouparada_deoperacao", default: false, null: false
+    #t.boolean "bexiste_projeto_instalacao_individual_dovaso", default: false, null: false
+    #t.boolean "bexiste_projeto_instalacao_geral_localizacao_vasos", default: false, null: false
+    #t.integer "tem_operador_qualificado_operacao", default: 2, null: false
+    #t.boolean "bpossui_laudo_teste_hidrostatico", default: true, null: false
+    #t.integer "possui_certif_calibracao_dispositivos_seguranca", default: 2, null: false
+    #t.integer "possui_relatorios_inspecao", default: 1, null: false
+    #t.boolean "bpossui_programacao_inspecoes", default: true, null: false
+    #t.integer "recomendacoes_insp_anterior_foram_realizadas", default: 1
+    #t.boolean "bpossui_mapa_medicao_espessura", default: false, null: false
+    #t.boolean "bpossui_plaqueta_identificacao_fabricante_vaso", default: true, null: false
+    #t.boolean "bpossui_plaqueta_identificacao_nr13_dovaso", default: true, null: false
+    #t.boolean "bmanometro_ehmantido_calibrado_eemboas_condicoes_operacao", default: true, null: false
+    #t.boolean "bpressostato_ehmantido_calibrado_eemboas_condicoes_operacao", default: true, null: false
+    #t.boolean "boutros_elementos_controle_ehmantido_calib_eemboas_condicoes_op", default: true, null: false
+    #t.string "anotacoes_elementos_controle_calibrados_eemboas_condicoes_opera", limit: 100
+    #t.boolean "bvaso_emoperacao_mesmocom_deterioracao_atestada", default: false, null: false
+    #t.boolean "bpossui_placa_dolocal_deinstalacao", default: false, null: false
+    #t.boolean "belementos_facilmente_acessiveis_drenosrespiroseoutros", default: true, null: false
+    #t.boolean "bpossui_manometro_ousimilar", default: true, null: false
+    #t.integer "tipo_cobetura", default: 1, null: false
+    #t.boolean "bdispoe_duassaidas_amplas_sinalizadas_desobstruidas", default: true, null: false
+    #t.boolean "bdispor_acesso_facil_seguro_paraoperacao_manutencao", default: true, null: false
+    #t.boolean "bdispor_ventilacao_permanente", default: true, null: false
+    #t.boolean "bdispor_iluminacao_artificial", default: true, null: false
+    #t.boolean "bpossui_iluminacao_emergencia", default: true, null: false
+    #t.integer "possui_dispositivo_deseguranca", default: 1, null: false
+    #t.integer "possui_dispositivo_contra_bloqueio_dodisp_seg", default: 2, null: false
+    #t.boolean "bman_tem_sinais_manutencao", default: true, null: false
+    #t.boolean "bman_foifeito_ajuste", default: false, null: false
+    #t.boolean "bman_foifeita_calibracao", default: false, null: false
+    #t.boolean "bman_foi_substituido", default: false, null: false
+    #t.boolean "bdispseg_tem_sinais_manutencao", default: true, null: false
+    #t.boolean "bdispseg_foifeito_ajuste", default: false, null: false
+    #t.boolean "bdispseg_foifeita_calibracao", default: false, null: false
+    #t.boolean "bdispseg_foisubstituido", default: false, null: false
+    #t.boolean "bdreno_tem_sinais_manutencao", default: true, null: false
+    #t.boolean "bdreno_foiacionado_paradrenar_liqacumulado", default: true, null: false
+    #t.boolean "bdreno_foifeita_manutencao", default: false, null: false
+    #t.boolean "bdreno_posicionado_ptomais_baixo", default: true, null: false
+    #t.boolean "bdreno_foisubstituido", default: false, null: false
+    #t.string "manometro_observacoes", limit: 100
+    #t.string "dispositivoseg_observacoes", limit: 100
+    #t.float "dispositivoseg_pabertura", default: 0.0, null: false
+    #t.boolean "bdreno_inclinacao_positiva", default: true, null: false
+    #t.string "dreno_observacoes", limit: 100
+    #t.float "dreno_qtdadeliquido_drenado", default: 0.0, null: false
+    #t.boolean "bpressostato_existe", default: true, null: false
+    #t.boolean "bpressostato_tem_sinais_manutencao", default: true, null: false
+    #t.boolean "bpressostato_foifeito_ajuste", default: false, null: false
+    #t.boolean "bpressostato_foiverificada_faixadetrabalho", default: true, null: false
+    #t.boolean "bpressostato_foisubstituido", default: false, null: false
+    #t.float "pressostato_pliga", default: 0.0, null: false
+    #t.float "pressostato_pdesliga", default: 0.0, null: false
+    #t.string "pressostato_observacoes", limit: 100
+    #t.boolean "bexiste_corrosaoacentuada_trincas_oupartes_soltas", default: false, null: false
+    #t.integer "tipo_degrausacesso_eguardacorpo_boascondicoes", default: 2, null: false
+    #t.integer "partesup_pisos_passarelas_platafor_eos_perfis_sustent_emboascon", default: 2, null: false
+    #t.boolean "bexiste_falha_nasolda_entreberco_ecasco_dovaso", default: false, null: false
+    #t.boolean "bexiste_corrosao_outrincas_noselementos_fixacao", default: false, null: false
+    #t.boolean "bpintura_emboas_condicoes", default: true, null: false
+    #t.string "obs_inspecao_elementos_sobre_o_vaso_ou_nao", limit: 100
+    #t.boolean "bexiste_deformacoes_trincas_vazamentos_vaso", default: false, null: false
+    #t.boolean "basconexoes_eacessorios_estao_emboas_condicoesfisicas", default: true, null: false
+    #t.boolean "basconexoes_acessorios_apresentamvazamentos", default: false, null: false
+    #t.boolean "baspartes_moveis_estao_protegidas", default: true, null: false
+    #t.boolean "bdreno_existe", default: true, null: false
+    #t.integer "finalidade_vaso_id", default: 0, null: false
+    #t.date "data_reparos_alteracoes"
+    #t.text "recomendacoes_ao_usuario"
+    #t.text "intervencoes_feitas_pelo_ph"
+    #t.boolean "belaborado_reg_seg", default: false, null: false
+    #t.boolean "belaborado_desenho_plaqueta", default: false, null: false
+    #t.boolean "belaborado_laudo_th", default: false, null: false
+    #t.boolean "belaborado_programacao_insp", default: false, null: false
+    #t.boolean "belaborado_mapa_espessura", default: false, null: false
+    #t.boolean "belaborado_plaqueta_identificacao", default: false, null: false
+    #t.text "relacao_rgi", default: "NENHUM RGI ENCONTRADO"
+    #t.boolean "belaborada_placa_local_inst", default: false, null: false
+    #t.boolean "bajuste_inclinacao", default: false, null: false
+    #t.integer "prazo_recomendacoes", default: 60, null: false
+    #t.text "result_insp_externa"
+    #t.text "result_insp_interna"
+    #t.date "dt_prox_insp_externa", default: -> { "(CURRENT_DATE + 365)" }, null: false
+    #t.date "dt_prox_insp_interna", default: -> { "(CURRENT_DATE + 3650)" }, null: false
+    #t.date "dt_prox_teste_hidrostatico", default: -> { "(CURRENT_DATE + 5475)" }, null: false
+    #t.date "dt_prox_insp_externa_dispositivo_seguranca", default: -> { "(CURRENT_DATE + 365)" }, null: false
+    #t.date "dt_prox_insp_interna_dispositivo_seguranca", default: -> { "(CURRENT_DATE + 3650)" }, null: false
+    #t.text "parecer_quanto_integridade_vaso"
+    #t.string "PATCH_IMG_FOTO_ANTES_INSPECAO", limit: 100, default: "fig/fabricante_numserie/2021mm/antes.jpg"
+    #t.string "PATCH_IMG_FOTO_POS_INSPECAO", limit: 100, default: "fig/fabricante_numserie/2021mm/pos.jpg"
+    #t.string "PATCH_IMG_FOTO_TH", limit: 100, default: "fig/fabricante_numserie/2021mm/th.jpg"
+    #t.string "PATCH_IMG_FOTO_INSTALACAO", limit: 100, default: "fig/fabricante_numserie/2021mm/inst.jpg"
+    #t.string "PATCH_MG_FOTO_CORPO_VASO", limit: 100, default: "fig/fabricante_numserie/2021mm/corpo.jpg"
+    #t.string "PATCH_IMG_FOTO_INTERNA1", limit: 100, default: "fig/fabricante_numserie/2021mm/int1.jpg"
+    #t.string "PATCH_IMG_FOTO_INTERNA2", limit: 100, default: "fig/fabricante_numserie/2021mm/int2.jpg"
+    #t.string "PATCH_IMG_FOTO_INTERNA3", limit: 100, default: "fig/fabricante_numserie/2021mm/int3.jpg"
+    #t.string "PATCH_IMG_FOTO_INTERNA4", limit: 100, default: "fig/fabricante_numserie/2021mm/int4.jpg"
+    #t.integer "tipo_inspecao_id", default: 0, null: false
+    #t.boolean "brel_impresso", default: false, null: false
+    #t.boolean "belaborado_prontuario", default: false, null: false
+    #t.boolean "brevisado", default: false, null: false
+    #t.boolean "benviada_placa_local_para_confeccao", default: false
+    #t.boolean "b_rascunho", default: true, null: false, comment: "Quando TRUE indica que trata-se de um rascunho de relatório, ou seja, é um relatório em andamento, ainda não finalizado."
+    #t.binary "foto_antes_inspecao"
+    #t.binary "foto_pos_inspecao"
+    #t.binary "foto_th"
+    #t.binary "foto_instalacao"
+    #t.binary "foto_corpo"
+    #t.binary "foto_interna1"
+    #t.binary "foto_interna2"
+    #t.binary "foto_interna3"
+    #t.binary "foto_interna4"
+    #t.boolean "b_laudoth_eh_2avia", default: false, null: false
+    #t.string "nova_venda_obs", limit: 120
+    #t.boolean "nova_venda_aguarda_resposta", default: false, null: false
     #t.boolean "nova_venda_fora_lista", default: false, null: false
     #t.boolean "b_vaso_inativo_mais_doze_meses", default: false
     #t.integer "possui_acesso_visual_externo", default: 1
     #t.integer "fluido_servico_id", default: 0
+    #t.bigint "user_id"
+    #t.bigint "art_id"
+    #t.bigint "cidade_id"
+    #t.integer "ambiente_inst_id", default: 2
+    #t.integer "tipo_dreno_id", default: 0    
     
-                                  )
-    end
+    
+    
+    
+    
     
     def get_relacoes
       #@fabricantes        = Cadastro.where(eh_fabricante: true).order(:nome_curto)      

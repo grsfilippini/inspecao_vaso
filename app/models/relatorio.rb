@@ -8,6 +8,7 @@ class Relatorio < ApplicationRecord
   validates :vaso_id,                       presence: true
   validates :proprietaria_id,               presence: true
   validates :inspetora_id,                  presence: true
+  validates :fluido_servico_id,             presence: true
     
   # Relações  
   belongs_to :tipo_inspecao

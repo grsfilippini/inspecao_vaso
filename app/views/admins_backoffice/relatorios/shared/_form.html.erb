@@ -55,12 +55,12 @@
                                 
                                 <%= form.label :art_id, 'ART', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
                                 <div class="col-sm-3 mb-0 mb-sm-0">                                    
-                                    <%= form.collection_select(:art_id, @arts, :id, lambda { |art| "#{art.art} - #{art.cadastro.nome_curto}" }, { include_blank: true, selected: nil}, {class: 'select-width-150 form-control' }) %>
+                                    <%= form.collection_select(:art_id, @arts, :id, lambda { |art| "#{art.art} - #{art.cadastro.nome_curto}" }, { include_blank: 'Selecione uma ART'}, {class: 'select-width-150 form-control' }) %>
                                 </div>
                                 
                                 <%= form.label :ph_id, 'PH', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
                                 <div class="col-sm-3 mb-0 mb-sm-0">                                    
-                                    <%= form.collection_select(:ph_id, @phs, :id, :nome, { include_blank: true, selected: nil}, {class: 'select-width-150 form-control' }) %>
+                                    <%= form.collection_select(:ph_id, @phs, :id, :nome, { include_blank: 'Selecione um profissional'}, {class: 'select-width-150 form-control' }) %>
                                 </div>                                
                                 
                             </div>
@@ -101,8 +101,8 @@
                                                                                  
                             <hr>
                             
-                            <%= button_tag "Criar", type: "submit", class: "btn btn-primary", name: "btn_criar" %>
-                            <%= button_tag "Criar e Iniciar Inspeção", type: "submit", class: "btn btn-primary", name: "btn_iniciar_inspecao" %>
+                            <%= button_tag "Gravar", type: "submit", class: "btn btn-primary", name: "btn_criar" %>
+                            <%= button_tag "Gravar e prosseguir inspeção", type: "submit", class: "btn btn-primary", name: "btn_doc_existente" %>
                                                         
                         <% end %>                                                                     
                         

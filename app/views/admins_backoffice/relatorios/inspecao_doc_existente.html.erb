@@ -40,36 +40,224 @@
                             <div class="form-group row"> 
                             
                             </div>
-                            <div class="form-group row"> 
-                                <div class="form-check col-sm-2 mb-0 mb-sm-0">
+                            
+                            
+                            <div class="form-group row">
+                                <div class="form-check col-sm-3 mb-0 mb-sm-0 d-inline">
+                                    <%= form.check_box :bpossui_registro_seguranca, class: "form-check-input", id: "RegistroSegurancaCheckbox" %>
+                                    <%= form.label :bpossui_registro_seguranca, "Registro de segurança", class: "form-check-label", for: "RegistroSegurancaCheckbox" %>
+                                </div>
+                                <div class="form-check col-sm-4 mb-0 mb-sm-0 d-inline">
+                                    <%= form.check_box :btem_data_instalacao_no_reg_seguranca, class: "form-check-input", id: "DataInstVasoCheckbox", disabled: !@relatorio.bpossui_registro_seguranca %>
+                                    <%= form.label :btem_data_instalacao_no_reg_seguranca, "Tem data de instalação do vaso", class: "form-check-label", for: "DataInstVasoCheckbox" %>
+                                </div>
+                            </div>
+                            
+                            
+                            <div class="form-group row">
+                                <div class="form-check col-sm-3 mb-0 mb-sm-0 d-inline">
                                     <%= form.check_box :bexiste_prontuario, class: "form-check-input", id: "ProntuarioCheckbox" %>
                                     <%= form.label :bexiste_prontuario, "Prontuário", class: "form-check-label", for: "ProntuarioCheckbox" %>
                                 </div>
-                                <div class="form-check col-sm-2 mb-0 mb-sm-0">                                    
+                                <div class="form-check col-sm-2 mb-0 mb-sm-0 d-inline">                                    
                                     <%= form.check_box :bprontuario_digital, class: "form-check-input", id: "ProntuarioDigitalCheckbox", disabled: !@relatorio.bprontuario_digital %>
                                     <%= form.label :bprontuario_digital, "Digital", class: "form-check-label", for: "ProntuarioDigitalCheckbox" %>
                                 </div>
                             </div>
                             
-                            <div class="form-group row"> 
-                                <%= form.label :foi_executada_inspecao_inicial, 'Inspeção inicial', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
-                                <div class="btn-group col-sm-10 mb-0 mb-sm-0" data-toggle="buttons">
+                            
+                            <div class="form-group row">
+                                <%= form.label :foi_executada_inspecao_inicial, 'Inspeção inicial', {class: "col-sm-3 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="btn-group col-sm-6 mb-0 mb-sm-0" data-toggle="buttons">
                                     <% options = { "Não" => 0, "Sim" => 1, "Dispensado" => 2, "1a inspeção" => 3 } %>
                                     <% options.each do |label, value| %>
-                                        <label class="btn btn-primary">
-                                            <%= radio_button_tag :foi_executada_inspecao_inicial, value %>
+                                        <label class="btn btn-dark">
+                                            <% if  @relatorio.foi_executada_inspecao_inicial == value %>
+                                                <%= radio_button_tag :foi_executada_inspecao_inicial, value, checked: true %>
+                                            <%else%>
+                                                <%= radio_button_tag :foi_executada_inspecao_inicial, value %>
+                                            <%end%>                                            
                                             <%= label %>
                                         </label>
                                     <% end %>
                                 </div>
                             </div>
-                                                      
+                            
+                            <div class="form-group row">
+                                <%= form.label :possui_relatorios_inspecao, 'Relatórios inspeção anterior', {class: "col-sm-3 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="btn-group col-sm-6 mb-0 mb-sm-0" data-toggle="buttons">
+                                    <% options = { "Não" => 0, "Sim" => 1, "Dispensado (inicial/1a periódica)" => 2 } %>
+                                    <% options.each do |label, value| %>
+                                        <label class="btn btn-dark">
+                                            <% if  @relatorio.possui_relatorios_inspecao == value %>
+                                                <%= radio_button_tag :possui_relatorios_inspecao, value, checked: true %>
+                                            <%else%>
+                                                <%= radio_button_tag :possui_relatorios_inspecao, value %>
+                                            <%end%>
+                                            <%= label %>
+                                        </label>
+                                    <% end %>
+                                </div>
+                            </div>                            
+                            
+                            <div class="form-group row">
+                                <div class="form-check col-sm-6 mb-0 mb-sm-0">                                    
+                                    <%= form.check_box :bexiste_inspecao_periodica_interna_externa_teste_hidrostatico, class: "form-check-input", id: "InspecoesCheckbox" %>
+                                    <%= form.label :bexiste_inspecao_periodica_interna_externa_teste_hidrostatico, "Inspeção periódica, interna, externa ou teste hidrostático", class: "form-check-label", for: "InspecoesCheckbox" %>
+                                </div>                                
+                                <div class="form-check col-sm-6 mb-0 mb-sm-0">                                    
+                                    <%= form.check_box :bexiste_inspecao_reconstituicao_prontuario, class: "form-check-input", id: "ReconstituicaoProntuarioCheckbox" %>
+                                    <%= form.label :bexiste_inspecao_reconstituicao_prontuario, "Inspeção de reconstituição de prontuário", class: "form-check-label", for: "ReconstituicaoProntuarioCheckbox" %>
+                                </div>
+
+                            </div>
+                            
+                            <div class="form-group row">
+                                <div class="form-check col-sm-6 mb-0 mb-sm-0">                                    
+                                    <%= form.check_box :bpossui_programacao_inspecoes, class: "form-check-input", id: "ProgramacaoInspCheckbox" %>
+                                    <%= form.label :bpossui_programacao_inspecoes, "Programação das inspeções", class: "form-check-label", for: "ProgramacaoInspCheckbox" %>
+                                </div>
+                                <div class="form-check col-sm-6 mb-0 mb-sm-0">                                    
+                                    <%= form.check_box :bpossui_laudo_teste_hidrostatico, class: "form-check-input", id: "LaudoTHCheckbox" %>
+                                    <%= form.label :bpossui_laudo_teste_hidrostatico, "Laudo de teste hidrostático", class: "form-check-label", for: "LaudoTHCheckbox" %>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <%= form.label :possui_certif_calibracao_dispositivos_seguranca, 'Certificado de calibração do dispositivo de segurança', {class: "col-sm-5 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="btn-group col-sm-6 mb-0 mb-sm-0" data-toggle="buttons">
+                                    <% options = { "Não" => 0, "Sim" => 1, "Dispensado cfme NR13 (13.5.1.6e)" => 2 } %>
+                                    <% options.each do |label, value| %>
+                                        <label class="btn btn-dark">
+                                            <% if  @relatorio.possui_certif_calibracao_dispositivos_seguranca == value %>
+                                                <%= radio_button_tag :possui_certif_calibracao_dispositivos_seguranca, value, checked: true %>
+                                            <%else%>
+                                                <%= radio_button_tag :possui_certif_calibracao_dispositivos_seguranca, value %>
+                                            <%end%>
+                                            <%= label %>
+                                        </label>
+                                    <% end %>
+                                </div>
+                            </div>   
+                            
+                            <div class="form-group row">                                
+                                <div class="form-check col-sm-3 mb-0 mb-sm-0">                                    
+                                    <%= form.check_box :bpossui_mapa_medicao_espessura, class: "form-check-input", id: "EspessuraCheckbox" %>
+                                    <%= form.label :bpossui_mapa_medicao_espessura, "Mapa de espessura", class: "form-check-label", for: "EspessuraCheckbox" %>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <div class="form-check col-sm-6 mb-0 mb-sm-0">
+                                    <%= form.check_box :bpossui_plaqueta_identificacao_fabricante_vaso, class: "form-check-input", id: "PlaquetaFabCheckbox" %>
+                                    <%= form.label :bpossui_plaqueta_identificacao_fabricante_vaso, "Plaqueta de identificação do fabricante", class: "form-check-label", for: "PlaquetaFabCheckbox" %>
+                                </div>
+                                <div class="form-check col-sm-6 mb-0 mb-sm-0">
+                                    <%= form.check_box :bpossui_plaqueta_identificacao_nr13_dovaso, class: "form-check-input", id: "PlaquetaVasoCheckbox" %>
+                                    <%= form.label :bpossui_plaqueta_identificacao_nr13_dovaso, "Plaqueta de identificação do vaso", class: "form-check-label", for: "PlaquetaVasoCheckbox" %>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <div class="form-check col-sm-5 mb-0 mb-sm-0">
+                                    <%= form.check_box :bexiste_desenho_plaqueta_identif_vaso, class: "form-check-input", id: "DesenhoPlaquetaCheckbox" %>
+                                    <%= form.label :bexiste_desenho_plaqueta_identif_vaso, "Desenho da plaqueta de identificação do vaso", class: "form-check-label", for: "DesenhoPlaquetaCheckbox" %>
+                                </div>                                
+                            </div>
                                                                                                              
                             <hr>
+                                                        
+                            <!-- Botão de dropdown -->
+                            <div class="btn-group">
+                              <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="collapse" data-target="#camposAdicionais" aria-expanded="false" aria-controls="camposAdicionais">
+                                Campos adicionais
+                                <span class="caret"></span>
+                              </button>
+                            </div>
+                          
+                            <!-- Campos adicionais (inicialmente ocultos) -->
+                            <div class="collapse" id="camposAdicionais">
+                                <div class="form-group row"></div>
+                                <div class="form-group row">
+                                    <div class="form-check col-sm-6 mb-0 mb-sm-0">
+                                        <%= form.check_box :bexiste_memorial_calculo_teste_hidrostatico, class: "form-check-input", id: "MemorialTHCheckbox" %>
+                                        <%= form.label :bexiste_memorial_calculo_teste_hidrostatico, "Memorial de cálculo do teste hidrostático", class: "form-check-label", for: "MemorialTHCheckbox" %>    
+                                    </div>  
+                                    <div class="form-check col-sm-6 mb-0 mb-sm-0">
+                                        <%= form.check_box :bexiste_inspecao_problema_operacional, class: "form-check-input", id: "InspProbOperCheckbox" %>
+                                        <%= form.label :bexiste_inspecao_problema_operacional, "Inspeção devido a problema operacional", class: "form-check-label", for: "InspProbOperCheckbox" %>    
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="form-check col-sm-6 mb-0 mb-sm-0">
+                                        <%= form.check_box :bexiste_inspecao_alteracao_operacional, class: "form-check-input", id: "InspAlterOperCheckbox" %>
+                                        <%= form.label :bexiste_inspecao_alteracao_operacional, "Inspeção de alteração de parâmetros operacionais", class: "form-check-label", for: "InspAlterOperCheckbox" %>
+                                    </div>                                    
+                                    <div class="form-check col-sm-6 mb-0 mb-sm-0">
+                                        <%= form.check_box :bexiste_inspecao_de_alteracao, class: "form-check-input", id: "InspAlterEstruturalCheckbox" %>
+                                        <%= form.label :bexiste_inspecao_de_alteracao, "Inspeção devido a alteração estrutural", class: "form-check-label", for: "InspAlterEstruturalCheckbox" %>
+                                    </div>
+                                </div>                                
+                                <div class="form-group row">
+                                    <div class="form-check col-sm-6 mb-0 mb-sm-0">
+                                        <%= form.check_box :bexiste_inspecao_de_reparo, class: "form-check-input", id: "InspReparoCheckbox" %>
+                                        <%= form.label :bexiste_inspecao_de_reparo, "Inspeção de reparo estrutural", class: "form-check-label", for: "InspReparoCheckbox" %>    
+                                    </div>                                    
+                                    <div class="form-check col-sm-6 mb-0 mb-sm-0">
+                                        <%= form.check_box :bexiste_inspecao_deretorno_ouparada_deoperacao, class: "form-check-input", id: "InspRetornoParadaCheckbox" %>
+                                        <%= form.label :bexiste_inspecao_deretorno_ouparada_deoperacao, "Inspeção de retorno/parada de operação", class: "form-check-label", for: "InspRetornoParadaCheckbox" %>    
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group row">
+                                    <%= form.label :tem_operador_qualificado_operacao, 'Certificado de operador qualificado', {class: "col-sm-4 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="btn-group col-sm-6 mb-0 mb-sm-0" data-toggle="buttons">
+                                        <% options = { "Não" => 0, "Sim" => 1, "Dispensado (Cat. III, IV e V)" => 2 } %>
+                                        <% options.each do |label, value| %>
+                                            <label class="btn btn-dark">
+                                                <% if  @relatorio.tem_operador_qualificado_operacao == value %>
+                                                    <%= radio_button_tag :tem_operador_qualificado_operacao, value, checked: true %>
+                                                <%else%>
+                                                    <%= radio_button_tag :tem_operador_qualificado_operacao, value %>
+                                                <%end%>
+                                                <%= label %>
+                                            </label>
+                                        <% end %>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group row">
+                                    <div class="form-check col-sm-6 mb-0 mb-sm-0">
+                                        <%= form.check_box :bexiste_desenho_conjunto_geral, class: "form-check-input", id: "DesenhoConjuntoCheckbox" %>
+                                        <%= form.label :bexiste_desenho_conjunto_geral, "Desenho de conjunto geral", class: "form-check-label", for: "DesenhoConjuntoCheckbox" %>    
+                                    </div>                                    
+                                    <div class="form-check col-sm-6 mb-0 mb-sm-0">
+                                        <%= form.check_box :bexiste_desenho_detalhes_de_todos_elementos, class: "form-check-input", id: "DesenhoDetalheElemCheckbox" %>
+                                        <%= form.label :bexiste_desenho_detalhes_de_todos_elementos, "Desenho de detalhes de todos elementos", class: "form-check-label", for: "DesenhoDetalheElemCheckbox" %>    
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group row">
+                                    <div class="form-check col-sm-6 mb-0 mb-sm-0">
+                                        <%= form.check_box :bexiste_projeto_instalacao_geral_localizacao_vasos, class: "form-check-input", id: "ProjetoInstGeralCheckbox" %>
+                                        <%= form.label :bexiste_projeto_instalacao_geral_localizacao_vasos, "Projeto de instalação geral/localização dos vasos", class: "form-check-label", for: "ProjetoInstGeralCheckbox" %>    
+                                    </div>                                    
+                                    <div class="form-check col-sm-6 mb-0 mb-sm-0">
+                                        <%= form.check_box :bexiste_projeto_instalacao_individual_dovaso, class: "form-check-input", id: "ProjInstVasoCheckbox" %>
+                                        <%= form.label :bexiste_projeto_instalacao_individual_dovaso, "Projeto de instalação individual do vaso", class: "form-check-label", for: "ProjInstVasoCheckbox" %>    
+                                    </div>
+                                </div>
+                                
+                                
+                            </div>
                             
-                            <%= button_tag "Gravar e Voltar", type: "submit", class: "btn btn-primary", name: "btn_gravar_voltar" %>
+                            <hr>
+                            
+                            <br> <br>
+                            
+                            <%= button_tag "Gravar e Voltar", type: "submit", class: "btn btn-primary", name: "btn_insp_inicio" %>
                             <%= button_tag "Gravar e Sair", type: "submit", class: "btn btn-primary", name: "btn_gravar_sair" %>
-                            <%= button_tag "Gravar e Avançar", type: "submit", class: "btn btn-primary", name: "btn_gravar_avancar" %>
+                            <%= button_tag "Gravar e Avançar", type: "submit", class: "btn btn-primary", name: "btn_verif_iniciais" %>
                                                         
                         <% end %>                                                                     
                         
@@ -96,6 +284,24 @@
         // Desabilita e desmarca o segundo checkbox
         prontuarioDigitalCheckbox.disabled = true;
         prontuarioDigitalCheckbox.checked = false;
+      }
+    });
+    
+    // Obtém referências aos elementos dos checkboxes
+    var registroSegurancaCheckbox = document.getElementById("RegistroSegurancaCheckbox");
+    var dataInstVasoCheckbox = document.getElementById("DataInstVasoCheckbox");
+    
+    // Adiciona um ouvinte de eventos ao primeiro checkbox
+    registroSegurancaCheckbox.addEventListener("change", function() {
+      // Verifica se o primeiro checkbox está marcado
+      if (registroSegurancaCheckbox.checked) {
+        // Habilita e desmarca o segundo checkbox
+        dataInstVasoCheckbox.disabled = false;
+        dataInstVasoCheckbox.checked = false;
+      } else {
+        // Desabilita e desmarca o segundo checkbox
+        dataInstVasoCheckbox.disabled = true;
+        dataInstVasoCheckbox.checked = false;
       }
     });
 </script>

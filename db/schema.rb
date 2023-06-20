@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_06_11_154224) do
+ActiveRecord::Schema.define(version: 2023_06_14_141252) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_repack"
@@ -291,9 +291,9 @@ ActiveRecord::Schema.define(version: 2023_06_11_154224) do
     t.string "codigo_usado_inspecao", limit: 35, default: "-x-x-x-x-x-x-x-x-x-x-x-x-x-x-"
     t.string "norma_brasileira_construcao", limit: 35, default: "-x-x-x-x-x-x-x-x-x-x-x-x-x-x-"
     t.string "norma_brasileira_inspecao", limit: 35, default: "ABNT NBR 15417:2007"
-    t.boolean "bexiste_prontuario", default: false, null: false
+    t.boolean "bexiste_prontuario", default: true, null: false
     t.boolean "bprontuario_digital", default: false, null: false
-    t.integer "foi_executada_inspecao_inicial", default: 1, null: false
+    t.integer "foi_executada_inspecao_inicial", default: 0, null: false
     t.boolean "bpossui_registro_seguranca", default: true, null: false
     t.boolean "btem_data_instalacao_no_reg_seguranca", default: false, null: false
     t.boolean "bexiste_desenho_plaqueta_identif_vaso", default: true
@@ -311,7 +311,7 @@ ActiveRecord::Schema.define(version: 2023_06_11_154224) do
     t.boolean "bexiste_projeto_instalacao_geral_localizacao_vasos", default: false, null: false
     t.integer "tem_operador_qualificado_operacao", default: 2, null: false
     t.boolean "bpossui_laudo_teste_hidrostatico", default: true, null: false
-    t.integer "possui_certif_calibracao_dispositivos_seguranca", default: 2, null: false
+    t.integer "possui_certif_calibracao_dispositivos_seguranca", default: 0, null: false
     t.integer "possui_relatorios_inspecao", default: 1, null: false
     t.boolean "bpossui_programacao_inspecoes", default: true, null: false
     t.integer "recomendacoes_insp_anterior_foram_realizadas", default: 1

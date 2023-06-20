@@ -1,0 +1,226 @@
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800"> Inspecionando Verificações Iniciais </h1>
+</div>
+
+<!-- Se tiver algum erro dentro de @admin, erro devido a processo de salvamento por exemplo, entra no alerta abaixo -->
+<% if @relatorio.errors.any? %>
+    <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>        
+        <ul>
+            <% @relatorio.errors.full_messages.each do |message| %>
+            <li> <%= message -%> </li>
+            <% end %>
+        </ul>
+    </div>
+<% end %>
+
+
+<!-- CONTAINER PARA O FORM -->
+<div class="container">
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+                <!-- div class="col-lg-5 d-none d-lg-block bg-register-image"></div -->
+                
+                <div class="col-lg-12">
+                    <div class="p-5">
+                        <!--div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                        </div-->
+                       
+                        <%= form_with(model: [ :admins_backoffice, @relatorio ], local: true, :html => { :multipart => true }) do |form| %>
+                            <span class="badge badge-light" style="font-size: 1.1em;">Relatório</span>
+                            <span class="badge badge-info badge-lg" style="font-size: 1.1em;"><%= @relatorio.id %></span>
+                            <span class="badge badge-light badge-lg" style="font-size: 1.1em;"><%= @relatorio.vaso.fabricante.nome_curto %></span>
+                            <span class="badge badge-light badge-lg" style="font-size: 1.1em;"><%= @relatorio.vaso.num_serie %></span>
+                            <span class="badge badge-light badge-lg" style="font-size: 1.1em;"><%= @relatorio.vaso.proprietaria.nome_curto %></span>
+                             
+                            <div class="form-group row"> 
+                            
+                            </div>
+                            
+                            <div class="form-group row">
+                                <%= form.label :recomendacoes_insp_anterior_foram_realizadas, 'Recomendações inspeção anterior foram realizadas', {class: "col-sm-5 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="btn-group col-sm-6 mb-0 mb-sm-0" data-toggle="buttons">
+                                    <% options = { "Não" => 0, "Sim" => 1, "Parcialmente" => 2, "1a Inspeção" => 3 } %>
+                                    <% options.each do |label, value| %>
+                                        <label class="btn btn-dark">
+                                            <% if  @relatorio.recomendacoes_insp_anterior_foram_realizadas == value %>
+                                                <%= radio_button_tag :recomendacoes_insp_anterior_foram_realizadas, value, checked: true %>
+                                            <%else%>
+                                                <%= radio_button_tag :recomendacoes_insp_anterior_foram_realizadas, value %>
+                                            <%end%>
+                                            <%= label %>
+                                        </label>
+                                    <% end %>
+                                </div>
+                            </div>   
+                            
+                            <div class="form-group row">
+                                <%= form.label :tipo_fixacao_vaso, 'Fixação do vaso', {class: "col-sm-5 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="btn-group col-sm-6 mb-0 mb-sm-0" data-toggle="buttons">
+                                    <% options = { "Fixo" => 0, "Móvel" => 1, "Misto" => 2 } %>
+                                    <% options.each do |label, value| %>
+                                        <label class="btn btn-dark">
+                                            <% if  @relatorio.tipo_fixacao_vaso == value %>
+                                                <%= radio_button_tag :tipo_fixacao_vaso, value, checked: true %>
+                                            <%else%>
+                                                <%= radio_button_tag :tipo_fixacao_vaso, value %>
+                                            <%end%>
+                                            <%= label %>
+                                        </label>
+                                    <% end %>
+                                </div>
+                            </div>   
+                            
+                            <div class="form-group row">
+                                <%= form.label :tipo_houve_alteracao_local_instalacao, 'Local de instalalção alterado', {class: "col-sm-5 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="btn-group col-sm-6 mb-0 mb-sm-0" data-toggle="buttons">
+                                    <% options = { "Não" => 0, "Sim" => 1, "1a Inspeção" => 2, "Vaso móvel" => 3 } %>
+                                    <% options.each do |label, value| %>
+                                        <label class="btn btn-dark">
+                                            <% if  @relatorio.tipo_houve_alteracao_local_instalacao == value %>
+                                                <%= radio_button_tag :tipo_houve_alteracao_local_instalacao, value, checked: true %>
+                                            <%else%>
+                                                <%= radio_button_tag :tipo_houve_alteracao_local_instalacao, value %>
+                                            <%end%>
+                                            <%= label %>
+                                        </label>
+                                    <% end %>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <%= form.label :possui_acesso_visual_externo, 'Existe acesso visual externo', {class: "col-sm-5 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="btn-group col-sm-6 mb-0 mb-sm-0" data-toggle="buttons">
+                                    <% options = { "Não" => 0, "Total" => 1, "Parcial" => 2 } %>
+                                    <% options.each do |label, value| %>
+                                        <label class="btn btn-dark">                                            
+                                            <% if  @relatorio.possui_acesso_visual_externo == value %>
+                                                <%= radio_button_tag :possui_acesso_visual_externo, value, checked: true %>
+                                            <%else%>
+                                                <%= radio_button_tag :possui_acesso_visual_externo, value %>
+                                            <%end%>
+                                            <%= label %>
+                                        </label>
+                                    <% end %>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <%= form.label :tipo_acesso_interno, 'Tipo de acesso interno', {class: "col-sm-5 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="btn-group col-sm-6 mb-0 mb-sm-0" data-toggle="buttons">
+                                    <% options = { "Janela de visita" => 0, "Pequena abertura" => 1, "Não possui" => 2 } %>
+                                    <% options.each do |label, value| %>
+                                        <label class="btn btn-dark">
+                                            <% if  @relatorio.tipo_acesso_interno == value %>
+                                                <%= radio_button_tag :tipo_acesso_interno, value, checked: true %>
+                                            <%else%>
+                                                <%= radio_button_tag :tipo_acesso_interno, value %>
+                                            <%end%>
+                                            <%= label %>
+                                        </label>
+                                    <% end %>
+                                </div>
+                            </div>                            
+                                                        
+                            <!-- Botão de dropdown -->
+                            <div class="btn-group">
+                              <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="collapse" data-target="#camposAdicionais" aria-expanded="false" aria-controls="camposAdicionais">
+                                Campos adicionais
+                                <span class="caret"></span>
+                              </button>
+                            </div>
+                          
+                            <!-- Campos adicionais (inicialmente ocultos) -->
+                            <div class="collapse" id="camposAdicionais">
+                                <div class="form-group row"></div>
+                                
+                                <div class="form-group row">
+                                    <div class="form-check col-sm-6 mb-0 mb-sm-0 d-inline">
+                                        <%= form.check_box :bvaso_emoperacao_mesmocom_deterioracao_atestada, class: "form-check-input", id: "EmOpDeterioracaoCheckbox" %>
+                                        <%= form.label :bvaso_emoperacao_mesmocom_deterioracao_atestada, "Em operação mesmo com deterioração atestada", class: "form-check-label red-label", for: "EmOpDeterioracaoCheckbox" %>
+                                    </div>
+
+                                    <div class="form-check col-sm-6 mb-0 mb-sm-0 d-inline">
+                                        <%= form.check_box :b_vaso_inativo_mais_doze_meses, class: "form-check-input", id: "Inativo12MesesCheckbox" %>
+                                        <%= form.label :b_vaso_inativo_mais_doze_meses, "Está inativo há mais de 12 meses", class: "form-check-label", for: "Inativo12MesesCheckbox" %>
+                                    </div>                                    
+                                </div>
+                                
+                                <div class="form-group row">
+                                    <div class="form-check col-sm-6 mb-0 mb-sm-0 d-inline">
+                                        <%= form.check_box :possui_respiro, class: "form-check-input", id: "PossuiRespiroCheckbox" %>
+                                        <%= form.label :possui_respiro, "Possui respiro", class: "form-check-label", for: "PossuiRespiroCheckbox" %>
+                                    </div>
+
+                                    <div class="form-check col-sm-6 mb-0 mb-sm-0 d-inline">
+                                        <%= form.check_box :possui_indicador_nivel, class: "form-check-input", id: "PossiIndicadorNivelCheckbox" %>
+                                        <%= form.label :possui_indicador_nivel, "Possui indicador de nível", class: "form-check-label", for: "PossiIndicadorNivelCheckbox" %>
+                                    </div>                                    
+                                </div>
+                                
+                                <div class="form-group row">
+                                    <div class="form-check col-sm-6 mb-0 mb-sm-0 d-inline">
+                                        <%= form.check_box :possui_indicador_temperatura, class: "form-check-input", id: "PossiIndicadorTempCheckbox" %>
+                                        <%= form.label :possui_indicador_temperatura, "Possui indicador de temperatura", class: "form-check-label", for: "PossiIndicadorTempCheckbox" %>
+                                    </div>
+                                    <%= form.label :fluido_servico_id, 'Fluído de serviço', {class: "col-sm-2 col-form-label text-sm-left text-lg-left"} %>
+                                    <div class="col-sm-4 mb-0 mb-sm-0">            
+                                        <%= form.collection_select(:fluido_servico_id, @fluido_servicos, :id, :descricao, { include_blank: 'Selecione um fluído'}, {class: 'select-width-150 form-control' }) %>
+                                    </div>
+                                </div>    
+
+                                <div class="form-group row">
+                                    <%= form.label :tipo_apresenta_sinais_reparo, 'Apresenta sinais de reparo', {class: "col-sm-3 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="btn-group col-sm-6 mb-0 mb-sm-0" data-toggle="buttons">
+                                        <% options = { "Não" => 0, "Sim - com projeto" => 1, "Sim - sem projeto" => 2 } %>
+                                        <% options.each do |label, value| %>
+                                            <label class="btn btn-dark">
+                                                <% if  @relatorio.tipo_apresenta_sinais_reparo == value %>
+                                                    <%= radio_button_tag :tipo_apresenta_sinais_reparo, value, checked: true %>
+                                                <%else%>
+                                                    <%= radio_button_tag :tipo_apresenta_sinais_reparo, value %>
+                                                <%end%>                                            
+                                                <%= label %>
+                                            </label>
+                                        <% end %>
+                                    </div>
+                                </div>
+                                                            
+                                <div class="form-group row">                                
+                                    <%= form.label :data_reparos_alteracoes, 'Data do reparo', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-3 mb-0 mb-sm-0">
+                                        <%= form.date_field :data_reparos_alteracoes, class: "form-control" %>
+                                    </div>
+                                    <%= form.label :reparos_observados, 'Reparos observados', {class: "col-sm-3 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="form-check col-sm-4 mb-0 mb-sm-0">
+                                        <%= form.text_field :reparos_observados, class: "form-control"  %>
+                                    </div>
+                                </div>
+                                <div class="form-group row">                                    
+                                    <%= form.label :metodo_alternativo_exame_interno, 'Método alternativo para acesso interno', {class: "col-sm-4 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="form-check col-sm-8 mb-0 mb-sm-0">
+                                        <%= form.text_field :metodo_alternativo_exame_interno, class: "form-control"  %>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            
+                            <hr>
+                            
+                            <br> <br>
+                            
+                            <%= button_tag "Gravar e Voltar", type: "submit", class: "btn btn-primary", name: "btn_doc_existente" %>
+                            <%= button_tag "Gravar e Sair", type: "submit", class: "btn btn-primary", name: "btn_gravar_sair" %>
+                            <%= button_tag "Gravar e Avançar", type: "submit", class: "btn btn-primary", name: "btn_insp_contratadas" %>
+                                                        
+                        <% end %>                                                                     
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- FIM DO CONTAINER DO FORM -->
