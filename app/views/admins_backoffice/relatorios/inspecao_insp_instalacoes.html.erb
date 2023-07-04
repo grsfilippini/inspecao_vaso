@@ -1,0 +1,92 @@
+<%= render partial: 'admins_backoffice/relatorios/shared/antes_form_inspecao' %>
+
+                       
+                        <%= form_with(model: [ :admins_backoffice, @relatorio ], local: true, :html => { :multipart => true }) do |form| %>
+                        
+                            <%= render partial: 'admins_backoffice/relatorios/shared/botoes_navegacao' %>
+                        
+                            <div class="form-group row">
+                                <div class="form-check col-sm-12 mb-0 mb-sm-0 d-inline">
+                                    <%= form.check_box :bpossui_placa_dolocal_deinstalacao, class: "form-check-input", id: "PlacaLocalCheckbox" %>
+                                    <%= form.label :bpossui_placa_dolocal_deinstalacao, "Possui placa indicando o local de instalação do vaso", class: "form-check-label", for: "PlacaLocalCheckbox" %>
+                                </div>                                   
+                            </div>                            
+                            
+                            <div class="form-group row">                                
+                                <%= form.label :ambiente_inst_id, 'Ambiente de instalação', {class: "col-sm-3 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="col-sm-6 mb-0 mb-sm-0">            
+                                    <%= form.collection_select(:ambiente_inst_id, @ambiente_insts, :id, :ambiente, { include_blank: 'Selecione um ambiente de instalação'}, {class: 'select-width-150 form-control' }) %>
+                                </div>
+                            </div>                            
+                                                        
+                            <div class="form-group row">
+                                <%= form.label :tipo_cobetura, 'Cobertura', {class: "col-sm-3 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="btn-group col-sm-6 mb-0 mb-sm-0" data-toggle="buttons">
+                                    <% options = { "Não tem" => 0, "Tem cobertura" => 1, "Cobertura improvisada" => 2 } %>
+                                    <% options.each do |label, value| %>
+                                        <label class="btn btn-dark">
+                                            <% if  @relatorio.tipo_cobetura == value %>
+                                                <%= radio_button_tag :tipo_cobetura, value, checked: true %>
+                                            <%else%>
+                                                <%= radio_button_tag :tipo_cobetura, value %>
+                                            <%end%>
+                                            <%= label %>
+                                        </label>
+                                    <% end %>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <div class="form-check col-sm-12 mb-0 mb-sm-0 d-inline">
+                                    <%= form.check_box :bdispoe_duassaidas_amplas_sinalizadas_desobstruidas, class: "form-check-input", id: "DuasSaidasCheckbox" %>
+                                    <%= form.label :bdispoe_duassaidas_amplas_sinalizadas_desobstruidas, "Dispões de duas saídas amplas sinalizadas", class: "form-check-label", for: "DuasSaidasCheckbox" %>
+                                </div>                                   
+                            </div>
+                            
+                            <div class="form-group row">
+                                <div class="form-check col-sm-12 mb-0 mb-sm-0 d-inline">
+                                    <%= form.check_box :bdispor_acesso_facil_seguro_paraoperacao_manutencao, class: "form-check-input", id: "AcessoFacilCheckbox" %>
+                                    <%= form.label :bdispor_acesso_facil_seguro_paraoperacao_manutencao, "Dispões de acesso fácil e seguro para operação e manutenção", class: "form-check-label", for: "AcessoFacilCheckbox" %>
+                                </div>                                   
+                            </div>
+                            
+                            <div class="form-group row">
+                                <div class="form-check col-sm-12 mb-0 mb-sm-0 d-inline">
+                                    <%= form.check_box :bdispor_ventilacao_permanente, class: "form-check-input", id: "VentilacaoCheckbox" %>
+                                    <%= form.label :bdispor_ventilacao_permanente, "Dispõe de ventilação permanente com entradas de ar que não possam ser bloqueadas", class: "form-check-label", for: "VentilacaoCheckbox" %>
+                                </div>                                   
+                            </div>                                                                                    
+                            
+                            <div class="form-group row">
+                                <div class="form-check col-sm-12 mb-0 mb-sm-0 d-inline">
+                                    <%= form.check_box :bdispor_iluminacao_artificial, class: "form-check-input", id: "IluminacaoArtificialCheckbox" %>
+                                    <%= form.label :bdispor_iluminacao_artificial, "Dispõe de iluminação artificial", class: "form-check-label", for: "IluminacaoArtificialCheckbox" %>
+                                </div>                                   
+                            </div>
+                            
+                            <div class="form-group row">
+                                <div class="form-check col-sm-12 mb-0 mb-sm-0 d-inline">
+                                    <%= form.check_box :bdispor_iluminacao_artificial, class: "form-check-input", id: "IluminacaoArtificialCheckbox" %>
+                                    <%= form.label :bdispor_iluminacao_artificial, "Dispõe de iluminação artificial", class: "form-check-label", for: "IluminacaoArtificialCheckbox" %>
+                                </div>                                   
+                            </div>
+                            
+                            <div class="form-group row">
+                                <div class="form-check col-sm-12 mb-0 mb-sm-0 d-inline">
+                                    <%= form.check_box :belementos_facilmente_acessiveis_drenosrespiroseoutros, class: "form-check-input", id: "ElementosAcessiveisCheckbox" %>
+                                    <%= form.label :belementos_facilmente_acessiveis_drenosrespiroseoutros, "Os elementos de controle são acessíveis, drenos, respiros e outros", class: "form-check-label", for: "ElementosAcessiveisCheckbox" %>
+                                </div>                                   
+                            </div>                            
+                            
+                            
+                            <hr>
+                            
+                            <br> <br>
+                            
+                            <%= button_tag "Gravar e Voltar", type: "submit", class: "btn btn-primary", name: "btn_insp_normas" %>
+                            <%= button_tag "Gravar e Sair", type: "submit", class: "btn btn-primary", name: "btn_gravar_sair" %>
+                            <%= button_tag "Gravar e Avançar", type: "submit", class: "btn btn-primary", name: "btn_insp_manometro" %>
+                                                        
+                        <% end %>                                                                     
+
+<%= render partial: 'admins_backoffice/relatorios/shared/depois_form_inspecao' %>

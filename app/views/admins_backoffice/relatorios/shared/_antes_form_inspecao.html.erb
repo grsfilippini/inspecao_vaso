@@ -1,0 +1,41 @@
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800"> Inspecionando <%= '- ' + @etapa %> </h1>
+</div>
+
+<!-- Se tiver algum erro dentro de @admin, erro devido a processo de salvamento por exemplo, entra no alerta abaixo -->
+<% if @relatorio.errors.any? %>
+    <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>        
+        <ul>
+            <% @relatorio.errors.full_messages.each do |message| %>
+            <li> <%= message -%> </li>
+            <% end %>
+        </ul>
+    </div>
+<% end %>
+
+
+<!-- CONTAINER PARA O FORM -->
+<div class="container">
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+                <!-- div class="col-lg-5 d-none d-lg-block bg-register-image"></div -->
+                
+                <div class="col-lg-12">
+                    <div class="p-5">
+                        <!--div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                        </div-->
+                        
+                        <span class="badge badge-light" style="font-size: 1.1em;">Relatório</span>
+                        <span class="badge badge-info badge-lg" style="font-size: 1.1em;"><%= @relatorio.id %></span>
+                        <span class="badge badge-light badge-lg" style="font-size: 1.1em;"><%= @relatorio.vaso.fabricante.nome_curto %></span>
+                        <span class="badge badge-light badge-lg" style="font-size: 1.1em;"><%= @relatorio.vaso.num_serie %></span>
+                        <span class="badge badge-light badge-lg" style="font-size: 1.1em;"><%= @relatorio.vaso.proprietaria.nome_curto %></span>
+                         
+                        <div class="form-group row"> 
+                        
+                        </div>                        

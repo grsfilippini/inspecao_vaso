@@ -1,0 +1,99 @@
+<%= render partial: 'admins_backoffice/relatorios/shared/antes_form_inspecao' %>
+
+                       
+                        <%= form_with(model: [ :admins_backoffice, @relatorio ], local: true, :html => { :multipart => true }) do |form| %>
+                            
+                            <%= render partial: 'admins_backoffice/relatorios/shared/botoes_navegacao' %>                            
+                        
+                            <div class="form-group row">
+                                <%= form.label :possui_dispositivo_deseguranca, 'Existe dispositivo de segurança', {class: "col-sm-4 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="btn-group col-sm-8 mb-0 mb-sm-0" data-toggle="buttons">
+                                    <% options = { "Não" => 0, "Válvula de segurança" => 1, "Válvula de alívio" => 2, "Válvula de segurança e alívio" => 3 } %>
+                                    <% options.each do |label, value| %>
+                                        <label class="btn btn-dark">
+                                            <% if  @relatorio.possui_dispositivo_deseguranca == value %>
+                                                <%= radio_button_tag :possui_dispositivo_deseguranca, value, checked: true %>
+                                            <%else%>
+                                                <%= radio_button_tag :possui_dispositivo_deseguranca, value %>
+                                            <%end%>
+                                            <%= label %>
+                                        </label>
+                                    <% end %>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <%= form.label :possui_dispositivo_contra_bloqueio_dodisp_seg, 'Possui dispositivo contra bloqueio do D.S.', {class: "col-sm-4 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="btn-group col-sm-8 mb-0 mb-sm-0" data-toggle="buttons">
+                                    <% options = { "Não" => 0, "Sim" => 1, "Disp. seg. instalado diretamente no vaso" => 2 } %>
+                                    <% options.each do |label, value| %>
+                                        <label class="btn btn-dark">
+                                            <% if  @relatorio.possui_dispositivo_contra_bloqueio_dodisp_seg == value %>
+                                                <%= radio_button_tag :possui_dispositivo_contra_bloqueio_dodisp_seg, value, checked: true %>
+                                            <%else%>
+                                                <%= radio_button_tag :possui_dispositivo_contra_bloqueio_dodisp_seg, value %>
+                                            <%end%>
+                                            <%= label %>
+                                        </label>
+                                    <% end %>
+                                </div>
+                            </div>   
+                            
+                            <div class="form-group row">
+                                <div class="form-check col-sm-6 mb-0 mb-sm-0 d-inline">
+                                    <%= form.check_box :bdispseg_tem_sinais_manutencao, class: "form-check-input", id: "DispSegSinaisManCheckbox" %>
+                                    <%= form.label :bdispseg_tem_sinais_manutencao, "Tem sinais de manutenção", class: "form-check-label", for: "DispSegSinaisManCheckbox" %>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <div class="form-check col-sm-6 mb-0 mb-sm-0 d-inline">
+                                    <%= form.check_box :bdispseg_foisubstituido, class: "form-check-input", id: "DispSegSubInsCheckbox" %>
+                                    <%= form.label :bdispseg_foisubstituido, "Foi substituído/instalado", class: "form-check-label orange-label", for: "DispSegSubInsCheckbox" %>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <div class="form-check col-sm-6 mb-0 mb-sm-0 d-inline">
+                                    <%= form.check_box :bdispseg_foifeito_ajuste, class: "form-check-input", id: "DispSegFeitoAjusteCheckbox" %>
+                                    <%= form.label :bdispseg_foifeito_ajuste, "Foi feito ajuste", class: "form-check-label orange-label", for: "DispSegFeitoAjusteCheckbox" %>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <div class="form-check col-sm-6 mb-0 mb-sm-0 d-inline">
+                                    <%= form.check_box :bdispseg_foifeita_calibracao, class: "form-check-input", id: "DispSegFoiCalibradoCheckbox" %>
+                                    <%= form.label :bdispseg_foifeita_calibracao, "Foi calibrado", class: "form-check-label orange-label", for: "DispSegFoiCalibradoCheckbox" %>
+                                </div>
+                            </div>                            
+                           
+                           <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <%= form.label :dispositivoseg_pabertura, "Pressão de abertura" , class: "red-label" %>
+                                    <%= form.number_field :dispositivoseg_pabertura, step: 0.001, min: -10, required: false, style: 'width: 100px;' %>
+                                    [MPa]
+                                </div>
+                            </div>
+                           
+                                          
+                            
+                            <div class="form-group row">                                
+                                <%= form.label :dispositivoseg_observacoes, 'Obs.', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="form-check col-sm-6 mb-0 mb-sm-0">
+                                    <%= form.text_field :dispositivoseg_observacoes, class: "form-control"  %>
+                                </div>
+                            </div>
+                                
+                           
+                            
+                            <hr>
+                            
+                            <br> <br>
+                            
+                            <%= button_tag "Gravar e Voltar", type: "submit", class: "btn btn-primary", name: "btn_insp_manometro" %>
+                            <%= button_tag "Gravar e Sair", type: "submit", class: "btn btn-primary", name: "btn_gravar_sair" %>
+                            <%= button_tag "Gravar e Avançar", type: "submit", class: "btn btn-primary", name: "btn_insp_dispseg" %>
+                                                        
+                        <% end %>                                                                     
+
+<%= render partial: 'admins_backoffice/relatorios/shared/depois_form_inspecao' %>

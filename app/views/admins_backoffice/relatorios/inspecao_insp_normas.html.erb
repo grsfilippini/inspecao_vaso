@@ -1,0 +1,46 @@
+<%= render partial: 'admins_backoffice/relatorios/shared/antes_form_inspecao' %>
+
+                       
+                        <%= form_with(model: [ :admins_backoffice, @relatorio ], local: true, :html => { :multipart => true }) do |form| %>
+                            
+                            <%= render partial: 'admins_backoffice/relatorios/shared/botoes_navegacao' %>
+                            
+                            <div class="form-group row">                                    
+                                <%= form.label :mte_norma_id, 'Norma regulamentadora do MTE', {class: "col-sm-4 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="col-sm-8 mb-0 mb-sm-0">            
+                                    <%= form.collection_select(:mte_norma_id, @mte_normas, :id, :descricao, { include_blank: 'Selecione a norma do MTE'}, {class: 'select-width-150 form-control' }) %>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">                                
+                                <%= form.label :norma_brasileira_inspecao, 'Norma brasileira de inspeção', {class: "col-sm-4 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="form-check col-sm-8 mb-0 mb-sm-0">
+                                    <%= form.text_field :norma_brasileira_inspecao, class: "form-control"  %>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">                                
+                                <%= form.label :codigo_usado_inspecao, 'Código usado na inspeção', {class: "col-sm-4 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="form-check col-sm-8 mb-0 mb-sm-0">
+                                    <%= form.text_field :codigo_usado_inspecao, class: "form-control"  %>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">                                
+                                <%= form.label :norma_brasileira_construcao, 'Norma brasileira de construção', {class: "col-sm-4 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="form-check col-sm-8 mb-0 mb-sm-0">
+                                    <%= form.text_field :norma_brasileira_construcao, class: "form-control"  %>
+                                </div>
+                            </div>                                
+                                                        
+                            <hr>
+                            
+                            <br> <br>
+                            
+                            <%= button_tag "Gravar e Voltar", type: "submit", class: "btn btn-primary", name: "btn_insp_contratadas" %>
+                            <%= button_tag "Gravar e Sair", type: "submit", class: "btn btn-primary", name: "btn_gravar_sair" %>
+                            <%= button_tag "Gravar e Avançar", type: "submit", class: "btn btn-primary", name: "btn_insp_instalacoes" %>
+                                                        
+                        <% end %>                                                                     
+
+<%= render partial: 'admins_backoffice/relatorios/shared/depois_form_inspecao' %>

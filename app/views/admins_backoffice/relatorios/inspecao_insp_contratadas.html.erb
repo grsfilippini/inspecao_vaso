@@ -1,0 +1,153 @@
+<%= render partial: 'admins_backoffice/relatorios/shared/antes_form_inspecao' %>
+
+                       
+                        <%= form_with(model: [ :admins_backoffice, @relatorio ], local: true, :html => { :multipart => true }) do |form| %>
+                            
+                            <%= render partial: 'admins_backoffice/relatorios/shared/botoes_navegacao' %>
+                            
+                            <fieldset class="Vaso">
+                            <legend>Vaso</legend>
+                                                
+                            <div class="form-group row">
+                                <div class="form-check col-sm-6 mb-0 mb-sm-0">                                    
+                                    <%= form.check_box :insp_contratada_vaso_inicial, class: "form-check-input", id: "InspInicialCheckbox" %>
+                                    <%= form.label :insp_contratada_vaso_inicial, "Início de operação (vaso novo)", class: "form-check-label", for: "InspInicialCheckbox" %>
+                                </div>                                
+                                <div class="form-check col-sm-6 mb-0 mb-sm-0">                                    
+                                    <%= form.check_box :insp_contratada_vaso_reconstituicao_prontuario, class: "form-check-input", id: "InspContReconstituicaoProntuarioCheckbox" %>
+                                    <%= form.label :insp_contratada_vaso_reconstituicao_prontuario, "Reconstituição de prontuário", class: "form-check-label", for: "InspContReconstituicaoProntuarioCheckbox" %>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <div class="form-check col-sm-6 mb-0 mb-sm-0">                                    
+                                    <%= form.check_box :insp_contratada_vaso_externa, class: "form-check-input", id: "InspContExternaCheckbox" %>
+                                    <%= form.label :insp_contratada_vaso_externa, "Externa", class: "form-check-label", for: "InspContExternaCheckbox" %>
+                                </div>                                
+                                <div class="form-check col-sm-6 mb-0 mb-sm-0">                                    
+                                    <%= form.check_box :insp_contratada_vaso_interna, class: "form-check-input", id: "InspContInternaCheckbox" %>
+                                    <%= form.label :insp_contratada_vaso_interna, "Interna", class: "form-check-label", for: "InspContInternaCheckbox" %>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <div class="form-check col-sm-6 mb-0 mb-sm-0">                                    
+                                    <%= form.check_box :insp_contratada_vaso_teste_hidrostatico, class: "form-check-input", id: "InspContTHCheckbox" %>
+                                    <%= form.label :insp_contratada_vaso_teste_hidrostatico, "Teste hidrostático", class: "form-check-label", for: "InspContTHCheckbox" %>
+                                </div>                                
+                                <div class="form-check col-sm-6 mb-0 mb-sm-0">                                    
+                                    <%= form.check_box :insp_contratada_vaso_mapa_espessura, class: "form-check-input", id: "InspEspParedeCheckbox" %>
+                                    <%= form.label :insp_contratada_vaso_mapa_espessura, "Medida espessura das paredes", class: "form-check-label", for: "InspEspParedeCheckbox" %>
+                                </div>
+                            </div>                                                        
+    
+                            </fieldset>
+                            
+                            
+                            <fieldset class="DispSeg">
+                            <legend>Dispositivo de segurança</legend>
+                            <div class="form-group row">
+                                <div class="form-check col-sm-6 mb-0 mb-sm-0">                                    
+                                    <%= form.check_box :insp_contratada_valvsegpop_externa, class: "form-check-input", id: "InspContDSExternaCheckbox" %>
+                                    <%= form.label :insp_contratada_valvsegpop_externa, "Externa dispositivo de segurança", class: "form-check-label", for: "InspContDSExternaCheckbox" %>
+                                </div>                                
+                                <div class="form-check col-sm-6 mb-0 mb-sm-0">                                    
+                                    <%= form.check_box :insp_contratada_valvsegpop_interna, class: "form-check-input", id: "InspContDSInternaCheckbox" %>
+                                    <%= form.label :insp_contratada_valvsegpop_interna, "Interna dispositivo de segurança", class: "form-check-label", for: "InspContDSInternaCheckbox" %>
+                                </div>
+                            </div>                            
+                            </fieldset>
+                            
+                            <fieldset class="ElemOperacao">
+                            <legend>Elementos de operação</legend>
+                            <div class="form-group row">
+                                <div class="form-check col-sm-6 mb-0 mb-sm-0">                                    
+                                    <%= form.check_box :insp_pressostato, class: "form-check-input", id: "InspContPressostatoCheckbox" %>
+                                    <%= form.label :insp_pressostato, "Pressostato", class: "form-check-label", for: "InspContPressostatoCheckbox" %>
+                                </div>                                
+                                <div class="form-check col-sm-6 mb-0 mb-sm-0">                                    
+                                    <%= form.check_box :insp_manometro, class: "form-check-input", id: "InspContManometroCheckbox" %>
+                                    <%= form.label :insp_manometro, "Manômetro", class: "form-check-label", for: "InspContManometroCheckbox" %>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="form-check col-sm-6 mb-0 mb-sm-0">                                    
+                                    <%= form.check_box :insp_dreno, class: "form-check-input", id: "InspContDrenoCheckbox" %>
+                                    <%= form.label :insp_dreno, "Dreno", class: "form-check-label", for: "InspContDrenoCheckbox" %>
+                                </div>                                
+                            </div>  
+                            </fieldset>
+                            
+                            
+                            <!-- Botão de dropdown -->
+                            <div class="btn-group">
+                              <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="collapse" data-target="#camposAdicionais" aria-expanded="false" aria-controls="camposAdicionais">
+                                Campos adicionais
+                                <span class="caret"></span>
+                              </button>
+                            </div>
+                          
+                            <!-- Campos adicionais (inicialmente ocultos) -->
+                            <div class="collapse" id="camposAdicionais">
+                                <div class="form-group row"></div>
+                                <fieldset class="Operacao">
+                                <legend>Operação</legend>
+                                <div class="form-group row">
+                                    <div class="form-check col-sm-6 mb-0 mb-sm-0 d-inline">
+                                        <%= form.check_box :insp_contratada_vaso_paradaretorno_operacao, class: "form-check-input", id: "InspContrParadaRetornoCheckbox" %>
+                                        <%= form.label :insp_contratada_vaso_paradaretorno_operacao, "Parada ou retorno de operação", class: "form-check-label", for: "InspContrParadaRetornoCheckbox" %>
+                                    </div>
+
+                                    <div class="form-check col-sm-6 mb-0 mb-sm-0 d-inline">
+                                        <%= form.check_box :insp_contratada_vaso_problema_operacional, class: "form-check-input", id: "InspContrProbOperCheckbox" %>
+                                        <%= form.label :insp_contratada_vaso_problema_operacional, "Problema operacional", class: "form-check-label", for: "InspContrProbOperCheckbox" %>
+                                    </div>                                    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="form-check col-sm-6 mb-0 mb-sm-0 d-inline">
+                                        <%= form.check_box :insp_contratada_vaso_alteracao_operacional, class: "form-check-input", id: "InspContrAltParamCheckbox" %>
+                                        <%= form.label :insp_contratada_vaso_alteracao_operacional, "Alteração de parâmetros operacionais", class: "form-check-label", for: "InspContrAltParamCheckbox" %>
+                                    </div>
+                                </div>                                
+                                </fieldset>
+
+                                <fieldset class="InstalacaoEstrutura">
+                                <legend>Instalação e estrutura</legend>
+                                <div class="form-group row">
+                                    <div class="form-check col-sm-6 mb-0 mb-sm-0 d-inline">
+                                        <%= form.check_box :insp_contratada_vaso_alteracao_estrutural, class: "form-check-input", id: "InspContrAltEstruralCheckbox" %>
+                                        <%= form.label :insp_contratada_vaso_alteracao_estrutural, "Alteração estrutural do vaso", class: "form-check-label", for: "InspContrAltEstruralCheckbox" %>
+                                    </div>
+
+                                    <div class="form-check col-sm-6 mb-0 mb-sm-0 d-inline">
+                                        <%= form.check_box :insp_contratada_vaso_alteracao_reparo, class: "form-check-input", id: "InspContrAltReparoCheckbox" %>
+                                        <%= form.label :insp_contratada_vaso_alteracao_reparo, "Alteração ou reparo", class: "form-check-label", for: "InspContrAltReparoCheckbox" %>
+                                    </div>                                    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="form-check col-sm-6 mb-0 mb-sm-0 d-inline">
+                                        <%= form.check_box :insp_contratada_vaso_projeto_instalacao_geral, class: "form-check-input", id: "InspContrPrjInstGeralCheckbox" %>
+                                        <%= form.label :insp_contratada_vaso_projeto_instalacao_geral, "Projeto de instalação geral/localização dos vasos", class: "form-check-label", for: "InspContrPrjInstGeralCheckbox" %>
+                                    </div>
+                                    <div class="form-check col-sm-6 mb-0 mb-sm-0 d-inline">
+                                        <%= form.check_box :insp_contratada_vaso_projeto_instalacao_dovaso_individual, class: "form-check-input", id: "InspContrPrjInstIndivCheckbox" %>
+                                        <%= form.label :insp_contratada_vaso_projeto_instalacao_dovaso_individual, "Projeto de instalação individual do vaso", class: "form-check-label", for: "InspContrPrjInstIndivCheckbox" %>
+                                    </div>                                    
+                                </div>                                
+                                </fieldset>
+                                
+                            </div>
+                            
+                            <hr>
+                            
+                            <br> <br>
+                            
+                            <%= button_tag "Gravar e Voltar", type: "submit", class: "btn btn-primary", name: "btn_verif_iniciais" %>
+                            <%= button_tag "Gravar e Sair", type: "submit", class: "btn btn-primary", name: "btn_gravar_sair" %>
+                            <%= button_tag "Gravar e Avançar Normas", type: "submit", class: "btn btn-primary", name: "btn_insp_normas" %>
+                            <%= button_tag "Gravar e Avançar Instalação", type: "submit", class: "btn btn-primary", name: "btn_insp_instalacoes", data: { toggle: 'tooltip' }, title: 'Salta para inspeção de instalação' %>
+                                                        
+                        <% end %>                                                                     
+                    
+                        
+<%= render partial: 'admins_backoffice/relatorios/shared/depois_form_inspecao' %>

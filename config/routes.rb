@@ -42,11 +42,17 @@ Rails.application.routes.draw do
     resources :tipo_vasos
     resources :users
     resources :relatorios
-    get 'relatorio_para_impressao', to: 'relatorios#para_imprimir'
-    get 'relatorio_em_aberto', to: 'relatorios#em_aberto'
-    get 'pesquisa_relatorio', to: 'relatorios#pesquisa'
-    get 'inspecao_doc_existente', to: 'relatorios#inspecao_doc_existente'
-    get 'inspecao_verif_iniciais', to: 'relatorios#inspecao_verif_iniciais'
+    get 'relatorio_para_impressao',  to: 'relatorios#para_imprimir'
+    get 'relatorio_em_aberto',       to: 'relatorios#em_aberto'
+    get 'pesquisa_relatorio',        to: 'relatorios#pesquisa'
+    get 'inspecao_doc_existente',    to: 'relatorios#inspecao_doc_existente'
+    get 'inspecao_verif_iniciais',   to: 'relatorios#inspecao_verif_iniciais'
+    get 'inspecao_insp_contratadas', to: 'relatorios#inspecao_insp_contratadas'
+    get 'inspecao_insp_normas',      to: 'relatorios#inspecao_insp_normas'
+    get 'inspecao_insp_instalacoes', to: 'relatorios#inspecao_insp_instalacoes'
+    get 'inspecao_insp_manometro',   to: 'relatorios#inspecao_insp_manometro'
+    get 'inspecao_insp_dispseg',     to: 'relatorios#inspecao_insp_dispseg'
+    
   end
 
   namespace :site do

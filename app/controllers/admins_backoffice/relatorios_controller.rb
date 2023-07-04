@@ -1,5 +1,12 @@
 class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
-  before_action :set_relatorio, only: [:edit, :update, :destroy, :inspecao_doc_existente, :inspecao_verif_iniciais]
+  before_action :set_relatorio, only: [:edit, :update, :destroy,
+                                       :inspecao_doc_existente,
+                                       :inspecao_verif_iniciais,
+                                       :inspecao_insp_contratadas,
+                                       :inspecao_insp_normas,
+                                       :inspecao_insp_instalacoes,
+                                       :inspecao_insp_manometro,
+                                       :inspecao_insp_dispseg]
   before_action :get_relacoes, only: [:new, :edit]
   
   def index
@@ -54,13 +61,37 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
     end
   end
 
-  def inspecao_doc_existente    
+  def inspecao_doc_existente
+    @etapa = 'Documentação Existente'
   end
   
   def inspecao_verif_iniciais
     @fluido_servicos = FluidoServico.order(:descricao)
+    @etapa = 'Verificações Iniciais'
+  end
+
+  def inspecao_insp_contratadas
+    @etapa = 'Inspeções Contratadas'
+  end
+    
+  def inspecao_insp_normas
+    @mte_normas = MteNorma.all
+    @etapa = 'Normas Utilizadas na Inspeção'
   end
   
+  def inspecao_insp_instalacoes
+    @ambiente_insts = AmbienteInst.all
+    @etapa = 'Instalações'
+  end
+  
+  def inspecao_insp_manometro    
+    @etapa = 'Manômetro'
+  end
+  
+  def inspecao_insp_dispseg
+    @etapa = 'Dispositivo de Segurança'
+  end
+    
   def update      
       if @relatorio.update(params_relatorio)        
         if params[:btn_gravar_sair]
@@ -69,11 +100,26 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
         elsif params[:btn_insp_inicio]
           redirect_to edit_admins_backoffice_relatorio_path(@relatorio.id), notice: "Relatório atualizado com sucesso!"        
         # Documentação existente
-        elsif params[:btn_doc_existente]
+        elsif params[:btn_doc_existente]          
           redirect_to admins_backoffice_inspecao_doc_existente_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para documentação existente."
         # Verificações iniciais  
-        elsif params[:btn_verif_iniciais]
+        elsif params[:btn_verif_iniciais]          
           redirect_to admins_backoffice_inspecao_verif_iniciais_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para verificações iniciais."
+        # Inspeções contratadas
+        elsif params[:btn_insp_contratadas]          
+          redirect_to admins_backoffice_inspecao_insp_contratadas_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para inspeções contratadas."
+        # Normas utilizadas na inspeção
+        elsif params[:btn_insp_normas]          
+          redirect_to admins_backoffice_inspecao_insp_normas_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para normas utilizadas na inspeção."
+        # Inspeções instalações
+        elsif params[:btn_insp_instalacoes]          
+          redirect_to admins_backoffice_inspecao_insp_instalacoes_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para inspeções das instalações."
+        # Manômetro
+        elsif params[:btn_insp_manometro]          
+          redirect_to admins_backoffice_inspecao_insp_manometro_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para inspeção do manômetro."
+        # Dispositivo de segurança
+        elsif params[:btn_insp_dispseg]          
+          redirect_to admins_backoffice_inspecao_insp_dispseg_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para inspeções do dispositivo de segurança."
         end
       else
         #get_relacoes
@@ -146,66 +192,81 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
                                         :possui_indicador_nivel,
                                         :possui_indicador_temperatura,
                                             
+                                        # Inspeções contratadas
+                                        :insp_contratada_vaso_inicial,
+                                        :insp_contratada_vaso_reconstituicao_prontuario,
+                                        :insp_contratada_vaso_externa,
+                                        :insp_contratada_vaso_interna,
+                                        :insp_contratada_vaso_teste_hidrostatico,
+                                        :insp_contratada_vaso_mapa_espessura,
+                                        :insp_contratada_valvsegpop_externa,
+                                        :insp_contratada_valvsegpop_interna,
+                                        :insp_pressostato,
+                                        :insp_manometro,
+                                        :insp_dreno,
+                                        :insp_contratada_vaso_paradaretorno_operacao,
+                                        :insp_contratada_vaso_problema_operacional,
+                                        :insp_contratada_vaso_alteracao_operacional,
+                                        :insp_contratada_vaso_alteracao_estrutural,
+                                        :insp_contratada_vaso_alteracao_reparo,
+                                        :insp_contratada_vaso_projeto_instalacao_geral,
+                                        :insp_contratada_vaso_projeto_instalacao_dovaso_individual,
                                         
-                                        :tipo_dreno_id,
-                                        :ambiente_inst_id                                       
+                                        # Normas utilizadas na inspeção
+                                        :mte_norma_id,
+                                        :norma_brasileira_inspecao,
+                                        :codigo_usado_inspecao,
+                                        :norma_brasileira_construcao,
+                                        
+                                        # Inspeção das instalações
+                                        :bpossui_placa_dolocal_deinstalacao,
+                                        :ambiente_inst_id,
+                                        :tipo_cobetura,
+                                        :bdispoe_duassaidas_amplas_sinalizadas_desobstruidas,
+                                        :bdispor_acesso_facil_seguro_paraoperacao_manutencao,
+                                        :bdispor_ventilacao_permanente,
+                                        :bdispor_iluminacao_artificial,
+                                        :bpossui_iluminacao_emergencia,
+                                        :belementos_facilmente_acessiveis_drenosrespiroseoutros,
+                                        
+                                        # Inspeção do manômetro
+                                        :bpossui_manometro_ousimilar,
+                                        :bman_foi_substituido,
+                                        :bmanometro_ehmantido_calibrado_eemboas_condicoes_operacao,
+                                        :bman_tem_sinais_manutencao,
+                                        :bman_foifeito_ajuste,
+                                        :bman_foifeita_calibracao,
+                                        
+                                        # Inspeção do dispositivo de segurança
+                                        :possui_dispositivo_deseguranca,
+                                        :possui_dispositivo_contra_bloqueio_dodisp_seg,
+                                        :bdispseg_tem_sinais_manutencao,
+                                        :bdispseg_foisubstituido,
+                                        :bdispseg_foifeito_ajuste,
+                                        :bdispseg_foifeita_calibracao,
+                                        :dispositivoseg_observacoes,
+                                        :dispositivoseg_pabertura,
+                                        
+                                        
+                                        :tipo_dreno_id
+                                        
+    
+          
         
     
-    #t.boolean "insp_contratada_vaso_externa", default: true, null: false
-    #t.boolean "insp_contratada_vaso_interna", default: false, null: false
-    #t.boolean "insp_contratada_vaso_teste_hidrostatico", default: false, null: false
-    #t.boolean "insp_contratada_vaso_mapa_espessura", default: false, null: false
-    #t.boolean "insp_contratada_vaso_inicial", default: false, null: false
-    #t.boolean "insp_contratada_vaso_problema_operacional", default: false, null: false
-    #t.boolean "insp_contratada_vaso_alteracao_operacional", default: false, null: false
-    #t.boolean "insp_contratada_vaso_alteracao_estrutural", default: false, null: false
-    #t.boolean "insp_contratada_vaso_alteracao_reparo", default: false, null: false
-    #t.boolean "insp_contratada_vaso_reconstituicao_prontuario", default: false, null: false
-    #t.boolean "insp_contratada_vaso_paradaretorno_operacao", default: false, null: false
-    #t.boolean "insp_contratada_vaso_projeto_instalacao_geral", default: false, null: false
-    #t.boolean "insp_contratada_vaso_projeto_instalacao_dovaso_individual", default: false, null: false
-    #t.boolean "insp_contratada_valvsegpop_interna", default: false, null: false
-    #t.boolean "insp_contratada_valvsegpop_externa", default: true, null: false
-    #t.boolean "insp_pressostato", default: true, null: false
-    #t.boolean "insp_manometro", default: true, null: false
-    #t.boolean "insp_dreno", default: true, null: false
-    #t.integer "mte_norma_id", default: 1, null: false
-    #t.string "codigo_usado_inspecao", limit: 35, default: "-x-x-x-x-x-x-x-x-x-x-x-x-x-x-"
-    #t.string "norma_brasileira_construcao", limit: 35, default: "-x-x-x-x-x-x-x-x-x-x-x-x-x-x-"
-    #t.string "norma_brasileira_inspecao", limit: 35, default: "ABNT NBR 15417:2007"
       
-    #t.boolean "bmanometro_ehmantido_calibrado_eemboas_condicoes_operacao", default: true, null: false
+    
     #t.boolean "bpressostato_ehmantido_calibrado_eemboas_condicoes_operacao", default: true, null: false
     #t.boolean "boutros_elementos_controle_ehmantido_calib_eemboas_condicoes_op", default: true, null: false
-    #t.string "anotacoes_elementos_controle_calibrados_eemboas_condicoes_opera", limit: 100    
-    #t.boolean "bpossui_placa_dolocal_deinstalacao", default: false, null: false
-    #t.boolean "belementos_facilmente_acessiveis_drenosrespiroseoutros", default: true, null: false
+    #t.string "anotacoes_elementos_controle_calibrados_eemboas_condicoes_opera", limit: 100            
     #t.boolean "bpossui_manometro_ousimilar", default: true, null: false
     
-    #t.integer "tipo_cobetura", default: 1, null: false
-    #t.boolean "bdispoe_duassaidas_amplas_sinalizadas_desobstruidas", default: true, null: false
-    #t.boolean "bdispor_acesso_facil_seguro_paraoperacao_manutencao", default: true, null: false
-    #t.boolean "bdispor_ventilacao_permanente", default: true, null: false
-    #t.boolean "bdispor_iluminacao_artificial", default: true, null: false
-    #t.boolean "bpossui_iluminacao_emergencia", default: true, null: false
-    #t.integer "possui_dispositivo_deseguranca", default: 1, null: false
-    #t.integer "possui_dispositivo_contra_bloqueio_dodisp_seg", default: 2, null: false
-    #t.boolean "bman_tem_sinais_manutencao", default: true, null: false
-    #t.boolean "bman_foifeito_ajuste", default: false, null: false
-    #t.boolean "bman_foifeita_calibracao", default: false, null: false
-    #t.boolean "bman_foi_substituido", default: false, null: false
-    #t.boolean "bdispseg_tem_sinais_manutencao", default: true, null: false
-    #t.boolean "bdispseg_foifeito_ajuste", default: false, null: false
-    #t.boolean "bdispseg_foifeita_calibracao", default: false, null: false
-    #t.boolean "bdispseg_foisubstituido", default: false, null: false
     #t.boolean "bdreno_tem_sinais_manutencao", default: true, null: false
     #t.boolean "bdreno_foiacionado_paradrenar_liqacumulado", default: true, null: false
     #t.boolean "bdreno_foifeita_manutencao", default: false, null: false
     #t.boolean "bdreno_posicionado_ptomais_baixo", default: true, null: false
     #t.boolean "bdreno_foisubstituido", default: false, null: false
-    #t.string "manometro_observacoes", limit: 100
-    #t.string "dispositivoseg_observacoes", limit: 100
-    #t.float "dispositivoseg_pabertura", default: 0.0, null: false
+    #t.string "manometro_observacoes", limit: 100    
     
     #t.boolean "bdreno_inclinacao_positiva", default: true, null: false
     #t.string "dreno_observacoes", limit: 100
@@ -487,7 +548,7 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
       @vasos              = Vaso.includes(:fabricante).order(:num_serie)
       @finalidade_vasos   = FinalidadeVaso.all
       @proprietarias      = Cadastro.order(:nome_curto)
-      @inspetoras         = Cadastro.where(eh_empresa_inspetora: true).order(:nome_curto)      
+      @inspetoras         = Cadastro.where(eh_empresa_inspetora: true).order(:nome_curto)
     end
   
 end
