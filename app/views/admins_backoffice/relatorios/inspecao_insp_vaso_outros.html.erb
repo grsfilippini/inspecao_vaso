@@ -1,0 +1,129 @@
+<%= render partial: 'admins_backoffice/relatorios/shared/antes_form_inspecao' %>
+
+                       
+                        <%= form_with(model: [ :admins_backoffice, @relatorio ], local: true, :html => { :multipart => true }) do |form| %>
+                            
+                            <%= render partial: 'admins_backoffice/relatorios/shared/botoes_navegacao' %>                            
+
+                            <fieldset class="Vaso">
+                            <legend>Vaso</legend>
+                                <div class="form-group row">
+                                    <div class="form-check col-sm-9 mb-0 mb-sm-0 d-inline">
+                                        <%= form.check_box :bpintura_emboas_condicoes, class: "form-check-input", id: "PinturaCheckbox" %>
+                                        <%= form.label :bpintura_emboas_condicoes, "A pintura está em boas condições", class: "form-check-label", for: "PinturaCheckbox" %>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="form-check col-sm-12 mb-0 mb-sm-0 d-inline">
+                                        <%= form.check_box :bexiste_deformacoes_trincas_vazamentos_vaso, class: "form-check-input", id: "TrincasCheckbox" %>
+                                        <%= form.label :bexiste_deformacoes_trincas_vazamentos_vaso, "Existem deformações, trincas, vazamentos ou outros que comprometam a integridade estrutural do vaso", class: "form-check-label red-label", for: "TrincasCheckbox" %>
+                                     </div>
+                                </div>
+                            
+                                <div class="form-group row">
+                                    <div class="form-check col-sm-12 mb-0 mb-sm-0 d-inline">
+                                        <%= form.check_box :bexiste_corrosaoacentuada_trincas_oupartes_soltas, class: "form-check-input", id: "TrincasPartesSoltasCheckbox" %>
+                                        <%= form.label :bexiste_corrosaoacentuada_trincas_oupartes_soltas, "Existe corrosão acentuada, trincas ou partes soltas", class: "form-check-label", for: "TrincasPartesSoltasCheckbox" %>
+                                     </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="form-check col-sm-12 mb-0 mb-sm-0 d-inline">
+                                        <%= form.check_box :bexiste_falha_nasolda_entreberco_ecasco_dovaso, class: "form-check-input", id: "BercoCascoCheckbox" %>
+                                        <%= form.label :bexiste_falha_nasolda_entreberco_ecasco_dovaso, "Existe falha na solda entre o berço e o casco do vaso", class: "form-check-label", for: "BercoCascoCheckbox" %>
+                                     </div>
+                                </div> 
+
+                                <div class="form-group row">
+                                    <div class="form-check col-sm-12 mb-0 mb-sm-0 d-inline">
+                                        <%= form.check_box :bexiste_corrosao_outrincas_noselementos_fixacao, class: "form-check-input", id: "TrincasElemFixaCheckbox" %>
+                                        <%= form.label :bexiste_corrosao_outrincas_noselementos_fixacao, "Existe corrosão ou trinca nos elementos de fixação", class: "form-check-label", for: "TrincasElemFixaCheckbox" %>
+                                     </div>
+                                </div>                                
+
+                            </fieldset>
+                            
+                            <fieldset class="Outros">
+                            <legend>Outros</legend>
+                            
+                            <div class="form-group row">
+                                <div class="form-check col-sm-9 mb-0 mb-sm-0 d-inline">
+                                    <%= form.check_box :baspartes_moveis_estao_protegidas, class: "form-check-input", id: "PartesMoveisCheckbox" %>
+                                    <%= form.label :baspartes_moveis_estao_protegidas, "As partes móveis estão protegidas", class: "form-check-label red-label", for: "PartesMoveisCheckbox" %>
+                                 </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="form-check col-sm-9 mb-0 mb-sm-0 d-inline">
+                                    <%= form.check_box :basconexoes_eacessorios_estao_emboas_condicoesfisicas, class: "form-check-input", id: "ConexoesAcessEmBoasCondCheckbox" %>
+                                    <%= form.label :basconexoes_eacessorios_estao_emboas_condicoesfisicas, "As conexões e acessórios estão em boas condições", class: "form-check-label", for: "ConexoesAcessEmBoasCondCheckbox" %>
+                                 </div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <div class="form-check col-sm-9 mb-0 mb-sm-0 d-inline">
+                                    <%= form.check_box :basconexoes_acessorios_apresentamvazamentos, class: "form-check-input", id: "ConexoesAcessVazamentosCheckbox" %>
+                                    <%= form.label :basconexoes_acessorios_apresentamvazamentos, "As conexões e/ou acessórios apresentam vazamentos", class: "form-check-label", for: "ConexoesAcessVazamentosCheckbox" %>
+                                 </div>
+                            </div>
+                            
+                            </fieldset>
+                            
+                            <fieldset class="Acesso">
+                            <legend>Acesso</legend>
+                            <div class="form-group row">
+                                <%= form.label :tipo_degrausacesso_eguardacorpo_boascondicoes, 'Degraus de acesso e guarda corpo em boas condições', {class: "col-sm-6 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="btn-group col-sm-6 mb-0 mb-sm-0" data-toggle="buttons">
+                                    <% options = { "Não" => 0, "Sim" => 1, "Não necessário" => 2, "Não existe" => 3 } %>
+                                    <% options.each do |label, value| %>
+                                        <label class="btn btn-dark">
+                                            <% if  @relatorio.tipo_degrausacesso_eguardacorpo_boascondicoes == value %>
+                                                <%= radio_button_tag :tipo_degrausacesso_eguardacorpo_boascondicoes, value, checked: true %>
+                                            <%else%>
+                                                <%= radio_button_tag :tipo_degrausacesso_eguardacorpo_boascondicoes, value %>
+                                            <%end%>
+                                            <%= label %>
+                                        </label>
+                                    <% end %>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <%= form.label :partesup_pisos_passarelas_platafor_eos_perfis_sustent_emboascon, 'Passarelas, plataformas e perfís de sustentação em boas condições', {class: "col-sm-6 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="btn-group col-sm-6 mb-0 mb-sm-0" data-toggle="buttons">
+                                    <% options = { "Não" => 0, "Sim" => 1, "Não necessário" => 2, "Não existe" => 3 } %>
+                                    <% options.each do |label, value| %>
+                                        <label class="btn btn-dark">
+                                            <% if  @relatorio.partesup_pisos_passarelas_platafor_eos_perfis_sustent_emboascon == value %>
+                                                <%= radio_button_tag :partesup_pisos_passarelas_platafor_eos_perfis_sustent_emboascon, value, checked: true %>
+                                            <%else%>
+                                                <%= radio_button_tag :partesup_pisos_passarelas_platafor_eos_perfis_sustent_emboascon, value %>
+                                            <%end%>
+                                            <%= label %>
+                                        </label>
+                                    <% end %>
+                                </div>
+                            </div>                            
+                            </fieldset>                            
+                                
+                            
+                            <div class="form-group row"> </div>
+                            
+                            <div class="form-group row">                                
+                                <%= form.label :obs_inspecao_elementos_sobre_o_vaso_ou_nao, 'Obs.', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="form-check col-sm-6 mb-0 mb-sm-0">
+                                    <%= form.text_field :obs_inspecao_elementos_sobre_o_vaso_ou_nao, class: "form-control"  %>
+                                </div>
+                            </div>                            
+                             
+                            <hr>
+                            
+                            <br> <br>
+                            
+                            <%= button_tag "Gravar e Voltar", type: "submit", class: "btn btn-primary", name: "btn_insp_pressostato" %>
+                            <%= button_tag "Gravar e Sair", type: "submit", class: "btn btn-primary", name: "btn_gravar_sair" %>
+                            <%= button_tag "Gravar e Avançar", type: "submit", class: "btn btn-primary", name: "btn_fotos" %>
+                                                        
+                        <% end %>                                                                     
+
+<%= render partial: 'admins_backoffice/relatorios/shared/depois_form_inspecao' %>

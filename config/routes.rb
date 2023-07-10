@@ -52,6 +52,10 @@ Rails.application.routes.draw do
     get 'inspecao_insp_instalacoes', to: 'relatorios#inspecao_insp_instalacoes'
     get 'inspecao_insp_manometro',   to: 'relatorios#inspecao_insp_manometro'
     get 'inspecao_insp_dispseg',     to: 'relatorios#inspecao_insp_dispseg'
+    get 'inspecao_insp_pressostato', to: 'relatorios#inspecao_insp_pressostato'
+    get 'inspecao_insp_dreno',       to: 'relatorios#inspecao_insp_dreno'
+    get 'inspecao_insp_vaso_outros', to: 'relatorios#inspecao_insp_vaso_outros'
+    get 'inspecao_fotos',            to: 'relatorios#inspecao_fotos'
     
   end
 

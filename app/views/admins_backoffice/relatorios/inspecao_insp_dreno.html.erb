@@ -1,0 +1,129 @@
+<%= render partial: 'admins_backoffice/relatorios/shared/antes_form_inspecao' %>
+
+                       
+                        <%= form_with(model: [ :admins_backoffice, @relatorio ], local: true, :html => { :multipart => true }) do |form| %>
+                            
+                            <%= render partial: 'admins_backoffice/relatorios/shared/botoes_navegacao' %>                            
+                            
+                            <div class="form-group row">
+                                <div class="form-check col-sm-6 mb-0 mb-sm-0 d-inline">
+                                    <%= form.check_box :bdreno_existe, class: "form-check-input", id: "ExisteDrenoCheckbox" %>
+                                    <%= form.label :bdreno_existe, "Existe dreno", class: "form-check-label", for: "ExisteDrenoCheckbox" %>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <%= form.label :tipo_dreno_id, 'Tipo dreno', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="col-sm-3 mb-0 mb-sm-0">            
+                                    <%= form.collection_select(:tipo_dreno_id, @tipo_drenos, :id, :tipo_dreno, { include_blank: 'Selecione o tipo de dreno'}, {class: 'select-width-150 form-control' }) %>
+                                </div>
+                            </div>
+                                
+                            <div class="form-group row">
+                                <div class="form-check col-sm-6 mb-0 mb-sm-0 d-inline">
+                                    <%= form.check_box :bdreno_posicionado_ptomais_baixo, class: "form-check-input", id: "DrenoBaixoCheckbox" %>
+                                    <%= form.label :bdreno_posicionado_ptomais_baixo, "Posicionado no ponto mais baixo", class: "form-check-label", for: "DrenoBaixoCheckbox" %>
+                                </div>
+                            </div>                                                        
+                            
+                            <div class="form-group row">
+                                <div class="form-check col-sm-6 mb-0 mb-sm-0 d-inline">
+                                    <%= form.check_box :bdreno_tem_sinais_manutencao, class: "form-check-input", id: "DrenoSinaisManCheckbox" %>
+                                    <%= form.label :bdreno_tem_sinais_manutencao, "Tem sinais de manutenção", class: "form-check-label", for: "DrenoSinaisManCheckbox" %>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <div class="form-check col-sm-6 mb-0 mb-sm-0 d-inline">
+                                    <%= form.check_box :bdreno_inclinacao_positiva, class: "form-check-input", id: "DrenoInclinPosCheckbox" %>
+                                    <%= form.label :bdreno_inclinacao_positiva, "Inclinação positiva", class: "form-check-label", for: "DrenoInclinPosCheckbox" %>
+                                </div>
+                            </div>
+
+                            
+                            <div class="form-group row">
+                                <div class="form-check col-sm-6 mb-0 mb-sm-0 d-inline">
+                                    <%= form.check_box :bdreno_foisubstituido, class: "form-check-input", id: "DrenoSubsCheckbox" %>
+                                    <%= form.label :bdreno_foisubstituido, "Foi substituido/instalado", class: "form-check-label orange-label", for: "DrenoSubsCheckbox" %>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <div class="form-check col-sm-6 mb-0 mb-sm-0 d-inline">
+                                    <%= form.check_box :bdreno_foifeita_manutencao, class: "form-check-input", id: "DrenoManCheckbox" %>
+                                    <%= form.label :bdreno_foifeita_manutencao, "Foi feita manutenção", class: "form-check-label orange-label", for: "DrenoManCheckbox" %>
+                                </div>
+                            </div>
+                            
+                        <div class="form-group row">
+                          <div class="form-check col-sm-6 mb-0 mb-sm-0 d-inline">
+                            <%= form.check_box :bdreno_foiacionado_paradrenar_liqacumulado, class: "form-check-input", id: "DrenoAcionCheckbox" %>
+                            <%= form.label :bdreno_foiacionado_paradrenar_liqacumulado, "Foi acionado para drenar líquido acumulado", class: "form-check-label orange-label", for: "DrenoAcionCheckbox" %>
+                          </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                          <div class="col-sm-6 mb-3 mb-sm-0">
+                            <%= form.label :dreno_qtdadeliquido_drenado, "Volume drenado", class: "red-label" %>
+                            <%= form.number_field :dreno_qtdadeliquido_drenado, step: 10, min: 0, required: false, style: 'width: 100px;', disabled: !@relatorio.bdreno_foiacionado_paradrenar_liqacumulado?, id:"object_volume_drenado"  %>
+                            [ml]
+                          </div>
+                        </div>
+                                                                  
+                        <script>
+                          const checkbox = document.getElementById("DrenoAcionCheckbox");
+                          const volumeDrenadoInput = document.getElementById("object_volume_drenado");
+                          
+                          checkbox.addEventListener("change", function() {
+                             volumeDrenadoInput.disabled = !this.checked;                            
+                          });
+                        </script>
+                            
+                            <div class="form-group row">                                
+                                <%= form.label :dreno_observacoes, 'Obs.', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="form-check col-sm-6 mb-0 mb-sm-0">
+                                    <%= form.text_field :dreno_observacoes, class: "form-control"  %>
+                                </div>
+                            </div>
+                           
+                           
+                            <!-- Botão de dropdown -->
+                            <div class="btn-group">
+                              <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="collapse" data-target="#camposAdicionais" aria-expanded="false" aria-controls="camposAdicionais">
+                                Campos adicionais
+                                <span class="caret"></span>
+                              </button>
+                            </div>
+                          
+                            <!-- Campos adicionais (inicialmente ocultos) -->
+                            <div class="collapse" id="camposAdicionais">
+                                <div class="form-group row"></div>
+                                
+                                <div class="form-group row">
+                                    <div class="form-check col-sm-9 mb-0 mb-sm-0 d-inline">
+                                        <%= form.check_box :boutros_elementos_controle_ehmantido_calib_eemboas_condicoes_op, class: "form-check-input", id: "OutrosElemControleCheckbox" %>
+                                        <%= form.label :boutros_elementos_controle_ehmantido_calib_eemboas_condicoes_op, "Outros elementos de controle são mantidos calibrados e em boas condições", class: "form-check-label", for: "OutrosElemControleCheckbox" %>
+                                     </div>
+                                </div>
+                            
+                                <div class="form-group row">                                
+                                    <%= form.label :anotacoes_elementos_controle_calibrados_eemboas_condicoes_opera, 'Obs.', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="form-check col-sm-6 mb-0 mb-sm-0">
+                                        <%= form.text_field :anotacoes_elementos_controle_calibrados_eemboas_condicoes_opera, class: "form-control"  %>
+                                    </div>
+                                </div>
+                                    
+                            </div>                                                                
+                           
+                            
+                            <hr>
+                            
+                            <br> <br>
+                            
+                            <%= button_tag "Gravar e Voltar", type: "submit", class: "btn btn-primary", name: "btn_insp_pressostato" %>
+                            <%= button_tag "Gravar e Sair", type: "submit", class: "btn btn-primary", name: "btn_gravar_sair" %>
+                            <%= button_tag "Gravar e Avançar", type: "submit", class: "btn btn-primary", name: "btn_insp_vaso_outros" %>
+                                                        
+                        <% end %>                                                                     
+
+<%= render partial: 'admins_backoffice/relatorios/shared/depois_form_inspecao' %>
