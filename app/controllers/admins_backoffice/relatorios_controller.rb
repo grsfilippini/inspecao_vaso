@@ -63,11 +63,11 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
   end
 
   def destroy
-    if @relatorio.destroy
-      redirect_to admins_backoffice_relatorio_em_aberto_path, notice: "Relatório excluído com sucesso!"
-    else
+    #if @relatorio.destroy
+    #  redirect_to admins_backoffice_relatorio_em_aberto_path, notice: "Relatório excluído com sucesso!"
+    #else
       render :index
-    end
+    #end
   end
 
 
@@ -130,6 +130,34 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
         if params[:relatorio][:foto_pos_inspecao].present?
           # Atualizar o campo de imagem diretamente com o novo arquivo
           @relatorio.update_attribute(:foto_pos_inspecao, params[:relatorio][:foto_pos_inspecao].read)
+        end
+        if params[:relatorio][:foto_corpo].present?
+          # Atualizar o campo de imagem diretamente com o novo arquivo
+          @relatorio.update_attribute(:foto_corpo, params[:relatorio][:foto_corpo].read)
+        end
+        if params[:relatorio][:foto_instalacao].present?
+          # Atualizar o campo de imagem diretamente com o novo arquivo
+          @relatorio.update_attribute(:foto_instalacao, params[:relatorio][:foto_instalacao].read)
+        end
+        if params[:relatorio][:foto_th].present?
+          # Atualizar o campo de imagem diretamente com o novo arquivo
+          @relatorio.update_attribute(:foto_th, params[:relatorio][:foto_th].read)
+        end
+        if params[:relatorio][:foto_interna1].present?
+          # Atualizar o campo de imagem diretamente com o novo arquivo
+          @relatorio.update_attribute(:foto_interna1, params[:relatorio][:foto_interna1].read)
+        end
+        if params[:relatorio][:foto_interna2].present?
+          # Atualizar o campo de imagem diretamente com o novo arquivo
+          @relatorio.update_attribute(:foto_interna2, params[:relatorio][:foto_interna2].read)
+        end
+        if params[:relatorio][:foto_interna3].present?
+          # Atualizar o campo de imagem diretamente com o novo arquivo
+          @relatorio.update_attribute(:foto_interna3, params[:relatorio][:foto_interna3].read)
+        end
+        if params[:relatorio][:foto_interna4].present?
+          # Atualizar o campo de imagem diretamente com o novo arquivo
+          @relatorio.update_attribute(:foto_interna4, params[:relatorio][:foto_interna4].read)
         end
       end
     end
@@ -313,6 +341,7 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
                                           :tipo_dreno_id,
                                           :bdreno_posicionado_ptomais_baixo,
                                           :bdreno_inclinacao_positiva,
+                                          :bajuste_inclinacao,
                                           :bdreno_foisubstituido,
                                           :bdreno_foifeita_manutencao,
                                           :bdreno_foiacionado_paradrenar_liqacumulado,
@@ -339,15 +368,18 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
                                           :anotacoes_elementos_controle_calibrados_eemboas_condicoes_opera,
                                           
                                           # Fotos
+                                          # inspeção externa
                                           :foto_antes_inspecao,
-                                          :foto_pos_inspecao
-                                          #t.binary "foto_th"
-                                          #t.binary "foto_instalacao"
-                                          #t.binary "foto_corpo"
-                                          #t.binary "foto_interna1"
-                                          #t.binary "foto_interna2"
-                                          #t.binary "foto_interna3"
-                                          #t.binary "foto_interna4"
+                                          :foto_pos_inspecao,
+                                          :foto_corpo,
+                                          :foto_instalacao,
+                                          # teste hidrostático
+                                          :foto_th,
+                                          # inspeção interna                                          
+                                          :foto_interna1,
+                                          :foto_interna2,
+                                          :foto_interna3,
+                                          :foto_interna4
                   
       #t.text "recomendacoes_ao_usuario"
       #t.text "intervencoes_feitas_pelo_ph"
@@ -359,7 +391,7 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
       #t.boolean "belaborado_plaqueta_identificacao", default: false, null: false
       #t.text "relacao_rgi", default: "NENHUM RGI ENCONTRADO"
       #t.boolean "belaborada_placa_local_inst", default: false, null: false
-      #t.boolean "bajuste_inclinacao", default: false, null: false
+      
       #t.integer "prazo_recomendacoes", default: 60, null: false
       #t.text "result_insp_externa"
       #t.text "result_insp_interna"
@@ -369,15 +401,6 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
       #t.date "dt_prox_insp_externa_dispositivo_seguranca", default: -> { "(CURRENT_DATE + 365)" }, null: false
       #t.date "dt_prox_insp_interna_dispositivo_seguranca", default: -> { "(CURRENT_DATE + 3650)" }, null: false
       #t.text "parecer_quanto_integridade_vaso"
-      #t.string "PATCH_IMG_FOTO_ANTES_INSPECAO", limit: 100, default: "fig/fabricante_numserie/2021mm/antes.jpg"
-      #t.string "PATCH_IMG_FOTO_POS_INSPECAO", limit: 100, default: "fig/fabricante_numserie/2021mm/pos.jpg"
-      #t.string "PATCH_IMG_FOTO_TH", limit: 100, default: "fig/fabricante_numserie/2021mm/th.jpg"
-      #t.string "PATCH_IMG_FOTO_INSTALACAO", limit: 100, default: "fig/fabricante_numserie/2021mm/inst.jpg"
-      #t.string "PATCH_MG_FOTO_CORPO_VASO", limit: 100, default: "fig/fabricante_numserie/2021mm/corpo.jpg"
-      #t.string "PATCH_IMG_FOTO_INTERNA1", limit: 100, default: "fig/fabricante_numserie/2021mm/int1.jpg"
-      #t.string "PATCH_IMG_FOTO_INTERNA2", limit: 100, default: "fig/fabricante_numserie/2021mm/int2.jpg"
-      #t.string "PATCH_IMG_FOTO_INTERNA3", limit: 100, default: "fig/fabricante_numserie/2021mm/int3.jpg"
-      #t.string "PATCH_IMG_FOTO_INTERNA4", limit: 100, default: "fig/fabricante_numserie/2021mm/int4.jpg"
       
       #t.boolean "brel_impresso", default: false, null: false
       #t.boolean "belaborado_prontuario", default: false, null: false
@@ -533,16 +556,7 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
     #t.date "dt_prox_teste_hidrostatico", default: -> { "(CURRENT_DATE + 5475)" }, null: false
     #t.date "dt_prox_insp_externa_dispositivo_seguranca", default: -> { "(CURRENT_DATE + 365)" }, null: false
     #t.date "dt_prox_insp_interna_dispositivo_seguranca", default: -> { "(CURRENT_DATE + 3650)" }, null: false
-    #t.text "parecer_quanto_integridade_vaso"
-    #t.string "PATCH_IMG_FOTO_ANTES_INSPECAO", limit: 100, default: "fig/fabricante_numserie/2021mm/antes.jpg"
-    #t.string "PATCH_IMG_FOTO_POS_INSPECAO", limit: 100, default: "fig/fabricante_numserie/2021mm/pos.jpg"
-    #t.string "PATCH_IMG_FOTO_TH", limit: 100, default: "fig/fabricante_numserie/2021mm/th.jpg"
-    #t.string "PATCH_IMG_FOTO_INSTALACAO", limit: 100, default: "fig/fabricante_numserie/2021mm/inst.jpg"
-    #t.string "PATCH_MG_FOTO_CORPO_VASO", limit: 100, default: "fig/fabricante_numserie/2021mm/corpo.jpg"
-    #t.string "PATCH_IMG_FOTO_INTERNA1", limit: 100, default: "fig/fabricante_numserie/2021mm/int1.jpg"
-    #t.string "PATCH_IMG_FOTO_INTERNA2", limit: 100, default: "fig/fabricante_numserie/2021mm/int2.jpg"
-    #t.string "PATCH_IMG_FOTO_INTERNA3", limit: 100, default: "fig/fabricante_numserie/2021mm/int3.jpg"
-    #t.string "PATCH_IMG_FOTO_INTERNA4", limit: 100, default: "fig/fabricante_numserie/2021mm/int4.jpg"
+    #t.text "parecer_quanto_integridade_vaso"    
     #t.integer "tipo_inspecao_id", default: 0, null: false
     #t.boolean "brel_impresso", default: false, null: false
     #t.boolean "belaborado_prontuario", default: false, null: false

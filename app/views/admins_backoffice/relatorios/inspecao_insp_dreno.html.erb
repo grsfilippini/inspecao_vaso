@@ -55,6 +55,12 @@
                                 </div>
                             </div>
                             
+                            <div class="form-group row">
+                                <div class="form-check col-sm-6 mb-0 mb-sm-0 d-inline">
+                                    <%= form.check_box :bajuste_inclinacao, class: "form-check-input", id: "DrenoAjusteInclinaCheckbox" %>
+                                    <%= form.label :bajuste_inclinacao, "Foi ajustada a inclinação", class: "form-check-label orange-label", for: "DrenoAjusteInclinaCheckbox" %>
+                                </div>
+                            </div>
                         <div class="form-group row">
                           <div class="form-check col-sm-6 mb-0 mb-sm-0 d-inline">
                             <%= form.check_box :bdreno_foiacionado_paradrenar_liqacumulado, class: "form-check-input", id: "DrenoAcionCheckbox" %>
@@ -120,9 +126,9 @@
                             
                             <br> <br>
                             
-                            <%= button_tag "Gravar e Voltar", type: "submit", class: "btn btn-primary", name: "btn_insp_pressostato" %>
+                            <%= button_tag "Gravar e Voltar", type: "submit", class: "btn btn-primary", name: "btn_insp_instalacoes" %>
                             <%= button_tag "Gravar e Sair", type: "submit", class: "btn btn-primary", name: "btn_gravar_sair" %>
-                            <%= button_tag "Gravar e Avançar", type: "submit", class: "btn btn-primary", name: "btn_insp_vaso_outros" %>
+                            <%= button_tag "Gravar e Avançar", type: "submit", class: "btn btn-primary", name: "btn_insp_dispseg" %>
                                                         
                         <% end %>                                                                     
 

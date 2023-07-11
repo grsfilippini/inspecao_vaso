@@ -86,6 +86,8 @@ end
 # Servidor de aplicação usado em production
 group :production do
   gem 'unicorn'
+  gem 'ed25519', '>= 1.2', '< 2.0'
+  gem 'bcrypt_pbkdf', '>= 1.0', '< 2.0'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
