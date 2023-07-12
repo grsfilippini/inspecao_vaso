@@ -30,259 +30,283 @@
                             <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                         </div-->
 
-                        <%= form_with(model: [ :admins_backoffice, @vaso ], local: true, :html => { :multipart => true }) do |form| %>
-                            
-                            <div class="form-group row">     
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <%= form.label :user_id, "Usuário: " %>
-                                    <%= form.collection_select(:user_id, @users, :id, :nome_completo, { include_blank: true }, {selected: nil,  style: 'width: 150px;'}) %>
-                                </div>
-                                
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <%= form.label :foto_plaqueta %>
-                                    <%#= form.file_field :foto_plaqueta %>
-                                    <% if @vaso.foto_plaqueta.present? %>
-                                        <%= image_tag("data:image/jpeg;base64," + Base64.encode64(@vaso.foto_plaqueta), width: '300', height: 'auto') %>
-                                    <% end %>
-                                </div>  
-                            </div>
-                            
-                            <p><b>IDENTIFICAÇÃO DO VASO</b></p>
-                            
-                            <div class="form-group row">                                
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <%= form.label :num_serie %>                                    
-                                    <%= form.text_field :num_serie, style: 'width: 100px;' %>
-                                </div>
-                                <div class="col-sm-6 mb-3 mb-sm-0">                                           
-                                    <%= form.label :fabricante_id %>            
-                                    <%= form.collection_select(:fabricante_id, @fabricantes, :id, :nome_curto, { include_blank: true }, {selected: nil, style: 'width: 200px;'}) %>
-                                </div>
-                            </div>                                                            
-                            
-                            <div class="form-group row">
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <%= form.label :proprietaria_id %>
-                                    <%= form.collection_select(:proprietaria_id, @proprietarias, :id, :nome_curto, {include_blank: true }, {selected: nil, style: 'width: 200px;'}) %>
-                                </div>
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <%= form.label :data_instalacao %>
-                                    <%= form.date_field :data_instalacao, value: Date.new(1980, 1, 1) %>
-                                </div>
-                            </div>
-                            
-                            <p><b>CARACTERÍSTICAS</b></p>
-                            
-                            <div class="form-group row">
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <%= form.label :dt_fabricacao_reconstituicao %>
-                                    <%= form.date_field :dt_fabricacao_reconstituicao %>
-                                    <%= form.label :bsem_data_fabricacao, 'Desconhecida' %>
-                                    <%= form.check_box :bsem_data_fabricacao %>
-                                </div>
-                                <div class="col-sm-6 mb-3 mb-sm-0">                                           
-                                    <%= form.label :tipo_vaso_id %>            
-                                    <%= form.collection_select(:tipo_vaso_id, @tipo_vasos, :id, :tipo_vaso) %>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group row">
-                                <div class="col-sm-6 mb-3 mb-sm-0">                                           
-                                    <%= form.label :tipo_compressor_id %>            
-                                    <%= form.collection_select :tipo_compressor_id, @tipo_compressors, :id, :tipo_compressor %>            
-                                </div>
-                                <div class="col-sm-6 mb-3 mb-sm-0">                                           
-                                    <%= form.label :tipo_dreno_id %>            
-                                    <%= form.collection_select :tipo_dreno_id, @tipo_drenos, :id, :tipo_dreno %>
-                                </div>                                
-                            </div>
-                            
-                            <div class="form-group row">
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <%= form.label :classe_fluido_id %>
-                                    <%= form.collection_select :classe_fluido_id, @classe_fluidos, :id, :descricao, {}, { style: 'width: 300px;' } %>
-                                </div>
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <%= form.label :fluido_servico_id %>
-                                    <%= form.collection_select :fluido_servico_id, @fluido_servicos, :id, :descricao %>
-                                </div>
-                            </div>                                                       
-                            
-                            <div class="form-group row">
-                                <div class="col-sm-12 mb-3 mb-sm-0">                                           
-                                    <%= form.label :tipo_dispositivo_seguranca_id %>                                    
-                                    <%= form.collection_select :tipo_dispositivo_seguranca_id, @tipo_dispositivo_segurancas, :id, :nome, {selected: nil} %>
-                                </div>
-                            </div>
-                            
-                            
-                            <div class="form-group row">
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <%= form.label :setor_instalacao_vaso %>
-                                    <%= form.text_field :setor_instalacao_vaso, style: 'width: 300px;' %>
-                                </div>
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <%= form.label :observacoes %>
-                                    <%= form.text_area :observacoes, style: 'width: 300px; height: 30px;' %>                                </div>
-                            </div>
-                            
-                                
-                            <div class="form-group row">
-                                <div class="col-sm-12 mb-3 mb-sm-0">                                           
-                                    <%= form.label :relatorio_ini_id %>                                    
-                                    <%= form.number_field :relatorio_ini_id, step: 1, min: -1, style: 'width: 100px;' %>
-                                    Deixe com valor "-1" caso não saiba o relatório de inspeção inicial.
-                                </div>                                
-                            </div>                                
-                                
-                            <p><b>DADOS DE PROJETO</b></p>
-                            
-                            <div class="form-group row">
-                                    
-                                <div class="col-sm-4 mb-3 mb-sm-0">
-                                    <%= form.label :catnr13_id %>
-                                    <%= form.collection_select :catnr13_id, @catnr13s, :id, :categoria %>
-                                </div>
-                                <div class="col-sm-8 mb-3 mb-sm-0">
-                                    <%= form.label :potencial_risco_id %>
-                                    <%= form.collection_select :potencial_risco_id, @potencial_riscos, :id, :descricao, {selected: nil, style: 'width: 100px;'} %>
-                                </div>                                                        
-                            </div>
-                            
-                            <div class="form-group row">
-                                <div class="col-sm-8 mb-3 mb-sm-0">                                           
-                                    <%= form.label :codigo_construcao_id %>
-                                    <%= form.collection_select(:codigo_construcao_id, @codigo_construcaos, :id, :codigo) %>
-                                </div>
-                                <div class="col-sm-4 mb-3 mb-sm-0">
-                                    <%= form.label :volume, required: true %>
-                                    <%= form.number_field :volume, step: 0.001, min: 0.001, style: 'width: 100px;' %>
-                                    [m<sup>3</sup>]
-                                </div>                                
-                            </div>
-                            
+                        <%= form_with(model: [ :admins_backoffice, @vaso ], local: true, html:{ multipart: true }) do |form| %>
 
-                            <p style="text-align: center">Pressões</p>
-                            
                             <div class="form-group row">
-                                <div class="col-sm-6 mb-3 mb-sm-0">                                           
-                                    <%= form.label :p_projeto %>
-                                    <%= form.number_field :p_projeto, step: 0.001, min: -10, required: true, style: 'width: 100px;' %>
-                                    [MPa]
+                                <%= form.label :user_id, "Usuário", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>                                
+                                <div class="col-sm-10 mb-0 mb-sm-0">                                    
+                                    <%= form.collection_select(:user_id, @users, :id, :nome_completo, {include_blank: 'Selecione um usuário'}, {selected: nil, class: 'form-control'}) %>
                                 </div>
                             </div>
-                            
-                            <div class="form-group row">                            
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <%= form.label :p_inf_operacao_fabricante, "Operação inf." %>
-                                    <%= form.number_field :p_inf_operacao_fabricante, step: 0.001, min: -10, required: false, style: 'width: 100px;' %>
-                                    [MPa]
-                                </div>
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <%= form.label :p_sup_operacao_fabricante, "Operação sup." %>            
-                                    <%= form.number_field :p_sup_operacao_fabricante, step: 0.001, min: -10, required: false, style: 'width: 100px;' %>
-                                    [MPa]
-                                </div>
-                            </div>
-                            
+                                
                             <div class="form-group row">
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <%= form.label :pmta_original %>
-                                    <%= form.number_field :pmta_original, step: 0.001, min: -10, required: false, style: 'width: 100px;' %>
-                                    [MPa]
+                                <%= form.label :foto_plaqueta, 'Plaqueta', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="form-label col-sm-4 mb-0 mb-sm-0">                                    
+                                    <% if @vaso.foto_plaqueta.present? %>
+                                      <img src="data:image/jpeg;base64,<%= Base64.encode64(@vaso.foto_plaqueta) %>" width="auto" height="120">
+                                    <% end %>
+                                </div>                                
+                                <div class="form-label col-sm-3 mb-0 mb-sm-0">                                    
+                                    <%= form.file_field :foto_plaqueta %>
                                 </div>
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <%= form.label :pth_original %>            
-                                    <%= form.number_field :pth_original, step: 0.001, min: -10, required: false, style: 'width: 100px;' %>
-                                    [MPa]
-                                </div>
+                                
                             </div>
+                                                        
+                            <fieldset class="Vaso_externa">
+                            <legend>Identificação do vaso</legend>
                             
-                            <div class="form-group row">
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <%= form.label :pmta_atual %>
-                                    <%= form.number_field :pmta_atual, step: 0.001, min: -10, required: true, style: 'width: 100px;' %>
-                                    [MPa]
+                                <div class="form-group row">
+                                    <%= form.label :num_serie, "Série", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-4 mb-3 mb-sm-0">                                        
+                                        <%= form.text_field :num_serie, class: "form-control" %>
+                                    </div>
+                                    
+                                    <%= form.label :fabricante_id, "Fabricante", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-4 mb-3 mb-sm-0">                                        
+                                        <%= form.collection_select(:fabricante_id, @fabricantes, :id, :nome_curto, { include_blank: true }, {selected: nil, class: "form-control"}) %>
+                                    </div>
+                                </div>                                                            
+                                
+                                <div class="form-group row">
+                                    <%= form.label :proprietaria_id, "Proprietária", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-4 mb-3 mb-sm-0">
+                                        <%= form.collection_select(:proprietaria_id, @proprietarias, :id, :nome_curto, {include_blank: true }, {selected: nil, class: "form-control"}) %>
+                                    </div>
+                                    
+                                    <%= form.label :data_instalacao, "Data instalação", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-3 mb-3 mb-sm-0">
+                                        <%= form.date_field :data_instalacao, value: Date.new(1980, 1, 1), class: "form-control" %>
+                                    </div>                                    
                                 </div>
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <%= form.label :pth_atual %>            
-                                    <%= form.number_field :pth_atual, step: 0.001, min: -10, required: true, style: 'width: 100px;' %>
-                                    [MPa]
+                                    
+                                <div class="form-group row">
+                                    <%= form.label :observacoes, "Obs.", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-4 mb-3 mb-sm-0">                                        
+                                        <%= form.text_area :observacoes, {class: "form-control"} %>
+                                    </div>
+                                    
+                                    <%= form.label :relatorio_ini_id, "Rel. inicial", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-4 mb-3 mb-sm-0">                                                                         
+                                        <%= form.number_field :relatorio_ini_id, step: 1, min: -1, style: 'width: 100px;', class: "form-control" %>
+                                        Deixe com valor "-1" caso não exista.
+                                    </div>
+                                
                                 </div>
-                            </div>
-                            <hr>
-                            <div class="form-group row">
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <%= form.label :temp_min_prj %>            
-                                    <%= form.number_field :temp_min_prj, step: 1, min: -100, style: "width: 100px;" %>
-                                    [°C]
-                                </div>
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <%= form.label :temp_max_prj %>            
-                                    <%= form.number_field :temp_max_prj, step: 1, min: -100, style: "width: 100px;" %>
-                                    [°C]
-                                </div>
-                            </div>
+                                    
+                            </fieldset>
                             
-                            <div class="form-group row">
-                                <div class="col-sm-6 mb-3 mb-sm-0">                                           
-                                    <%= form.label :material_id %>
-                                    <%= form.collection_select(:material_id, @materials, :id, :descricao, {include_blank: true }, {selected: nil, style: 'width: 200px;'}) %>
-                                </div>
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <%= form.label :efic_solda_tampo %>
-                                    <%= form.text_field :efic_solda_tampo, style: 'width: 100px;' %>
-                                </div>
-                            </div>
+                            <fieldset class="Vaso_externa">
+                            <legend>Características</legend>
                             
-                            <div class="form-group row">
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <%= form.label :efic_solda_costado %>
-                                    <%= form.text_field :efic_solda_costado, style: 'width: 100px;' %>
+                                <div class="form-group row">
+                                    <%= form.label :dt_fabricacao_reconstituicao, "Dt fabric./reconst.", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-3 mb-3 mb-sm-0">
+                                        <%= form.date_field :dt_fabricacao_reconstituicao, class: "form-control" %>
+                                    </div>
+                                    
+                                    <div class="form-check col-sm-4 mb-0 mb-sm-0 d-inline">
+                                        <%= form.check_box :bsem_data_fabricacao, class: "form-check-input", id: "DataDescCheckbox"%>
+                                        <%= form.label :bsem_data_fabricacao, "Desconhecida", class: "form-check-label", for: "DataDescCheckbox" %>
+                                    </div>
                                 </div>
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <%= form.label :efic_solda_costado_tampo %>
-                                    <%= form.text_field :efic_solda_costado_tampo, style: 'width: 100px;' %>
+                                
+                                <div class="form-group row">                                    
+                                    <%= form.label :tipo_vaso_id, "Tipo vaso", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-4 mb-3 mb-sm-0">
+                                        <%= form.collection_select(:tipo_vaso_id, @tipo_vasos, :id, :tipo_vaso, {include_blank: 'Selecione um tipo de vaso'}, {selected: nil, class: "form-control"}) %>
+                                    </div>
+                                
+                                    <%= form.label :tipo_compressor_id, "Tipo compressor", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-4 mb-3 mb-sm-0">                                    
+                                        <%= form.collection_select :tipo_compressor_id, @tipo_compressors, :id, :tipo_compressor, {include_blank: 'Selecione um tipo de compressor'}, {selected: nil, class: "form-control"} %>
+                                    </div>
                                 </div>
-                            </div>
+                                    
+                                <div class="form-group row">                                    
+                                    <%= form.label :tipo_dreno_id, "Tipo compressor", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-4 mb-3 mb-sm-0">                                    
+                                        <%= form.collection_select :tipo_dreno_id, @tipo_drenos, :id, :tipo_dreno, {include_blank: 'Selecione um tipo de dreno'}, {selected: nil, class: "form-control"} %>
+                                    </div>
+                                    <%= form.label :classe_fluido_id, "Classe fluído", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-4 mb-3 mb-sm-0">                                    
+                                        <%= form.collection_select :classe_fluido_id, @classe_fluidos, :id, :descricao, {include_blank: 'Selecione um tipo de dreno'}, {selected: nil, class: "form-control"} %>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group row">                                    
+                                    <%= form.label :fluido_servico_id, "Fluído serviço", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-4 mb-3 mb-sm-0">                                    
+                                        <%= form.collection_select :fluido_servico_id, @fluido_servicos, :id, :descricao, {include_blank: 'Selecione um fluído'}, {selected: nil, class: "form-control"} %>
+                                    </div>
+                                
+                                    <%= form.label :tipo_dispositivo_seguranca_id, "Tipo disp. seg.", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-4 mb-3 mb-sm-0">                                    
+                                        <%= form.collection_select :tipo_dispositivo_seguranca_id, @tipo_dispositivo_segurancas, :id, :nome, {include_blank: 'Selecione um tipo de disp. de seg.'}, {selected: nil, class: "form-control"} %>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group row">
+                                    <%= form.label :setor_instalacao_vaso, "Setor instalação", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-4 mb-3 mb-sm-0">                                        
+                                        <%= form.text_field :setor_instalacao_vaso, {class: "form-control"} %>
+                                    </div>
+                                </div>
+                                
+                            </fieldset>
+                               
+                            <fieldset class="Vaso_externa">
+                            <legend>Dados de projeto e operação</legend>
                             
-                            <p style="text-align: center">Dimensões</p>
-                            
-                            <div class="form-group row">
-                                <div class="col-sm-4 mb-3 mb-sm-0">
-                                    <%= form.label :perimetro_diametro_externo, "Perímetro" %>
-                                    <%= form.number_field :perimetro_diametro_externo, step: 0.1, min: 1, style: "width: 100px;" %>
-                                    [cm]
+                                <div class="form-group row">                                        
+                                    <%= form.label :catnr13_id, "Categoria NR13", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-4 mb-3 mb-sm-0">                                    
+                                        <%= form.collection_select :catnr13_id, @catnr13s, :id, :categoria, {include_blank: 'Selecione uma categoria'}, {selected: nil, class: "form-control"} %>
+                                    </div>
+
+                                    <%= form.label :potencial_risco_id, "Potencial de risco", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-4 mb-3 mb-sm-0">                                    
+                                        <%= form.collection_select :potencial_risco_id, @potencial_riscos, :id, :descricao, {include_blank: 'Selecione um potencial de risco'}, {selected: nil, class: "form-control"} %>
+                                    </div>                                                                                                  
                                 </div>
-                                <div class="col-sm-4 mb-3 mb-sm-0">
-                                    <%= form.label :entre_soladas_corpo %>            
-                                    <%= form.number_field :entre_soladas_corpo, step: 0.1, min: 1, style: "width: 100px;" %>
-                                    [cm]
+                                
+                                <div class="form-group row">
+                                    <%= form.label :codigo_construcao_id, "Código construção", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-4 mb-3 mb-sm-0">                                    
+                                        <%= form.collection_select :codigo_construcao_id, @codigo_construcaos, :id, :codigo, {include_blank: 'Selecione um código de construção'}, {selected: nil, class: "form-control"} %>
+                                    </div>                                                                                                  
+                                    
+                                    <%= form.label :volume, class: "col-sm-2 col-form-label text-sm-left text-lg-right" do %>
+                                        <%= safe_join([ "Volume", " [m<sup>3</sup>]".html_safe ]) %>
+                                    <% end %>
+                                    <div class="col-sm-4 mb-3 mb-sm-0">                                                                         
+                                        <%= form.number_field :volume, step: 0.001, min: 0.001, style: 'width: 100px;', class: "form-control" %>                                        
+                                    </div>                                    
                                 </div>
-                                <div class="col-sm-4 mb-3 mb-sm-0">
-                                    <%= form.label :profundidade_tampo %>
-                                    <%= form.number_field :profundidade_tampo, step: 0.1, min: 1, style: "width: 100px;" %>
-                                    [cm]
+                                
+    
+                                <p style="text-align: center">Pressões</p>
+                                
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">                                           
+                                        <%= form.label :p_projeto %>
+                                        <%= form.number_field :p_projeto, step: 0.001, min: -10, required: true, style: 'width: 100px;' %>
+                                        [MPa]
+                                    </div>
                                 </div>
-                            </div>
-                            
-                            <div class="form-group row">
-                                <div class="col-sm-4 mb-3 mb-sm-0">
-                                    <%= form.label :diametro_externo_corpo, "Diâmetro externo" %>
-                                    <%= form.number_field :diametro_externo_corpo, step: 0.1, min: 1, style: "width: 100px;" %>
-                                    [cm]
+                                
+                                <div class="form-group row">                            
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <%= form.label :p_inf_operacao_fabricante, "Operação inf." %>
+                                        <%= form.number_field :p_inf_operacao_fabricante, step: 0.001, min: -10, required: false, style: 'width: 100px;' %>
+                                        [MPa]
+                                    </div>
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <%= form.label :p_sup_operacao_fabricante, "Operação sup." %>            
+                                        <%= form.number_field :p_sup_operacao_fabricante, step: 0.001, min: -10, required: false, style: 'width: 100px;' %>
+                                        [MPa]
+                                    </div>
                                 </div>
-                                <div class="col-sm-4 mb-3 mb-sm-0">
-                                    <%= form.label :esp_projeto_corpo %>
-                                    <%= form.number_field :esp_projeto_corpo, step: 0.01, min: 0.1, style: "width: 100px;" %>
-                                    [mm]
+                                
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <%= form.label :pmta_original %>
+                                        <%= form.number_field :pmta_original, step: 0.001, min: -10, required: false, style: 'width: 100px;' %>
+                                        [MPa]
+                                    </div>
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <%= form.label :pth_original %>            
+                                        <%= form.number_field :pth_original, step: 0.001, min: -10, required: false, style: 'width: 100px;' %>
+                                        [MPa]
+                                    </div>
                                 </div>
-                                <div class="col-sm-4 mb-3 mb-sm-0">
-                                    <%= form.label :esp_projeto_tampo %>
-                                    <%= form.number_field :esp_projeto_tampo, step: 0.01, min: 0.1, style: "width: 100px;" %>
-                                    [mm]
-                                </div>                                        
-                            </div>
+                                
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <%= form.label :pmta_atual %>
+                                        <%= form.number_field :pmta_atual, step: 0.001, min: -10, required: true, style: 'width: 100px;' %>
+                                        [MPa]
+                                    </div>
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <%= form.label :pth_atual %>            
+                                        <%= form.number_field :pth_atual, step: 0.001, min: -10, required: true, style: 'width: 100px;' %>
+                                        [MPa]
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <%= form.label :temp_min_prj %>            
+                                        <%= form.number_field :temp_min_prj, step: 1, min: -100, style: "width: 100px;" %>
+                                        [°C]
+                                    </div>
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <%= form.label :temp_max_prj %>            
+                                        <%= form.number_field :temp_max_prj, step: 1, min: -100, style: "width: 100px;" %>
+                                        [°C]
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">                                           
+                                        <%= form.label :material_id %>
+                                        <%= form.collection_select(:material_id, @materials, :id, :descricao, {include_blank: true }, {selected: nil, style: 'width: 200px;'}) %>
+                                    </div>
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <%= form.label :efic_solda_tampo %>
+                                        <%= form.text_field :efic_solda_tampo, style: 'width: 100px;' %>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <%= form.label :efic_solda_costado %>
+                                        <%= form.text_field :efic_solda_costado, style: 'width: 100px;' %>
+                                    </div>
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <%= form.label :efic_solda_costado_tampo %>
+                                        <%= form.text_field :efic_solda_costado_tampo, style: 'width: 100px;' %>
+                                    </div>
+                                </div>
+                                
+                                <p style="text-align: center">Dimensões</p>
+                                
+                                <div class="form-group row">
+                                    <div class="col-sm-4 mb-3 mb-sm-0">
+                                        <%= form.label :perimetro_diametro_externo, "Perímetro" %>
+                                        <%= form.number_field :perimetro_diametro_externo, step: 0.1, min: 1, style: "width: 100px;" %>
+                                        [cm]
+                                    </div>
+                                    <div class="col-sm-4 mb-3 mb-sm-0">
+                                        <%= form.label :entre_soladas_corpo %>            
+                                        <%= form.number_field :entre_soladas_corpo, step: 0.1, min: 1, style: "width: 100px;" %>
+                                        [cm]
+                                    </div>
+                                    <div class="col-sm-4 mb-3 mb-sm-0">
+                                        <%= form.label :profundidade_tampo %>
+                                        <%= form.number_field :profundidade_tampo, step: 0.1, min: 1, style: "width: 100px;" %>
+                                        [cm]
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group row">
+                                    <div class="col-sm-4 mb-3 mb-sm-0">
+                                        <%= form.label :diametro_externo_corpo, "Diâmetro externo" %>
+                                        <%= form.number_field :diametro_externo_corpo, step: 0.1, min: 1, style: "width: 100px;" %>
+                                        [cm]
+                                    </div>
+                                    <div class="col-sm-4 mb-3 mb-sm-0">
+                                        <%= form.label :esp_projeto_corpo %>
+                                        <%= form.number_field :esp_projeto_corpo, step: 0.01, min: 0.1, style: "width: 100px;" %>
+                                        [mm]
+                                    </div>
+                                    <div class="col-sm-4 mb-3 mb-sm-0">
+                                        <%= form.label :esp_projeto_tampo %>
+                                        <%= form.number_field :esp_projeto_tampo, step: 0.01, min: 0.1, style: "width: 100px;" %>
+                                        [mm]
+                                    </div>                                        
+                                </div>
+                                
+                            </fieldset>
                             
                             <hr>
                             

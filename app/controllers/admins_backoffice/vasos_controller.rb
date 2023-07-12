@@ -38,6 +38,12 @@ class AdminsBackoffice::VasosController < AdminsBackofficeController
   
     def update        
       if @vaso.update(params_vaso)
+        # Verificar se um novo arquivo de imagem foi enviado
+        
+        if params[:vaso][:foto_plaqueta].present?
+          # Atualizar o campo de imagem diretamente com o novo arquivo
+          @vaso.update_attribute(:foto_plaqueta, params[:vaso][:foto_plaqueta].read)
+        end
         redirect_to admins_backoffice_vasos_path, notice: "Vaso atualizado com sucesso!"    
       else
         get_relacoes

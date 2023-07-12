@@ -9,7 +9,7 @@
                             
                             <div class="form-group row">
                                 <%= form.label :foto_antes_inspecao, 'Antes', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>                                
-                                <div class="form-label col-sm-5mb-0 mb-sm-0">                                    
+                                <div class="form-label col-sm-5 mb-0 mb-sm-0">                                    
                                     <% if @relatorio.foto_antes_inspecao.present? %>
                                       <img src="data:image/jpeg;base64,<%= Base64.encode64(@relatorio.foto_antes_inspecao) %>" width="auto" height="150">
                                     <% end %>
@@ -21,7 +21,7 @@
                             
                             <div class="form-group row">
                                 <%= form.label :foto_pos_inspecao, 'Pós', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>                                                                                                                
-                                <div class="form-label col-sm-5mb-0 mb-sm-0">                                    
+                                <div class="form-label col-sm-5 mb-0 mb-sm-0">                                    
                                     <% if @relatorio.foto_pos_inspecao.present? %>
                                       <img src="data:image/jpeg;base64,<%= Base64.encode64(@relatorio.foto_pos_inspecao) %>" width="auto" height="150">
                                     <% end %>
@@ -33,7 +33,7 @@
                             
                             <div class="form-group row">
                                 <%= form.label :foto_corpo, 'Corpo', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
-                                <div class="form-label col-sm-5mb-0 mb-sm-0">                                    
+                                <div class="form-label col-sm-5 mb-0 mb-sm-0">                                    
                                     <% if @relatorio.foto_corpo.present? %>
                                       <img src="data:image/jpeg;base64,<%= Base64.encode64(@relatorio.foto_corpo) %>" width="auto" height="150">
                                     <% end %>
@@ -45,7 +45,7 @@
                             
                             <div class="form-group row">
                                 <%= form.label :foto_instalacao, 'Instalação', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
-                                <div class="form-label col-sm-5mb-0 mb-sm-0">                                    
+                                <div class="form-label col-sm-5 mb-0 mb-sm-0">                                    
                                     <% if @relatorio.foto_instalacao.present? %>
                                       <img src="data:image/jpeg;base64,<%= Base64.encode64(@relatorio.foto_instalacao) %>" width="auto" height="150">
                                     <% end %>
@@ -62,7 +62,7 @@
                             
                             <div class="form-group row">
                                 <%= form.label :foto_antes_inspecao, 'Antes', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>                                
-                                <div class="form-label col-sm-5mb-0 mb-sm-0">                                    
+                                <div class="form-label col-sm-5 mb-0 mb-sm-0">                                    
                                     <% if @relatorio.foto_th.present? %>
                                       <img src="data:image/jpeg;base64,<%= Base64.encode64(@relatorio.foto_th) %>" width="auto" height="150">
                                     <% end %>
@@ -79,7 +79,7 @@
                             
                             <div class="form-group row">
                                 <%= form.label :foto_interna1, 'Interna 1', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>                                
-                                <div class="form-label col-sm-5mb-0 mb-sm-0">                                    
+                                <div class="form-label col-sm-5 mb-0 mb-sm-0">                                    
                                     <% if @relatorio.foto_interna1.present? %>
                                       <img src="data:image/jpeg;base64,<%= Base64.encode64(@relatorio.foto_interna1) %>" width="auto" height="150">
                                     <% end %>
@@ -91,7 +91,7 @@
                             
                             <div class="form-group row">
                                 <%= form.label :foto_interna2, 'Interna 2', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>                                                                                                                
-                                <div class="form-label col-sm-5mb-0 mb-sm-0">                                    
+                                <div class="form-label col-sm-5 mb-0 mb-sm-0">                                    
                                     <% if @relatorio.foto_interna2.present? %>
                                       <img src="data:image/jpeg;base64,<%= Base64.encode64(@relatorio.foto_interna2) %>" width="auto" height="150">
                                     <% end %>
@@ -103,7 +103,7 @@
                             
                             <div class="form-group row">
                                 <%= form.label :foto_interna3, 'Interna 3', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
-                                <div class="form-label col-sm-5mb-0 mb-sm-0">                                    
+                                <div class="form-label col-sm-5 mb-0 mb-sm-0">                                    
                                     <% if @relatorio.foto_interna3.present? %>
                                       <img src="data:image/jpeg;base64,<%= Base64.encode64(@relatorio.foto_interna3) %>" width="auto" height="150">
                                     <% end %>
@@ -115,7 +115,7 @@
                             
                             <div class="form-group row">
                                 <%= form.label :foto_interna4, 'Interna 4', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
-                                <div class="form-label col-sm-5mb-0 mb-sm-0">                                    
+                                <div class="form-label col-sm-5 mb-0 mb-sm-0">                                    
                                     <% if @relatorio.foto_interna4.present? %>
                                       <img src="data:image/jpeg;base64,<%= Base64.encode64(@relatorio.foto_interna4) %>" width="auto" height="150">
                                     <% end %>
