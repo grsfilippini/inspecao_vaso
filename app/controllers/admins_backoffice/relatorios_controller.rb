@@ -63,11 +63,11 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
   end
 
   def destroy
-    #if @relatorio.destroy
-    #  redirect_to admins_backoffice_relatorio_em_aberto_path, notice: "Relatório excluído com sucesso!"
-    #else
+    if @relatorio.destroy
+      redirect_to admins_backoffice_relatorio_em_aberto_path, notice: "Relatório excluído com sucesso!"
+    else
       render :index
-    #end
+    end
   end
 
 

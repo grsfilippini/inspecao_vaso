@@ -4,7 +4,7 @@
         <div class="row">
         
             <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                <div class="input-group">      
+                <div c5//lass="input-group">      
                     <%= form.text_field :num_serie, class:"form-control bg-light border-0 small", placeholder: "# série...", class:"form-control" %>
                 </div>
             </div>
@@ -61,12 +61,12 @@
                     <td><%= v.proprietaria.nome_curto %></td>
 
                     <td style="width: 100px">
-                        <%= link_to edit_admins_backoffice_vaso_path(v.id), class:"btn btn-info btn-circle btn-sm" do %> 
+                        <%= link_to edit_admins_backoffice_vaso_path(v), class:"btn btn-info btn-circle btn-sm" do %> 
                             <i class="fas fa-edit"></i>
                         <%end%>
-                        <%= link_to admins_backoffice_vaso_path(v.id), 
-                                    method: :delete, class:"btn btn-danger btn-circle btn-sm", 
-                                    data: { confirm: t('mensagens.confirmar_exclusao', item: v.num_serie)} do %>
+                        <%= link_to admins_backoffice_vaso_path(v), 
+                                    method: :delete, class:"btn btn-danger btn-circle btn-sm",
+                                    data: { confirm: t('mensagens.confirmar_exclusao', item: v.id)}  do %>
                             <i class="fas fa-minus"></i> 
                         <%end%>
                     </td>
