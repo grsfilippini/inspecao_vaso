@@ -52,7 +52,7 @@
                                 
                             </div>
                                                         
-                            <fieldset class="Vaso_externa">
+                            <fieldset class="Vaso_identificacao">
                             <legend>Identificação do vaso</legend>
                             
                                 <div class="form-group row">
@@ -95,7 +95,7 @@
                                     
                             </fieldset>
                             
-                            <fieldset class="Vaso_externa">
+                            <fieldset class="Vaso_caracteristicas">
                             <legend>Características</legend>
                             
                                 <div class="form-group row">
@@ -154,7 +154,7 @@
                                 
                             </fieldset>
                                
-                            <fieldset class="Vaso_externa">
+                            <fieldset class="Vaso_projeto">
                             <legend>Dados de projeto e operação</legend>
                             
                                 <div class="form-group row">                                        
@@ -175,136 +175,213 @@
                                         <%= form.collection_select :codigo_construcao_id, @codigo_construcaos, :id, :codigo, {include_blank: 'Selecione um código de construção'}, {selected: nil, class: "form-control"} %>
                                     </div>                                                                                                  
                                     
-                                    <%= form.label :volume, class: "col-sm-2 col-form-label text-sm-left text-lg-right" do %>
-                                        <%= safe_join([ "Volume", " [m<sup>3</sup>]".html_safe ]) %>
-                                    <% end %>
-                                    <div class="col-sm-4 mb-3 mb-sm-0">                                                                         
-                                        <%= form.number_field :volume, step: 0.001, min: 0.001, style: 'width: 100px;', class: "form-control" %>                                        
+                                    <%= form.label :volume, "Volume [l]", class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                    <input type="number" step="1" min="0" style="width: 100px;" class="form-control col-sm-1 text-sm-left text-lg-right" id="volume_litros">
+                                    
+                                    <%= form.label :volume, "[m<sup>3</sup>]".html_safe, class: "col-sm-1 col-form-label text-sm-left text-lg-right" %>
+                                    <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                        <%= form.number_field :volume, step: 0.001, min: 0.001,  class: "form-control", id: "volume_m3", disabled: true %>
+                                    </div>
+                                </div>                                
+
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", function() {
+                                        var volumeLitrosInput = document.getElementById("volume_litros");
+                                        var volumeM3Input = document.getElementById("volume_m3");
+                                
+                                        volumeLitrosInput.addEventListener("input", function() {
+                                            var valor = volumeLitrosInput.value;
+                                            var valorM3 = valor / 1000; // Divide o valor por 1000
+                                            volumeM3Input.value = valorM3;
+                                        });
+                                    });
+                                </script>
+
+                                <div class="form-group row">
+                                    <div class="col-sm-2 mb-3 mb-sm-0">
+                                        <h6><span class="badge badge-secondary">Pressões</span></h6>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group row">                                    
+                                    <%= form.label :p_projeto, 'Projeto [MPa]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                    <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                        <%= form.number_field :p_projeto, step: 0.001, min: -10,  class: "form-control", id: "pressao_projeto" %>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group row">
+                                    <%= form.label :pmta_original, 'PMTA orig.[MPa]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                    <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                        <%= form.number_field :pmta_original, step: 0.001, min: -10,  class: "form-control", id: "pmta_original" %>
+                                    </div>
+                                    <%= form.label :pmta_atual, 'PMTA atual[MPa]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                    <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                        <%= form.number_field :pmta_atual, step: 0.001, min: -10,  class: "form-control", id: "pmta_atual" %>
+                                    </div>
+                                </div>
+                                <!-- Atualiza pressões  caso esteja inserindo um novo vaso -->
+                                <% if !@vaso.id.present? %>
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function() {
+                                            var pressaoProjetoInput = document.getElementById("pressao_projeto");
+                                            var pmtaOriginalInput = document.getElementById("pmta_original");
+                                            var pmtaAtualInput = document.getElementById("pmta_atual");
+                                    
+                                            pressaoProjetoInput.addEventListener("input", function() {
+                                                var pressao = pressaoProjetoInput.value;                                            
+                                                pmtaOriginalInput.value = pressao;
+                                                pmtaAtualInput.value = pressao;
+                                            });
+                                        });
+                                    </script>
+                                <% end %>
+
+                                <div class="form-group row">
+                                    <%= form.label :pth_original, 'PTH orig.[MPa]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                    <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                        <%= form.number_field :pth_original, step: 0.001, min: -10,  class: "form-control", id: "pth_original" %>
+                                    </div>
+                                    <%= form.label :pth_atual, 'PTH atual[MPa]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                    <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                        <%= form.number_field :pth_atual, step: 0.001, min: -10,  class: "form-control", id: "pth_atual" %>
+                                    </div>
+                                </div>
+
+                                <!-- Atualiza pressões  caso esteja inserindo um novo vaso -->
+                                <% if !@vaso.id.present? %>
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function() {
+                                            var pthOriginalInput = document.getElementById("pth_original");                                            
+                                            var pthAtualInput = document.getElementById("pth_atual");
+                                    
+                                            pthOriginalInput.addEventListener("input", function() {
+                                                var pressao = pthOriginalInput.value;                                            
+                                                pthAtualInput.value = pressao;
+                                            });
+                                        });
+                                    </script>
+                                <% end %>
+
+                                <div class="form-group row">
+                                    <%= form.label :p_inf_operacao_fabricante, 'Operação inf.[MPa]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                    <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                        <%= form.number_field :p_inf_operacao_fabricante, step: 0.001, min: -10,  class: "form-control" %>
+                                    </div>
+                                    <%= form.label :p_sup_operacao_fabricante, 'Operação sp.[MPa]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                    <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                        <%= form.number_field :p_sup_operacao_fabricante, step: 0.001, min: -10,  class: "form-control" %>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-sm-2 mb-3 mb-sm-0">
+                                        <h6><span class="badge badge-secondary">Outras informações</span></h6>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <%= form.label :temp_min_prj, 'Temp. min.[°C]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                    <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                        <%= form.number_field :temp_min_prj, step: 1, min: -100,  class: "form-control" %>
+                                    </div>
+                                    <%= form.label :temp_max_prj, 'Temp. máx.[°C]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                    <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                        <%= form.number_field :temp_max_prj, step: 1, min: -100,  class: "form-control" %>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group row">
+                                    <%= form.label :material_id, "Material", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-4 mb-3 mb-sm-0">                                    
+                                        <%= form.collection_select :material_id, @materials, :id, :descricao, {include_blank: 'Selecione um material'}, {selected: nil, class: "form-control"} %>
                                     </div>                                    
                                 </div>
                                 
-    
-                                <p style="text-align: center">Pressões</p>
-                                
                                 <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">                                           
-                                        <%= form.label :p_projeto %>
-                                        <%= form.number_field :p_projeto, step: 0.001, min: -10, required: true, style: 'width: 100px;' %>
-                                        [MPa]
+                                    <%= form.label :efic_solda_tampo, 'Efic. solda tampo', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                    <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                        <%= form.number_field :efic_solda_tampo, step: 0.01, min: 0,  class: "form-control" %>
                                     </div>
-                                </div>
-                                
-                                <div class="form-group row">                            
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <%= form.label :p_inf_operacao_fabricante, "Operação inf." %>
-                                        <%= form.number_field :p_inf_operacao_fabricante, step: 0.001, min: -10, required: false, style: 'width: 100px;' %>
-                                        [MPa]
+                                    <%= form.label :efic_solda_costado, 'Efic. solda costado', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                    <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                        <%= form.number_field :efic_solda_costado, step: 0.01, min: 0,  class: "form-control" %>
                                     </div>
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <%= form.label :p_sup_operacao_fabricante, "Operação sup." %>            
-                                        <%= form.number_field :p_sup_operacao_fabricante, step: 0.001, min: -10, required: false, style: 'width: 100px;' %>
-                                        [MPa]
+                                    <%= form.label :efic_solda_costado_tampo, 'Efc. sol. cos. tampo', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                    <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                        <%= form.number_field :efic_solda_costado_tampo, step: 0.01, min: 0,  class: "form-control" %>
                                     </div>
                                 </div>
                                 
                                 <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <%= form.label :pmta_original %>
-                                        <%= form.number_field :pmta_original, step: 0.001, min: -10, required: false, style: 'width: 100px;' %>
-                                        [MPa]
-                                    </div>
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <%= form.label :pth_original %>            
-                                        <%= form.number_field :pth_original, step: 0.001, min: -10, required: false, style: 'width: 100px;' %>
-                                        [MPa]
+                                    <div class="col-sm-2 mb-3 mb-sm-0">
+                                        <h6><span class="badge badge-secondary">Dimensões</span></h6>
                                     </div>
                                 </div>
                                 
                                 <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <%= form.label :pmta_atual %>
-                                        <%= form.number_field :pmta_atual, step: 0.001, min: -10, required: true, style: 'width: 100px;' %>
-                                        [MPa]
+                                    <%= form.label :perimetro_diametro_externo, 'Perímetro [cm]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                    <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                        <%= form.number_field :perimetro_diametro_externo, step: 0.1, min: 1,  class: "form-control", id: "perimetro" %>
                                     </div>
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <%= form.label :pth_atual %>            
-                                        <%= form.number_field :pth_atual, step: 0.001, min: -10, required: true, style: 'width: 100px;' %>
-                                        [MPa]
+                                    <%= form.label :entre_soladas_corpo, 'Entre soldas [cm]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                    <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                        <%= form.number_field :entre_soladas_corpo, step: 0.1, min: 1,  class: "form-control" %>
                                     </div>
-                                </div>
-                                <hr>
-                                <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <%= form.label :temp_min_prj %>            
-                                        <%= form.number_field :temp_min_prj, step: 1, min: -100, style: "width: 100px;" %>
-                                        [°C]
-                                    </div>
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <%= form.label :temp_max_prj %>            
-                                        <%= form.number_field :temp_max_prj, step: 1, min: -100, style: "width: 100px;" %>
-                                        [°C]
+                                    <%= form.label :profundidade_tampo, 'Profun. tampo [cm]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                    <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                        <%= form.number_field :profundidade_tampo, step: 0.1, min: 1,  class: "form-control" %>
                                     </div>
                                 </div>
                                 
                                 <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">                                           
-                                        <%= form.label :material_id %>
-                                        <%= form.collection_select(:material_id, @materials, :id, :descricao, {include_blank: true }, {selected: nil, style: 'width: 200px;'}) %>
+                                    <%= form.label :diametro_externo_corpo, 'Diâm. externo [cm]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                    <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                        <%= form.number_field :diametro_externo_corpo, step: 0.1, min: 1,  class: "form-control", id: "diametro" %>
                                     </div>
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <%= form.label :efic_solda_tampo %>
-                                        <%= form.text_field :efic_solda_tampo, style: 'width: 100px;' %>
+                                    <%= form.label :esp_projeto_corpo, 'E. prj. corpo [mm]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                    <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                        <%= form.number_field :esp_projeto_corpo, step: 0.01, min: 0.1,  class: "form-control" %>
                                     </div>
-                                </div>
-                                
-                                <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <%= form.label :efic_solda_costado %>
-                                        <%= form.text_field :efic_solda_costado, style: 'width: 100px;' %>
-                                    </div>
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <%= form.label :efic_solda_costado_tampo %>
-                                        <%= form.text_field :efic_solda_costado_tampo, style: 'width: 100px;' %>
+                                    <%= form.label :esp_projeto_tampo, 'E. prj. tampo [mm]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                    <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                        <%= form.number_field :esp_projeto_tampo, step: 0.01, min: 0.1,  class: "form-control" %>
                                     </div>
                                 </div>
-                                
-                                <p style="text-align: center">Dimensões</p>
-                                
-                                <div class="form-group row">
-                                    <div class="col-sm-4 mb-3 mb-sm-0">
-                                        <%= form.label :perimetro_diametro_externo, "Perímetro" %>
-                                        <%= form.number_field :perimetro_diametro_externo, step: 0.1, min: 1, style: "width: 100px;" %>
-                                        [cm]
-                                    </div>
-                                    <div class="col-sm-4 mb-3 mb-sm-0">
-                                        <%= form.label :entre_soladas_corpo %>            
-                                        <%= form.number_field :entre_soladas_corpo, step: 0.1, min: 1, style: "width: 100px;" %>
-                                        [cm]
-                                    </div>
-                                    <div class="col-sm-4 mb-3 mb-sm-0">
-                                        <%= form.label :profundidade_tampo %>
-                                        <%= form.number_field :profundidade_tampo, step: 0.1, min: 1, style: "width: 100px;" %>
-                                        [cm]
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group row">
-                                    <div class="col-sm-4 mb-3 mb-sm-0">
-                                        <%= form.label :diametro_externo_corpo, "Diâmetro externo" %>
-                                        <%= form.number_field :diametro_externo_corpo, step: 0.1, min: 1, style: "width: 100px;" %>
-                                        [cm]
-                                    </div>
-                                    <div class="col-sm-4 mb-3 mb-sm-0">
-                                        <%= form.label :esp_projeto_corpo %>
-                                        <%= form.number_field :esp_projeto_corpo, step: 0.01, min: 0.1, style: "width: 100px;" %>
-                                        [mm]
-                                    </div>
-                                    <div class="col-sm-4 mb-3 mb-sm-0">
-                                        <%= form.label :esp_projeto_tampo %>
-                                        <%= form.number_field :esp_projeto_tampo, step: 0.01, min: 0.1, style: "width: 100px;" %>
-                                        [mm]
-                                    </div>                                        
-                                </div>
+
+                                <!-- Atualiza diâmetro caso perímetro seja alterado -->
+                                <% if !@vaso.id.present? %>
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function() {
+                                            var perimetroInput = document.getElementById("perimetro");                                            
+                                            var diametroInput = document.getElementById("diametro");
+                                    
+                                            perimetroInput.addEventListener("input", function() {
+                                                var perimetro = perimetroInput.value;
+                                                var diametro = perimetro / Math.PI;
+                                                var diametroArredondado = Math.round(diametro * 10)/10
+                                                diametroInput.value = diametroArredondado;
+                                            });
+                                        });
+                                    </script>
+                                <% end %>
+
+                                <!-- Atualiza perímetro caso diâmetro seja alterado -->
+                                <% if !@vaso.id.present? %>
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function() {
+                                            var perimetroInput = document.getElementById("perimetro");                                            
+                                            var diametroInput = document.getElementById("diametro");
+                                    
+                                            diametroInput.addEventListener("input", function() {
+                                                var diametro = diametroInput.value;
+                                                var perimetro = diametro * Math.PI;
+                                                var perimetroArredondado = Math.round(perimetro * 10)/10
+                                                perimetroInput.value = perimetroArredondado;
+                                            });
+                                        });
+                                    </script>
+                                <% end %>
                                 
                             </fieldset>
                             
