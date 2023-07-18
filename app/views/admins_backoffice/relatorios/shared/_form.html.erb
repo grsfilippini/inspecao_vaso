@@ -73,7 +73,7 @@
                                 
                                 <%= form.label :data_relatorio, 'Data', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
                                 <div class="col-sm-3 mb-0 mb-sm-0">                                    
-                                    <%= form.date_field :data_relatorio, value: Date.current, class: "form-control" %>
+                                    <%= form.date_field :data_relatorio, value: @relatorio.id.present? ? @relatorio.data_relatorio : Date.current, class: "form-control" %>
                                 </div>
                             
                                 <%= form.label :vaso_id, 'Vaso', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>

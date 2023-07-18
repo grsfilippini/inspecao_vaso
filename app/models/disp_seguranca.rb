@@ -9,6 +9,8 @@ class DispSeguranca < ApplicationRecord
     belongs_to :tipo_dispositivo_seguranca
     belongs_to :user
     
+    has_many :relatorio_dispsegs
+    
     # Callback method, RoR
     after_create :seta_estatistica
     after_destroy :dec_estatistica

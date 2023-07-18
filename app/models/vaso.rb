@@ -35,6 +35,7 @@ class Vaso < ApplicationRecord
     belongs_to :user
     
     has_many :relatorios
+    has_many :relatorio_dispsegs
     
     has_one :corp, through: :proprietaria
     

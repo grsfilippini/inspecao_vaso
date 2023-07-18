@@ -56,7 +56,9 @@ Rails.application.routes.draw do
     get 'inspecao_insp_dreno',       to: 'relatorios#inspecao_insp_dreno'
     get 'inspecao_insp_vaso_outros', to: 'relatorios#inspecao_insp_vaso_outros'
     get 'inspecao_fotos',            to: 'relatorios#inspecao_fotos'
-    
+
+    resources :relatorio_dispsegs
+    get 'pesquisa_relatorio_dispseg', to: 'relatorio_dispsegs#pesquisa'
   end
 
   namespace :site do
