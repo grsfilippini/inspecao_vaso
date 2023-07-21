@@ -74,9 +74,11 @@ class AdminsBackoffice::VasosController < AdminsBackofficeController
       @corps = Corp.all.order(:nome)
     end
     
-    
-    
-    
+    def json_data      
+      @vaso = Vaso.find(params[:id])
+      render json: { pmta_atual: @vaso.pmta_atual }
+    end
+
     
     private
    

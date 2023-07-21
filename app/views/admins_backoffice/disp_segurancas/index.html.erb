@@ -8,6 +8,7 @@
         <thead>
             <tr>
                 <th>#</th>
+                <th>Usuário</th>
                 <th><%= traduz_atributos_humanos(@disp_segurancas, :serie) %> </th>
                 <th><%= traduz_atributos_humanos(@disp_segurancas, :cadastro) %></th>
                 <th><%= traduz_atributos_humanos(@disp_segurancas, :tipo_dispositivo_seguranca) %></th>
@@ -22,6 +23,7 @@
             <% @disp_segurancas.each do |a|%>
                 <tr>
                     <td><%= a.id %></td>
+                    <td><%= a.user.nome %></td>
                     <td><%= a.serie %></td>
                     <td><%= a.cadastro.nome_curto.truncate(30) %></td>
                     <td><%= a.tipo_dispositivo_seguranca.nome.truncate(30) %></td>
@@ -43,3 +45,4 @@
     <%= paginate @disp_segurancas %>
 
 </div>
+

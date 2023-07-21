@@ -3,6 +3,8 @@ class DispSeguranca < ApplicationRecord
     validates :serie,                         presence: true
     validates :cadastro_id,                   presence: true
     validates :tipo_dispositivo_seguranca_id, presence: true
+    validates :user_id,                       presence: true
+    validates :castelo, inclusion: { in: %w[uma_parte duas_partes multiplas_partes] }
     
     # Duas chaves estrangeiras com mesma tabela
     belongs_to :cadastro

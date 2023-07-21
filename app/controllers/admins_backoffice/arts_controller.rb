@@ -47,7 +47,12 @@ class AdminsBackoffice::ArtsController < AdminsBackofficeController
       end
     end
   
-  
+    def json_data      
+      @art = Art.find(params[:id])
+      render json: { cadastro_id: @art.cadastro_id, ph_id: @art.ph_id }
+    end
+    
+    
     private
   
     

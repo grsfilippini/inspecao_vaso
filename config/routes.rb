@@ -18,15 +18,22 @@ Rails.application.routes.draw do
     get 'pesquisa_cadastro', to: 'cadastros#pesquisa'
     resources :cidades
     resources :catnr13s
-    resources :finalidade_vasos
-    resources :vasos
-    get 'pesquisa_vaso', to: 'vasos#pesquisa'
-    #get 'vasos/:id/imgplaqueta', to: 'vasos#plaqueta_preview', as: 'plaqueta_preview'
+    resources :finalidade_vasos    
+    resources :vasos do
+      member do
+        get :json_data, defaults: { format: 'json' }
+      end
+    end   
+    get 'pesquisa_vaso', to: 'vasos#pesquisa'    
     resources :tipo_compressors
     resources :tipo_drenos
     resources :ambiente_insts
     resources :phs
-    resources :arts
+    resources :arts do
+      member do
+        get :json_data, defaults: { format: 'json' }
+      end
+    end    
     resources :classe_fluidos
     resources :codigo_construcaos
     resources :tipo_dispositivo_segurancas
@@ -59,6 +66,7 @@ Rails.application.routes.draw do
 
     resources :relatorio_dispsegs
     get 'pesquisa_relatorio_dispseg', to: 'relatorio_dispsegs#pesquisa'
+    get 'relatorio_dispseg_impresso',         to: 'relatorio_dispsegs#impresso'
   end
 
   namespace :site do

@@ -290,8 +290,11 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <%= link_to admins_backoffice_relatorio_dispsegs_path, class:"collapse-item" do %>
-                            Relatórios
-                        <%end%>                        
+                            Relatórios não impressos
+                        <%end%>
+                        <%= link_to admins_backoffice_relatorio_dispseg_impresso_path, class:"collapse-item" do %>
+                            Relatórios impressos
+                        <%end%>
                         <%= link_to '#', class:"collapse-item" do %>
                             (-)
                         <%end%>

@@ -15,6 +15,7 @@
     </div>
 <% end %>
 
+
 <!-- CONTAINER PARA O FORM -->
 <div class="container">
     <div class="card o-hidden border-0 shadow-lg my-5">
@@ -29,30 +30,302 @@
                             <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                         </div-->
 
-
                         <%= form_with(model: [ :admins_backoffice, @relatorio_dispseg ], local: true) do |form| %>
-                            
-                            <div class="form-group row">
-                                <%= form.label :id, "Relatório", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
-                                <div class="col-sm-4 mb-0 mb-sm-0">                                    
-                                    <%= form.number_field :id, class: 'form-control', min: 1 %>
+                            <fieldset class="Relatorio_DispSeg_Identificacao">
+                            <legend>Identificação</legend>
+                                <div class="form-group row">
+                                    <%= form.label :user_id, "Usuário", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>                                
+                                    <div class="col-sm-4 mb-0 mb-sm-0">                                    
+                                        <%= form.collection_select(:user_id, @users, :id, :nome_completo, {include_blank: 'Selecione um usuário'}, {selected: nil, class: 'form-control'}) %>
+                                    </div>
+                                    <div class="col-sm-2 mb-0 mb-sm-0">                                        
+                                    </div>
+                                    <div class="form-check col-sm-4 mb-0 mb-sm-0 d-inline">
+                                        <%= form.check_box :bimpresso, class: "form-check-input", id: "ImpressoCheckbox"%>
+                                        <%= form.label :bimpresso, "Relatório impresso", class: "form-check-label", for: "ImpressoCheckbox" %>
+                                    </div>
                                 </div>
-                                <%= form.label :user_id, "Usuário", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>                                
-                                <div class="col-sm-4 mb-0 mb-sm-0">                                    
-                                    <%= form.collection_select(:user_id, @users, :id, :nome_completo, {include_blank: 'Selecione um usuário'}, {selected: nil, class: 'form-control'}) %>
-                                </div>
-                            </div>
 
-                        <div class="form-group row">
-                            <%= form.label :data, 'Data', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="form-group row">
+                                    <%= form.label :id, "Relatório", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-2 mb-0 mb-sm-0">                                    
+                                        <%= form.number_field :id, class: 'form-control', min: 1 %>
+                                    </div>
+                                </div>
+
+                            <div class="form-group row">
+                                <%= form.label :data, 'Data', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
                                 <div class="col-sm-3 mb-0 mb-sm-0">                                    
                                     <%= form.date_field :data, value: @relatorio_dispseg.id.present? ? @relatorio_dispseg.data : Date.current, class: "form-control" %>
                                 </div>
+                            </div>
 
-                            <button type="submit" class="btn btn-primary"><%=t('botoes.gravar')%></button>
+                            <div class="form-group row">
+                                <%= form.label :disp_seguranca_id, 'Disp. segurança', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="col-sm-4 mb-0 mb-sm-0">
+                                    <%= form.collection_select(:disp_seguranca_id, @disp_segurancas, :id, lambda { |disp_seguranca| "#{disp_seguranca.serie} - #{disp_seguranca.cadastro.nome_curto}" }, { include_blank: 'Selecione um dispositivo de segurança' }, {class: 'form-control' }) %>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <hr>
+
+                        <div class="form-group row">
+                            <%= form.label :art_id, 'ART', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                            <div class="col-sm-3 mb-0 mb-sm-0">
+                            <%= form.collection_select(:art_id, @arts, :id, lambda { |art| "#{art.art} - #{art.cadastro.nome_curto}" }, { include_blank: 'Selecione uma ART'}, {class: 'form-control', id: 'art-select' }) %>
+                            </div>
+
+                            <%= form.label :cadastro_id, 'Propr.', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                            <div class="col-sm-3 mb-0 mb-sm-0">
+                            <%= form.collection_select(:cadastro_id, @cadastros, :id, :nome_curto, { include_blank: 'Selecione o proprietário'}, {class: 'form-control', id: 'cadastro-select' }) %>
+                            </div>
+
+                            <%= form.label :ph_id, 'PH', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                            <div class="col-sm-3 mb-0 mb-sm-0">
+                            <%= form.collection_select(:ph_id, @phs, :id, :nome, { include_blank: 'Selecione o profissional'}, {class: 'form-control', id: 'ph-select' }) %>
+                            </div>
+
+                            <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                var artSelect = document.getElementById('art-select');
+                                var cadastroSelect = document.getElementById('cadastro-select');
+                                var phSelect = document.getElementById('ph-select');
+
+                                artSelect.addEventListener('change', function() {
+                                var confirmDialog = confirm("Deseja atribuir o cadastro e o ph da ART selecionada ao Relatorio de dispositivo de segurança?");
+
+                                if (confirmDialog) {
+                                    var artId = artSelect.value;
+                                    fetch('/admins_backoffice/arts/' + artId + '/json_data')
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        cadastroSelect.value = data.cadastro_id;
+                                        phSelect.value = data.ph_id;
+                                    })
+                                    .catch(error => console.error(error));
+                                }
+                                });
+                            });
+                            </script>
+
+                        </div>
+                        
+                        <hr>
+
+                        <div class="form-group row">
+                            <%= form.label :vaso_id, 'Vaso', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                            <div class="col-sm-3 mb-0 mb-sm-0">
+                                <%= form.collection_select(:vaso_id, @vasos, :id, lambda { |vaso| "#{vaso.num_serie} - #{vaso.fabricante.nome_curto}" }, { include_blank: 'Selecione um vaso'}, {class: 'form-control', id: 'vaso-select'}) %>
+                            </div>
+                            <label for="pmta" class="col-sm-2 col-form-label text-sm-left text-lg-right">PMTA [MPa]</label>
+                            <div class="col-sm-2 mb-0 mb-sm-0">
+                                <input type="number" step="0.001" min="-10" class="form-control" id="value-pmta" value="0" readonly>
+                            </div>
+
+                            <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                var vasoSelect = document.getElementById('vaso-select');
+                                var pmta = document.getElementById('value-pmta');
+                                
+                                vasoSelect.addEventListener('change', function() {                                
+                                    var vasoId = vasoSelect.value;
+                                    fetch('/admins_backoffice/vasos/' + vasoId + '/json_data')
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        pmta.value = data.pmta_atual;
+                                    })
+                                    .catch(error => console.error(error));                                
+                                });
+                            });
+                            </script>
                         </div>
 
-                            <hr>    
+                        
+                        <fieldset class="Relatorio_DispSeg_Inspecao">
+                            <legend>Inspeção</legend>
+                            <div class="form-group row">
+                                <div class="form-check col-sm-6 mb-0 mb-sm-0 d-inline">
+                                    <%= form.check_box :bvalv_eh_estanque, class: "form-check-input", id: "ValvEstanqueCheckbox"%>
+                                    <%= form.label :bvalv_eh_estanque, "A válvula é estanque", class: "form-check-label", for: "ValvEstanqueCheckbox" %>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">                            
+                                <small class="form-text text-muted">Elementos físicos (desmarcar os que não estiverem em bom estado).</small>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="form-check col-sm-4 mb-0 mb-sm-0 d-inline">
+                                    <%= form.check_box :bcorpo_bom_estado, class: "form-check-input", id: "CorpoBomEstadoCheckbox"%>
+                                    <%= form.label :bcorpo_bom_estado, "Corpo em bom estado", class: "form-check-label", for: "CorpoBomEstadoCheckbox" %>
+                                </div>
+                                <div class="form-check col-sm-4 mb-0 mb-sm-0 d-inline">
+                                    <%= form.check_box :broscas_bom_estado, class: "form-check-input", id: "RoscasBomEstadoCheckbox"%>
+                                    <%= form.label :broscas_bom_estado, "Roscas em bom estado", class: "form-check-label", for: "RoscasBomEstadoCheckbox" %>
+                                </div>
+                                <div class="form-check col-sm-4 mb-0 mb-sm-0 d-inline">
+                                    <%= form.check_box :bdiscovedacao_bom_estado, class: "form-check-input", id: "DiscoBomEstadoCheckbox"%>
+                                    <%= form.label :bdiscovedacao_bom_estado, "Disco de vedação em bom estado", class: "form-check-label", for: "DiscoBomEstadoCheckbox" %>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="form-check col-sm-4 mb-0 mb-sm-0 d-inline">
+                                    <%= form.check_box :bhaste_bom_estado, class: "form-check-input", id: "HasteBomEstadoCheckbox"%>
+                                    <%= form.label :bhaste_bom_estado, "Haste em bom estado", class: "form-check-label", for: "HasteBomEstadoCheckbox" %>
+                                </div>
+                                <div class="form-check col-sm-4 mb-0 mb-sm-0 d-inline">
+                                    <%= form.check_box :bmola_bom_estado, class: "form-check-input", id: "MolaBomEstadoCheckbox"%>
+                                    <%= form.label :bmola_bom_estado, "Haste em bom estado", class: "form-check-label", for: "MolaBomEstadoCheckbox" %>
+                                </div>
+                                <div class="form-check col-sm-4 mb-0 mb-sm-0 d-inline">
+                                    <%= form.check_box :bparafusoregulagem_bom_etado, class: "form-check-input", id: "ParafusoBomEstadoCheckbox"%>
+                                    <%= form.label :bparafusoregulagem_bom_etado, "Parafuso de regulagem em bom estado", class: "form-check-label", for: "ParafusoBomEstadoCheckbox" %>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="form-check col-sm-4 mb-0 mb-sm-0 d-inline">
+                                    <%= form.check_box :balavanca_bom_estado, class: "form-check-input", id: "AlavancaBomEstadoCheckbox"%>
+                                    <%= form.label :balavanca_bom_estado, "Alavanca em bom estado", class: "form-check-label", for: "AlavancaBomEstadoCheckbox" %>
+                                </div>
+                                
+                                <%= form.label :obs, 'Obs.', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="form-check col-sm-7 mb-0 mb-sm-0">
+                                    <%= form.text_field :obs, class: "form-control"  %>
+                                </div>                            
+                            </div>                            
+                        </fieldset>
+
+                        <fieldset class="Relatorio_DispSeg_Calibracao">
+                            <legend>Calibração</legend>
+                            <div class="form-group row">                            
+                                <small class="form-text text-muted">Executar quando apresentar evidências que justifiquem a necessidade.</small>
+                            </div>
+
+                            <div class="form-group row"> 
+                                <div class="form-check col-sm-4 mb-0 mb-sm-0 d-inline">
+                                    <%= form.check_box :bfoi_calibrada, class: "form-check-input", id: "FoiCalibradaCheckbox"%>
+                                    <%= form.label :bfoi_calibrada, "Foi calibrada", class: "form-check-label", for: "FoiCalibradaCheckbox" %>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">     
+                                <%= form.label :fluido_calibracao_valv_seg_id, 'Fluído de calibração', {class: "col-sm-3 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="col-sm-3 mb-0 mb-sm-0">                                    
+                                    <%= form.collection_select(:fluido_calibracao_valv_seg_id, @fluido_calibracao_valv_segs, :id, :descricao, { include_blank: 'Selecione o fluído de calibração' }, {class: 'form-control', id: 'fluido_calibracao_valv_seg_id' }) %>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">     
+                                <%= form.label :instrumento_padrao_id, 'Instrumento padrão', {class: "col-sm-3 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="col-sm-5 mb-0 mb-sm-0">                                    
+                                    <%= form.collection_select(:instrumento_padrao_id, @instrumento_padraos, :id, :nome_curto, { include_blank: 'Selecione o instrumento padrão' }, {class: 'form-control', id:'instrumento-padrao' }) %>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <div class="col-sm-2 mb-3 mb-sm-0">
+                                    <h6><span class="badge badge-secondary">Pressões</span></h6>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">                                    
+                                <%= form.label :pressao_teste_1, 'P1 [MPa]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                    <%= form.number_field :pressao_teste_1, step: 0.001, min: -10,  class: "form-control", id: "pressao_teste1" %>
+                                </div>
+                                <%= form.label :pressao_teste_2, 'P2 [MPa]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                    <%= form.number_field :pressao_teste_2, step: 0.001, min: -10,  class: "form-control", id: "pressao_teste2" %>
+                                </div>
+                                <%= form.label :pressao_teste_3, 'P3 [MPa]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                    <%= form.number_field :pressao_teste_3, step: 0.001, min: -10,  class: "form-control", id: "pressao_teste3" %>
+                                </div>
+                            </div>
+                            <div class="form-group row">                                    
+                                <%= form.label :pressao_ajuste, 'P ajuste [MPa]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                    <%= form.number_field :pressao_ajuste, step: 0.001, min: -10,  class: "form-control", id: "pressao_ajuste" %>
+                                </div>                               
+                            </div>                            
+                            <script>
+                            // Função para calcular a média das três pressões
+                            function calcularMediaPressoes() {
+                                // Obter os valores das pressões de teste
+                                const pressaoTeste1 = parseFloat(document.getElementById("pressao_teste1").value);
+                                const pressaoTeste2 = parseFloat(document.getElementById("pressao_teste2").value);
+                                const pressaoTeste3 = parseFloat(document.getElementById("pressao_teste3").value);
+
+                                // Calcular a média
+                                const media = (pressaoTeste1 + pressaoTeste2 + pressaoTeste3) / 3;
+
+                                // Atualizar o valor do campo de "pressao_ajuste" com a média calculada
+                                document.getElementById("pressao_ajuste").value = media.toFixed(3); // Fixar em 3 casas decimais
+                            }
+                            // Adicionar o evento de escuta de alteração para cada campo de pressão de teste
+                            document.getElementById("pressao_teste1").addEventListener("change", calcularMediaPressoes);
+                            document.getElementById("pressao_teste2").addEventListener("change", calcularMediaPressoes);
+                            document.getElementById("pressao_teste3").addEventListener("change", calcularMediaPressoes);
+                            </script>
+
+                            <div class="form-group row">                                    
+                                <%= form.label :pressao_vedacao, 'P vedação [MPa]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                    <%= form.number_field :pressao_vedacao, step: 0.001, min: -10,  class: "form-control", id: "pressao_vedacao" %>
+                                </div>                               
+                            </div>
+
+                            <script>
+                            document.addEventListener("DOMContentLoaded", function() {
+                                // Função para verificar o valor do checkbox e habilitar ou desabilitar o collection_select
+                                function toggleCollectionSelect() {
+                                var checkboxValue = document.getElementById('FoiCalibradaCheckbox').checked;
+                                var collectionSelect = document.getElementById('fluido_calibracao_valv_seg_id');
+                                var instrumentoPadrao = document.getElementById('instrumento-padrao');
+                                var pressaoTeste1 = document.getElementById('pressao_teste1');
+                                var pressaoTeste2 = document.getElementById('pressao_teste2');
+                                var pressaoTeste3 = document.getElementById('pressao_teste3');
+                                var pressaoAjuste = document.getElementById('pressao_ajuste');
+                                var pressaoVedacao = document.getElementById('pressao_vedacao');
+
+                                if (checkboxValue) {
+                                    collectionSelect.disabled = false; // Habilita o collection_select
+                                    instrumentoPadrao.disabled = false;
+                                    pressaoTeste1.disabled = false;
+                                    pressaoTeste2.disabled = false;
+                                    pressaoTeste3.disabled = false;                                    
+                                    pressaoVedacao.disabled = false;
+                                } else {
+                                    collectionSelect.disabled = true; // Desabilita o collection_select
+                                    instrumentoPadrao.disabled = true;
+                                    pressaoTeste1.disabled = true;
+                                    pressaoTeste2.disabled = true;
+                                    pressaoTeste3.disabled = true;                                    
+                                    pressaoVedacao.disabled = true;
+                                }
+                                }
+
+                                // Chama a função para configurar o estado inicial do collection_select
+                                toggleCollectionSelect();
+
+                                // Adiciona um ouvinte de eventos para o checkbox
+                                document.getElementById('FoiCalibradaCheckbox').addEventListener('change', function() {
+                                toggleCollectionSelect(); // Chama a função sempre que o valor do checkbox for alterado
+                                });
+                            });
+                            </script>
+                            
+                        
+                        </fieldset>
+
+                        <br>
+                        <br>
+                        <button type="submit" class="btn btn-primary"><%=t('botoes.gravar')%></button>
+
+                        <hr>    
                         <% end %>
 
                     </div>

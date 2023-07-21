@@ -125,7 +125,7 @@ ActiveRecord::Schema.define(version: 2023_06_14_141252) do
   create_table "disp_segurancas", id: :integer, default: -> { "nextval('dispsegurancas_id_seq'::regclass)" }, force: :cascade do |t|
     t.string "serie", limit: 100, null: false
     t.integer "cadastro_id", default: 67, null: false
-    t.integer "tipo_dispositivo_seguranca_id", default: 2, null: false
+    t.integer "tipo_dispositivo_seguranca_id", default: 0, null: false
     t.string "castelo", limit: 100
     t.string "bitola", limit: 100
     t.bigint "user_id"
@@ -240,8 +240,8 @@ ActiveRecord::Schema.define(version: 2023_06_14_141252) do
     t.boolean "bmola_bom_estado", default: true, null: false
     t.boolean "bparafusoregulagem_bom_etado", default: true, null: false
     t.boolean "balavanca_bom_estado", default: true, null: false
-    t.integer "fluido_calibracao_valv_seg_id", default: 1, null: false
-    t.integer "instrumento_padrao_id", default: 2, null: false
+    t.integer "fluido_calibracao_valv_seg_id", default: 1
+    t.integer "instrumento_padrao_id", default: 2
     t.integer "cadastro_id", null: false
     t.boolean "bvalv_eh_estanque", default: true
     t.text "obs"
@@ -395,15 +395,6 @@ ActiveRecord::Schema.define(version: 2023_06_14_141252) do
     t.date "dt_prox_insp_externa_dispositivo_seguranca", default: -> { "(CURRENT_DATE + 365)" }, null: false
     t.date "dt_prox_insp_interna_dispositivo_seguranca", default: -> { "(CURRENT_DATE + 3650)" }, null: false
     t.text "parecer_quanto_integridade_vaso"
-    t.string "PATCH_IMG_FOTO_ANTES_INSPECAO", limit: 100, default: "fig/fabricante_numserie/2021mm/antes.jpg"
-    t.string "PATCH_IMG_FOTO_POS_INSPECAO", limit: 100, default: "fig/fabricante_numserie/2021mm/pos.jpg"
-    t.string "PATCH_IMG_FOTO_TH", limit: 100, default: "fig/fabricante_numserie/2021mm/th.jpg"
-    t.string "PATCH_IMG_FOTO_INSTALACAO", limit: 100, default: "fig/fabricante_numserie/2021mm/inst.jpg"
-    t.string "PATCH_MG_FOTO_CORPO_VASO", limit: 100, default: "fig/fabricante_numserie/2021mm/corpo.jpg"
-    t.string "PATCH_IMG_FOTO_INTERNA1", limit: 100, default: "fig/fabricante_numserie/2021mm/int1.jpg"
-    t.string "PATCH_IMG_FOTO_INTERNA2", limit: 100, default: "fig/fabricante_numserie/2021mm/int2.jpg"
-    t.string "PATCH_IMG_FOTO_INTERNA3", limit: 100, default: "fig/fabricante_numserie/2021mm/int3.jpg"
-    t.string "PATCH_IMG_FOTO_INTERNA4", limit: 100, default: "fig/fabricante_numserie/2021mm/int4.jpg"
     t.integer "tipo_inspecao_id", default: 0, null: false
     t.boolean "brel_impresso", default: false, null: false
     t.boolean "belaborado_prontuario", default: false, null: false

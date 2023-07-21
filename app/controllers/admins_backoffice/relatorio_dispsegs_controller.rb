@@ -3,18 +3,19 @@ class AdminsBackoffice::RelatorioDispsegsController < AdminsBackofficeController
     before_action :get_relacoes, only: [:new, :edit]
     
     def index
-      @relatorio_dispsegs = RelatorioDispseg.all.order(id: :desc).page(params[:page]).per(10)
+      @relatorio_dispsegs = RelatorioDispseg.where(bimpresso: false).order(id: :desc).page(params[:page]).per(10)
     end
   
-    def new
+    def new        
       @relatorio_dispseg = RelatorioDispseg.new
     end
   
-    def create
+    def create        
       @relatorio_dispseg = RelatorioDispseg.new(params_relatorio_dispseg)
       if @relatorio_dispseg.save
         redirect_to admins_backoffice_relatorio_dispsegs_path, notice: "Relatório criado com sucesso!"
       else
+        get_relacoes        
         render :new
       end
     end
@@ -27,6 +28,7 @@ class AdminsBackoffice::RelatorioDispsegsController < AdminsBackofficeController
       if @relatorio_dispseg.update(params_relatorio_dispseg)
         redirect_to admins_backoffice_relatorio_dispsegs_path, notice: "Relatório atualizado com sucesso!"
       else
+        get_relacoes
         render :edit
       end
     end
@@ -45,37 +47,41 @@ class AdminsBackoffice::RelatorioDispsegsController < AdminsBackofficeController
         @relatorio_dispsegs = RelatorioDispseg.pesquisa(params[:page], params[:serie_dispseg], params[:serie_vaso])
     end
 
+    def impresso
+      @relatorio_dispsegs = RelatorioDispseg.where(bimpresso: true).order(id: :desc).page(params[:page]).per(10)
+    end
+
  
     private
   
     
     def params_relatorio_dispseg
       puts params
-      params.require(:relatorio_dispseg).permit(:data, :vaso_id)
-    
-    #   t.integer "vaso_id", null: false
-    #   t.float "pressao_teste_1"
-    #   t.float "pressao_teste_2"
-    #   t.float "pressao_teste_3"
-    #   t.float "pressao_ajuste", null: false
-    #   t.float "pressao_vedacao", default: 0.0
-    #   t.boolean "bcorpo_bom_estado", default: true, null: false
-    #   t.boolean "broscas_bom_estado", default: true, null: false
-    #   t.boolean "bdiscovedacao_bom_estado", default: true, null: false
-    #   t.boolean "bhaste_bom_estado", default: true, null: false
-    #   t.boolean "bmola_bom_estado", default: true, null: false
-    #   t.boolean "bparafusoregulagem_bom_etado", default: true, null: false
-    #   t.boolean "balavanca_bom_estado", default: true, null: false
-    #   t.integer "fluido_calibracao_valv_seg_id", default: 1, null: false
-    #   t.integer "instrumento_padrao_id", default: 2, null: false
-    #   t.integer "cadastro_id", null: false
-    #   t.boolean "bvalv_eh_estanque", default: true
-    #   t.text "obs"
-    #   t.boolean "bfoi_calibrada", default: false, null: false
-    #   t.integer "disp_seguranca_id", null: false
-    #   t.boolean "bimpresso", default: false
-    #   t.integer "ph_id", default: 0, null: false
-    #   t.integer "art_id", default: 0, null: false
+      params.require(:relatorio_dispseg).permit(:id,
+                                                :user_id, 
+                                                :data, 
+                                                :vaso_id,
+                                                :disp_seguranca_id,
+                                                :art_id,
+                                                :cadastro_id,
+                                                :ph_id,
+                                                :bvalv_eh_estanque,
+                                                :bcorpo_bom_estado,
+                                                :broscas_bom_estado,
+                                                :bdiscovedacao_bom_estado,
+                                                :bhaste_bom_estado,
+                                                :bmola_bom_estado,
+                                                :bparafusoregulagem_bom_etado,
+                                                :balavanca_bom_estado,
+                                                :obs,
+                                                :fluido_calibracao_valv_seg_id,
+                                                :instrumento_padrao_id,
+                                                :pressao_teste_1,
+                                                :pressao_teste_2,
+                                                :pressao_teste_3,
+                                                :pressao_ajuste,
+                                                :pressao_vedacao,
+                                                :bimpresso)
     end
   
     def set_relatorio_dispseg
@@ -87,8 +93,11 @@ class AdminsBackoffice::RelatorioDispsegsController < AdminsBackofficeController
         @users              = User.order(:nome).order(:sobrenome)
         @arts               = Art.includes(:cadastro).order(id: :desc).limit(20)
         @phs                = Ph.order(:nome)        
-        @vasos              = Vaso.includes(:fabricante).order(:num_serie)        
+        @vasos              = Vaso.includes(:fabricante).order(:num_serie)
         @cadastros          = Cadastro.order(:nome_curto)
+        @disp_segurancas    = DispSeguranca.includes(:cadastro).order(serie: :desc)
+        @fluido_calibracao_valv_segs = FluidoCalibracaoValvSeg.all
+        @instrumento_padraos = InstrumentoPadrao.all        
     end
 
   end 
