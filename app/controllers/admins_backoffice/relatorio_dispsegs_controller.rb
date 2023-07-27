@@ -91,7 +91,7 @@ class AdminsBackoffice::RelatorioDispsegsController < AdminsBackofficeController
   
     def get_relacoes
         @users              = User.order(:nome).order(:sobrenome)
-        @arts               = Art.includes(:cadastro).order(id: :desc).limit(20)
+        @arts               = Art.includes(:cadastro).order(id: :desc)
         @phs                = Ph.order(:nome)        
         @vasos              = Vaso.includes(:fabricante).order(:num_serie)
         @cadastros          = Cadastro.order(:nome_curto)
