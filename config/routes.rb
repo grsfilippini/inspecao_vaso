@@ -10,6 +10,9 @@ Rails.application.routes.draw do
     # Substitui-se as declarações acima por:
     # Isso cria várias rotas padronizadas.
     resources :admins, except: [:delete] # Chama procedimentos dos administradores
+    resources :users    
+    resources :empresas
+    
     # only diz para gerar somente as rotas especificadas
     # , except: [:destroy, :new] -> diz para não criar as rotas especificadas
     # , only: [:destroy, :new] -> diz para criar as rotas especificadas        
@@ -46,8 +49,7 @@ Rails.application.routes.draw do
     resources :mtpds_num_series
     resources :potencial_riscos
     resources :tipo_inspecaos
-    resources :tipo_vasos
-    resources :users
+    resources :tipo_vasos    
     resources :relatorios
     get 'relatorio_para_impressao',  to: 'relatorios#para_imprimir'
     get 'relatorio_em_aberto',       to: 'relatorios#em_aberto'
@@ -82,15 +84,20 @@ Rails.application.routes.draw do
     patch 'perfil', to: 'perfil#update'
   end
 
+  namespace :empresas_backoffice do
+    get 'welcome/index'
+  end  
+
   # O skip abaixo é para não criar a rota sign_up padrão do devise.
   # Não foi removido o módulo registrable, todos recursos internos ficam ativados, exceto a rota.
   # O sign_up foi implementado como admins_backoffice/admins/new.
   devise_for :admins, skip: [:registrations]
-  
   devise_for :users
+  devise_for :empresas
 
   get 'inicio', to: 'site/welcome#index'
   root          to: 'site/welcome#index'
   get 'admin',  to: 'admins_backoffice/welcome#index'
+  get 'empresa',to: 'empresas_backoffice/welcome#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

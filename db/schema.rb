@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_06_14_141252) do
+ActiveRecord::Schema.define(version: 2023_07_27_203953) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_repack"
@@ -133,6 +133,21 @@ ActiveRecord::Schema.define(version: 2023_06_14_141252) do
     t.index ["user_id"], name: "index_disp_segurancas_on_user_id"
   end
 
+  create_table "empresas", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "nome"
+    t.bigint "corp_id"
+    t.index ["corp_id"], name: "index_empresas_on_corp_id"
+    t.index ["email"], name: "index_empresas_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_empresas_on_reset_password_token", unique: true
+  end
+
   create_table "espessura_vasos", id: :integer, default: -> { "nextval('\"MEDIDA_ESPESSURA_VASO_ID_seq\"'::regclass)" }, force: :cascade do |t|
     t.integer "vaso_id", null: false
     t.float "esp_casco_1"
@@ -251,6 +266,7 @@ ActiveRecord::Schema.define(version: 2023_06_14_141252) do
     t.integer "ph_id", default: 0, null: false
     t.integer "art_id", default: 0, null: false
     t.bigint "user_id"
+    t.date "data_prox_insp"
     t.index ["user_id"], name: "index_relatorio_dispsegs_on_user_id"
   end
 
@@ -531,6 +547,7 @@ ActiveRecord::Schema.define(version: 2023_06_14_141252) do
   add_foreign_key "disp_segurancas", "cadastros", name: "dispsegurancas_fabricante_id_fkey"
   add_foreign_key "disp_segurancas", "tipo_dispositivo_segurancas", name: "dispsegurancas_modelodispseg_id_fkey"
   add_foreign_key "disp_segurancas", "users"
+  add_foreign_key "empresas", "corps"
   add_foreign_key "espessura_vasos", "cadastros", column: "inspetora_id", name: "MEDIDA_ESPESSURA_VASO_empresainspetora_id_fkey"
   add_foreign_key "espessura_vasos", "instrumento_padraos", name: "MEDIDA_ESPESSURA_VASO_instrumentopadrao_id_fkey"
   add_foreign_key "espessura_vasos", "instrumento_padraos", name: "MEDIDA_ESPESSURA_VASO_instrumentopadrao_id_fkey1"

@@ -1,0 +1,34 @@
+<div>  
+  <a class="hiddenanchor" id="signin"></a>
+  <div class="login_wrapper">
+    <div class="animate form login_form">
+      <section class="login_content">
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+          <h1>Entrada da Empresa</h1>
+          <div>            
+            <%= f.email_field :email, autofocus: true, class:"form-control", placeholder:"Username" %>
+          </div>
+          <div>            
+            <%= f.password_field :password, class:"form-control", placeholder:"Senha" %>
+          </div>
+
+          <% if devise_mapping.rememberable? %>
+            <div class="custom-control custom-checkbox small" style="float: left; display: flex; align-items: center;">
+              <%= f.check_box :remember_me, class: "custom-control-input" %>
+              <%= f.label :remember_me, class:"custom-control-label", style: "line-height: 100%;" %>
+            </div>
+          <% end %>
+
+          <div>            
+            <%= f.submit "Entrar", class:"btn btn-default btn-success submit", style:"float: none; margin-left: 5px; width: 28%" %>
+            <%= link_to 'Esqueceu a senha?', new_empresa_password_path, class: 'reset_pass', style: 'float: right' %>
+          </div>
+
+          <div class="clearfix"></div>
+
+          <div class="separator"></div>
+        <%end%>
+      </section>
+    </div>    
+  </div>
+</div>

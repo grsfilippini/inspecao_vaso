@@ -1,0 +1,2 @@
+module EmpresasBackoffice::WelcomeHelper
+end
