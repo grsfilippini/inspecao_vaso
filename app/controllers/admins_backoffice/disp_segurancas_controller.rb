@@ -7,7 +7,7 @@ class AdminsBackoffice::DispSegurancasController < AdminsBackofficeController
       # O includes abaixo inclui na query a busca por disp_seguranca      
       @disp_segurancas = DispSeguranca.includes(:cadastro, :tipo_dispositivo_seguranca, :user)
                  .all
-                 .order(:serie)
+                 .order(serie: :desc)
                  .page(params[:page])
                  .per(20)
     end
@@ -53,7 +53,7 @@ class AdminsBackoffice::DispSegurancasController < AdminsBackofficeController
     
     def params_disp_seguranca
       puts params
-      params.require(:disp_seguranca).permit(:id, :serie, :cadastro_id, :tipo_dispositivo_seguranca_id, :castelo, :bitola, :user)
+      params.require(:disp_seguranca).permit(:id, :serie, :cadastro_id, :tipo_dispositivo_seguranca_id, :castelo, :bitola, :user_id)
     end
   
     def set_disp_seguranca

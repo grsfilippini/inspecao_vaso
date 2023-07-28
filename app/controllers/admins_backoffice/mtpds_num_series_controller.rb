@@ -7,7 +7,7 @@ class AdminsBackoffice::MtpdsNumSeriesController < AdminsBackofficeController
       # O includes abaixo inclui na query a busca por mtpds_num_serie      
       @mtpds_num_series = MtpdsNumSerie.includes(:disp_seguranca)
                  .all
-                 .order(:serie)
+                 .order(serie: :desc)
                  .page(params[:page])
                  .per(50)
     end

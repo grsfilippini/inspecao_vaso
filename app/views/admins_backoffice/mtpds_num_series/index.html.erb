@@ -9,7 +9,6 @@
             <tr>
                 <th>#</th>
                 <th>Núm. série MTPDS </th>
-                <th>Fab. do disp. seg.</th>                
                 <th>
                     <%= link_to  new_admins_backoffice_mtpds_num_series_path, class:"btn btn-success btn-circle btn-sm" do %>
                         <i class="fas fa-plus"></i>
@@ -21,8 +20,8 @@
             <% @mtpds_num_series.each do |a|%>
                 <tr>
                     <td><%= a.id %></td>
-                    <td><%= a.serie %></td>
-                    <td><%= a.disp_seguranca.cadastro.nome_curto %></td>                    
+                    <td><%= a.serie %></td>                    
+                    <td><%= a.disp_seguranca ? a.disp_seguranca.cadastro.nome_curto : 'Não atribuído' %></td>
                     <td style="width: 100px">
                         <%= link_to edit_admins_backoffice_mtpds_num_series_path(a.id), class:"btn btn-info btn-circle btn-sm" do %> 
                             <i class="fas fa-edit"></i>
