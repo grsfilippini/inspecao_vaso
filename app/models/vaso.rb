@@ -1,21 +1,4 @@
 class Vaso < ApplicationRecord
-    # Campos obrigatórios
-    validates :fabricante_id,                 presence: true
-    validates :num_serie,                     presence: true
-    validates :catnr13_id,                    presence: true
-    validates :dt_fabricacao_reconstituicao,  presence: true
-    validates :tipo_compressor_id,            presence: true
-    validates :volume,                        presence: true
-    validates :proprietaria_id,               presence: true
-    validates :tipo_dreno_id,                 presence: true
-    validates :relatorio_ini_id,              presence: true
-    validates :tipo_vaso_id,                  presence: true
-    validates :codigo_construcao_id,          presence: true
-    validates :fluido_servico_id,             presence: true
-    validates :potencial_risco_id,            presence: true
-    validates :classe_fluido_id,              presence: true
-    validates :tipo_dispositivo_seguranca_id, presence: true
-    validates :material_id,                   presence: true    
     
     # Duas chaves estrangeiras com mesma tabela
     belongs_to :fabricante,    class_name: 'Cadastro'

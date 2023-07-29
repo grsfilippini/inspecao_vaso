@@ -35,7 +35,7 @@
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
 
-              <%= link_to inicio_path, class: "site_title" do %>                
+              <%= link_to empresa_path, class: "site_title" do %>                
                 <%= image_tag "logo_mantinsp.png", style: "max-width: 50px; max-height: auto;" %>
                 <%= content_tag :span, "Mantinsp" %>
               <% end %>
@@ -66,15 +66,11 @@
                       <i class="fa fa-home"></i> Início
                     <% end %>
                   </li>                  
-                  <li>                    
-                    <%= link_to '#' do %>
-                      <i class="fa fa-user"></i> Dados do perfil
-                    <% end %>
-                  </li>                  
+                                   
                 </ul>
               </div>
               
-              <div class="menu_section">
+              <!-- div class="menu_section">
                 <h3>(General)</h3>
                 <ul class="nav side-menu">
                   <li><a><i class="fa fa-home"></i> (Home) <span class="fa fa-chevron-down"></span></a>
@@ -95,7 +91,7 @@
                     </ul>
                   </li>
                 </ul>
-              </div>              
+              </div-->              
             </div>
             <!-- /sidebar menu -->            
           </div>
@@ -114,10 +110,7 @@
                       <%#= image_tag(avatar_empresa_url, alt:"", id: "imgAvatarSm") %>
                       <%= current_empresa.email %>
                     </a>
-                    <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">                        
-                        <a class="dropdown-item"  href="javascript:;">
-                          <span>(Settings)</span>
-                        </a>                      
+                    <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">                                    
                         <%= link_to destroy_empresa_session_path, class:"dropdown-item", method: :delete do %>
                           Sair
                           <i class="fa fa-sign-out pull-right"></i>
@@ -207,11 +200,10 @@
 
         <!-- page content -->
         <div class="right_col" role="main">
-          <div class="">
-            <div class="page-title">
-              <%= yield %>
-            </div>
+          <div class="">            
+            <%= yield %>
           </div>
+          <br>
         </div>
         <!-- /page content -->
 

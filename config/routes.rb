@@ -68,7 +68,7 @@ Rails.application.routes.draw do
 
     resources :relatorio_dispsegs
     get 'pesquisa_relatorio_dispseg', to: 'relatorio_dispsegs#pesquisa'
-    get 'relatorio_dispseg_impresso',         to: 'relatorio_dispsegs#impresso'
+    get 'relatorio_dispseg_impresso', to: 'relatorio_dispsegs#impresso'
   end
 
   namespace :site do

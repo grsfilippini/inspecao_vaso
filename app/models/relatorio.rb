@@ -86,7 +86,16 @@ class Relatorio < ApplicationRecord
     end
   end
   
-  
+  # Método para obter a data formatada (campo virtual)
+  def data_relatorio_formatada
+    data_relatorio.strftime('%d/%m/%Y') if data_relatorio.present?
+  end
+  def dt_prox_insp_externa_formatada
+    dt_prox_insp_externa.strftime('%d/%m/%Y') if dt_prox_insp_externa.present?
+  end
+  def dt_prox_insp_interna_formatada
+    dt_prox_insp_interna.strftime('%d/%m/%Y') if dt_prox_insp_interna.present?
+  end  
   
   private
   

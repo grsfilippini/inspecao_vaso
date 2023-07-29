@@ -10,11 +10,13 @@ class Cadastro < ApplicationRecord
     
     belongs_to :corp#, foreign_key: 'corp_id'
     belongs_to :user
+    belongs_to :cidade
     
     # Duas chaves estrangeiras com mesma tabela
     # A consulta de valores se dá através de fabricante_vasos e proprietaria_vasos
     has_many :fabricante_vasos,   class_name: 'Vaso', foreign_key: 'fabricante_id'
     has_many :proprietaria_vasos, class_name: 'Vaso', foreign_key: 'proprietaria_id'
+    has_many :vasos, foreign_key: 'proprietaria_id'
     
     # Callback method, RoR
     after_create :seta_estatistica
@@ -39,7 +41,22 @@ class Cadastro < ApplicationRecord
           .per(50)          
         end
     end
+
     
+    def TemVasoVencido(data_limite)
+      vaso_vencido = false
+      self.vasos.each do |vaso|
+        if vaso.relatorios.any?
+          r = vaso.relatorios.max_by { |relatorio| relatorio.id }
+          if r.dt_prox_insp_externa <= data_limite
+            vaso_vencido = true
+            break
+          end          
+        end
+      end
+      return vaso_vencido
+    end
+
     
     private
     
