@@ -42,73 +42,6 @@
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">                
-                <%= link_to admins_backoffice_welcome_index_path, class:"nav-link" do %>
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Painel</span>
-                <% end %>
-            </li>
-
-            <!-- Nav Item - Administradores -->
-            <li class="nav-item">
-                <%= link_to admins_backoffice_admins_path, class:"nav-link" do %>
-                    <i class="fas fa-fw fa-users"></i>
-                    <span>Administradores</span>
-                <% end %>
-            </li>
-            
-            <!-- Nav Item - Usuários -->
-            <li class="nav-item">
-                <%= link_to admins_backoffice_users_path, class:"nav-link" do %>
-                    <i class="fas fa-fw fa-users"></i>
-                    <span>Usuários</span>
-                <% end %>
-            </li>
-
-            <!-- Nav Item - Empresas -->
-            <li class="nav-item">
-                <%= link_to admins_backoffice_empresas_path, class:"nav-link" do %>
-                    <i class="fas fa-fw fa-industry"></i>
-                    <span>Empresas</span>
-                <% end %>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Empresa Inspetora
-            </div>
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse4"
-                    aria-expanded="true" aria-controls="collapse4">
-                    <i class="fas fa-tag fa-cog"></i>
-                    <span>Cadastros</span>
-                </a>
-                <!--Adicionar "show" junto à class da div abaixo para que ao abrir o menu inicie expandido -->
-                <div id="collapse4" class="collapse" aria-labelledby="heading4" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Cadastros:</h6>
-                        <%= link_to admins_backoffice_phs_path, class:"collapse-item" do %>
-                            (Empresa inspetora)
-                        <%end%>
-                        <%= link_to admins_backoffice_phs_path, class:"collapse-item" do %>
-                            Profissional habilitado
-                        <%end%>
-                        <%= link_to admins_backoffice_instrumento_padraos_path, class:"collapse-item" do %>
-                            Instrumentos padrões
-                        <%end%>
-                    </div>
-                </div>                
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
             <!-- Heading -->
             <div class="sidebar-heading">
                 Cadastros
@@ -279,9 +212,8 @@
                         <%= link_to admins_backoffice_relatorios_path, class:"collapse-item" do %>
                             Relatórios concluídos
                         <%end%>
-                        <div class="collapse-divider"></div>
-                        <%= link_to '#', class:"collapse-item" do %>
-                            (-)
+                        <%= link_to admins_backoffice_busca_um_relatorio_path, class:"collapse-item" do %>
+                            Busca um relatório
                         <%end%>
                     </div>
                 </div>
@@ -302,10 +234,7 @@
                         <%end%>
                         <%= link_to admins_backoffice_relatorio_dispseg_impresso_path, class:"collapse-item" do %>
                             Relatórios impressos
-                        <%end%>
-                        <%= link_to '#', class:"collapse-item" do %>
-                            (-)
-                        <%end%>
+                        <%end%>                        
                     </div>
                 </div>
             </li>            
@@ -319,6 +248,74 @@
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
+
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">                
+                <%= link_to admins_backoffice_welcome_index_path, class:"nav-link" do %>
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Painel</span>
+                <% end %>
+            </li>
+
+            <!-- Nav Item - Administradores -->
+            <li class="nav-item">
+                <%= link_to admins_backoffice_admins_path, class:"nav-link" do %>
+                    <i class="fas fa-fw fa-users"></i>
+                    <span>Administradores</span>
+                <% end %>
+            </li>
+            
+            <!-- Nav Item - Usuários -->
+            <li class="nav-item">
+                <%= link_to admins_backoffice_users_path, class:"nav-link" do %>
+                    <i class="fas fa-fw fa-users"></i>
+                    <span>Usuários</span>
+                <% end %>
+            </li>
+
+            <!-- Nav Item - Empresas -->
+            <li class="nav-item">
+                <%= link_to admins_backoffice_empresas_path, class:"nav-link" do %>
+                    <i class="fas fa-fw fa-industry"></i>
+                    <span>Empresas</span>
+                <% end %>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Empresa Inspetora
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse4"
+                    aria-expanded="true" aria-controls="collapse4">
+                    <i class="fas fa-tag fa-cog"></i>
+                    <span>Cadastros</span>
+                </a>
+                <!--Adicionar "show" junto à class da div abaixo para que ao abrir o menu inicie expandido -->
+                <div id="collapse4" class="collapse" aria-labelledby="heading4" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Cadastros:</h6>
+                        <%= link_to admins_backoffice_phs_path, class:"collapse-item" do %>
+                            (Empresa inspetora)
+                        <%end%>
+                        <%= link_to admins_backoffice_phs_path, class:"collapse-item" do %>
+                            Profissional habilitado
+                        <%end%>
+                        <%= link_to admins_backoffice_instrumento_padraos_path, class:"collapse-item" do %>
+                            Instrumentos padrões
+                        <%end%>
+                    </div>
+                </div>                
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">

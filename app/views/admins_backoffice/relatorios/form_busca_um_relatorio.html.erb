@@ -1,0 +1,4 @@
+<%= form_tag admins_backoffice_edita_um_relatorio_path, method: :get do %>
+  <%= number_field_tag :id, nil, placeholder: "Digite o ID do Relatório" %>
+  <%= submit_tag "Editar Relatório", class: "btn btn-primary" %>
+<% end %>

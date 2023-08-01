@@ -10,7 +10,8 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
                                        :inspecao_insp_pressostato,
                                        :inspecao_insp_dreno,
                                        :inspecao_insp_vaso_outros,
-                                       :inspecao_fotos]
+                                       :inspecao_fotos,
+                                       :form_edita_um_relatorio]
   before_action :get_relacoes, only: [:new, :edit]
   
   def index
@@ -45,7 +46,15 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
     @relatorio = Relatorio.new     
   end
 
-  def edit # Ação de edição    
+  def edit # Ação de edição        
+  end
+
+  def form_busca_um_relatorio
+    #@relatorio = Relatorio.new
+  end
+
+  def form_edita_um_relatorio
+    redirect_to edit_admins_backoffice_relatorio_path(@relatorio.id)
   end
 
   def create      

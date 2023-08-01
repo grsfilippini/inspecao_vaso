@@ -1,0 +1,104 @@
+<div class="col-lg-12">    
+    <div style="padding: 1rem; align-items: center;">
+    <h5><%= @filiais.total_count %>&nbsp; - FILIAIS VINCULADAS A CORPORAÇÃO - <%=current_empresa.corp.nome%> </h5>
+        <span class="badge badge-success">Em até 6 meses sem vaso vencido</span>
+        <span class="badge badge-warning">Em até 6 meses com vaso vencido</span>
+        <span class="badge badge-danger">Tem vaso vencido</span>
+    </div>
+
+    <%= form_with(url: empresas_backoffice_pesquisa_path, local: true, method: :get) do |form| %>
+        <div class="row">
+        
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                <div class="input-group">      
+                    <%= form.text_field :termo_regiao, class:"form-control bg-light border-0 small", placeholder: "Região...", class:"form-control" %>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                <div class="input-group">
+                    <%= form.collection_select :filial_id, @cadastros, :id, :nome_curto, {include_blank: "Filial..." }, {class:"form-control"} %>
+                    <span class="input-group-btn">                        
+                        <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+                    </span>
+                </div>
+            </div>
+
+        </div>
+    <%end%>
+</div> <!-- FIM DO CONTAINER DO FORM -->    
+
+<% @filiais.each do |f| %>
+    <%hoje = Time.now%>
+    <%daqui_seis_meses = hoje.advance(months: 6) %>
+    <div class="card">
+        <div class="card-header">
+            <p>          
+                <%if !f.TemVasoVencido(daqui_seis_meses)%>
+                    <span class="badge badge-success"><%= f.regiao %></span>
+                <%elsif !f.TemVasoVencido(hoje)%>
+                    <span class="badge badge-warning"><%= f.regiao %></span>
+                <%else%>
+                    <span class="badge badge-danger"><%= f.regiao %></span>
+                <%end%>
+                &nbsp; - &nbsp; <%= f.cidade.nome %> &nbsp; - &nbsp; <%= f.nome_curto %>
+            </p>
+        </div>        
+        <div class="card-body">        
+            <p class="card-text">CNPJ: <%= f.cnpj %></p>
+            <p class="card-text">End.: <%= f.endereco %>&nbsp; - &nbsp; <%= f.cep %> &nbsp; - Fone:&nbsp;  <%= f.fone %></p>            
+            <!-- Botão de dropdown -->
+            <div class="btn-group">
+                <button class="btn btn-sm btn-light dropdown-toggle" type="button" data-toggle="collapse" data-target="#listaVasos<%=f.id%>" aria-expanded="false" aria-controls="listaVasos<%=f.id%>">
+                <%= f.vasos.count %>&nbsp; - &nbsp;Vasos
+                <span class="caret"></span>
+                </button>
+            </div>            
+            <!-- Campos adicionais (inicialmente ocultos) -->
+            <div class="collapse" id="listaVasos<%=f.id%>">
+                <table border="1">
+                    <tr>
+                        <th rowspan="2">Fabricante1</th>
+                        <th rowspan="2"># série</th>
+                        <th rowspan="2">Volume [litros]</th>
+                        <th rowspan="2">PMTA [psi]</th>
+                        <th rowspan="2">Último relatório</th>
+                        <th rowspan="2">Data</th>
+                        <th colspan="2">Vencimento das inspeções</th>                        
+                    </tr>
+                    <tr>                        
+                        <th>Externa</th>
+                        <th>Interna</th>
+                    </tr>                    
+
+                    <% f.vasos.each do |vaso| %>
+                        <tr>
+                            <td> <p class="card-text"><%= vaso.fabricante.nome_curto %></p> </td>
+                            <td> <p class="card-text"><%= vaso.num_serie %></p> </td>
+                            <td> <p class="card-text"><%= (vaso.volume*1000).round(0) %>&nbsp;</p> </td>
+                            <td> <p class="card-text"><%= (vaso.pmta_atual*145.03773773).round(0) %>&nbsp;</p> </td>
+
+                            <% if vaso.relatorios.any? %>
+                                <% r = vaso.relatorios.max_by { |relatorio| relatorio.id } %>
+                                <td> <p class="card-text"><%= r.id %></p> </td>
+                                <td> <p class="card-text"><%= r.data_relatorio_formatada %></p> </td>
+                                <td> <p class="card-text"><%= r.dt_prox_insp_externa_formatada %></p> </td>
+                                <td> <p class="card-text"><%= r.dt_prox_insp_interna_formatada %></p> </td>
+                            <% else %>
+                                <td> <p class="card-text">Sem relatórios</p> </td>
+                            <% end %>
+
+
+
+                        </tr>
+                    <% end %>                    
+                </table>
+            </div>
+
+        </div>        
+    </div>  
+    <br>
+  
+<% end %>
+
+<%= paginate @filiais %>
