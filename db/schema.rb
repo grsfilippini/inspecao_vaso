@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_27_203953) do
+ActiveRecord::Schema.define(version: 2023_08_02_131343) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_repack"
@@ -255,7 +255,7 @@ ActiveRecord::Schema.define(version: 2023_07_27_203953) do
     t.boolean "bmola_bom_estado", default: true, null: false
     t.boolean "bparafusoregulagem_bom_etado", default: true, null: false
     t.boolean "balavanca_bom_estado", default: true, null: false
-    t.integer "fluido_calibracao_valv_seg_id", default: 1
+    t.integer "fluido_calibracao_valv_seg_id", default: 3
     t.integer "instrumento_padrao_id", default: 2
     t.integer "cadastro_id", null: false
     t.boolean "bvalv_eh_estanque", default: true
@@ -438,6 +438,7 @@ ActiveRecord::Schema.define(version: 2023_07_27_203953) do
     t.bigint "cidade_id"
     t.integer "ambiente_inst_id", default: 2
     t.integer "tipo_dreno_id", default: 0
+    t.boolean "avaliadoph"
     t.index ["ambiente_inst_id"], name: "index_relatorios_on_ambiente_inst_id"
     t.index ["art_id"], name: "index_relatorios_on_art_id"
     t.index ["cidade_id"], name: "index_relatorios_on_cidade_id"

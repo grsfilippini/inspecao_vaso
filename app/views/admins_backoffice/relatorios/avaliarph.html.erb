@@ -1,0 +1,86 @@
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800"> PH - Avaliação do Relatório - <%= @relatorio.id %></h1>
+</div>
+
+<!-- Se tiver algum erro dentro de @admin, erro devido a processo de salvamento por exemplo, entra no alerta abaixo -->
+<% if @relatorio.errors.any? %>
+    <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>        
+        <ul>
+            <% @relatorio.errors.full_messages.each do |message| %>
+            <li> <%= message -%> </li>
+            <% end %>
+        </ul>
+    </div>
+<% end %>
+
+
+<!-- CONTAINER PARA O FORM -->
+<div class="container">
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+                <!-- div class="col-lg-5 d-none d-lg-block bg-register-image"></div -->
+                
+                <div class="col-lg-12">
+                    <div class="p-5">
+                        <!--div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                        </div-->
+
+                        <%= form_with(model: [ :admins_backoffice, @relatorio ], local: true, :html => { :multipart => true }) do |form| %>
+                            
+                            <div class="form-group row">
+                                <div class="form-check col-sm-4 mb-0 mb-sm-0">
+                                    <%= form.check_box :b_rascunho, class: "form-check-input", id: "RascunhoCheckbox" %>
+                                    <%= form.label :b_rascunho, "Em aberto", class: "form-check-label", for: "RascunhoCheckbox" %>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <%= form.label :art_id, 'ART', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="col-sm-3 mb-0 mb-sm-0">                                    
+                                    <%= form.collection_select(:art_id, @arts, :id, lambda { |art| "#{art.art} - #{art.cadastro.nome_curto}" }, { include_blank: 'Selecione uma ART'}, {class: 'select-width-150 form-control' }) %>
+                                </div>
+                                
+                                <%= form.label :ph_id, 'PH', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="col-sm-3 mb-0 mb-sm-0">                                    
+                                    <%= form.collection_select(:ph_id, @phs, :id, :nome, { include_blank: 'Selecione um profissional'}, {class: 'select-width-150 form-control' }) %>
+                                </div>
+
+                                <%= form.label :cidade_id, 'Cidade', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="col-sm-3 mb-0 mb-sm-0">            
+                                    <%= form.collection_select(:cidade_id, @cidades, :id, :nome, { include_blank: 'Selecione uma cidade'}, {class: 'select-width-150 form-control' }) %>
+                                </div>              
+                            </div>
+                            
+                            <div class="form-group row">
+                                <%= form.label :data_relatorio, 'Data', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="col-sm-3 mb-0 mb-sm-0">                                    
+                                    <%= form.date_field :data_relatorio, value: @relatorio.id.present? ? @relatorio.data_relatorio : Date.current, class: "form-control" %>
+                                </div>
+                            
+                                <%= form.label :vaso_id, 'Vaso', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="col-sm-3 mb-0 mb-sm-0">                                    
+                                    <%= form.collection_select(:vaso_id, @vasos, :id, lambda { |vaso| "#{vaso.num_serie} - #{vaso.fabricante.nome_curto}" }, { include_blank: 'Selecione um vaso' }, {class: 'select-width-150 form-control' }) %>
+                                </div>
+
+                                <div class="col-sm-4 mb-0 mb-sm-0">
+                                    <%= form.collection_select(:proprietaria_id, @proprietarias, :id, :nome_curto, { include_blank: 'Selecione o proprietário'}, {class: 'select-width-150 form-control' }) %>
+                                </div>
+                            </div>
+
+                            <hr>
+                            
+                            <%= button_tag "Gravar avaliação", type: "submit", class: "btn btn-primary", name: "btn_gravar_avaliacaoph" %>
+                                                        
+                        <% end %>                                                                     
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- FIM DO CONTAINER DO FORM -->

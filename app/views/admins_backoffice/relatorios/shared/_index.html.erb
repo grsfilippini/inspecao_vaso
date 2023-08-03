@@ -1,19 +1,17 @@
 <div class="col-lg-12">    
-    <%= form_with(url:admins_backoffice_pesquisa_relatorio_path, local: true, method: :get, class: "d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search") do |form| %>    
-        <div class="form-group row">
-            <div class="col-lg-4">
-                <h1 class="h3 mb-4 text-gray-800">Lista de Relatórios -  <%= @nome_rel %> - <%= @relatorios.total_count %> </h1>
-            </div>
-            
-            <div class="col-lg-2">
+    <h1 class="h3 mb-2 text-gray-800"><%= t('mensagens.lista_de', model: @relatorios.model_name.human(count: @relatorios.count)) %> &nbsp;<%= @nome_rel %>&nbsp; - <%= @relatorios.total_count %> </h1>
+    
+    <%= form_with(url:admins_backoffice_pesquisa_relatorio_path, local: true, method: :get) do |form| %>        
+        <div class="row">            
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                 <div class="input-group">      
-                    <%= form.text_field :num_serie, class:"form-control bg-light border-0 small", placeholder: "# série...", style: "width: 150px;" %>
+                    <%= form.text_field :num_serie, class:"form-control bg-light border-0 small", placeholder: "# série..." %>
                 </div>
             </div>
             
-            <div class="col-lg-3">                    
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-3">               
                 <div class="input-group">                    
-                    <%= form.collection_select :proprietaria_id, @proprietarias, :id, :nome_curto, {include_blank: true }, {style: "width: 150px;", class:"form-control"} %>
+                    <%= form.collection_select :proprietaria_id, @proprietarias, :id, :nome_curto, {include_blank: true }, {class:"form-control"} %>
                     <div class="input-group-append">
                         <button class="btn btn-primary" type="submit">
                             <i class="fas fa-search fa-sm"></i>
@@ -35,6 +33,7 @@
                 <th># série</th>
                 <th>Fabricante</th>
                 <th>Proprietaria</th>
+                <th align="center">Avaliado PH</th>
                 <th>
                     <% if @em_aberto  %>
                         <%= link_to new_admins_backoffice_relatorio_path, class:"btn btn-success btn-circle btn-sm" do %>
@@ -56,6 +55,12 @@
                     <td><%= r.vaso.num_serie %></td>
                     <td><%= r.vaso.fabricante.nome_curto.truncate(20) %></td>
                     <td><%= r.proprietaria.nome_curto %></td>
+
+                    <td align="center"><% if r.avaliadoph == true %>
+                        <%= link_to "SIM", admins_backoffice_avaliarph_path(r) %>
+                        <% else %>
+                        <%= link_to "NÃO", admins_backoffice_avaliarph_path(r) %>
+                        <% end %> </td>
 
                     <td style="width: 100px">
                         <% if @em_aberto  %>

@@ -11,7 +11,8 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
                                        :inspecao_insp_dreno,
                                        :inspecao_insp_vaso_outros,
                                        :inspecao_fotos,
-                                       :form_edita_um_relatorio]
+                                       :form_edita_um_relatorio,
+                                       :avaliarph]
   before_action :get_relacoes, only: [:new, :edit]
   
   def index
@@ -127,7 +128,11 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
   def inspecao_fotos
     @etapa = 'Fotos'
   end
-    
+  
+  def avaliarph
+    get_relacoes
+  end
+
   def update          
     if params_relatorio.present?
       if @relatorio.update(params_relatorio)

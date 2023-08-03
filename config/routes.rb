@@ -65,6 +65,7 @@ Rails.application.routes.draw do
     get 'inspecao_insp_dreno',       to: 'relatorios#inspecao_insp_dreno'
     get 'inspecao_insp_vaso_outros', to: 'relatorios#inspecao_insp_vaso_outros'
     get 'inspecao_fotos',            to: 'relatorios#inspecao_fotos'
+    get 'avaliarph/:id',             to: 'relatorios#avaliarph', as: :avaliarph
     get 'busca_um_relatorio',        to: 'relatorios#form_busca_um_relatorio'
     get 'edita_um_relatorio',        to: 'relatorios#form_edita_um_relatorio'
 
