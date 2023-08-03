@@ -61,6 +61,6 @@ class AdminsBackoffice::MtpdsNumSeriesController < AdminsBackofficeController
     end
     
     def get_relacoes      
-      @disp_segurancas = DispSeguranca.order(:serie)
+      @disp_segurancas = DispSeguranca.order(serie: :desc)
     end
 end

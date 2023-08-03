@@ -33,13 +33,6 @@
                         <%= form_with(model: [ :admins_backoffice, @relatorio ], local: true, :html => { :multipart => true }) do |form| %>
                             
                             <div class="form-group row">
-                                <div class="form-check col-sm-4 mb-0 mb-sm-0">
-                                    <%= form.check_box :b_rascunho, class: "form-check-input", id: "RascunhoCheckbox" %>
-                                    <%= form.label :b_rascunho, "Em aberto", class: "form-check-label", for: "RascunhoCheckbox" %>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group row">
                                 <%= form.label :art_id, 'ART', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
                                 <div class="col-sm-3 mb-0 mb-sm-0">                                    
                                     <%= form.collection_select(:art_id, @arts, :id, lambda { |art| "#{art.art} - #{art.cadastro.nome_curto}" }, { include_blank: 'Selecione uma ART'}, {class: 'select-width-150 form-control' }) %>
@@ -71,6 +64,38 @@
                                     <%= form.collection_select(:proprietaria_id, @proprietarias, :id, :nome_curto, { include_blank: 'Selecione o proprietário'}, {class: 'select-width-150 form-control' }) %>
                                 </div>
                             </div>
+
+                            <hr>
+
+                            <div class="form-group row">
+                                <div class="form-check col-sm-4 mb-0 mb-sm-0">
+                                    <% if @relatorio.avaliadoph %>
+                                        <%= form.check_box :b_rascunho, class: "form-check-input", id: "RascunhoCheckbox", disabled: true %>
+                                    <% else %>
+                                        <%= form.check_box :b_rascunho, class: "form-check-input", id: "RascunhoCheckbox" %>
+                                    <% end %>
+                                    <%= form.label :b_rascunho, "Em aberto", class: "form-check-label", for: "RascunhoCheckbox" %>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <div class="form-check col-sm-4 mb-0 mb-sm-0">
+                                    <%= form.check_box :avaliadoph, class: "form-check-input", id: "AvaliadoPhCheckbox" %>
+                                    <%= form.label :avaliadoph, "Avaliado PH", class: "form-check-label", for: "AvaliadoPhCheckbox" %>
+                                </div>
+                            </div>
+
+                            <script>
+                                window.addEventListener("load", function () {
+                                    const primeiroCheckbox = document.getElementById("RascunhoCheckbox");
+                                    const segundoCheckbox = document.getElementById("AvaliadoPhCheckbox");
+
+                                    segundoCheckbox.addEventListener("click", function () {
+                                    primeiroCheckbox.checked = false;
+                                    primeiroCheckbox.disabled = this.checked;
+                                    });
+                                });
+                            </script>
 
                             <hr>
                             

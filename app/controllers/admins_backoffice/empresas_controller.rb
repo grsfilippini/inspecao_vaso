@@ -57,7 +57,7 @@ class AdminsBackoffice::EmpresasController < AdminsBackofficeController
   end    
     
   def get_relacoes    
-    @corps   = Corp.all    
+    @corps   = Corp.all.order(:nome)
   end
 
 end

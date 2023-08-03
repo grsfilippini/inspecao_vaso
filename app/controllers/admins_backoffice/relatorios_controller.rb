@@ -176,7 +176,7 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
       end
     end
     
-    if params[:btn_gravar_sair]
+    if params[:btn_gravar_sair] || params[:btn_gravar_avaliacaoph]
       redirect_to admins_backoffice_relatorio_em_aberto_path, notice: "Relatório atualizado com sucesso!"
     # Início da inspeção
     elsif params[:btn_insp_inicio]
@@ -226,6 +226,7 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
       if params.key?(:relatorio)  
         params.require(:relatorio).permit(:user_id,
                                           :b_rascunho,
+                                          :avaliadoph,
                                           :tipo_inspecao_id,
                                           :art_id,
                                           :ph_id,

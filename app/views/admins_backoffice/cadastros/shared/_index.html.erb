@@ -1,16 +1,15 @@
 <div class="container-fluid">
-    <%= form_with(url:admins_backoffice_pesquisa_cadastro_path, local: true, method: :get, class: "d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search") do |form| %>
-        <div class="form-group row">        
-            <div class="col-lg-4">
-                <h1 class="h3 mb-4 text-gray-800"><%= t('mensagens.lista_de', model: @cadastros.model_name.human(count: @cadastros.count)) %> </h1>
-            </div>
-            <div class="col-lg-4">
+    <h1 class="h3 mb-4 text-gray-800"><%= t('mensagens.lista_de', model: @cadastros.model_name.human(count: @cadastros.count)) %> </h1>
+    <%= form_with(url:admins_backoffice_pesquisa_cadastro_path, local: true, method: :get) do |form| %>
+        <div class="row">        
+                        
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                 <div class="input-group">      
                     <%= form.text_field :termo_nome, class:"form-control bg-light border-0 small", placeholder: "Nome curto ...", style: "width: 150px;" %>
                 </div>
             </div>
             
-            <div class="col-lg-4">                    
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-3">                 
                 <div class="input-group">                    
                     <%= form.collection_select :corp_id, @corps, :id, :nome, {include_blank: true }, {style: "width: 120px;", class:"form-control"} %>
                     <div class="input-group-append">
