@@ -47,6 +47,11 @@ class AdminsBackoffice::DispSegurancasController < AdminsBackofficeController
       end
     end
   
+    def obter_ultima_serie_mtpds
+      last_record = MtpdsNumSerie.last
+      serie = last_record&.serie || '' # Caso não haja registro, define um valor padrão vazio
+      render json: { serie: serie }
+    end
   
     private
   

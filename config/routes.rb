@@ -41,6 +41,7 @@ Rails.application.routes.draw do
     resources :codigo_construcaos
     resources :tipo_dispositivo_segurancas
     resources :disp_segurancas
+    get '/obter_ultima_serie_mtpds', to: 'disp_segurancas#obter_ultima_serie_mtpds'
     resources :fluido_calibracao_valv_segs
     resources :fluido_servicos
     resources :instrumento_padraos
