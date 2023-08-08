@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_02_131343) do
+ActiveRecord::Schema.define(version: 2023_08_07_222752) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_repack"
@@ -240,7 +240,7 @@ ActiveRecord::Schema.define(version: 2023_08_02_131343) do
     t.string "descricao", limit: 45
   end
 
-  create_table "relatorio_dispsegs", id: :integer, default: nil, force: :cascade do |t|
+  create_table "relatorio_dispsegs", id: :integer, default: -> { "nextval('relatorio_dispsegs_new_id_seq'::regclass)" }, force: :cascade do |t|
     t.date "data", default: -> { "CURRENT_DATE" }, null: false
     t.integer "vaso_id", null: false
     t.float "pressao_teste_1"

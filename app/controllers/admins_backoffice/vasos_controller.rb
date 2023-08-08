@@ -21,11 +21,27 @@ class AdminsBackoffice::VasosController < AdminsBackofficeController
   
     def create      
       @vaso = Vaso.new(params_vaso)
-      #if @vaso.relatorio_ini_id.blank? then
-      #    @vaso.relatorio_ini_id = -1          
-      #end
+      
+      if params[:vaso][:proximomtp] == "1"
+        # Resgata o próximo número de série disponível e atribui ao dispositivo de segurança                
+        @vaso.num_serie = obter_ultima_serie_mtp_hash
+      end      
+
+      # Salva o novo dispositivo de segurança
       if @vaso.save
-        redirect_to admins_backoffice_vasos_path, notice: "Vaso criado com sucesso!"    
+        if params[:vaso][:foto_plaqueta].present?
+          # Atualizar o campo de imagem diretamente com o novo arquivo
+          @vaso.update_attribute(:foto_plaqueta, params[:vaso][:foto_plaqueta].read)
+        end
+
+        if params[:vaso][:proximomtp] == "1"
+          @mtp_serie = MtpNumSerie.new
+          @mtp_serie.serie = @vaso.num_serie
+          @mtp_serie.vaso_id = @vaso.id
+          @mtp_serie.save
+        end
+        
+        redirect_to admins_backoffice_vasos_path, notice: "Vaso criado com sucesso!"        
       else
         get_relacoes
         render :new
@@ -79,6 +95,21 @@ class AdminsBackoffice::VasosController < AdminsBackofficeController
       render json: { pmta_atual: @vaso.pmta_atual }
     end
 
+    # Retorna um hash
+    def obter_ultima_serie_mtp_hash
+      last_record = MtpNumSerie.where("serie LIKE ?", "MTP%").order(serie: :desc).first
+      serie = last_record&.serie || 'MTP000' # Caso não haja registro, define um valor padrão vazio
+      serie = last_record.serie[-3..-1]
+      next_serie_val = serie.to_i + 1      
+      serie = 'MTP'+ next_serie_val.to_s.rjust(3, '0')
+      serie
+    end
+
+    # Retorna u json
+    def obter_ultima_serie_mtp
+      serie = obter_ultima_serie_mtp_hash
+      render json: { serie: serie }
+    end
     
     private
    

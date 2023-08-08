@@ -40,30 +40,38 @@
                             <div class="form-group row">        
                                 <%= form.label :serie, "Série", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
                                 <div class="col-sm-4 mb-3 mb-sm-0">
-                                    <%= form.text_field :serie, class: "form-control", id: "Serie"%>
+                                    <%= form.text_field :serie, class: "form-control", id: "SerieMTPDS"%>
                                 </div>
-                                <div class="col-sm-4 mb-3 mb-sm-0">
-                                    <%= form.check_box :proximomtpds, class: "form-check-input", id: "ProximoMTPDSCheckbox" %>
-                                    <%= form.label :proximomtpds, "<< Próximo MTPDS", class: "form-check-label", for: "ProximoMTPDSCheckbox" %>
-                                </div>
+                                <%if @disp_seguranca.id.blank? %>
+                                    <div class="col-sm-4 mb-3 mb-sm-0">
+                                        <%= form.check_box :proximomtpds, class: "form-check-input", id: "ProximoMTPDSCheckbox" %>
+                                        <%= form.label :proximomtpds, "<< Próximo MTPDS", class: "form-check-label", for: "ProximoMTPDSCheckbox" %>
+                                    </div>
+                                <%end%>
                             </div>
                             <script>
                                 // Captura o checkbox e o campo de texto
-                                const proximoMTPDSCheckbox = document.getElementById('ProximoMTPDSCheckbox');
-                                const serieTextField = document.getElementById('Serie');
+                                var proximoMTPDSCheckbox = document.getElementById('ProximoMTPDSCheckbox');
+                                var serieTextField = document.getElementById('SerieMTPDS');
 
                                 // Adiciona um evento de clique ao checkbox
-                                proximoMTPDSCheckbox.addEventListener('click', () => {
-                                // Se o checkbox estiver marcado, faz a chamada AJAX para obter a série do último registro
-                                if (proximoMTPDSCheckbox.checked) {
-                                    fetch('/admins_backoffice/obter_ultima_serie_mtpds') // Substitua o caminho pela rota correta em seu aplicativo
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        // Atualiza o valor do campo de texto com a série obtida
-                                        serieTextField.value = data.serie;
-                                    })
-                                    .catch(error => console.error('Erro ao obter última série:', error));
-                                }
+                                proximoMTPDSCheckbox.addEventListener('change', () => {                                
+                                    // Se o checkbox estiver marcado, faz a chamada AJAX para obter a série do último registro                                    
+                                    if (proximoMTPDSCheckbox.checked) {
+                                        
+                                        //alert('O checkbox está marcado!');
+                                        fetch('/admins_backoffice/obter_ultima_serie_mtpds') // Substitua o caminho pela rota correta em seu aplicativo
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            // Atualiza o valor do campo de texto com a série obtida
+                                            serieTextField.value = data.serie;
+                                            serieTextField.readOnly = true; // Desabilita o campo
+                                        })
+                                    
+                                    } else {                                        
+                                        serieTextField.value = '';
+                                        serieTextField.readOnly = false; 
+                                    }
                                 });
                             </script>
 

@@ -28,6 +28,7 @@ Rails.application.routes.draw do
       end
     end   
     get 'pesquisa_vaso', to: 'vasos#pesquisa'    
+    get '/obter_ultima_serie_mtp', to: 'vasos#obter_ultima_serie_mtp'
     resources :tipo_compressors
     resources :tipo_drenos
     resources :ambiente_insts

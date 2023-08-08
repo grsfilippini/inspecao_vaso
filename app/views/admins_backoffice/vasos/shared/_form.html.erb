@@ -34,7 +34,7 @@
 
                             <div class="form-group row">
                                 <%= form.label :user_id, "Usuário", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>                                
-                                <div class="col-sm-10 mb-0 mb-sm-0">                                    
+                                <div class="col-sm-4 mb-0 mb-sm-0">                                    
                                     <%= form.collection_select(:user_id, @users, :id, :nome_completo, {include_blank: 'Selecione um usuário'}, {selected: nil, class: 'form-control'}) %>
                                 </div>
                             </div>
@@ -57,9 +57,45 @@
                             
                                 <div class="form-group row">
                                     <%= form.label :num_serie, "Série", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
-                                    <div class="col-sm-4 mb-3 mb-sm-0">                                        
-                                        <%= form.text_field :num_serie, class: "form-control" %>
+                                    <div class="col-sm-2 mb-3 mb-sm-0">                                        
+                                        <%= form.text_field :num_serie, class: "form-control", id: "SerieMTP" %>
                                     </div>
+
+                                    <%if @vaso.id.blank? %>
+                                        <div class="col-sm-2 mb-3 mb-sm-0">
+                                            <%= form.check_box :proximomtp, class: "form-check-input", id: "ProximoMTPCheckbox" %>
+                                            <%= form.label :proximomtp, "<< Próximo MTP", class: "form-check-label", for: "ProximoMTPCheckbox" %>
+                                        </div>
+                                    <%else%>
+                                        <div class="col-sm-2 mb-3 mb-sm-0">                                        
+                                        </div>
+                                    <%end%>
+
+                                    <script>
+                                        // Captura o checkbox e o campo de texto
+                                        var proximoMTPCheckbox = document.getElementById('ProximoMTPCheckbox');
+                                        var serieTextField = document.getElementById('SerieMTP');
+
+                                        // Adiciona um evento de clique ao checkbox
+                                        proximoMTPCheckbox.addEventListener('change', () => {                                
+                                            // Se o checkbox estiver marcado, faz a chamada AJAX para obter a série do último registro                                    
+                                            if (proximoMTPCheckbox.checked) {
+                                                
+                                                //alert('O checkbox está marcado!');
+                                                fetch('/admins_backoffice/obter_ultima_serie_mtp') // Substitua o caminho pela rota correta em seu aplicativo
+                                                .then(response => response.json())
+                                                .then(data => {
+                                                    // Atualiza o valor do campo de texto com a série obtida
+                                                    serieTextField.value = data.serie;
+                                                    serieTextField.readOnly = true; // Desabilita o campo
+                                                })
+                                            
+                                            } else {                                        
+                                                serieTextField.value = '';
+                                                serieTextField.readOnly = false; 
+                                            }
+                                        });
+                                    </script>
                                     
                                     <%= form.label :fabricante_id, "Fabricante", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
                                     <div class="col-sm-4 mb-3 mb-sm-0">                                        
@@ -180,7 +216,7 @@
                                     
                                     <%= form.label :volume, "[m<sup>3</sup>]".html_safe, class: "col-sm-1 col-form-label text-sm-left text-lg-right" %>
                                     <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
-                                        <%= form.number_field :volume, step: 0.001, min: 0.001,  class: "form-control", id: "volume_m3", disabled: true %>
+                                        <%= form.number_field :volume, step: 0.001, min: 0.000,  class: "form-control", id: "volume_m3", disabled: true %>
                                     </div>
                                 </div>                                
 
@@ -337,15 +373,15 @@
                                 <div class="form-group row">
                                     <%= form.label :diametro_externo_corpo, 'Diâm. externo [cm]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
                                     <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
-                                        <%= form.number_field :diametro_externo_corpo, step: 0.1, min: 1,  class: "form-control", id: "diametro" %>
+                                        <%= form.number_field :diametro_externo_corpo, step: 0.1, min: 0,  class: "form-control", id: "diametro" %>
                                     </div>
                                     <%= form.label :esp_projeto_corpo, 'E. prj. corpo [mm]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
                                     <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
-                                        <%= form.number_field :esp_projeto_corpo, step: 0.01, min: 0.1,  class: "form-control" %>
+                                        <%= form.number_field :esp_projeto_corpo, step: 0.01, min: 0,  class: "form-control" %>
                                     </div>
                                     <%= form.label :esp_projeto_tampo, 'E. prj. tampo [mm]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
                                     <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
-                                        <%= form.number_field :esp_projeto_tampo, step: 0.01, min: 0.1,  class: "form-control" %>
+                                        <%= form.number_field :esp_projeto_tampo, step: 0.01, min: 0,  class: "form-control" %>
                                     </div>
                                 </div>
 

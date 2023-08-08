@@ -7,7 +7,7 @@ class AdminsBackoffice::MtpNumSeriesController < AdminsBackofficeController
       # O includes abaixo inclui na query a busca por mtp_num_serie      
       @mtp_num_series = MtpNumSerie.includes(:vaso)
                  .all
-                 .order(:serie)
+                 .order(serie: :desc)
                  .page(params[:page])
                  .per(50)
     end

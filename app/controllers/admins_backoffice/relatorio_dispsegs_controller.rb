@@ -57,8 +57,7 @@ class AdminsBackoffice::RelatorioDispsegsController < AdminsBackofficeController
     
     def params_relatorio_dispseg
       puts params
-      params.require(:relatorio_dispseg).permit(:id,
-                                                :user_id, 
+      params.require(:relatorio_dispseg).permit(:user_id, 
                                                 :data, 
                                                 :vaso_id,
                                                 :disp_seguranca_id,
@@ -81,7 +80,8 @@ class AdminsBackoffice::RelatorioDispsegsController < AdminsBackofficeController
                                                 :pressao_teste_3,
                                                 :pressao_ajuste,
                                                 :pressao_vedacao,
-                                                :bimpresso)
+                                                :bimpresso,
+                                                :data_prox_insp)
     end
   
     def set_relatorio_dispseg

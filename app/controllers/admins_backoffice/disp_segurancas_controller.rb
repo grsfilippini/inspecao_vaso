@@ -17,11 +17,27 @@ class AdminsBackoffice::DispSegurancasController < AdminsBackofficeController
     end
   
     def create
-      @disp_seguranca = DispSeguranca.new(params_disp_seguranca)
-      if @disp_seguranca.save
+      @disp_seguranca = DispSeguranca.new(params_disp_seguranca)      
+      if params[:disp_seguranca][:proximomtpds] == "1"
+        # Resgata o próximo número de série disponível e atribui ao dispositivo de segurança                
+        @disp_seguranca.serie = obter_ultima_serie_mtpds_hash
+      end      
+      # Salva o novo dispositivo de segurança
+      if @disp_seguranca.save        
+        # Se é para considerar o próximo mtpds, então salva no controle MtpdsNumSerie
+        
+        if params[:disp_seguranca][:proximomtpds] == "1"
+          @mtpds_serie = MtpdsNumSerie.new
+          @mtpds_serie.serie = @disp_seguranca.serie
+          @mtpds_serie.disp_seguranca_id = @disp_seguranca.id
+          @mtpds_serie.save          
+        end
         redirect_to admins_backoffice_disp_segurancas_path, notice: "Dispositivo de segurança criado com sucesso!"    
       else
         get_relacoes
+        # Apaga número de série, pois o campo proximomtpds fica unckedked após erro de save.
+        # Assim obriga o usuário a selecionar novamente o próximo num serie.
+        @disp_seguranca.serie = ''
         render :new
       end
     end
@@ -46,13 +62,24 @@ class AdminsBackoffice::DispSegurancasController < AdminsBackofficeController
         render :index
       end
     end
-  
-    def obter_ultima_serie_mtpds
-      last_record = MtpdsNumSerie.last
-      serie = last_record&.serie || '' # Caso não haja registro, define um valor padrão vazio
+    
+    # Retorna um hash
+    def obter_ultima_serie_mtpds_hash
+      last_record = MtpdsNumSerie.where("serie LIKE ?", "MTPDS%").order(serie: :desc).first
+      serie = last_record&.serie || 'MTPDS0000' # Caso não haja registro, define um valor padrão vazio
+      serie = last_record.serie[-4..-1]
+      next_serie_val = serie.to_i + 1      
+      serie = 'MTPDS'+ next_serie_val.to_s.rjust(4, '0')
+      serie      
+    end
+
+    # Retorna u json
+    def obter_ultima_serie_mtpds            
+      serie = obter_ultima_serie_mtpds_hash
       render json: { serie: serie }
     end
-  
+
+
     private
   
     

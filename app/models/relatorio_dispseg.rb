@@ -1,6 +1,6 @@
 class RelatorioDispseg < ApplicationRecord
   # Campos obrigatórios
-  validates :id,                            presence: true  
+  #validates :id,                            presence: true  
   #validates :user_id,                       presence: true
   validates :data,                          presence: true
   validates :vaso_id,                       presence: true
