@@ -69,7 +69,9 @@ Rails.application.routes.draw do
     get 'inspecao_fotos',            to: 'relatorios#inspecao_fotos'
     get 'avaliarph/:id',             to: 'relatorios#avaliarph', as: :avaliarph
     get 'busca_um_relatorio',        to: 'relatorios#form_busca_um_relatorio'
-    get 'edita_um_relatorio',        to: 'relatorios#form_edita_um_relatorio'
+    get 'edita_um_relatorio',        to: 'relatorios#form_edita_um_relatorio'    
+    get 'preenche_intervencoes',     to: 'relatorios#preenche_intervencoes'
+    get 'preenche_recomendacoes',    to: 'relatorios#preenche_recomendacoes'
 
     resources :relatorio_dispsegs
     get 'pesquisa_relatorio_dispseg', to: 'relatorio_dispsegs#pesquisa'
@@ -80,7 +82,7 @@ Rails.application.routes.draw do
     get 'welcome/index'
     get 'pesquisa', to: 'pesquisa#vasos'
     get 'pesq_fab_prop', to: 'pesquisa#pesq_fab_prop'
-    post 'relatorios_vaso', to: 'relatorios_vaso#relatorios'
+    post 'relatorios_vaso', to: 'relatorios_vaso#relatorios'    
   end
 
   namespace :users_backoffice do

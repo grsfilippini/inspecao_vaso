@@ -20,15 +20,15 @@
                             </div>                            
                                                         
                             <div class="form-group row">
-                                <%= form.label :tipo_cobetura, 'Cobertura', {class: "col-sm-3 col-form-label text-sm-left text-lg-right"} %>
+                                <%= form.label :'relatorio[tipo_cobetura]', 'Cobertura', {class: "col-sm-3 col-form-label text-sm-left text-lg-right"} %>
                                 <div class="btn-group col-sm-6 mb-0 mb-sm-0" data-toggle="buttons">
                                     <% options = { "Não tem" => 0, "Tem cobertura" => 1, "Cobertura improvisada" => 2 } %>
                                     <% options.each do |label, value| %>
                                         <label class="btn btn-dark">
                                             <% if  @relatorio.tipo_cobetura == value %>
-                                                <%= radio_button_tag :tipo_cobetura, value, checked: true %>
+                                                <%= radio_button_tag :'relatorio[tipo_cobetura]', value, checked: true %>
                                             <%else%>
-                                                <%= radio_button_tag :tipo_cobetura, value %>
+                                                <%= radio_button_tag :'relatorio[tipo_cobetura]', value %>
                                             <%end%>
                                             <%= label %>
                                         </label>
@@ -66,8 +66,8 @@
                             
                             <div class="form-group row">
                                 <div class="form-check col-sm-12 mb-0 mb-sm-0 d-inline">
-                                    <%= form.check_box :bdispor_iluminacao_emergencia, class: "form-check-input", id: "IluminacaoEmergenciaCheckbox" %>
-                                    <%= form.label :bdispor_iluminacao_emergencia, "Dispõe de iluminação de emergência", class: "form-check-label", for: "IluminacaoEmergenciaCheckbox" %>
+                                    <%= form.check_box :bpossui_iluminacao_emergencia, class: "form-check-input", id: "IluminacaoEmergenciaCheckbox" %>
+                                    <%= form.label :bpossui_iluminacao_emergencia, "Dispõe de iluminação de emergência", class: "form-check-label", for: "IluminacaoEmergenciaCheckbox" %>
                                 </div>                                   
                             </div>
                             

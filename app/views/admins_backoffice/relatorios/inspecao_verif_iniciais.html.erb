@@ -5,34 +5,29 @@
                             
                             <%= render partial: 'admins_backoffice/relatorios/shared/botoes_navegacao' %>
                             
+                            
+
                             <div class="form-group row">
-                                <%= form.label :recomendacoes_insp_anterior_foram_realizadas, 'Recomendações inspeção anterior foram realizadas', {class: "col-sm-5 col-form-label text-sm-left text-lg-right"} %>
+                                <%= form.label :'relatorio[recomendacoes_insp_anterior_foram_realizadas]', 'Recomendações inspeção anterior foram realizadas', { class: "col-sm-5 col-form-label text-sm-left text-lg-right" } %>
                                 <div class="btn-group col-sm-6 mb-0 mb-sm-0" data-toggle="buttons">
                                     <% options = { "Não" => 0, "Sim" => 1, "Parcialmente" => 2, "1a Inspeção" => 3 } %>
                                     <% options.each do |label, value| %>
-                                        <label class="btn btn-dark">
-                                            <% if  @relatorio.recomendacoes_insp_anterior_foram_realizadas == value %>
-                                                <%= radio_button_tag :recomendacoes_insp_anterior_foram_realizadas, value, checked: true %>
-                                            <%else%>
-                                                <%= radio_button_tag :recomendacoes_insp_anterior_foram_realizadas, value %>
-                                            <%end%>
-                                            <%= label %>
-                                        </label>
+                                    <label class="btn btn-dark">
+                                        <%= radio_button_tag :'relatorio[recomendacoes_insp_anterior_foram_realizadas]', value, @relatorio.recomendacoes_insp_anterior_foram_realizadas == value %>
+                                        <%= label %>
+                                    </label>
                                     <% end %>
                                 </div>
-                            </div>   
+                                </div>
+
                             
                             <div class="form-group row">
-                                <%= form.label :tipo_fixacao_vaso, 'Fixação do vaso', {class: "col-sm-5 col-form-label text-sm-left text-lg-right"} %>
+                                <%= form.label :'relatorio[tipo_fixacao_vaso]', 'Fixação do vaso', {class: "col-sm-5 col-form-label text-sm-left text-lg-right"} %>
                                 <div class="btn-group col-sm-6 mb-0 mb-sm-0" data-toggle="buttons">
                                     <% options = { "Fixo" => 0, "Móvel" => 1, "Misto" => 2 } %>
                                     <% options.each do |label, value| %>
                                         <label class="btn btn-dark">
-                                            <% if  @relatorio.tipo_fixacao_vaso == value %>
-                                                <%= radio_button_tag :tipo_fixacao_vaso, value, checked: true %>
-                                            <%else%>
-                                                <%= radio_button_tag :tipo_fixacao_vaso, value %>
-                                            <%end%>
+                                            <%= radio_button_tag :'relatorio[tipo_fixacao_vaso]', value, @relatorio.tipo_fixacao_vaso == value %>                                            
                                             <%= label %>
                                         </label>
                                     <% end %>
@@ -40,16 +35,12 @@
                             </div>   
                             
                             <div class="form-group row">
-                                <%= form.label :tipo_houve_alteracao_local_instalacao, 'Local de instalalção alterado', {class: "col-sm-5 col-form-label text-sm-left text-lg-right"} %>
+                                <%= form.label :'relatorio[tipo_houve_alteracao_local_instalacao]', 'Local de instalalção alterado', {class: "col-sm-5 col-form-label text-sm-left text-lg-right"} %>
                                 <div class="btn-group col-sm-6 mb-0 mb-sm-0" data-toggle="buttons">
                                     <% options = { "Não" => 0, "Sim" => 1, "1a Inspeção" => 2, "Vaso móvel" => 3 } %>
                                     <% options.each do |label, value| %>
                                         <label class="btn btn-dark">
-                                            <% if  @relatorio.tipo_houve_alteracao_local_instalacao == value %>
-                                                <%= radio_button_tag :tipo_houve_alteracao_local_instalacao, value, checked: true %>
-                                            <%else%>
-                                                <%= radio_button_tag :tipo_houve_alteracao_local_instalacao, value %>
-                                            <%end%>
+                                            <%= radio_button_tag :'relatorio[tipo_houve_alteracao_local_instalacao]', value, @relatorio.tipo_houve_alteracao_local_instalacao == value %>                                            
                                             <%= label %>
                                         </label>
                                     <% end %>
@@ -57,32 +48,24 @@
                             </div>
                             
                             <div class="form-group row">
-                                <%= form.label :possui_acesso_visual_externo, 'Existe acesso visual externo', {class: "col-sm-5 col-form-label text-sm-left text-lg-right"} %>
+                                <%= form.label :'relatorio[possui_acesso_visual_externo]', 'Existe acesso visual externo', {class: "col-sm-5 col-form-label text-sm-left text-lg-right"} %>
                                 <div class="btn-group col-sm-6 mb-0 mb-sm-0" data-toggle="buttons">
                                     <% options = { "Não" => 0, "Total" => 1, "Parcial" => 2 } %>
                                     <% options.each do |label, value| %>
-                                        <label class="btn btn-dark">                                            
-                                            <% if  @relatorio.possui_acesso_visual_externo == value %>
-                                                <%= radio_button_tag :possui_acesso_visual_externo, value, checked: true %>
-                                            <%else%>
-                                                <%= radio_button_tag :possui_acesso_visual_externo, value %>
-                                            <%end%>
+                                        <label class="btn btn-dark">
+                                            <%= radio_button_tag :'relatorio[possui_acesso_visual_externo]', value, @relatorio.possui_acesso_visual_externo == value %>                                            
                                             <%= label %>
                                         </label>
                                     <% end %>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <%= form.label :tipo_acesso_interno, 'Tipo de acesso interno', {class: "col-sm-5 col-form-label text-sm-left text-lg-right"} %>
+                                <%= form.label :'relatorio[tipo_acesso_interno]', 'Tipo de acesso interno', {class: "col-sm-5 col-form-label text-sm-left text-lg-right"} %>
                                 <div class="btn-group col-sm-6 mb-0 mb-sm-0" data-toggle="buttons">
                                     <% options = { "Janela de visita" => 0, "Pequena abertura" => 1, "Não possui" => 2 } %>
                                     <% options.each do |label, value| %>
                                         <label class="btn btn-dark">
-                                            <% if  @relatorio.tipo_acesso_interno == value %>
-                                                <%= radio_button_tag :tipo_acesso_interno, value, checked: true %>
-                                            <%else%>
-                                                <%= radio_button_tag :tipo_acesso_interno, value %>
-                                            <%end%>
+                                            <%= radio_button_tag :'relatorio[tipo_acesso_interno]', value, @relatorio.tipo_acesso_interno == value %>
                                             <%= label %>
                                         </label>
                                     <% end %>
@@ -137,16 +120,12 @@
                                 </div>    
 
                                 <div class="form-group row">
-                                    <%= form.label :tipo_apresenta_sinais_reparo, 'Apresenta sinais de reparo', {class: "col-sm-3 col-form-label text-sm-left text-lg-right"} %>
+                                    <%= form.label :'relatorio[tipo_apresenta_sinais_reparo]', 'Apresenta sinais de reparo', {class: "col-sm-3 col-form-label text-sm-left text-lg-right"} %>
                                     <div class="btn-group col-sm-6 mb-0 mb-sm-0" data-toggle="buttons">
                                         <% options = { "Não" => 0, "Sim - com projeto" => 1, "Sim - sem projeto" => 2 } %>
                                         <% options.each do |label, value| %>
                                             <label class="btn btn-dark">
-                                                <% if  @relatorio.tipo_apresenta_sinais_reparo == value %>
-                                                    <%= radio_button_tag :tipo_apresenta_sinais_reparo, value, checked: true %>
-                                                <%else%>
-                                                    <%= radio_button_tag :tipo_apresenta_sinais_reparo, value %>
-                                                <%end%>                                            
+                                                <%= radio_button_tag :'relatorio[tipo_apresenta_sinais_reparo]', value, @relatorio.tipo_apresenta_sinais_reparo == value %>
                                                 <%= label %>
                                             </label>
                                         <% end %>

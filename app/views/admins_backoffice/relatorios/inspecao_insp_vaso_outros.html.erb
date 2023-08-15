@@ -72,15 +72,15 @@
                             <fieldset class="Acesso">
                             <legend>Acesso</legend>
                             <div class="form-group row">
-                                <%= form.label :tipo_degrausacesso_eguardacorpo_boascondicoes, 'Degraus de acesso e guarda corpo em boas condições', {class: "col-sm-6 col-form-label text-sm-left text-lg-right"} %>
+                                <%= form.label :'relatorio[tipo_degrausacesso_eguardacorpo_boascondicoes]', 'Degraus de acesso e guarda corpo em boas condições', {class: "col-sm-6 col-form-label text-sm-left text-lg-right"} %>
                                 <div class="btn-group col-sm-6 mb-0 mb-sm-0" data-toggle="buttons">
                                     <% options = { "Não" => 0, "Sim" => 1, "Não necessário" => 2, "Não existe" => 3 } %>
                                     <% options.each do |label, value| %>
                                         <label class="btn btn-dark">
                                             <% if  @relatorio.tipo_degrausacesso_eguardacorpo_boascondicoes == value %>
-                                                <%= radio_button_tag :tipo_degrausacesso_eguardacorpo_boascondicoes, value, checked: true %>
+                                                <%= radio_button_tag :'relatorio[tipo_degrausacesso_eguardacorpo_boascondicoes]', value, checked: true %>
                                             <%else%>
-                                                <%= radio_button_tag :tipo_degrausacesso_eguardacorpo_boascondicoes, value %>
+                                                <%= radio_button_tag :'relatorio[tipo_degrausacesso_eguardacorpo_boascondicoes]', value %>
                                             <%end%>
                                             <%= label %>
                                         </label>
@@ -89,15 +89,15 @@
                             </div>
                             
                             <div class="form-group row">
-                                <%= form.label :partesup_pisos_passarelas_platafor_eos_perfis_sustent_emboascon, 'Passarelas, plataformas e perfís de sustentação em boas condições', {class: "col-sm-6 col-form-label text-sm-left text-lg-right"} %>
+                                <%= form.label :'relatorio[partesup_pisos_passarelas_platafor_eos_perfis_sustent_emboascon]', 'Passarelas, plataformas e perfís de sustentação em boas condições', {class: "col-sm-6 col-form-label text-sm-left text-lg-right"} %>
                                 <div class="btn-group col-sm-6 mb-0 mb-sm-0" data-toggle="buttons">
                                     <% options = { "Não" => 0, "Sim" => 1, "Não necessário" => 2, "Não existe" => 3 } %>
                                     <% options.each do |label, value| %>
                                         <label class="btn btn-dark">
                                             <% if  @relatorio.partesup_pisos_passarelas_platafor_eos_perfis_sustent_emboascon == value %>
-                                                <%= radio_button_tag :partesup_pisos_passarelas_platafor_eos_perfis_sustent_emboascon, value, checked: true %>
+                                                <%= radio_button_tag :'relatorio[partesup_pisos_passarelas_platafor_eos_perfis_sustent_emboascon]', value, checked: true %>
                                             <%else%>
-                                                <%= radio_button_tag :partesup_pisos_passarelas_platafor_eos_perfis_sustent_emboascon, value %>
+                                                <%= radio_button_tag :'relatorio[partesup_pisos_passarelas_platafor_eos_perfis_sustent_emboascon]', value %>
                                             <%end%>
                                             <%= label %>
                                         </label>

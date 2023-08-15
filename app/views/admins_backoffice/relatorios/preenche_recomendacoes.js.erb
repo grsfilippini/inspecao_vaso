@@ -1,0 +1,119 @@
+var txtRecomendacoes = document.getElementById("relatorio_recomendacoes_ao_usuario");
+txtRecomendacoes.value = '';
+
+// Verificações iniciais
+//
+<% if @relatorio.tipo_apresenta_sinais_reparo == 2 %>
+    txtRecomendacoes.value += '# Providenciar o PAR (Projeto de Alteração ou Reparo) do vaso. Conforme modificações estruturais verificadas no vaso;\n'    
+<% end %>
+<% if @relatorio.tipo_houve_alteracao_local_instalacao == 1 %>
+    txtRecomendacoes.value += '# Sempre que houver mudança no local de instalação, o profissional habilitado deverá ser avisado para proceder com uma inspeção extraordinária;\n'
+<% end %>
+<% if @relatorio.b_vaso_inativo_mais_doze_meses %>
+    txtRecomendacoes.value += '# Sempre que o vaso ficar inativo por 12 meses ou mais, o profissional habilitado deverá ser avisado para proceder com inspeção extraordinária de parada;\n'
+<% end %>
+
+// Instalações
+//
+<% if !@relatorio.bdispoe_duassaidas_amplas_sinalizadas_desobstruidas %>
+    txtRecomendacoes.value += '# Providenciar duas saídas do ambiente de instalação do vaso. Devem ser amplas, permanentemente desobstruídas e sinalizadas;\n'
+<% end %>
+<% if !@relatorio.bdispor_acesso_facil_seguro_paraoperacao_manutencao %>
+    txtRecomendacoes.value += '# Melhorar o acesso ao vaso. O mesmo deve ter acesso fácil e seguro para operação e manutenção do mesmo;\n'
+<% end %>
+<% if !@relatorio.bdispor_ventilacao_permanente %>
+    txtRecomendacoes.value += '# Providenciar ventilação permanente no ambiente de instalação do vaso, com entradas e saídas de ar que não possam ser bloqueadas;\n'
+<% end %>
+<% if !@relatorio.bdispor_iluminacao_artificial %>
+    txtRecomendacoes.value += '# Providenciar iluminação artificial, conforme normas oficiais vigentes, caso haja trabalho no período noturno ou caso não haja iluminação natural suficiente;\n'
+<% end %>
+<% if !@relatorio.bpossui_iluminacao_emergencia %>
+    txtRecomendacoes.value += '# Providenciar sistema de iluminação de emergência caso haja trabalho no período noturno ou caso não haja iluminação natural suficiente;\n'
+<% end %>
+
+// Dreno
+// 
+<% if !@relatorio.bdreno_existe && !@relatorio.bdreno_foisubstituido %>
+    txtRecomendacoes.value += '# Providenciar a instalação de um dreno no ponto mais baixo do vaso de pressão;\n'
+<% end %>
+<% if !@relatorio.bdreno_posicionado_ptomais_baixo %>
+    txtRecomendacoes.value += '# O dreno deverá ser reposicionado no ponto mais baixo do vaso;\n'
+<% end %>
+
+// Vaso e outros
+//
+<% if @relatorio.bexiste_corrosaoacentuada_trincas_oupartes_soltas %>
+    txtRecomendacoes.value += '# Providenciar manutenção para eliminar o que houver de: corrosão, trinca ou elemento solto;\n'
+<% end %>
+<% if @relatorio.bexiste_falha_nasolda_entreberco_ecasco_dovaso %>
+    txtRecomendacoes.value += '# Providenciar manutenção da solda entre o berço e o casco do vaso de pressão;\n'
+<% end %>
+<% if @relatorio.bexiste_corrosao_outrincas_noselementos_fixacao %>
+    txtRecomendacoes.value += '# Providenciar manutenção para eliminar o que houver de: corrosão, deformação ou trinca nos elementos de fixação;\n'
+<% end %>
+<% if !@relatorio.bpintura_emboas_condicoes %>
+    txtRecomendacoes.value += '# Providenciar pintura do corpo do vaso de pressão;\n'
+<% end %>
+<% if @relatorio.bexiste_deformacoes_trincas_vazamentos_vaso %>
+    txtRecomendacoes.value += '# Providenciar conserto das deformações e/ou trincas e/ou vazamentos que estão comprometendo a integridade estrutural do vaso;\n'
+<% end %>
+<% if !@relatorio.basconexoes_eacessorios_estao_emboas_condicoesfisicas %>
+    txtRecomendacoes.value += '# Providenciar conserto ou substituição das conexões e acessórios que estão danificados;\n'
+<% end %>
+<% if @relatorio.basconexoes_acessorios_apresentamvazamentos %>
+    txtRecomendacoes.value += '# Eliminar vazamentos nas conexões e acessórios;\n'
+<% end %>
+
+// Documentação existente
+//
+var bElaboradoPlaqueta = document.getElementById("ElaboradaPlaquetaCheckbox");
+var bElaboradoMapaEsp  = document.getElementById("MapaEspessuraCheckbox");
+var bElaboradoLaudoTH  = document.getElementById("LaudoTHCheckbox");
+var bElaboradoDesenhoPlaqueta = document.getElementById("ElaboradoDesenhoPlaquetaCheckbox");
+var bElaboradoProntuario = document.getElementById("ProntuarioCheckbox");
+var bElaboradoRegSeguranca = document.getElementById("RegSegCheckbox");
+var bElaboradaPlacaLocal = document.getElementById("PlacaLocalCheckbox")
+
+<% if !@relatorio.bpossui_plaqueta_identificacao_nr13_dovaso %>
+    if (!bElaboradoPlaqueta.checked){ txtRecomendacoes.value += '# Elaborar plaqueta de identificação do vaso cfme NR13. Deve ser fixada junto ao vaso, na base do motor ou na estrutura de sustentação do vaso. Tomar a precaução de que o vaso NÃO SEJA PERFURADO em hipótese alguma;\n' }
+<% end %>
+<% if !@relatorio.insp_contratada_vaso_mapa_espessura && !@relatorio.bpossui_mapa_medicao_espessura && !@relatorio.bexiste_prontuario %>
+    if (!bElaboradoMapaEsp.checked){ txtRecomendacoes.value += '# Providenciar medição da espessura das paredes do vaso. Apresentar esta medição em desenho técnico com a localização da medida e seu valor. Essa medição deve ser feita pelo profissional habilitado ou seu representante;\n' }
+<% end %>
+<% if !@relatorio.bpossui_laudo_teste_hidrostatico && !@relatorio.insp_contratada_vaso_teste_hidrostatico %>
+    if (!bElaboradoLaudoTH.checked){ txtRecomendacoes.value += '# Providenciar o teste hidrostático do vaso, bem como seu respectivo laudo. Esse trabalho deve ser feito pelo profissional habilitado;\n' }
+<% end %>
+<% if !@relatorio.bexiste_desenho_plaqueta_identif_vaso %>
+    if (!bElaboradoDesenhoPlaqueta.checked){ txtRecomendacoes.value += '# Providenciar desenho técnico da plaqueta de identificação do vaso cfme NR13;\n' }
+<% end %>
+<% if !@relatorio.bexiste_prontuario && !@relatorio.insp_contratada_vaso_reconstituicao_prontuario %>
+    if (!bElaboradoProntuario.checked){ txtRecomendacoes.value += '# Providenciar a elaboração do prontuário do vaso de pressão. Contate o profissional habilitado para isso;\n' }
+<% end %>
+<% if !@relatorio.bpossui_registro_seguranca %>
+    if (!bElaboradoRegSeguranca.checked){ txtRecomendacoes.value += '# Providenciar o registro de segurança do vaso de pressão cfme NR13. Este registro deve ser elaborado pelo profissional habilitado;\n' }
+<% end %>
+
+// Manômetro
+//
+<% if !@relatorio.bpossui_manometro_ousimilar && !@relatorio.bman_foi_substituido %>
+    txtRecomendacoes.value += '# Instalar um manômetro no corpo do vaso ou no sistema que o contenha de tal maneira que indique a pressão de operação do vaso. O manômetro deve ficar visível ao operador;\n'
+<% end %>
+
+// Instalações
+//
+<% if !@relatorio.bpossui_placa_dolocal_deinstalacao %>
+    if (!bElaboradaPlacaLocal.checked) { txtRecomendacoes.value += '# Providenciar placa para identificação do local de instalação do vaso. O modelo consta no item 9 deste relatório;\n' }
+    txtRecomendacoes.value += '# Instalar placa de localização em posição visível a quem esteja a 10 metros do ambiente;'    
+<% end %>
+
+// Dreno
+//
+<% if !@relatorio.bdreno_inclinacao_positiva && !@relatorio.bajuste_inclinacao %>
+    txtRecomendacoes.value += '# Providenciar ajuste na inclinação do vaso de tal forma que o líquido acumulado no fundo possa escoar totalmente em direção ao dreno;\n'
+<% end %>
+
+// Para nenhuma recomendação.
+//
+if (txtRecomendacoes.value === '') { txtRecomendacoes.value = "NENHUMA RECOMENDAÇÃO." }
+
+

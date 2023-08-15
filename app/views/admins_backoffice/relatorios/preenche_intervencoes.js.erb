@@ -1,0 +1,105 @@
+var txtIntervencoes = document.getElementById("relatorio_intervencoes_feitas_pelo_ph");
+txtIntervencoes.value = '';
+
+// Intervenções feitas durante a inspeção
+//
+// Manômetro
+<% if @relatorio.bman_foi_substituido %>
+    <% if @relatorio.bpossui_manometro_ousimilar %>
+        txtIntervencoes.value += '# O manômetro foi substituído;\n'
+    <% else %>
+        txtIntervencoes.value += '# Foi instalado um manômetro;\n'
+    <% end %>
+<% end %>
+<% if @relatorio.bman_foifeito_ajuste %>
+    txtIntervencoes.value += '# O manômetro foi ajustado;\n'
+<% end %>
+<% if @relatorio.bman_foifeita_calibracao %>
+    txtIntervencoes.value += '# O manômetro foi calibrado;\n'
+<% end %>
+//
+// Dispositivo de segurança
+<% if @relatorio.insp_contratada_valvsegpop_externa %>
+    txtIntervencoes.value += '# O dispositivo de segurança foi inspecionado externamente;\n';
+<% end %>
+<% if @relatorio.bdispseg_foisubstituido %>
+    txtIntervencoes.value += '# O dispositivo de segurança foi substituído;\n'
+<% end %>
+<% if @relatorio.bdispseg_foifeito_ajuste %>
+    var pAberturaValue = <%= @relatorio.dispositivoseg_pabertura.to_f.round(3) %>;
+    txtIntervencoes.value += '# O dispositivo de segurança foi aberto e limpo. Sua abertura foi ajustada para ' + pAberturaValue.toFixed(3) + ' MPa;\n'
+<% end %>
+<% if @relatorio.bdispseg_foifeita_calibracao %>
+    var pAberturaValue = <%= @relatorio.dispositivoseg_pabertura.to_f.round(3) %>;
+    txtIntervencoes.value += '# Foi executada calibração do dispositivo de segurança com emissão de certificado, entregue junto deste relatório. Sua abertura foi ajustada para ' + pAberturaValue.toFixed(3) + ' MPa;\n'
+<% end %>
+//
+// Pressostato
+<% if @relatorio.bpressostato_foisubstituido %>
+    txtIntervencoes.value += '# O pressostato foi substituído;\n'
+<% end %>
+<% if @relatorio.bpressostato_foifeito_ajuste %>
+    var pLigaValue    = <%= @relatorio.pressostato_pliga.to_f.round(3) %>;
+    var pDesligaValue = <%= @relatorio.pressostato_pdesliga.to_f.round(3) %>;
+    txtIntervencoes.value += '# O pressostato foi ajustado. Sua faixa de trabalho está ajustada para ligar com ' + pLigaValue + ' MPa e desligar com ' + pDesligaValue + ' MPa;\n';
+<% elsif @relatorio.bpressostato_foiverificada_faixadetrabalho %>
+    var pLigaValue    = <%= @relatorio.pressostato_pliga.to_f.round(3) %>;
+    var pDesligaValue = <%= @relatorio.pressostato_pdesliga.to_f.round(3) %>;
+    txtIntervencoes.value += '# Foi verificada a faixa de trabalho do pressostato. Está ligando com ' + pLigaValue + ' MPa e desligando com ' + pDesligaValue + ' MPa;\n';
+<% end %>
+//
+// Dreno
+<% if @relatorio.bdreno_foisubstituido %>
+    <% if @relatorio.bdreno_existe %>
+        txtIntervencoes.value += '# O dreno foi substituído;\n';
+    <% else %>
+        txtIntervencoes.value += '# O dreno foi instalado;\n';
+    <% end %>
+<% end %>
+<% if @relatorio.bdreno_foifeita_manutencao %>
+    txtIntervencoes.value += '# Foi executada manutenção do dreno;\n';
+<% end %> 
+<% if @relatorio.bdreno_foiacionado_paradrenar_liqacumulado %>
+    var qtdeLiqDrenado = <%= @relatorio.dreno_qtdadeliquido_drenado.to_f.round(0) %>;
+    txtIntervencoes.value += '# O dreno foi acionado. Saiu aproximadamente ' + qtdeLiqDrenado.toFixed(0) + ' mililitros de líquido;\n';
+<% end %>
+<% if @relatorio.bajuste_inclinacao %>
+    txtIntervencoes.value += '# A inclinação do vaso foi ajustada para ficar positiva, ou seja, com escoamento do líquido em direção ao dreno;\n';
+<% end %> 
+
+
+// Intervenções feitas após a inspeção
+//
+var cbxRegistroSeg      = document.getElementById("RegSegCheckbox")
+var cbxProntuario       = document.getElementById("ProntuarioCheckbox")
+var cbxLaudoTH          = document.getElementById("LaudoTHCheckbox")
+var cbxLaudoTH2aVia     = document.getElementById("LaudoTH2aViaCheckbox")
+var cbxProgramaInsp     = document.getElementById("ProgInspCheckbox")
+var cbxDesenhoPlaqueta  = document.getElementById("ElaboradoDesenhoPlaquetaCheckbox")
+var cbxMapaEspessura    = document.getElementById("MapaEspessuraCheckbox")
+var cbxPlacaLocal       = document.getElementById("PlacaLocalCheckbox")
+var cbxPlaqueta         = document.getElementById("ElaboradaPlaquetaCheckbox")
+var cbxAjusteInclinacao = document.getElementById("AjusteInclinacaoVasoCheckbox")
+
+if (cbxRegistroSeg.checked) { txtIntervencoes.value += "# Foi elaborado o registro de segurança do vaso de pressão cfme NR13. Livro entregue junto deste relatório;\n"; }
+if (cbxProntuario.checked)  { txtIntervencoes.value += "# Foi elaborado o prontuário do vaso de pressão cfme NR13. Documento entregue junto deste relatório;\n" }
+if (cbxLaudoTH.checked ) { 
+    if (cbxLaudoTH2aVia.checked) {
+        txtIntervencoes.value += "# Foi emitida 2a via do laudo de teste hidrostático. Documento entregue junto deste relatório;\n" 
+    }
+    else {
+        txtIntervencoes.value += "# Foi executado o teste hidrostático e elaborado seu laudo. Documento entregue junto deste relatório;\n" 
+    }
+}
+if (cbxProgramaInsp.checked)    { txtIntervencoes.value += "# Foi definida a programação das inspeções do vaso e seus elementos. Consta no final deste relatório;\n" }
+if (cbxDesenhoPlaqueta.checked) { txtIntervencoes.value += "# Foi elaborado o desenho técnico da plaqueta de identificação do vaso cfme NR13. Documento entregue junto deste relatório;\n" }
+if (cbxMapaEspessura.checked)   { txtIntervencoes.value += "# Foi feito levantamento de espessura das paredes do vaso. Este consta em documento entregue junto deste relatório;\n" }
+if (cbxPlacaLocal.checked)      { txtIntervencoes.value += "# Foi elaborada placa de identificação do local de instalação. A mesma foi entregue junto deste relatório. Deve ser fixada junto ao vaso de forma que seja visível a quem esteja chegando próximo ao ambiente;\n" }
+if (cbxPlaqueta.checked)        { txtIntervencoes.value += "# Foi elaborada plaqueta de identificação do vaso conforme NR13. A plaqueta foi entregue junto deste relatório. Deve ser fixada junto ao vaso, na base do motor ou na estrutura de sustentação do vaso. Tomar a precaução de que o vaso NÃO SEJA PERFURADO em hipótese alguma;\n" }
+
+
+// Para nenhuma intervenção.
+//
+if (txtIntervencoes.value === '') { txtIntervencoes.value = "NENHUMA INTERVENÇÃO." }
+
+

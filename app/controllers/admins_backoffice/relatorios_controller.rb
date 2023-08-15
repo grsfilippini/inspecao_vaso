@@ -133,9 +133,9 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
     get_relacoes
   end
 
-  def update          
-    if params_relatorio.present?
-      if @relatorio.update(params_relatorio)
+  def update              
+    if params_relatorio.present?      
+      if @relatorio.update(params_relatorio)        
         # Verificar se um novo arquivo de imagem foi enviado
         if params[:relatorio][:foto_antes_inspecao].present?
           # Atualizar o campo de imagem diretamente com o novo arquivo
@@ -172,51 +172,82 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
         if params[:relatorio][:foto_interna4].present?
           # Atualizar o campo de imagem diretamente com o novo arquivo
           @relatorio.update_attribute(:foto_interna4, params[:relatorio][:foto_interna4].read)
-        end
+        end      
+        
+        redireciona_para_guia
+        
+      else
+        get_relacoes
+        render 'edit'
       end
-    end
-    
-    if params[:btn_gravar_sair] || params[:btn_gravar_avaliacaoph]
-      redirect_to admins_backoffice_relatorio_em_aberto_path, notice: "Relatório atualizado com sucesso!"
-    # Início da inspeção
-    elsif params[:btn_insp_inicio]
-      redirect_to edit_admins_backoffice_relatorio_path(@relatorio.id), notice: "Relatório atualizado com sucesso!"        
-    # Documentação existente
-    elsif params[:btn_doc_existente]          
-      redirect_to admins_backoffice_inspecao_doc_existente_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para documentação existente."
-    # Verificações iniciais  
-    elsif params[:btn_verif_iniciais]          
-      redirect_to admins_backoffice_inspecao_verif_iniciais_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para verificações iniciais."
-    # Inspeções contratadas
-    elsif params[:btn_insp_contratadas]          
-      redirect_to admins_backoffice_inspecao_insp_contratadas_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para inspeções contratadas."
-    # Normas utilizadas na inspeção
-    elsif params[:btn_insp_normas]          
-      redirect_to admins_backoffice_inspecao_insp_normas_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para normas utilizadas na inspeção."
-    # Inspeções instalações
-    elsif params[:btn_insp_instalacoes]          
-      redirect_to admins_backoffice_inspecao_insp_instalacoes_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para inspeções das instalações."
-    # Manômetro
-    elsif params[:btn_insp_manometro]          
-      redirect_to admins_backoffice_inspecao_insp_manometro_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para inspeção do manômetro."
-    # Dispositivo de segurança
-    elsif params[:btn_insp_dispseg]          
-      redirect_to admins_backoffice_inspecao_insp_dispseg_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para inspeções do dispositivo de segurança."
-    # Pressostato
-    elsif params[:btn_insp_pressostato]          
-      redirect_to admins_backoffice_inspecao_insp_pressostato_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para inspeção do pressostato."
-    # Dreno
-    elsif params[:btn_insp_dreno]          
-      redirect_to admins_backoffice_inspecao_insp_dreno_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para inspeção do dreno."
-    # Vaso e outros
-    elsif params[:btn_insp_vaso_outros]          
-      redirect_to admins_backoffice_inspecao_insp_vaso_outros_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para inspeção do vaso e outros."
-    # Fotos
-    elsif params[:btn_fotos]          
-      redirect_to admins_backoffice_inspecao_fotos_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para fotos."
-    end
+
+    else
+      redireciona_para_guia
+    end    
   end
   
+# Redireciona para a guia conforme o button que estiver presente em params
+def redireciona_para_guia
+  # Direciona para próxima tela ou tela anterior conforme botão pressionado
+  if params[:btn_gravar_sair] || params[:btn_gravar_avaliacaoph]
+    redirect_to admins_backoffice_relatorio_em_aberto_path, notice: "Relatório atualizado com sucesso!"
+  # Início da inspeção
+  elsif params[:btn_insp_inicio]
+    redirect_to edit_admins_backoffice_relatorio_path(@relatorio.id), notice: "Relatório atualizado com sucesso!"        
+  # Documentação existente
+  elsif params[:btn_doc_existente]          
+    redirect_to admins_backoffice_inspecao_doc_existente_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para documentação existente."
+  # Verificações iniciais  
+  elsif params[:btn_verif_iniciais]          
+    redirect_to admins_backoffice_inspecao_verif_iniciais_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para verificações iniciais."
+  # Inspeções contratadas
+  elsif params[:btn_insp_contratadas]          
+    redirect_to admins_backoffice_inspecao_insp_contratadas_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para inspeções contratadas."
+  # Normas utilizadas na inspeção
+  elsif params[:btn_insp_normas]          
+    redirect_to admins_backoffice_inspecao_insp_normas_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para normas utilizadas na inspeção."
+  # Inspeções instalações
+  elsif params[:btn_insp_instalacoes]          
+    redirect_to admins_backoffice_inspecao_insp_instalacoes_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para inspeções das instalações."
+  # Manômetro
+  elsif params[:btn_insp_manometro]          
+    redirect_to admins_backoffice_inspecao_insp_manometro_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para inspeção do manômetro."
+  # Dispositivo de segurança
+  elsif params[:btn_insp_dispseg]          
+    redirect_to admins_backoffice_inspecao_insp_dispseg_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para inspeções do dispositivo de segurança."
+  # Pressostato
+  elsif params[:btn_insp_pressostato]          
+    redirect_to admins_backoffice_inspecao_insp_pressostato_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para inspeção do pressostato."
+  # Dreno
+  elsif params[:btn_insp_dreno]          
+    redirect_to admins_backoffice_inspecao_insp_dreno_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para inspeção do dreno."
+  # Vaso e outros
+  elsif params[:btn_insp_vaso_outros]          
+    redirect_to admins_backoffice_inspecao_insp_vaso_outros_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para inspeção do vaso e outros."
+  # Fotos
+  elsif params[:btn_fotos]          
+    redirect_to admins_backoffice_inspecao_fotos_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para fotos."
+  end
+end
+
+  def preenche_intervencoes
+    # Realize as operações necessárias para obter os dados    
+    @relatorio = Relatorio.find(params[:relatorio_id])
+
+    respond_to do |format|
+      format.js # Isso renderizará um arquivo JavaScript correspondente ao seu_metodo.js.erb
+    end
+  end
+
+  def preenche_recomendacoes
+    # Realize as operações necessárias para obter os dados    
+    @relatorio = Relatorio.find(params[:relatorio_id])
+
+    respond_to do |format|
+      format.js # Isso renderizará um arquivo JavaScript correspondente ao seu_metodo.js.erb
+    end
+  end
+
   private
     def set_relatorio
       @relatorio = Relatorio.find(params[:id])      
@@ -394,19 +425,24 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
                                           :foto_interna1,
                                           :foto_interna2,
                                           :foto_interna3,
-                                          :foto_interna4
-                  
-      #t.text "recomendacoes_ao_usuario"
-      #t.text "intervencoes_feitas_pelo_ph"
-      #t.boolean "belaborado_reg_seg", default: false, null: false
-      #t.boolean "belaborado_desenho_plaqueta", default: false, null: false
-      #t.boolean "belaborado_laudo_th", default: false, null: false
-      #t.boolean "belaborado_programacao_insp", default: false, null: false
-      #t.boolean "belaborado_mapa_espessura", default: false, null: false
-      #t.boolean "belaborado_plaqueta_identificacao", default: false, null: false
+                                          :foto_interna4,
+
+                                          # intervenções
+                                          :belaborado_reg_seg,
+                                          :belaborado_prontuario,
+                                          :belaborado_laudo_th,
+                                          :b_laudoth_eh_2avia,
+                                          :belaborado_programacao_insp,
+                                          :belaborado_desenho_plaqueta,
+                                          :belaborado_mapa_espessura,
+                                          :belaborada_placa_local_inst,
+                                          :belaborado_plaqueta_identificacao,
+                                          :intervencoes_feitas_pelo_ph,
+
+                                          # recomendações
+                                          :recomendacoes_ao_usuario
+                                          
       #t.text "relacao_rgi", default: "NENHUM RGI ENCONTRADO"
-      #t.boolean "belaborada_placa_local_inst", default: false, null: false
-      
       #t.integer "prazo_recomendacoes", default: 60, null: false
       #t.text "result_insp_externa"
       #t.text "result_insp_interna"
@@ -417,12 +453,10 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
       #t.date "dt_prox_insp_interna_dispositivo_seguranca", default: -> { "(CURRENT_DATE + 3650)" }, null: false
       #t.text "parecer_quanto_integridade_vaso"
       
-      #t.boolean "brel_impresso", default: false, null: false
-      #t.boolean "belaborado_prontuario", default: false, null: false
+      #t.boolean "brel_impresso", default: false, null: false      
       #t.boolean "brevisado", default: false, null: false
       #t.boolean "benviada_placa_local_para_confeccao", default: false
   
-      #t.boolean "b_laudoth_eh_2avia", default: false, null: false
       #t.string "nova_venda_obs", limit: 120
       #t.boolean "nova_venda_aguarda_resposta", default: false, null: false
       #t.boolean "nova_venda_fora_lista", default: false, null: false      

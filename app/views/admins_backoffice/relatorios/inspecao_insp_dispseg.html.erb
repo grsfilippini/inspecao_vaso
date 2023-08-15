@@ -6,15 +6,15 @@
                             <%= render partial: 'admins_backoffice/relatorios/shared/botoes_navegacao' %>                            
                         
                             <div class="form-group row">
-                                <%= form.label :possui_dispositivo_deseguranca, 'Existe dispositivo de segurança', {class: "col-sm-4 col-form-label text-sm-left text-lg-right"} %>
+                                <%= form.label :'relatorio[possui_dispositivo_deseguranca]', 'Existe dispositivo de segurança', {class: "col-sm-4 col-form-label text-sm-left text-lg-right"} %>
                                 <div class="btn-group col-sm-8 mb-0 mb-sm-0" data-toggle="buttons">
                                     <% options = { "Não" => 0, "Válvula de segurança" => 1, "Válvula de alívio" => 2, "Válvula de segurança e alívio" => 3 } %>
                                     <% options.each do |label, value| %>
                                         <label class="btn btn-dark">
                                             <% if  @relatorio.possui_dispositivo_deseguranca == value %>
-                                                <%= radio_button_tag :possui_dispositivo_deseguranca, value, checked: true %>
+                                                <%= radio_button_tag :'relatorio[possui_dispositivo_deseguranca]', value, checked: true %>
                                             <%else%>
-                                                <%= radio_button_tag :possui_dispositivo_deseguranca, value %>
+                                                <%= radio_button_tag :'relatorio[possui_dispositivo_deseguranca]', value %>
                                             <%end%>
                                             <%= label %>
                                         </label>
@@ -23,15 +23,15 @@
                             </div>
                             
                             <div class="form-group row">
-                                <%= form.label :possui_dispositivo_contra_bloqueio_dodisp_seg, 'Possui dispositivo contra bloqueio do D.S.', {class: "col-sm-4 col-form-label text-sm-left text-lg-right"} %>
+                                <%= form.label :'relatorio[possui_dispositivo_contra_bloqueio_dodisp_seg]', 'Possui dispositivo contra bloqueio do D.S.', {class: "col-sm-4 col-form-label text-sm-left text-lg-right"} %>
                                 <div class="btn-group col-sm-8 mb-0 mb-sm-0" data-toggle="buttons">
                                     <% options = { "Não" => 0, "Sim" => 1, "Disp. seg. instalado diretamente no vaso" => 2 } %>
                                     <% options.each do |label, value| %>
                                         <label class="btn btn-dark">
                                             <% if  @relatorio.possui_dispositivo_contra_bloqueio_dodisp_seg == value %>
-                                                <%= radio_button_tag :possui_dispositivo_contra_bloqueio_dodisp_seg, value, checked: true %>
+                                                <%= radio_button_tag :'relatorio[possui_dispositivo_contra_bloqueio_dodisp_seg]', value, checked: true %>
                                             <%else%>
-                                                <%= radio_button_tag :possui_dispositivo_contra_bloqueio_dodisp_seg, value %>
+                                                <%= radio_button_tag :'relatorio[possui_dispositivo_contra_bloqueio_dodisp_seg]', value %>
                                             <%end%>
                                             <%= label %>
                                         </label>

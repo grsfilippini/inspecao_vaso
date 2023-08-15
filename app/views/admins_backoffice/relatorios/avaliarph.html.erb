@@ -65,6 +65,91 @@
                                 </div>
                             </div>
 
+                            <fieldset class="Vaso_intervencoes">
+                            <legend>Intervenções</legend>
+                                <div class="form-group row">
+                                    <div class="col-sm-3 mb-3 mb-sm-0">
+                                        <h6><span class="badge badge-secondary">Documentos e afins emitidos</span></h6>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="form-check col-sm-3 mb-0 mb-sm-0">
+                                        <%= form.check_box :belaborado_reg_seg, class: "form-check-input", id: "RegSegCheckbox", disabled: @relatorio.bpossui_registro_seguranca ? true : false %>
+                                        <%= form.label :belaborado_reg_seg, "Registro de segurança", class: "form-check-label", for: "RegSegCheckbox" %>
+                                    </div>
+
+                                    <div class="form-check col-sm-3 mb-0 mb-sm-0">
+                                        <%= form.check_box :belaborado_prontuario, class: "form-check-input", id: "ProntuarioCheckbox", disabled: @relatorio.bexiste_prontuario ? true : false %>
+                                        <%= form.label :belaborado_prontuario, "Prontuário", class: "form-check-label", for: "ProntuarioCheckbox" %>
+                                    </div>
+                                            
+                                    <div class="form-check col-sm-3 mb-0 mb-sm-0">
+                                        <%= form.check_box :belaborado_laudo_th, class: "form-check-input", id: "LaudoTHCheckbox", disabled: @relatorio.bpossui_laudo_teste_hidrostatico ? true : false %>
+                                        <%= form.label :belaborado_laudo_th, "Laudo de teste hidrostático", class: "form-check-label", for: "LaudoTHCheckbox" %>
+                                    </div>
+                                    <div class="form-check col-sm-3 mb-0 mb-sm-0">
+                                        <%= form.check_box :b_laudoth_eh_2avia, class: "form-check-input", id: "LaudoTH2aViaCheckbox", disabled: @relatorio.bpossui_laudo_teste_hidrostatico ? true : false %>
+                                        <%= form.label :b_laudoth_eh_2avia, "2a via", class: "form-check-label", for: "LaudoTH2aViaCheckbox" %>                                        
+                                    </div>
+                                </div> 
+                                <div class="form-group row">
+                                    <div class="form-check col-sm-3 mb-0 mb-sm-0">
+                                        <%= form.check_box :belaborado_programacao_insp, class: "form-check-input", id: "ProgInspCheckbox", disabled: @relatorio.bpossui_programacao_inspecoes ? true : false %>
+                                        <%= form.label :belaborado_programacao_insp, "Programação das inspeções", class: "form-check-label", for: "ProgInspCheckbox" %>
+                                    </div>
+
+                                    <div class="form-check col-sm-3 mb-0 mb-sm-0">
+                                        <%= form.check_box :belaborado_desenho_plaqueta, class: "form-check-input", id: "ElaboradoDesenhoPlaquetaCheckbox", disabled: @relatorio.bexiste_desenho_plaqueta_identif_vaso ? true : false %>
+                                        <%= form.label :belaborado_desenho_plaqueta, "Desenho da plaqueta de indentificação NR13", class: "form-check-label", for: "ElaboradoDesenhoPlaquetaCheckbox" %>                                        
+                                    </div>
+
+                                    <div class="form-check col-sm-3 mb-0 mb-sm-0">
+                                        <%= form.check_box :belaborado_mapa_espessura, class: "form-check-input", id: "MapaEspessuraCheckbox", disabled: @relatorio.bpossui_mapa_medicao_espessura ? true : false %>
+                                        <%= form.label :belaborado_mapa_espessura, "Mapa de medida de espessura", class: "form-check-label", for: "MapaEspessuraCheckbox" %>                                        
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-sm-3 mb-3 mb-sm-0">
+                                        <h6><span class="badge badge-secondary">Outras intervenções</span></h6>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="form-check col-sm-3 mb-0 mb-sm-0">
+                                        <%= form.check_box :belaborada_placa_local_inst, class: "form-check-input", id: "PlacaLocalCheckbox", disabled: @relatorio.bpossui_placa_dolocal_deinstalacao ? true : false %>
+                                        <%= form.label :belaborada_placa_local_inst, "Elaborada placa de identificação do local de instalação", class: "form-check-label", for: "PlacaLocalCheckbox" %>
+                                    </div>
+                                    <div class="form-check col-sm-3 mb-0 mb-sm-0">
+                                        <%= form.check_box :belaborado_plaqueta_identificacao, class: "form-check-input", id: "ElaboradaPlaquetaCheckbox", disabled: @relatorio.bpossui_plaqueta_identificacao_nr13_dovaso ? true : false %>
+                                        <%= form.label :belaborado_plaqueta_identificacao, "Elaborada plaqueta de indentificação NR13", class: "form-check-label", for: "ElaboradaPlaquetaCheckbox" %>
+                                    </div>
+                                </div>
+                                                                
+                                <%= link_to 'Preencher intervenção', admins_backoffice_preenche_intervencoes_path(relatorio_id: @relatorio.id.to_s), data: { remote: true } %>
+
+                                <div class="form-group row">
+                                    <%= form.label :intervencoes_feitas_pelo_ph, "Intervenções feitas pelo PH", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-10 mb-3 mb-sm-0">                                        
+                                        <%= form.text_area :intervencoes_feitas_pelo_ph, class: "form-control", style: "height: 300px;" %>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+
+                            <fieldset class="Vaso_recomendacoes">
+                            <legend>Recomendações</legend>
+                                                                
+                                <%= link_to 'Preencher recomendações', admins_backoffice_preenche_recomendacoes_path(relatorio_id: @relatorio.id.to_s), data: { remote: true } %>
+
+                                <div class="form-group row">
+                                    <%= form.label :recomendacoes_ao_usuario, "Recomendações ao usuário do vaso", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-10 mb-3 mb-sm-0">
+                                        <%= form.text_area :recomendacoes_ao_usuario, class: "form-control", style: "height: 300px;" %>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+
                             <hr>
 
                             <div class="form-group row">
