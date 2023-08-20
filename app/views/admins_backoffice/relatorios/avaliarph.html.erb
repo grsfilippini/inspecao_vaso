@@ -636,6 +636,10 @@
                                         <%= form.check_box :b_rascunho, class: "form-check-input", id: "RascunhoCheckbox" %>
                                     <% end %>
                                     <%= form.label :b_rascunho, "Em aberto", class: "form-check-label", for: "RascunhoCheckbox" %>
+                                </div>                                
+                                <div class="form-check col-sm-4 mb-0 mb-sm-0">
+                                    <%= form.check_box :brel_impresso, class: "form-check-input", id: "RelImpressoCheckbox" %>
+                                    <%= form.label :brel_impresso, "Já impresso", class: "form-check-label", for: "RelImpressoCheckbox" %>
                                 </div>
                             </div>
                             
@@ -650,10 +654,13 @@
                                 window.addEventListener("load", function () {
                                     const primeiroCheckbox = document.getElementById("RascunhoCheckbox");
                                     const segundoCheckbox = document.getElementById("AvaliadoPhCheckbox");
+                                    const impressoCheckbox = document.getElementById("RelImpressoCheckbox")
 
                                     segundoCheckbox.addEventListener("click", function () {
                                     primeiroCheckbox.checked = false;
                                     primeiroCheckbox.disabled = this.checked;
+                                    impressoCheckbox.disabled = !this.checked;
+                                    if (!this.checked) { impressoCheckbox.checked = this.checked; }
                                     });
                                 });
                             </script>

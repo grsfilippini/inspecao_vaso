@@ -7,7 +7,19 @@ class Cadastro < ApplicationRecord
     validates :nome_curto, presence: true
     validates :cnpj, presence: true
     validates :corp_id, presence: true
-    
+    validates_length_of :nome, maximum: 100
+    validates_length_of :nome_curto, maximum: 50
+    validates_length_of :cnpj, maximum: 18
+    validates_length_of :endereco, maximum: 75
+    validates_length_of :cep, maximum: 10
+    validates_length_of :email, maximum: 40    
+    validates_length_of :fone, maximum: 35
+    validates_length_of :contato, maximum: 35
+    validates_length_of :website, maximum: 55
+    validates_length_of :observacoes, maximum: 100
+    validates_length_of :bairro, maximum: 60
+    validates_length_of :regiao, maximum: 15
+        
     belongs_to :corp#, foreign_key: 'corp_id'
     belongs_to :user
     belongs_to :cidade

@@ -295,6 +295,7 @@ end
         params.require(:relatorio).permit(:user_id,
                                           :b_rascunho,
                                           :avaliadoph,
+                                          :brel_impresso,
                                           :tipo_inspecao_id,
                                           :art_id,
                                           :ph_id,
@@ -500,7 +501,6 @@ end
                                           :dt_prox_insp_externa_dispositivo_seguranca,
                                           :dt_prox_insp_interna_dispositivo_seguranca
       
-      #t.boolean "brel_impresso", default: false, null: false      
       #t.boolean "brevisado", default: false, null: false
       #t.boolean "benviada_placa_local_para_confeccao", default: false
   
