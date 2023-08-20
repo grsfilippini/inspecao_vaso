@@ -61,29 +61,52 @@
                                     <%= form.label :bajuste_inclinacao, "Foi ajustada a inclinação", class: "form-check-label orange-label", for: "DrenoAjusteInclinaCheckbox" %>
                                 </div>
                             </div>
-                        <div class="form-group row">
-                          <div class="form-check col-sm-6 mb-0 mb-sm-0 d-inline">
-                            <%= form.check_box :bdreno_foiacionado_paradrenar_liqacumulado, class: "form-check-input", id: "DrenoAcionCheckbox" %>
-                            <%= form.label :bdreno_foiacionado_paradrenar_liqacumulado, "Foi acionado para drenar líquido acumulado", class: "form-check-label orange-label", for: "DrenoAcionCheckbox" %>
-                          </div>
-                        </div>
-                        
-                        <div class="form-group row">
-                          <div class="col-sm-6 mb-3 mb-sm-0">
-                            <%= form.label :dreno_qtdadeliquido_drenado, "Volume drenado", class: "red-label" %>
-                            <%= form.number_field :dreno_qtdadeliquido_drenado, step: 10, min: 0, required: false, style: 'width: 100px;', disabled: !@relatorio.bdreno_foiacionado_paradrenar_liqacumulado?, id:"object_volume_drenado"  %>
-                            [ml]
-                          </div>
-                        </div>
-                                                                  
-                        <script>
-                          const checkbox = document.getElementById("DrenoAcionCheckbox");
-                          const volumeDrenadoInput = document.getElementById("object_volume_drenado");
-                          
-                          checkbox.addEventListener("change", function() {
-                             volumeDrenadoInput.disabled = !this.checked;                            
-                          });
-                        </script>
+
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function() {
+                                    var inclinacaoPositivaCheckbox = document.getElementById("DrenoInclinPosCheckbox");
+                                    var ajusteInclinacaoCheckbox = document.getElementById("DrenoAjusteInclinaCheckbox");
+
+                                    function updateAjusteInclinacaoCheckbox() {
+                                    if (inclinacaoPositivaCheckbox.checked) {
+                                        ajusteInclinacaoCheckbox.checked = false;
+                                        ajusteInclinacaoCheckbox.disabled = true;
+                                    } else {
+                                        ajusteInclinacaoCheckbox.disabled = false;
+                                    }
+                                    }
+
+                                    inclinacaoPositivaCheckbox.addEventListener("change", function() {
+                                    updateAjusteInclinacaoCheckbox();
+                                    });
+
+                                    updateAjusteInclinacaoCheckbox();
+                                });
+                            </script>
+
+                            <div class="form-group row">
+                                <div class="form-check col-sm-6 mb-0 mb-sm-0 d-inline">
+                                    <%= form.check_box :bdreno_foiacionado_paradrenar_liqacumulado, class: "form-check-input", id: "DrenoAcionCheckbox" %>
+                                    <%= form.label :bdreno_foiacionado_paradrenar_liqacumulado, "Foi acionado para drenar líquido acumulado", class: "form-check-label orange-label", for: "DrenoAcionCheckbox" %>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <%= form.label :dreno_qtdadeliquido_drenado, "Volume drenado", class: "red-label" %>
+                                    <%= form.number_field :dreno_qtdadeliquido_drenado, step: 10, min: 0, required: false, style: 'width: 100px;', disabled: !@relatorio.bdreno_foiacionado_paradrenar_liqacumulado?, id:"object_volume_drenado"  %>
+                                    [ml]
+                                </div>
+                            </div>
+                                                                    
+                            <script>
+                                const checkbox = document.getElementById("DrenoAcionCheckbox");
+                                const volumeDrenadoInput = document.getElementById("object_volume_drenado");
+                                
+                                checkbox.addEventListener("change", function() {
+                                    volumeDrenadoInput.disabled = !this.checked;                            
+                                });
+                            </script>
                             
                             <div class="form-group row">                                
                                 <%= form.label :dreno_observacoes, 'Obs.', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>

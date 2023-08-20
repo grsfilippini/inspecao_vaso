@@ -1,0 +1,13 @@
+var txtResultadoExterna = document.getElementById("relatorio_result_insp_externa");
+txtResultadoExterna.value = '';
+
+<% if @relatorio.insp_contratada_vaso_externa %>
+    txtResultadoExterna.value  = 'APÓS A INSPEÇÃO VISUAL CONCLUI-SE QUE:\n'
+    txtResultadoExterna.value += '1. O VASO NÃO APRESENTA DEFORMAÇÕES VISÍVEIS;\n'
+    txtResultadoExterna.value += '2. NÃO APRESENTA OXIDAÇÃO COM PERDA DE MATERIAL SIGNIFICATIVA;\n'
+    txtResultadoExterna.value += '3. NÃO APRESENTA TRINCAS VISÍVEIS;\n'
+    txtResultadoExterna.value += '4. NÃO APRESENTA VAZAMENTOS;\n'
+    txtResultadoExterna.value += 'NÃO FOI LOCALIZADO NENHUMA ANOMALIA QUE PUDESSE CARACTERIZAR A PERDA DE RESISTÊNCIA DO VASO, PORTANTO O MESMO É APROVADO NO EXAME EXTERNO.'
+<% else %>
+    txtResultadoExterna.value = 'INSPEÇÃO EXTERNA NÃO REALIZADA.'
+<% end %>

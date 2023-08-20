@@ -131,11 +131,12 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
   
   def avaliarph
     get_relacoes
+    @ultimo_rel = Relatorio.where(vaso_id: @relatorio.vaso_id).order(id: :desc).first
   end
 
   def update              
     if params_relatorio.present?      
-      if @relatorio.update(params_relatorio)        
+      if @relatorio.update(params_relatorio)                
         # Verificar se um novo arquivo de imagem foi enviado
         if params[:relatorio][:foto_antes_inspecao].present?
           # Atualizar o campo de imagem diretamente com o novo arquivo
@@ -240,6 +241,42 @@ end
   end
 
   def preenche_recomendacoes
+    # Realize as operações necessárias para obter os dados    
+    @relatorio = Relatorio.find(params[:relatorio_id])
+
+    respond_to do |format|
+      format.js # Isso renderizará um arquivo JavaScript correspondente ao seu_metodo.js.erb
+    end
+  end
+
+  def preenche_rgi
+    # Realize as operações necessárias para obter os dados    
+    @relatorio = Relatorio.find(params[:relatorio_id])
+
+    respond_to do |format|
+      format.js # Isso renderizará um arquivo JavaScript correspondente ao seu_metodo.js.erb
+    end
+  end
+
+  def preenche_insp_externa
+    # Realize as operações necessárias para obter os dados    
+    @relatorio = Relatorio.find(params[:relatorio_id])
+
+    respond_to do |format|
+      format.js # Isso renderizará um arquivo JavaScript correspondente ao seu_metodo.js.erb
+    end
+  end
+
+  def preenche_insp_interna
+    # Realize as operações necessárias para obter os dados    
+    @relatorio = Relatorio.find(params[:relatorio_id])
+
+    respond_to do |format|
+      format.js # Isso renderizará um arquivo JavaScript correspondente ao seu_metodo.js.erb
+    end
+  end
+
+  def preenche_parecer_conclusivo
     # Realize as operações necessárias para obter os dados    
     @relatorio = Relatorio.find(params[:relatorio_id])
 
@@ -362,6 +399,7 @@ end
                                           
                                           # Inspeção do dispositivo de segurança
                                           :possui_dispositivo_deseguranca,
+                                          :bBloqueioInadvertidoIntencionalDoDispSeg,
                                           :possui_dispositivo_contra_bloqueio_dodisp_seg,
                                           :bdispseg_tem_sinais_manutencao,
                                           :bdispseg_foisubstituido,
@@ -440,18 +478,27 @@ end
                                           :intervencoes_feitas_pelo_ph,
 
                                           # recomendações
-                                          :recomendacoes_ao_usuario
-                                          
-      #t.text "relacao_rgi", default: "NENHUM RGI ENCONTRADO"
-      #t.integer "prazo_recomendacoes", default: 60, null: false
-      #t.text "result_insp_externa"
-      #t.text "result_insp_interna"
-      #t.date "dt_prox_insp_externa", default: -> { "(CURRENT_DATE + 365)" }, null: false
-      #t.date "dt_prox_insp_interna", default: -> { "(CURRENT_DATE + 3650)" }, null: false
-      #t.date "dt_prox_teste_hidrostatico", default: -> { "(CURRENT_DATE + 5475)" }, null: false
-      #t.date "dt_prox_insp_externa_dispositivo_seguranca", default: -> { "(CURRENT_DATE + 365)" }, null: false
-      #t.date "dt_prox_insp_interna_dispositivo_seguranca", default: -> { "(CURRENT_DATE + 3650)" }, null: false
-      #t.text "parecer_quanto_integridade_vaso"
+                                          :recomendacoes_ao_usuario,
+                                          :prazo_recomendacoes,
+
+                                          # rgi
+                                          :relacao_rgi,
+
+                                          # resultado da inspeção externa
+                                          :result_insp_externa,
+
+                                          # resultado da inspeção interna
+                                          :result_insp_interna,
+
+                                          # parecer conclusivo sobre a integridade estrutural do vaso
+                                          :parecer_quanto_integridade_vaso,
+
+                                          # programação das inspeções
+                                          :dt_prox_insp_externa,
+                                          :dt_prox_insp_interna,
+                                          :dt_prox_teste_hidrostatico,
+                                          :dt_prox_insp_externa_dispositivo_seguranca,
+                                          :dt_prox_insp_interna_dispositivo_seguranca
       
       #t.boolean "brel_impresso", default: false, null: false      
       #t.boolean "brevisado", default: false, null: false
@@ -460,7 +507,6 @@ end
       #t.string "nova_venda_obs", limit: 120
       #t.boolean "nova_venda_aguarda_resposta", default: false, null: false
       #t.boolean "nova_venda_fora_lista", default: false, null: false      
-      
                                     )
       else        
       end

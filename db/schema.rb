@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_07_222752) do
+ActiveRecord::Schema.define(version: 2023_08_20_190548) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_repack"
@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(version: 2023_08_07_222752) do
     t.string "endereco", limit: 75
     t.string "cep", limit: 10
     t.string "email", limit: 40
-    t.string "fone", limit: 15
+    t.string "fone", limit: 35
     t.string "contato", limit: 35
     t.string "website", limit: 55
     t.string "observacoes", limit: 100
@@ -439,6 +439,7 @@ ActiveRecord::Schema.define(version: 2023_08_07_222752) do
     t.integer "ambiente_inst_id", default: 2
     t.integer "tipo_dreno_id", default: 0
     t.boolean "avaliadoph"
+    t.boolean "bBloqueioInadvertidoIntencionalDoDispSeg", default: false
     t.index ["ambiente_inst_id"], name: "index_relatorios_on_ambiente_inst_id"
     t.index ["art_id"], name: "index_relatorios_on_art_id"
     t.index ["cidade_id"], name: "index_relatorios_on_cidade_id"

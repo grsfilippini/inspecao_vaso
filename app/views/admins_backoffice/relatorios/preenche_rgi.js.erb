@@ -1,0 +1,43 @@
+var txtRGI = document.getElementById("relatorio_relacao_rgi");
+txtRGI.value = '';
+
+// Dispositivo de segurança
+//
+<% if @relatorio.possui_dispositivo_deseguranca == 0 %>
+    <% if @relatorio.bdispseg_foisubstituido %>
+        txtRGI.value += '# O vaso não possuia dispositivo de segurança instalado diretamente no corpo do vaso ou no sistema que o contenha. Porém foi feita a instalação do mesmo durante a inspeção;\n'    
+    <% else %>
+        txtRGI.value += '# O vaso não possui dispositivo de segurança instalado diretamente no corpo do vaso ou no sistema que o contenha. O VASO NÃO SERÁ LIBERADO PARA USO;\n'            
+    <% end %>
+<% end %>
+
+<% if @relatorio.bBloqueioInadvertidoIntencionalDoDispSeg %>
+    txtRGI.value += '# O dispositivo de segurança foi bloqueado de forma inadvertida ou intencional. O VASO NÃO SERÁ LIBERADO PARA USO;\n'
+<% end %>
+
+<% if @relatorio.possui_dispositivo_contra_bloqueio_dodisp_seg == 0 %>
+    txtRGI.value += '# Dispositivo de segurança não instalado diretamente sobre o vaso e sem dispositivo anti-bloqueio. O VASO NÃO SERÁ LIBERADO PARA USO;\n'
+<% end %>
+
+// Partes móveis
+//
+<% if !@relatorio.baspartes_moveis_estao_protegidas %>
+    txtRGI.value += '# Providenciar proteção para partes móveis, ou seja, proteção para correias, rodas dentadas entre outras. O VASO NÃO SERÁ LIBERADO PARA USO;\n'
+<% end %>
+
+// Verificações iniciais
+//
+<% if @relatorio.bvaso_emoperacao_mesmocom_deterioracao_atestada %>
+    txtRGI.value += '# O vaso encontra-se em operação mesmo com deterioração estrutural atestada por PH. O VASO NÃO SERÁ LIBERADO PARA USO;\n'
+<% end %>
+
+// Vaso e outros
+//
+<% if @relatorio.bexiste_deformacoes_trincas_vazamentos_vaso %>
+    txtRGI.value += '# O vaso contém danos (deformações, trincas, vazamentos, ...) que comprometem a integridade estrutural. O VASO NÃO SERÁ LIBERADO PARA USO;\n'
+<% end %>
+
+// Para nenhum RGI.
+//
+if (txtRGI.value === '') { txtRGI.value = "NENHUM RGI." }    
+  

@@ -91,7 +91,29 @@
                                         <%= form.check_box :b_laudoth_eh_2avia, class: "form-check-input", id: "LaudoTH2aViaCheckbox", disabled: @relatorio.bpossui_laudo_teste_hidrostatico ? true : false %>
                                         <%= form.label :b_laudoth_eh_2avia, "2a via", class: "form-check-label", for: "LaudoTH2aViaCheckbox" %>                                        
                                     </div>
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function() {
+                                            var laudoTHCheckbox = document.getElementById("LaudoTHCheckbox");
+                                            var laudoTH2aViaCheckbox = document.getElementById("LaudoTH2aViaCheckbox");
+
+                                            function updateLaudoTH2aViaCheckbox() {
+                                            if (!laudoTHCheckbox.checked) {
+                                                laudoTH2aViaCheckbox.checked = false;
+                                                laudoTH2aViaCheckbox.disabled = true;
+                                            } else {
+                                                laudoTH2aViaCheckbox.disabled = false;
+                                            }
+                                            }
+
+                                            laudoTHCheckbox.addEventListener("change", function() {
+                                            updateLaudoTH2aViaCheckbox();
+                                            });
+
+                                            updateLaudoTH2aViaCheckbox();
+                                        });
+                                    </script>
                                 </div> 
+
                                 <div class="form-group row">
                                     <div class="form-check col-sm-3 mb-0 mb-sm-0">
                                         <%= form.check_box :belaborado_programacao_insp, class: "form-check-input", id: "ProgInspCheckbox", disabled: @relatorio.bpossui_programacao_inspecoes ? true : false %>
@@ -146,6 +168,460 @@
                                     <div class="col-sm-10 mb-3 mb-sm-0">
                                         <%= form.text_area :recomendacoes_ao_usuario, class: "form-control", style: "height: 300px;" %>
                                     </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <%= form.label :prazo_recomendacoes, "Prazo para implementar as recomendações", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-2 mb-3 mb-sm-0">                                                                         
+                                        <%= form.number_field :prazo_recomendacoes, step: 1, min: 0, class: "form-control" %>                                        
+                                    </div>
+                                </div>                                
+
+                            </fieldset>
+
+                            <fieldset class="Vaso_rgi">
+                            <legend>Itens de Risco Grave e Iminente (RGI)</legend>
+                                
+                                <%= link_to 'Preencher RGI', admins_backoffice_preenche_rgi_path(relatorio_id: @relatorio.id.to_s), data: { remote: true } %>
+
+                                <div class="form-group row">
+                                    <%= form.label :relacao_rgi, "Relação de itens com RISCO GRAVE E IMINENTE", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-10 mb-3 mb-sm-0">
+                                        <%= form.text_area :relacao_rgi, class: "form-control", style: "height: 100px;" %>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <fieldset class="Vaso_insp_externa">
+                            <legend>Resultado da inspeção externa</legend>
+                                
+                                <%= link_to 'Preencher resultado padrão', admins_backoffice_preenche_insp_externa_path(relatorio_id: @relatorio.id.to_s), data: { remote: true } %>
+
+                                <div class="form-group row">
+                                    <%= form.label :result_insp_externa, "Análise", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-10 mb-3 mb-sm-0">
+                                        <%= form.text_area :result_insp_externa, class: "form-control", style: "height: 180px;" %>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <fieldset class="Vaso_insp_interna">
+                            <legend>Resultado da inspeção interna</legend>
+                                
+                                <%= link_to 'Preencher resultado padrão', admins_backoffice_preenche_insp_interna_path(relatorio_id: @relatorio.id.to_s), data: { remote: true } %>
+
+                                <div class="form-group row">
+                                    <%= form.label :result_insp_interna, "Análise", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-10 mb-3 mb-sm-0">
+                                        <%= form.text_area :result_insp_interna, class: "form-control", style: "height: 180px;" %>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <fieldset class="Vaso_parecer_conclusivo">
+                            <legend>Parecer conclusivo</legend>
+                                
+                                <%= link_to 'Preencher resultado padrão', admins_backoffice_preenche_parecer_conclusivo_path(relatorio_id: @relatorio.id.to_s), data: { remote: true } %>
+
+                                <div class="form-group row">
+                                    <%= form.label :parecer_quanto_integridade_vaso, "Análise", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-10 mb-3 mb-sm-0">
+                                        <%= form.text_area :parecer_quanto_integridade_vaso, class: "form-control", style: "height: 180px;" %>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <fieldset class="Vaso_programacao_inspecoes">
+                            <legend>Programação das inspeções</legend>
+                                
+                                <div class="form-group row">
+                                    <div class="col-sm-3 mb-3 mb-sm-0">
+                                        <h6><span class="badge badge-secondary">Programação vaso</span></h6>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <%= form.label :dt_prox_insp_externa, "Inspeção externa", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-3 mb-3 mb-sm-0">
+                                        <%= form.date_field :dt_prox_insp_externa, class: "form-control" %>
+                                    </div>
+                                    <div class="col-sm-1 mb-1 mb-sm-0">                                        
+                                        <button type="button" id="atribuir-1ano">1</button>
+                                    </div>
+                                    <!-- Adicione este script na parte inferior do seu HTML -->
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function() {
+                                            // Obtenha referências aos elementos
+                                            var atribuirBotao = document.getElementById("atribuir-1ano");
+                                            var dataRelatorioInput = document.getElementById("relatorio_data_relatorio");
+                                            var dtProxInput = document.getElementById("relatorio_dt_prox_insp_externa");
+
+                                            // Adicione um evento de clique ao botão
+                                            atribuirBotao.addEventListener("click", function() {
+                                                // Obtenha a data do campo "data_relatorio"
+                                                var dataRelatorioValue = dataRelatorioInput.value;
+
+                                                // Verifique se a data é válida
+                                                if (dataRelatorioValue) {
+                                                    var dataRelatorio = new Date(dataRelatorioValue);
+
+                                                    // Adicione 1 ano à data
+                                                    dataRelatorio.setFullYear(dataRelatorio.getFullYear() + 1);
+
+                                                    // Formate a nova data no formato "YYYY-MM-DD"
+                                                    var novaDataFormatada = dataRelatorio.toISOString().split('T')[0];
+
+                                                    // Coloque a nova data no campo "dt_prox_insp_externa"
+                                                    dtProxInput.value = novaDataFormatada;
+                                                }
+                                            });
+                                        });
+                                    </script>
+
+                                    <div class="col-sm-1 mb-1 mb-sm-0">                                        
+                                        <button type="button" id="atribuir-2ano">2</button>
+                                    </div>
+                                    <!-- Adicione este script na parte inferior do seu HTML -->
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function() {
+                                            // Obtenha referências aos elementos
+                                            var atribuirBotao = document.getElementById("atribuir-2ano");
+                                            var dataRelatorioInput = document.getElementById("relatorio_data_relatorio");
+                                            var dtProxInput = document.getElementById("relatorio_dt_prox_insp_externa");
+
+                                            // Adicione um evento de clique ao botão
+                                            atribuirBotao.addEventListener("click", function() {
+                                                // Obtenha a data do campo "data_relatorio"
+                                                var dataRelatorioValue = dataRelatorioInput.value;
+
+                                                // Verifique se a data é válida
+                                                if (dataRelatorioValue) {
+                                                    var dataRelatorio = new Date(dataRelatorioValue);
+
+                                                    // Adicione 1 ano à data
+                                                    dataRelatorio.setFullYear(dataRelatorio.getFullYear() + 2);
+
+                                                    // Formate a nova data no formato "YYYY-MM-DD"
+                                                    var novaDataFormatada = dataRelatorio.toISOString().split('T')[0];
+
+                                                    // Coloque a nova data no campo "dt_prox_insp_externa"
+                                                    dtProxInput.value = novaDataFormatada;
+                                                }
+                                            });
+                                        });
+                                    </script>
+                                    <div class="col-sm-1 mb-1 mb-sm-0">                                        
+                                        <button type="button" id="atribuir-3ano">3</button>
+                                    </div>
+                                    <!-- Adicione este script na parte inferior do seu HTML -->
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function() {
+                                            // Obtenha referências aos elementos
+                                            var atribuirBotao = document.getElementById("atribuir-3ano");
+                                            var dataRelatorioInput = document.getElementById("relatorio_data_relatorio");
+                                            var dtProxInput = document.getElementById("relatorio_dt_prox_insp_externa");
+
+                                            // Adicione um evento de clique ao botão
+                                            atribuirBotao.addEventListener("click", function() {
+                                                // Obtenha a data do campo "data_relatorio"
+                                                var dataRelatorioValue = dataRelatorioInput.value;
+
+                                                // Verifique se a data é válida
+                                                if (dataRelatorioValue) {
+                                                    var dataRelatorio = new Date(dataRelatorioValue);
+
+                                                    // Adicione 1 ano à data
+                                                    dataRelatorio.setFullYear(dataRelatorio.getFullYear() + 3);
+
+                                                    // Formate a nova data no formato "YYYY-MM-DD"
+                                                    var novaDataFormatada = dataRelatorio.toISOString().split('T')[0];
+
+                                                    // Coloque a nova data no campo "dt_prox_insp_externa"
+                                                    dtProxInput.value = novaDataFormatada;
+                                                }
+                                            });
+                                        });
+                                    </script>
+                                    <div class="col-sm-1 mb-1 mb-sm-0">                                        
+                                        <button type="button" id="atribuir-4ano">4</button>
+                                    </div>
+                                    <!-- Adicione este script na parte inferior do seu HTML -->
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function() {
+                                            // Obtenha referências aos elementos
+                                            var atribuirBotao = document.getElementById("atribuir-4ano");
+                                            var dataRelatorioInput = document.getElementById("relatorio_data_relatorio");
+                                            var dtProxInput = document.getElementById("relatorio_dt_prox_insp_externa");
+
+                                            // Adicione um evento de clique ao botão
+                                            atribuirBotao.addEventListener("click", function() {
+                                                // Obtenha a data do campo "data_relatorio"
+                                                var dataRelatorioValue = dataRelatorioInput.value;
+
+                                                // Verifique se a data é válida
+                                                if (dataRelatorioValue) {
+                                                    var dataRelatorio = new Date(dataRelatorioValue);
+
+                                                    // Adicione 1 ano à data
+                                                    dataRelatorio.setFullYear(dataRelatorio.getFullYear() + 4);
+
+                                                    // Formate a nova data no formato "YYYY-MM-DD"
+                                                    var novaDataFormatada = dataRelatorio.toISOString().split('T')[0];
+
+                                                    // Coloque a nova data no campo "dt_prox_insp_externa"
+                                                    dtProxInput.value = novaDataFormatada;
+                                                }
+                                            });
+                                        });
+                                    </script>
+                                    <div class="col-sm-1 mb-1 mb-sm-0">                                        
+                                        <button type="button" id="atribuir-5ano">5</button>
+                                    </div>
+                                    <!-- Adicione este script na parte inferior do seu HTML -->
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function() {
+                                            // Obtenha referências aos elementos
+                                            var atribuirBotao = document.getElementById("atribuir-5ano");
+                                            var dataRelatorioInput = document.getElementById("relatorio_data_relatorio");
+                                            var dtProxInput = document.getElementById("relatorio_dt_prox_insp_externa");
+
+                                            // Adicione um evento de clique ao botão
+                                            atribuirBotao.addEventListener("click", function() {
+                                                // Obtenha a data do campo "data_relatorio"
+                                                var dataRelatorioValue = dataRelatorioInput.value;
+
+                                                // Verifique se a data é válida
+                                                if (dataRelatorioValue) {
+                                                    var dataRelatorio = new Date(dataRelatorioValue);
+
+                                                    // Adicione 1 ano à data
+                                                    dataRelatorio.setFullYear(dataRelatorio.getFullYear() + 5);
+
+                                                    // Formate a nova data no formato "YYYY-MM-DD"
+                                                    var novaDataFormatada = dataRelatorio.toISOString().split('T')[0];
+
+                                                    // Coloque a nova data no campo "dt_prox_insp_externa"
+                                                    dtProxInput.value = novaDataFormatada;
+                                                }
+                                            });
+                                        });
+                                    </script>
+                                </div>
+                                <div class="form-group row">
+                                    <%= form.label :dt_prox_insp_interna, "Inspeção interna", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-3 mb-3 mb-sm-0">
+                                        <%= form.date_field :dt_prox_insp_interna, class: "form-control" %>
+                                    </div>
+                                    <div class="col-sm-1 mb-1 mb-sm-0">                                        
+                                        <button type="button" id="atribuir_int-10ano">10</button>
+                                    </div>
+                                    <!-- Adicione este script na parte inferior do seu HTML -->
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function() {
+                                            // Obtenha referências aos elementos
+                                            var atribuirBotao = document.getElementById("atribuir_int-10ano");
+                                            var dataRelatorioInput = document.getElementById("relatorio_data_relatorio");
+                                            var dtProxInput = document.getElementById("relatorio_dt_prox_insp_interna");
+
+                                            // Adicione um evento de clique ao botão
+                                            atribuirBotao.addEventListener("click", function() {
+                                                // Obtenha a data do campo "data_relatorio"
+                                                var dataRelatorioValue = dataRelatorioInput.value;
+
+                                                // Verifique se a data é válida
+                                                if (dataRelatorioValue) {
+                                                    var dataRelatorio = new Date(dataRelatorioValue);
+
+                                                    // Adicione 1 ano à data
+                                                    dataRelatorio.setFullYear(dataRelatorio.getFullYear() + 10);
+
+                                                    // Formate a nova data no formato "YYYY-MM-DD"
+                                                    var novaDataFormatada = dataRelatorio.toISOString().split('T')[0];
+
+                                                    // Coloque a nova data no campo "dt_prox_insp_externa"
+                                                    dtProxInput.value = novaDataFormatada;
+                                                }
+                                            });
+                                        });
+                                    </script>
+                                    <div class="col-sm-1 mb-1 mb-sm-0">                                        
+                                        <button type="button" id="atribuir_int_rel_anterior">&#x2190;</button>
+                                    </div>
+                                    <%= form.label @ultimo_rel.dt_prox_insp_interna, @ultimo_rel.dt_prox_insp_interna.strftime('%d/%m/%Y'), {class: "col-sm-2 col-form-label text-sm-left text-lg-right", id: "prox_insp_interna_ultimo_relatorio"} %>
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            const button = document.getElementById('atribuir_int_rel_anterior');
+                                            const dataLabel = document.getElementById('prox_insp_interna_ultimo_relatorio');
+                                            const dataField = document.getElementById('relatorio_dt_prox_insp_interna');
+
+                                            button.addEventListener('click', function() {
+                                            const labelText = dataLabel.textContent;
+                                            const dateArray = labelText.split('/');
+                                            const formattedDate = `${dateArray[2]}-${dateArray[1]}-${dateArray[0]}`;
+                                            
+                                            dataField.value = formattedDate;
+                                            });
+                                        });
+                                    </script>
+                                </div>
+                                <div class="form-group row">
+                                    <%= form.label :dt_prox_teste_hidrostatico, "Teste hidrostático", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-3 mb-3 mb-sm-0">
+                                        <%= form.date_field :dt_prox_teste_hidrostatico, class: "form-control" %>
+                                    </div>
+                                    <div class="col-sm-1 mb-1 mb-sm-0">                                        
+                                        <button type="button" id="atribuir_th-15ano">15</button>
+                                    </div>
+                                    <!-- Adicione este script na parte inferior do seu HTML -->
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function() {
+                                            // Obtenha referências aos elementos
+                                            var atribuirBotao = document.getElementById("atribuir_th-15ano");
+                                            var dataRelatorioInput = document.getElementById("relatorio_data_relatorio");
+                                            var dtProxInput = document.getElementById("relatorio_dt_prox_teste_hidrostatico");
+
+                                            // Adicione um evento de clique ao botão
+                                            atribuirBotao.addEventListener("click", function() {
+                                                // Obtenha a data do campo "data_relatorio"
+                                                var dataRelatorioValue = dataRelatorioInput.value;
+
+                                                // Verifique se a data é válida
+                                                if (dataRelatorioValue) {
+                                                    var dataRelatorio = new Date(dataRelatorioValue);
+
+                                                    // Adicione 1 ano à data
+                                                    dataRelatorio.setFullYear(dataRelatorio.getFullYear() + 15);
+
+                                                    // Formate a nova data no formato "YYYY-MM-DD"
+                                                    var novaDataFormatada = dataRelatorio.toISOString().split('T')[0];
+
+                                                    // Coloque a nova data no campo "dt_prox_insp_externa"
+                                                    dtProxInput.value = novaDataFormatada;
+                                                }
+                                            });
+                                        });
+                                    </script>
+                                    <div class="col-sm-1 mb-1 mb-sm-0">                                        
+                                        <button type="button" id="atribuir_th_rel_anterior">&#x2190;</button>
+                                    </div>
+                                    <%= form.label @ultimo_rel.dt_prox_teste_hidrostatico, @ultimo_rel.dt_prox_teste_hidrostatico.strftime('%d/%m/%Y'), {class: "col-sm-2 col-form-label text-sm-left text-lg-right", id: "prox_th_ultimo_relatorio"} %>
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            const button = document.getElementById('atribuir_th_rel_anterior');
+                                            const dataLabel = document.getElementById('prox_th_ultimo_relatorio');
+                                            const dataField = document.getElementById('relatorio_dt_prox_teste_hidrostatico');
+
+                                            button.addEventListener('click', function() {
+                                            const labelText = dataLabel.textContent;
+                                            const dateArray = labelText.split('/');
+                                            const formattedDate = `${dateArray[2]}-${dateArray[1]}-${dateArray[0]}`;
+                                            
+                                            dataField.value = formattedDate;
+                                            });
+                                        });
+                                    </script>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-sm-3 mb-3 mb-sm-0">
+                                        <h6><span class="badge badge-secondary">Programação dispositivo de segurança</span></h6>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <%= form.label :dt_prox_insp_externa_dispositivo_seguranca, "Inspeção externa", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-3 mb-3 mb-sm-0">
+                                        <%= form.date_field :dt_prox_insp_externa_dispositivo_seguranca, class: "form-control" %>
+                                    </div>
+                                    <div class="col-sm-1 mb-1 mb-sm-0">                                        
+                                        <button type="button" id="atribuir_ext_dispseg-1ano">1</button>
+                                    </div>
+                                    <!-- Adicione este script na parte inferior do seu HTML -->
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function() {
+                                            // Obtenha referências aos elementos
+                                            var atribuirBotao = document.getElementById("atribuir_ext_dispseg-1ano");
+                                            var dataRelatorioInput = document.getElementById("relatorio_data_relatorio");
+                                            var dtProxInput = document.getElementById("relatorio_dt_prox_insp_externa_dispositivo_seguranca");
+
+                                            // Adicione um evento de clique ao botão
+                                            atribuirBotao.addEventListener("click", function() {
+                                                // Obtenha a data do campo "data_relatorio"
+                                                var dataRelatorioValue = dataRelatorioInput.value;
+
+                                                // Verifique se a data é válida
+                                                if (dataRelatorioValue) {
+                                                    var dataRelatorio = new Date(dataRelatorioValue);
+
+                                                    // Adicione 1 ano à data
+                                                    dataRelatorio.setFullYear(dataRelatorio.getFullYear() + 1);
+
+                                                    // Formate a nova data no formato "YYYY-MM-DD"
+                                                    var novaDataFormatada = dataRelatorio.toISOString().split('T')[0];
+
+                                                    // Coloque a nova data no campo "dt_prox_insp_externa"
+                                                    dtProxInput.value = novaDataFormatada;
+                                                }
+                                            });
+                                        });
+                                    </script>
+                                </div>
+                                <div class="form-group row">
+                                    <%= form.label :dt_prox_insp_interna_dispositivo_seguranca, "Inspeção interna", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-3 mb-3 mb-sm-0">
+                                        <%= form.date_field :dt_prox_insp_interna_dispositivo_seguranca, class: "form-control" %>
+                                    </div>
+                                    <div class="col-sm-1 mb-1 mb-sm-0">                                        
+                                        <button type="button" id="atribuir_int_dispseg-10ano">10</button>
+                                    </div>
+                                    <!-- Adicione este script na parte inferior do seu HTML -->
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function() {
+                                            // Obtenha referências aos elementos
+                                            var atribuirBotao = document.getElementById("atribuir_int_dispseg-10ano");
+                                            var dataRelatorioInput = document.getElementById("relatorio_data_relatorio");
+                                            var dtProxInput = document.getElementById("relatorio_dt_prox_insp_interna_dispositivo_seguranca");
+
+                                            // Adicione um evento de clique ao botão
+                                            atribuirBotao.addEventListener("click", function() {
+                                                // Obtenha a data do campo "data_relatorio"
+                                                var dataRelatorioValue = dataRelatorioInput.value;
+
+                                                // Verifique se a data é válida
+                                                if (dataRelatorioValue) {
+                                                    var dataRelatorio = new Date(dataRelatorioValue);
+
+                                                    // Adicione 1 ano à data
+                                                    dataRelatorio.setFullYear(dataRelatorio.getFullYear() + 10);
+
+                                                    // Formate a nova data no formato "YYYY-MM-DD"
+                                                    var novaDataFormatada = dataRelatorio.toISOString().split('T')[0];
+
+                                                    // Coloque a nova data no campo "dt_prox_insp_externa"
+                                                    dtProxInput.value = novaDataFormatada;
+                                                }
+                                            });
+                                        });
+                                    </script>
+                                    <div class="col-sm-1 mb-1 mb-sm-0">                                        
+                                        <button type="button" id="atribuir_insp_int_dispseg_rel_anterior">&#x2190;</button>
+                                    </div>
+                                    <%= form.label @ultimo_rel.dt_prox_insp_interna_dispositivo_seguranca, @ultimo_rel.dt_prox_insp_interna_dispositivo_seguranca.strftime('%d/%m/%Y'), {class: "col-sm-2 col-form-label text-sm-left text-lg-right", id: "prox_insp_int_dispseg_ultimo_relatorio"} %>
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            const button = document.getElementById('atribuir_insp_int_dispseg_rel_anterior');
+                                            const dataLabel = document.getElementById('prox_insp_int_dispseg_ultimo_relatorio');
+                                            const dataField = document.getElementById('relatorio_dt_prox_insp_interna_dispositivo_seguranca');
+
+                                            button.addEventListener('click', function() {
+                                            const labelText = dataLabel.textContent;
+                                            const dateArray = labelText.split('/');
+                                            const formattedDate = `${dateArray[2]}-${dateArray[1]}-${dateArray[0]}`;
+                                            
+                                            dataField.value = formattedDate;
+                                            });
+                                        });
+                                    </script>
                                 </div>
 
                             </fieldset>

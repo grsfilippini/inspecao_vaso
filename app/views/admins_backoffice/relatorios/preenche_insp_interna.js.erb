@@ -1,0 +1,12 @@
+var txtResultadoInterna = document.getElementById("relatorio_result_insp_interna");
+txtResultadoInterna.value = '';
+
+<% if @relatorio.insp_contratada_vaso_interna %>
+    txtResultadoInterna.value  = 'APÓS A INSPEÇÃO VISUAL COM AUXÍLIO DE BOROSCÓPIO, CONCLUI-SE QUE:\n'
+    txtResultadoInterna.value += '1. O VASO APRESENTA OXIDAÇÃO ***LEVE/MODERADA*** NAS PAREDES INTERNAS;\n'
+    txtResultadoInterna.value += '2. OS CORDÕES DE SOLDA ESTÃO VISÍVEIS E ÍNTEGROS;\n'
+    txtResultadoInterna.value += '3. NÃO EXISTEM INDÍCIOS DE PRESENÇA DE TRINCAS;\n'
+    txtResultadoInterna.value += 'NÃO FOI LOCALIZADO NENHUMA ANOMALIA QUE PUDESSE CARACTERIZAR A PERDA DE RESISTÊNCIA DO VASO, PORTANTO O MESMO É APROVADO NO EXAME INTERNO.'
+<% else %>
+    txtResultadoInterna.value = 'INSPEÇÃO INTERNA NÃO REALIZADA.'
+<% end %>
