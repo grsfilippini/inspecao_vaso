@@ -700,7 +700,7 @@ end
       #@materials          = Material.order(:descricao)
       @users              = User.order(:nome).order(:sobrenome)
       @tipo_inspecaos     = TipoInspecao.order(:nome)
-      @arts               = Art.includes(:cadastro).order(id: :desc).limit(20)
+      @arts               = Art.includes(:cadastro).order(id: :desc)
       @phs                = Ph.order(:nome)
       @cidades            = Cidade.order(:nome)
       @vasos              = Vaso.includes(:fabricante).order(:num_serie)
