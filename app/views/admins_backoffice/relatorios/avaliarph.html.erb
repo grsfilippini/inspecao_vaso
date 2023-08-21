@@ -126,7 +126,7 @@
                                     </div>
 
                                     <div class="form-check col-sm-3 mb-0 mb-sm-0">
-                                        <%= form.check_box :belaborado_mapa_espessura, class: "form-check-input", id: "MapaEspessuraCheckbox", disabled: @relatorio.bpossui_mapa_medicao_espessura ? true : false %>
+                                        <%= form.check_box :belaborado_mapa_espessura, class: "form-check-input", id: "MapaEspessuraCheckbox", disabled: @relatorio.insp_contratada_vaso_mapa_espessura ? false : true %>
                                         <%= form.label :belaborado_mapa_espessura, "Mapa de medida de espessura", class: "form-check-label", for: "MapaEspessuraCheckbox" %>                                        
                                     </div>
                                 </div>
@@ -637,8 +637,12 @@
                                     <% end %>
                                     <%= form.label :b_rascunho, "Em aberto", class: "form-check-label", for: "RascunhoCheckbox" %>
                                 </div>                                
-                                <div class="form-check col-sm-4 mb-0 mb-sm-0">
-                                    <%= form.check_box :brel_impresso, class: "form-check-input", id: "RelImpressoCheckbox" %>
+                                <div class="form-check col-sm-4 mb-0 mb-sm-0">                                    
+                                    <% if !@relatorio.avaliadoph %>                                        
+                                        <%= form.check_box :brel_impresso, class: "form-check-input", id: "RelImpressoCheckbox", disabled: true  %>
+                                    <% else %>
+                                        <%= form.check_box :brel_impresso, class: "form-check-input", id: "RelImpressoCheckbox" %>
+                                    <% end %>
                                     <%= form.label :brel_impresso, "Já impresso", class: "form-check-label", for: "RelImpressoCheckbox" %>
                                 </div>
                             </div>

@@ -31,6 +31,7 @@ class Relatorio < ApplicationRecord
   # Callback method, RoR
   after_create :seta_estatistica
   after_destroy :dec_estatistica
+  after_create :seta_relatorio_ini_vaso
   
   # **************************************************
   # Método de classe, pode ser chamado sem instanciar    
@@ -105,5 +106,13 @@ class Relatorio < ApplicationRecord
    
   def dec_estatistica
     AdminEstatistica.dec_evento(AdminEstatistica::EVENTOS[:total_relatorios])
+  end
+
+  def seta_relatorio_ini_vaso
+    @vaso = Vaso.find(vaso_id)
+    if @vaso.relatorio_ini_id == -1
+      @vaso.relatorio_ini_id = id
+      @vaso.save
+    end
   end
 end
