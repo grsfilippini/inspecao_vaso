@@ -130,8 +130,14 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
   end
   
   def avaliarph
-    get_relacoes
-    @ultimo_rel = Relatorio.where(vaso_id: @relatorio.vaso_id).order(id: :desc).first
+    get_relacoes    
+    @ultimo_rel = Relatorio.where(vaso_id: @relatorio.vaso_id).order(id: :desc).offset(1).first
+    if @ultimo_rel.nil? 
+      @ultimo_rel = Relatorio.new
+      @ultimo_rel.dt_prox_insp_interna = Date.today
+      @ultimo_rel.dt_prox_teste_hidrostatico = Date.today
+      @ultimo_rel.dt_prox_insp_interna_dispositivo_seguranca = Date.today      
+    end
   end
 
   def update              
