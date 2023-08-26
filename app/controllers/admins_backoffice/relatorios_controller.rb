@@ -43,9 +43,17 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
     @em_aberto = FALSE
   end
   
-  def new
-    @relatorio = Relatorio.new     
+  def new    
+    @relatorio = Relatorio.new
+    # Verifica se o parâmetro sel_relatorio_id está presente e não é nil
+    if params[:sel_relatorio_id].present? && params[:sel_relatorio_id] != nil      
+      # Faça suas atribuições aqui usando o valor de sel_relatorio_id
+      relatorio_base = Relatorio.find(params[:sel_relatorio_id])
+      attributes_to_assign = relatorio_base.attributes.except("id", "data_relatorio", "b_rascunho", "avaliadoph", "brel_impresso")  # Excluindo o campo "id"
+      @relatorio.assign_attributes(attributes_to_assign)
+    end
   end
+  
 
   def edit # Ação de edição        
   end
@@ -61,7 +69,7 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
   def create      
     @relatorio = Relatorio.new(params_relatorio)    
     if @relatorio.save   
-      if params[:btn_criar]
+      if params[:btn_gravar]
         redirect_to admins_backoffice_relatorio_em_aberto_path, notice: "Relatório criado com sucesso!"
       else
         redirect_to admins_backoffice_inspecao_doc_existente_path(id: @relatorio.id), notice: "Relatório criado com sucesso! Iniciando a inspeção."
@@ -196,7 +204,7 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
 # Redireciona para a guia conforme o button que estiver presente em params
 def redireciona_para_guia
   # Direciona para próxima tela ou tela anterior conforme botão pressionado
-  if params[:btn_gravar_sair] || params[:btn_gravar_avaliacaoph]
+  if params[:btn_gravar_sair] || params[:btn_gravar_avaliacaoph] || params[:btn_gravar]
     redirect_to admins_backoffice_relatorio_em_aberto_path, notice: "Relatório atualizado com sucesso!"
   # Início da inspeção
   elsif params[:btn_insp_inicio]
@@ -291,6 +299,19 @@ end
     end
   end
 
+  def inicia_inspecao_proprietario
+    @proprietarias = Cadastro.where(eh_fabricante: false, eh_empresa_inspetora: false).order(:nome_curto)
+  end
+
+  def get_relatorios_by_vaso
+    vaso_id = params[:vaso_id]
+    relatorios = Relatorio.where(vaso_id: vaso_id).order(id: :desc)    
+    render json: relatorios.select(:id, :data_relatorio, :user_id, :tipo_inspecao_id, :art_id, :ph_id, :cidade_id, :vaso_id, :finalidade_vaso_id, :proprietaria_id, :inspetora_id).as_json
+  end  
+
+  ##########
+  # PRIVATE
+  ##########
   private
     def set_relatorio
       @relatorio = Relatorio.find(params[:id])      

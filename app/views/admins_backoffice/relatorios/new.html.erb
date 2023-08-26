@@ -1,2 +1,17 @@
+<script>
+    // Função para exibir o alerta ao entrar no formulário
+    function exibirAlertaEntrada() {
+        alert("Você está criando um novo relatório à partir de um relatório existente. CASO A ART DO RELATÓRIO ANTERIOR NÃO CONTEMPLE O SERVIÇO ATUAL, FAVOR SELECIONAR NOVA ART.");
+    }
+
+    // Adicionar o evento de carga (load) à página para exibir o alerta ao entrar
+    window.addEventListener("load", function() {
+        <% if @relatorio.art_id.present? %>
+            exibirAlertaEntrada();
+        <% end %>
+    });
+</script>
+
+
 <%= render partial: 'admins_backoffice/relatorios/shared/form',
            locals: { action_messege: t('mensagens.inserindo', model: @relatorio.model_name.human(count: 1)) } %>

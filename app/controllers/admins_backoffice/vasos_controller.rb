@@ -111,6 +111,17 @@ class AdminsBackoffice::VasosController < AdminsBackofficeController
       render json: { serie: serie }
     end
     
+    def get_vasos_by_proprietaria
+      proprietaria_id = params[:proprietaria_id]
+      vasos = Vaso.where(proprietaria_id: proprietaria_id).order(:num_serie)
+      render json: vasos.select(:id, :num_serie).as_json
+    end
+
+
+
+    ##########
+    # PRIVATE
+    ##########
     private
    
     def params_vaso

@@ -202,9 +202,12 @@
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages"
                     data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
+                    <div class="bg-white py-2 collapse-inner rounded">                    
+                        <%= link_to admins_backoffice_inicia_inspecao_proprietario_path, class:"collapse-item" do %>
+                            Inspeção pelo proprietário
+                        <%end%>
                         <%= link_to admins_backoffice_relatorio_em_aberto_path, class:"collapse-item" do %>
-                            Relatórios em aberto
+                            Relatórios em aberto 
                         <%end%>
                         <%= link_to admins_backoffice_relatorio_para_impressao_path, class:"collapse-item" do %>
                             Relatórios a imprimir
@@ -229,6 +232,9 @@
                 <div id="collapsePages6" class="collapse" aria-labelledby="headingPages"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
+                        <%= link_to admins_backoffice_inicia_inspecao_dispseg_proprietario_path, class:"collapse-item" do %>
+                            Inspeção pelo proprietário
+                        <%end%>
                         <%= link_to admins_backoffice_relatorio_dispsegs_path, class:"collapse-item" do %>
                             Relatórios não impressos
                         <%end%>

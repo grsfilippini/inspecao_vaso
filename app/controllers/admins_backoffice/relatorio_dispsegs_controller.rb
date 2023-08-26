@@ -8,8 +8,16 @@ class AdminsBackoffice::RelatorioDispsegsController < AdminsBackofficeController
   
     def new        
       @relatorio_dispseg = RelatorioDispseg.new
+      # Verifica se o parâmetro sel_relatorio_id está presente e não é nil
+      if params[:sel_relatorio_id].present? && params[:sel_relatorio_id] != nil      
+        # Faça suas atribuições aqui usando o valor de sel_relatorio_id
+        relatorio_base = RelatorioDispseg.find(params[:sel_relatorio_id])
+        attributes_to_assign = relatorio_base.attributes.except("id", "data", "bimpresso", "data_prox_insp", "bfoi_calibrada", "pressao_teste_1", "pressao_teste_2", "pressao_teste_3", "pressao_vedacao")  # Excluindo o campo "id"
+        @relatorio_dispseg.assign_attributes(attributes_to_assign)
+      end
     end
-  
+    
+    
     def create        
       @relatorio_dispseg = RelatorioDispseg.new(params_relatorio_dispseg)
       if @relatorio_dispseg.save
@@ -51,7 +59,16 @@ class AdminsBackoffice::RelatorioDispsegsController < AdminsBackofficeController
       @relatorio_dispsegs = RelatorioDispseg.where(bimpresso: true).order(id: :desc).page(params[:page]).per(10)
     end
 
+    def inicia_inspecao_proprietario
+      @proprietarias = Cadastro.where(eh_fabricante: false, eh_empresa_inspetora: false).order(:nome_curto)
+    end
  
+    def get_relatorios_by_vaso
+      vaso_id = params[:vaso_id]
+      relatorios = RelatorioDispseg.where(vaso_id: vaso_id).order(id: :desc)    
+      render json: relatorios.select(:id, :data).as_json
+    end  
+
     private
   
     
@@ -75,6 +92,7 @@ class AdminsBackoffice::RelatorioDispsegsController < AdminsBackofficeController
                                                 :obs,
                                                 :fluido_calibracao_valv_seg_id,
                                                 :instrumento_padrao_id,
+                                                :bfoi_calibrada,
                                                 :pressao_teste_1,
                                                 :pressao_teste_2,
                                                 :pressao_teste_3,

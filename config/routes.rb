@@ -26,9 +26,11 @@ Rails.application.routes.draw do
       member do
         get :json_data, defaults: { format: 'json' }
       end
-    end   
+    end       
     get 'pesquisa_vaso', to: 'vasos#pesquisa'    
     get '/obter_ultima_serie_mtp', to: 'vasos#obter_ultima_serie_mtp'
+    get 'get_vasos_by_proprietaria/:proprietaria_id', to: 'vasos#get_vasos_by_proprietaria'
+
     resources :tipo_compressors
     resources :tipo_drenos
     resources :ambiente_insts
@@ -76,10 +78,14 @@ Rails.application.routes.draw do
     get 'preenche_insp_externa',       to: 'relatorios#preenche_insp_externa'
     get 'preenche_insp_interna',       to: 'relatorios#preenche_insp_interna'
     get 'preenche_parecer_conclusivo', to: 'relatorios#preenche_parecer_conclusivo'
+    get 'inicia_inspecao_proprietario',to: 'relatorios#inicia_inspecao_proprietario'
+    get 'get_relatorios_by_vaso/:vaso_id', to: 'relatorios#get_relatorios_by_vaso'
 
     resources :relatorio_dispsegs
     get 'pesquisa_relatorio_dispseg', to: 'relatorio_dispsegs#pesquisa'
     get 'relatorio_dispseg_impresso', to: 'relatorio_dispsegs#impresso'
+    get 'inicia_inspecao_dispseg_proprietario',to: 'relatorio_dispsegs#inicia_inspecao_proprietario'
+    get 'get_relatorios_dispseg_by_vaso/:vaso_id', to: 'relatorio_dispsegs#get_relatorios_by_vaso'
   end
 
   namespace :site do
