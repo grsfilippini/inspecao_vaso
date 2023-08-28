@@ -44,26 +44,14 @@
                       </div>
                     <% end %>
                   </li>
-                
-                  <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="dropdown08" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <%= current_user.email %>
-                      </a>
-                      <div class="dropdown-menu" aria-labelledby="dropdown08">                    
-                          
-                          <%= link_to users_backoffice_welcome_index_path, class: "dropdown-item" do %>
-                              <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Perfil
-                          <% end %>
-      
-                          <div class="dropdown-divider"></div>
-      
-                          <%= link_to destroy_user_session_path, class:"dropdown-item", method: :delete do %>
-                              <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Sair
-                          <% end %>
-      
-                      </div>
-                  </li>                         
                   
+                  <li class="nav-item">                
+                      <%= link_to current_user.email, users_backoffice_welcome_index_path, class:"nav-link" %>
+                  </li>
+
+                  <li class="nav-item">                
+                      <%= link_to 'Sair', destroy_user_session_path, class:"nav-link" %>
+                  </li>
                   
               <% end %>
   
