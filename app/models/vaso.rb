@@ -5,7 +5,7 @@ class Vaso < ApplicationRecord
     # Duas chaves estrangeiras com mesma tabela
     belongs_to :fabricante,    class_name: 'Cadastro'
     belongs_to :proprietaria,  class_name: 'Cadastro'
-    #belongs_to :relatorio_ini, class_name: 'Relatorio' # SE LIBERAR ESTA LINHA, NÃO ACEITA -1 NO Vaso
+    belongs_to :relatorio_ini, class_name: 'Relatorio'
     belongs_to :tipo_compressor
     belongs_to :tipo_dreno
     belongs_to :tipo_vaso

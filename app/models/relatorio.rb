@@ -29,9 +29,9 @@ class Relatorio < ApplicationRecord
   has_one :corp, through: :proprietaria
   
   # Callback method, RoR
-  after_create :seta_estatistica
-  after_destroy :dec_estatistica
   after_create :seta_relatorio_ini_vaso
+  after_create :seta_estatistica
+  after_destroy :dec_estatistica  
   
   # **************************************************
   # Método de classe, pode ser chamado sem instanciar    
@@ -108,9 +108,10 @@ class Relatorio < ApplicationRecord
     AdminEstatistica.dec_evento(AdminEstatistica::EVENTOS[:total_relatorios])
   end
 
+  # Caso o vaso ainda não possui relatório inicial, seta o relatório corrente como inicial
   def seta_relatorio_ini_vaso
     @vaso = Vaso.find(vaso_id)
-    if @vaso.relatorio_ini_id == -1
+    if @vaso.relatorio_ini_id == 0
       @vaso.relatorio_ini_id = id
       @vaso.save
     end
