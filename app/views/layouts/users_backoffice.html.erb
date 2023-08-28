@@ -46,7 +46,7 @@
             <!-- menu profile quick info -->
             <div class="profile clearfix">
               <div class="profile_pic">                                
-                <%= link_to image_tag(avatar_url, alt:"...", class:"img-circle profile_img", id: "imgAvatarLg"), '#', "data-toggle": "modal", href: "#avatarModal" %>
+                <%= link_to image_tag(avatar_user_url, alt:"...", class:"img-circle profile_img", id: "imgAvatarLg"), '#', "data-toggle": "modal", href: "#avatarModal" %>
               </div>
               <div class="profile_info">
                 <span>Seja bem-vindo,</span>
@@ -116,7 +116,7 @@
                 <ul class=" navbar-right">
                   <li class="nav-item dropdown open" style="padding-left: 15px;">
                     <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                      <%= image_tag(avatar_url, alt:"", id: "imgAvatarSm") %>
+                      <%= image_tag(avatar_user_url, alt:"", id: "imgAvatarSm") %>
                       <%= current_user.email %>
                     </a>
                     <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">                        
@@ -246,7 +246,7 @@
               <%= form.fields_for :perfil_usuario do |perfil_form| %>
                 <div class="form-group">
                     <%= perfil_form.label :avatar %>
-                    <%= image_tag(avatar_url, alt:"...", class:"img-circle profile_img", id:"AvatarModal") %>
+                    <%= image_tag(avatar_user_url, alt:"...", class:"img-circle profile_img", id:"AvatarModal") %>
                     <%= perfil_form.file_field :avatar %>
                 </div>
               <% end %>
