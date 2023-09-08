@@ -1,69 +1,53 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    <title>Inspeção Vaso</title>
-        <%= csrf_meta_tags %>
-        <%= csp_meta_tag %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MANTINSP</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag    'application' %>
+    <%= stylesheet_link_tag    'site' %>     
+</head>
+<body>
 
-        <%= stylesheet_link_tag    'application' %>
-        <%= stylesheet_link_tag    'site' %>     
-  </head>
+<div class="container-fluid">
+  <div class="row">
+    <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+      <div class="position-sticky">
+        <div class="px-3 py-4">
+          <h4 class="fw-bold">MANTINSP</h4>
+        </div>
+        <ul class="nav flex-column">
+          
+          <% unless user_signed_in? %>
+            <li class="nav-item">                
+                <%= link_to 'Entrar', new_user_session_path, class:"nav-link" %>
+            </li>
 
-  <body>   
-    <div class="container">
-      <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
-        
-          <div class="navbar-header">            
-            <%= link_to 'MANTINSP', root_path, class:"navbar-brand" %>
-          </div>
-        
-          <div class="collapse navbar-collapse" id="navbarsExample08">
-            
-              <ul class="navbar-nav justify-content-end">
-              
-              <% unless user_signed_in? %>            
-                  <li class="nav-item active">                
-                      <%= link_to 'Entrar', new_user_session_path, class:"nav-link" %>
-                  </li>
-  
-                  <li class="nav-item active">                
-                      <%= link_to 'Cadastrar-se', new_user_registration_path, class:"nav-link" %>
-                  </li>
-                  
-              <% else %>
-                  <li class="nav-item">                  
-                    <%= form_with(url: site_pesquisa_path, local: true, method: :get, class:"form-inline") do |form| %> 
-                      <div class="input-group">                        
-                        <%= form.text_field :termo, class:"form-control", placeholder:"# série" %>
-                        <div class="input-group-append">
-                          <button class="btn btn-outline-secondary" type="submit">Pesquisar</button>
-                        </div>
-                      </div>
-                    <% end %>
-                  </li>
-                  
-                  <li class="nav-item">                
-                      <%= link_to current_user.email, users_backoffice_welcome_index_path, class:"nav-link" %>
-                  </li>
+            <li class="nav-item">                
+                <%= link_to 'Cadastrar-se', new_user_registration_path, class:"nav-link" %>
+            </li>
+          <% else %>
+            <li class="nav-item">                
+                <%= link_to current_user.email, users_backoffice_welcome_index_path, class:"nav-link" %>
+            </li>
 
-                  <li class="nav-item">                
-                      <%= link_to 'Sair', destroy_user_session_path, class:"nav-link" %>
-                  </li>
-                  
-              <% end %>
-  
-              </ul>
-              
-          </div>
-      </nav>
+            <li class="nav-item">                      
+                <%= link_to 'Sair', destroy_user_session_path, method: :delete, class: "nav-link" %>
+            </li>
+          <% end %>
+        </ul>        
+      </div>
+    </nav>
+
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     
       <%= yield %>
     
-    </div> <!-- /container -->
-
+    </main>
+  </div>
+</div> 
 
     <%= javascript_include_tag 'application' %>
     <%= javascript_include_tag 'site' %>
@@ -82,6 +66,5 @@
             });
         <%end%>
     <%end%>
-
-  </body>
+</body>
 </html>

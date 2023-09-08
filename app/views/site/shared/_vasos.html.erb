@@ -1,30 +1,52 @@
-<br>
-<br>
-<br>      
-
-<div class="jumbotron d-flex" style="padding: 1rem; align-items: center;">
+<div class="container-fluid">
   
-  <% if params[:termo].present? %>
-    <%="(#{@count_vasos}) Resultados para a busca de \"#{params[:termo]}\"..."%>&nbsp;&nbsp;&nbsp;
-  <% elsif params[:fabricante_id].present? %>    
-    <%="(#{@count_vasos}) Resultados para fabricante \"#{@fab_atual.nome_curto}\"..."%>&nbsp;&nbsp;&nbsp;
-  <% elsif params[:proprietaria_id].present? %>
-    <%="(#{@count_vasos}) Resultados para proprietaria \"#{@prop_atual.nome_curto}\"..."%>&nbsp;&nbsp;&nbsp;
-  <% elsif params[:corporacao_id].present? %>
-    <%="(#{@count_vasos}) Resultados para corporação \"#{@corp_atual.nome}\"..."%>&nbsp;&nbsp;&nbsp;  
-  <% else %>   
-    (<%= @count_vasos %>) &nbsp; Últimos vasos cadastrados... &nbsp;&nbsp;&nbsp;
-  <% end %>  
-  
-  <%= form_with url: site_pesq_fab_prop_path, local: true, method: :get, class: 'float-right' do |f| %>
-    <%= label_tag 'name', 'Fab.' %>
-    <%= f.collection_select :fabricante_id, @fabricantes, :id, :nome_curto, {include_blank: true }, {style: "width: 120px;"} %>
-    <%= label_tag 'name', 'Prop.' %>
-    <%= f.collection_select :proprietaria_id, @proprietarias, :id, :nome_curto, {include_blank: true }, {style: "width: 120px;"} %>
-    <%= label_tag 'name', 'Corp.' %>
-    <%= f.collection_select :corporacao_id, @corps, :id, :nome, {include_blank: true }, {style: "width: 120px;"} %>
-    <%= f.submit "Filtrar", class:"btn btn-primary", style: "align-items: center;" %>
+  <div class="form-group row mt-3">      
+    <div class="col-md-8 d-flex align-items-center">
+      <%= form_with(url: site_pesquisa_path, local: true, method: :get, class:"form-inline") do |form| %> 
+        <div class="input-group">          
+          <%= form.text_field :termo, class:"form-control", placeholder:"# série" %>
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit">Pesquisar</button>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+    
+  <%= form_with url: site_pesq_fab_prop_path, local: true, method: :get do |f| %>
+    <div class="form-group row">              
+        <div class="col-sm-2 mb-3 mb-sm-0">                                        
+          <%= f.collection_select :fabricante_id, @fabricantes, :id, :nome_curto, {include_blank: "Fabricante" }, {class: "form-control"} %>
+        </div>                
+        <div class="col-sm-2 mb-3 mb-sm-0">          
+          <%= f.collection_select :proprietaria_id, @proprietarias, :id, :nome_curto, {include_blank: "Proprietaria" }, {class: "form-control"} %>
+        </div>        
+        <div class="col-sm-2 mb-3 mb-sm-0">          
+          <%= f.collection_select :corporacao_id, @corps, :id, :nome, {include_blank: "Corporação" }, {class: "form-control"} %>
+        </div>
+        <div class="col-sm-2 mb-3 mb-sm-0">          
+          <%= f.submit "Filtrar", class:"btn btn-primary", style: "align-items: center;" %>
+        </div>
+    </div>
+    
   <% end %>
+
+  <div class="form-group row">
+    <div class="col-md-12">
+      <% if params[:termo].present? %>
+        <%="#{@vasos.total_count} - Resultados para a busca de \"#{params[:termo]}\"..."%>&nbsp;&nbsp;&nbsp;
+      <% elsif params[:fabricante_id].present? %>    
+        <%="#{@vasos.total_count} - Resultados para fabricante \"#{@fab_atual.nome_curto}\"..."%>&nbsp;&nbsp;&nbsp;
+      <% elsif params[:proprietaria_id].present? %>
+        <%="#{@vasos.total_count} - Resultados para proprietaria \"#{@prop_atual.nome_curto}\"..."%>&nbsp;&nbsp;&nbsp;
+      <% elsif params[:corporacao_id].present? %>
+        <%="#{@vasos.total_count} - Resultados para corporação \"#{@corp_atual.nome}\"..."%>&nbsp;&nbsp;&nbsp;  
+      <% else %>   
+        <%= @vasos.total_count %>&nbsp; - &nbsp; Últimos vasos cadastrados... &nbsp;&nbsp;&nbsp;
+      <% end %>  
+    </div>
+  </div>
+                                
   
 </div>
 

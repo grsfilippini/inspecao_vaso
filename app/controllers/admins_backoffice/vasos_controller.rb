@@ -24,7 +24,7 @@ class AdminsBackoffice::VasosController < AdminsBackofficeController
       
       if params[:vaso][:proximomtp] == "1"
         # Resgata o próximo número de série disponível e atribui ao dispositivo de segurança                
-        @vaso.num_serie = obter_ultima_serie_mtp_hash
+        @vaso.num_serie = obter_ultima_serie_mtp_hash        
       end      
 
       # Salva o novo dispositivo de segurança
@@ -34,11 +34,11 @@ class AdminsBackoffice::VasosController < AdminsBackofficeController
           @vaso.update_attribute(:foto_plaqueta, params[:vaso][:foto_plaqueta].read)
         end
 
-        if params[:vaso][:proximomtp] == "1"
+        if params[:vaso][:proximomtp] == "1"          
           @mtp_serie = MtpNumSerie.new
           @mtp_serie.serie = @vaso.num_serie
           @mtp_serie.vaso_id = @vaso.id
-          @mtp_serie.save
+          @mtp_serie.save          
         end
         
         redirect_to admins_backoffice_vasos_path, notice: "Vaso criado com sucesso!"        

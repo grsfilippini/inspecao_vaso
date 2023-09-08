@@ -42,7 +42,7 @@
                             <div class="form-group row">
                                 <%= form.label :foto_plaqueta, 'Plaqueta', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
                                 <div class="form-label col-sm-4 mb-0 mb-sm-0">                                    
-                                    <% if @vaso.foto_plaqueta.present? %>
+                                    <% if @vaso.foto_plaqueta.present? && @vaso.id.present? %>
                                       <img src="data:image/jpeg;base64,<%= Base64.encode64(@vaso.foto_plaqueta) %>" width="auto" height="120">
                                     <% end %>
                                 </div>                                
@@ -211,12 +211,12 @@
                                         <%= form.collection_select :codigo_construcao_id, @codigo_construcaos, :id, :codigo, {include_blank: 'Selecione um código de construção'}, {selected: nil, class: "form-control"} %>
                                     </div>                                                                                                  
                                     
-                                    <%= form.label :volume, "Volume [l]", class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                    <%= form.label "Volume [l]", class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
                                     <input type="number" step="1" min="0" style="width: 100px;" class="form-control col-sm-1 text-sm-left text-lg-right" id="volume_litros">
                                     
                                     <%= form.label :volume, "[m<sup>3</sup>]".html_safe, class: "col-sm-1 col-form-label text-sm-left text-lg-right" %>
                                     <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
-                                        <%= form.number_field :volume, step: 0.001, min: 0.000,  class: "form-control", id: "volume_m3", disabled: true %>
+                                        <%= form.number_field :volume, step: 0.001, min: 0.000, class: "form-control", id: "volume_m3", readonly: true %>
                                     </div>
                                 </div>                                
 

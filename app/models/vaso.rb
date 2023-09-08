@@ -95,9 +95,9 @@ class Vaso < ApplicationRecord
             .per(10)    
     end
     
-    def self.pesquisa_sem_pagina(termo, usuario)
-        Vaso.where("lower(num_serie) LIKE ?", "%#{termo.downcase}%").where(user_id: usuario)
-    end
+    # def self.pesquisa_sem_pagina(termo, usuario)
+    #     Vaso.where("lower(num_serie) LIKE ?", "%#{termo.downcase}%").where(user_id: usuario)
+    # end
     
     def self.ultimos_vasos(page, usuario)
         Vaso.includes(:proprietaria,  :fabricante, :tipo_compressor,   :tipo_dreno,
@@ -110,9 +110,9 @@ class Vaso < ApplicationRecord
             .per(10)  
     end
     
-    def self.ultimos_vasos_sem_pagina(usuario)
-        Vaso.where(user_id: usuario)
-    end
+    # def self.ultimos_vasos_sem_pagina(usuario)
+    #     Vaso.where(user_id: usuario)
+    # end
     
     # Métodos scope, são métodos de classe que são utilizados apenas em pesquisa.
     # São métodos que podem ser encadeados em uma pesquisa.
