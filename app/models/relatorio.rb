@@ -57,7 +57,7 @@ class Relatorio < ApplicationRecord
   def self.relatorios_em_aberto(page)
     includes(:user, :proprietaria, :vaso)
       .where(b_rascunho: true)
-      .order(id: :desc)
+      .order(id: :asc)
       .limit(50)
       .page(page)
       .per(20)  
