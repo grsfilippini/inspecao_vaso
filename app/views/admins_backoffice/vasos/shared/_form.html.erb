@@ -386,7 +386,7 @@
                                 </div>
 
                                 <!-- Atualiza diâmetro caso perímetro seja alterado -->
-                                <% if !@vaso.id.present? %>
+                                <%# if !@vaso.id.present? %>
                                     <script>
                                         document.addEventListener("DOMContentLoaded", function() {
                                             var perimetroInput = document.getElementById("perimetro");                                            
@@ -400,7 +400,7 @@
                                             });
                                         });
                                     </script>
-                                <% end %>
+                                <%# end %>
 
                                 <!-- Atualiza perímetro caso diâmetro seja alterado -->
                                 <% if !@vaso.id.present? %>

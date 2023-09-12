@@ -1,7 +1,16 @@
 class Vaso < ApplicationRecord
     # Campos com seleção obrigatória
     validates :num_serie, presence: true
-    
+    validates :fabricante_id, presence: true
+    validates :catnr13_id, presence: true
+    validates :volume, presence: true
+    validates :proprietaria_id, presence: true
+    validates :pmta_atual, presence: true
+    validates :codigo_construcao_id, presence: true
+    validates :perimetro_diametro_externo, presence: true
+    validates :entre_soladas_corpo, presence: true
+    validates :profundidade_tampo, presence: true
+
     # Duas chaves estrangeiras com mesma tabela
     belongs_to :fabricante,    class_name: 'Cadastro'
     belongs_to :proprietaria,  class_name: 'Cadastro'
