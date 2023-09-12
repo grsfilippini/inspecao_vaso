@@ -202,10 +202,15 @@
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages"
                     data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">                    
+                    <div class="bg-white py-2 collapse-inner rounded">                                                                    
                         <%= link_to admins_backoffice_inicia_inspecao_proprietario_path, class:"collapse-item" do %>
                             Inspeção pelo proprietário
                         <%end%>
+                        <hr>
+                        <%= link_to admins_backoffice_espessura_vasos_path, class:"collapse-item" do %>
+                            Espessura de vasos
+                        <%end%>
+                        <hr>
                         <%= link_to admins_backoffice_relatorio_em_aberto_path, class:"collapse-item" do %>
                             Relatórios em aberto 
                         <%end%>
@@ -217,7 +222,7 @@
                         <%end%>
                         <%= link_to admins_backoffice_busca_um_relatorio_path, class:"collapse-item" do %>
                             Busca um relatório
-                        <%end%>
+                        <%end%>                        
                     </div>
                 </div>
             </li>

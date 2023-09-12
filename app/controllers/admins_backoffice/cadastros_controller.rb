@@ -65,7 +65,7 @@ class AdminsBackoffice::CadastrosController < AdminsBackofficeController
   
     
     def params_cadastro
-      puts params
+      #puts params
       params.require(:cadastro).permit(:nome,
                                        :nome_curto,
                                        :cnpj,

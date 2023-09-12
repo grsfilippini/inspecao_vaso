@@ -1,7 +1,7 @@
 class Vaso < ApplicationRecord
     # Campos com seleção obrigatória
     validates :num_serie, presence: true
-
+    
     # Duas chaves estrangeiras com mesma tabela
     belongs_to :fabricante,    class_name: 'Cadastro'
     belongs_to :proprietaria,  class_name: 'Cadastro'

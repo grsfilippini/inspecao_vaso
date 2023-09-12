@@ -507,7 +507,7 @@ ActiveRecord::Schema.define(version: 2023_08_20_190548) do
     t.float "pmta_atual"
     t.float "pth_atual"
     t.text "observacoes"
-    t.decimal "relatorio_ini_id", precision: 10, default: "-1", null: false
+    t.decimal "relatorio_ini_id", precision: 10, default: "0", null: false
     t.integer "tipo_vaso_id", default: 0, null: false
     t.float "p_projeto"
     t.integer "codigo_construcao_id", default: 10, null: false

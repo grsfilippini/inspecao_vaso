@@ -1,0 +1,191 @@
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800"> <%= action_messege %> </h1>
+</div>
+
+<!-- Se tiver algum erro dentro de @admin, erro devido a processo de salvamento por exemplo, entra no alerta abaixo -->
+<% if @espessura_vaso.errors.any? %>
+    <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>        
+        <ul>
+            <% @espessura_vaso.errors.full_messages.each do |message| %>
+            <li> <%= message -%> </li>
+            <% end %>
+        </ul>
+    </div>
+<% end %>
+
+
+<!-- CONTAINER PARA O FORM -->
+<div class="container">
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+                <!-- div class="col-lg-5 d-none d-lg-block bg-register-image"></div -->
+                
+                <div class="col-lg-12">
+                    <div class="p-5">
+                        <!--div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                        </div-->
+
+                        <%= form_with(model: [ :admins_backoffice, @espessura_vaso ], local: true) do |form| %>
+
+                            <div class="form-group row">
+                                <%= form.label :user_id, "Usuário", {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="col-sm-4 mb-0 mb-sm-0">                                    
+                                    <%= form.collection_select(:user_id, @users, :id, :nome_completo, {include_blank: 'Selecione um usuário'}, {selected: nil, class: 'form-control'}) %>
+                                </div>
+                            </div>
+
+                            <hr>   
+                            
+                            <div class="form-group row">
+                                <%= form.label :data, 'Data', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="col-sm-3 mb-0 mb-sm-0">                                    
+                                    <%= form.date_field :data, value: @espessura_vaso.id.present? ? @espessura_vaso.data : Date.current, class: "form-control" %>
+                                </div>
+                                
+                                <%= form.label :inspetora_id, 'Inspetora', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="col-sm-4 mb-0 mb-sm-0">                                    
+                                    <%= form.collection_select(:inspetora_id, @inspetoras, :id, :nome_curto, { include_blank: 'Selecione a empresa inspetora'}, {class: 'form-control' }) %>
+                                </div>
+
+                            </div>
+
+                            <hr>
+
+                            <div class="form-group row">
+                                <%= form.label :vaso_id, 'Vaso', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="col-sm-3 mb-0 mb-sm-0">                                    
+                                    <%= form.collection_select(:vaso_id, @vasos, :id, lambda { |vaso| "#{vaso.num_serie} - #{vaso.fabricante.nome_curto}" }, { include_blank: 'Selecione um vaso' }, {class: 'form-control' }) %>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="form-group row">
+                                <%= form.label :instrumento_padrao_id, 'Instrumento', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="col-sm-5 mb-0 mb-sm-0">                                    
+                                    <%= form.collection_select(:instrumento_padrao_id, @instrumento_padraos, :id, :nome_curto, { include_blank: 'Selecione o instrumento padrão'}, {class: 'form-control' }) %>
+                                </div>
+                            </div>
+
+                            <fieldset class="Medidas">
+                            <legend>Medidas em [mm]</legend>
+                            
+                            <div class="form-group row">
+                                <%= form.label :esp_casco_1, "1 - Esp. corpo", class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                    <%= form.number_field :esp_casco_1, step: 0.01, min: 0.000, class: "form-control", id: "esp1" %>
+                                </div>
+                            </div>    
+
+                            <div class="form-group row">
+                                <%= form.label :esp_casco_2, "2 - Esp. tampo", class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                    <%= form.number_field :esp_casco_2, step: 0.01, min: 0.000, class: "form-control", id: "esp2" %>
+                                </div>
+
+                                <%= form.label :esp_casco_3, "3 - Esp. tampo", class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                    <%= form.number_field :esp_casco_3, step: 0.01, min: 0.000, class: "form-control", id: "esp3" %>
+                                </div>
+                            </div>    
+
+                            <div class="form-group row">
+                                <%= form.label :esp_casco_4, "4 - Esp. corpo", class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                    <%= form.number_field :esp_casco_4, step: 0.01, min: 0.000, class: "form-control", id: "esp4" %>
+                                </div>
+
+                                <%= form.label :esp_casco_5, "5 - Esp. corpo", class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                    <%= form.number_field :esp_casco_5, step: 0.01, min: 0.000, class: "form-control", id: "esp5" %>
+                                </div>
+
+                                <%= form.label :esp_casco_6, "6 - Esp. corpo", class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                    <%= form.number_field :esp_casco_6, step: 0.01, min: 0.000, class: "form-control", id: "esp6" %>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <%= form.label :esp_casco_7, "7 - Esp. tampo", class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                    <%= form.number_field :esp_casco_7, step: 0.01, min: 0.000, class: "form-control", id: "esp7" %>
+                                </div>
+
+                                <%= form.label :esp_casco_8, "8 - Esp. tampo", class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                    <%= form.number_field :esp_casco_8, step: 0.01, min: 0.000, class: "form-control", id: "esp8" %>
+                                </div>
+                            </div> 
+
+                            <div class="form-group row">
+                                <%= form.label :esp_casco_9, "9 - Esp. corpo", class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                    <%= form.number_field :esp_casco_9, step: 0.01, min: 0.000, class: "form-control", id: "esp9" %>
+                                </div>
+
+                                <%= form.label :esp_casco_10, "10 - Esp. corpo", class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                    <%= form.number_field :esp_casco_10, step: 0.01, min: 0.000, class: "form-control", id: "esp10" %>
+                                </div>
+                            </div>
+                                    
+                            </fieldset>
+                            
+                            <fieldset class="Medidas_Minimas">
+                            <legend>Medidas mínimas em [mm]</legend>
+                                <div class="form-group row">   
+                                    <%= form.label :esp_min_corpo, "Corpo", class: "col-sm-1 col-form-label text-sm-left text-lg-right" %>
+                                    <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                        <%= form.number_field :esp_min_corpo, step: 0.001, min: 0.000, class: "form-control", id: "esp_min_corpo", readonly: true %>
+                                    </div>
+
+                                    <%= form.label :esp_min_tampo, "Tampo", class: "col-sm-1 col-form-label text-sm-left text-lg-right" %>
+                                    <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                        <%= form.number_field :esp_min_tampo, step: 0.001, min: 0.000, class: "form-control", id: "esp_min_tampo", readonly: true %>
+                                    </div>
+                                </div>                                
+                            </fieldset>
+
+                            <script>
+                                const camposVerificarCorpo = ["esp1", "esp4", "esp5", "esp6", "esp9", "esp10"];
+                                const camposVerificarTampo = ["esp2", "esp3", "esp7", "esp8"];
+
+                                camposVerificarCorpo.forEach(id => {
+                                    const campo = document.getElementById(id);
+                                    campo.addEventListener('input', () => atualizarEspessura('esp_min_corpo'));
+                                });
+
+                                camposVerificarTampo.forEach(id => {
+                                    const campo = document.getElementById(id);
+                                    campo.addEventListener('input', () => atualizarEspessura('esp_min_tampo'));
+                                });
+
+                                function atualizarEspessura(campoResultado) {
+                                    const valoresCorpo = camposVerificarCorpo.map(id => parseFloat(document.getElementById(id).value)).filter(value => !isNaN(value));
+                                    const valoresTampo = camposVerificarTampo.map(id => parseFloat(document.getElementById(id).value)).filter(value => !isNaN(value));
+
+                                    const valorMinCorpo = Math.min(...valoresCorpo);
+                                    const valorMinTampo = Math.min(...valoresTampo);
+
+                                    document.getElementById(campoResultado).value = campoResultado === 'esp_min_corpo' ? valorMinCorpo : valorMinTampo;
+                                }
+                            </script>
+
+                            <hr>
+                            
+                            <button type="submit" class="btn btn-primary"><%=t('botoes.gravar')%></button>
+                            
+                        <% end %>                                                                     
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- FIM DO CONTAINER DO FORM -->

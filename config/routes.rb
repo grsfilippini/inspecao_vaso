@@ -21,6 +21,8 @@ Rails.application.routes.draw do
     get 'pesquisa_cadastro', to: 'cadastros#pesquisa'
     resources :cidades
     resources :catnr13s
+    resources :espessura_vasos
+    get 'pesquisa_espessura_vaso', to: 'espessura_vasos#pesquisa' 
     resources :finalidade_vasos    
     resources :vasos do
       member do
