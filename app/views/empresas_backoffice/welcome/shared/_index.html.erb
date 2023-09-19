@@ -57,25 +57,25 @@
             </div>            
             <!-- Campos adicionais (inicialmente ocultos) -->
             <div class="collapse" id="listaVasos<%=f.id%>">
-                <table border="1">
+                <table class="table">
                     <tr>
-                        <th rowspan="2">Fabricante1</th>
-                        <th rowspan="2"># série</th>
-                        <th rowspan="2">Volume [litros]</th>
-                        <th rowspan="2">PMTA [psi]</th>
-                        <th rowspan="2">Último relatório</th>
-                        <th rowspan="2">Data</th>
+                        <th scope="col" rowspan="2">Fabricante</th>
+                        <th scope="col" rowspan="2"># série</th>
+                        <th scope="col" rowspan="2">Volume [litros]</th>
+                        <th scope="col" rowspan="2">PMTA [psi]</th>
+                        <th scope="col" rowspan="2">Último relatório</th>
+                        <th scope="col" rowspan="2">Data</th>
                         <th colspan="4">Vencimento das inspeções</th>                        
                     </tr>
                     <tr>                        
-                        <th>Externa</th>
-                        <th>Interna</th>
-                        <th>D.Seg.Ext.</th>
-                        <th>D.Seg.Int.</th>
+                        <th scope="col"> Externa</th>
+                        <th scope="col">Interna</th>
+                        <th scope="col">D.Seg.Ext.</th>
+                        <th scope="col">D.Seg.Int.</th>
                     </tr>                    
 
                     <% f.vasos.each do |vaso| %>
-                        <tr>
+                        <tr scope="row">
                             <td> <p class="card-text"><%= vaso.fabricante.nome_curto %></p> </td>
                             <td> <p class="card-text"><%= vaso.num_serie %></p> </td>
                             <td> <p class="card-text"><%= (vaso.volume*1000).round(0) %>&nbsp;</p> </td>
@@ -85,7 +85,7 @@
                                 <% r = vaso.relatorios.max_by { |relatorio| relatorio.id } %>
                                 <td> <p class="card-text"><%= r.id %></p> </td>
                                 <td> <p class="card-text"><%= r.data_relatorio_formatada %></p> </td>                                
-                                <td style="text-align: center;">
+                                <td>
                                     <%if !f.TemVasoVencido(daqui_seis_meses)%>
                                         <span class="badge-lg badge-success"><%= r.dt_prox_insp_externa_formatada %></span>
                                     <%elsif !f.TemVasoVencido(hoje)%>
