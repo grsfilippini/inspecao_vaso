@@ -57,56 +57,57 @@
             </div>            
             <!-- Campos adicionais (inicialmente ocultos) -->
             <div class="collapse" id="listaVasos<%=f.id%>">
-                <table class="table">
-                    <tr>
-                        <th scope="col" rowspan="2">Fabricante</th>
-                        <th scope="col" rowspan="2"># série</th>
-                        <th scope="col" rowspan="2">Volume [litros]</th>
-                        <th scope="col" rowspan="2">PMTA [psi]</th>
-                        <th scope="col" rowspan="2">Último relatório</th>
-                        <th scope="col" rowspan="2">Data</th>
-                        <th colspan="4">Vencimento das inspeções</th>                        
-                    </tr>
-                    <tr>                        
-                        <th scope="col"> Externa</th>
-                        <th scope="col">Interna</th>
-                        <th scope="col">D.Seg.Ext.</th>
-                        <th scope="col">D.Seg.Int.</th>
-                    </tr>                    
-
-                    <% f.vasos.each do |vaso| %>
-                        <tr scope="row">
-                            <td> <p class="card-text"><%= vaso.fabricante.nome_curto %></p> </td>
-                            <td> <p class="card-text"><%= vaso.num_serie %></p> </td>
-                            <td> <p class="card-text"><%= (vaso.volume*1000).round(0) %>&nbsp;</p> </td>
-                            <td> <p class="card-text"><%= (vaso.pmta_atual*145.03773773).round(0) %>&nbsp;</p> </td>
-
-                            <% if vaso.relatorios.any? %>
-                                <% r = vaso.relatorios.max_by { |relatorio| relatorio.id } %>
-                                <td> <p class="card-text"><%= r.id %></p> </td>
-                                <td> <p class="card-text"><%= r.data_relatorio_formatada %></p> </td>                                
-                                <td>
-                                    <%if !f.TemVasoVencido(daqui_seis_meses)%>
-                                        <span class="badge-lg badge-success"><%= r.dt_prox_insp_externa_formatada %></span>
-                                    <%elsif !f.TemVasoVencido(hoje)%>
-                                        <span class="badge-lg badge-warning"><%= r.dt_prox_insp_externa_formatada %></span>
-                                    <%else%>
-                                        <span class="badge-lg badge-danger"><%= r.dt_prox_insp_externa_formatada %></span>
-                                    <%end%>
-                                </td>
-
-                                <td style="color: #000000; background-color: #FFFF00;"> <p class="card-text"><%= r.dt_prox_insp_interna_formatada %></p> </td>
-                                <td style="color: #000000; background-color: #FFFF00;"> <p class="card-text"><%= r.dt_prox_insp_dispseg_externa_formatada %></p> </td>
-                                <td style="color: #000000; background-color: #FFFF00;"> <p class="card-text"><%= r.dt_prox_insp_dispseg_interna_formatada %></p> </td>
-                            <% else %>
-                                <td> <p class="card-text">Sem relatórios</p> </td>
-                            <% end %>
-
-
-
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <tr>
+                            <th scope="col" rowspan="2">Fabricante</th>
+                            <th scope="col" rowspan="2"># série</th>
+                            <th scope="col" rowspan="2">Volume [litros]</th>
+                            <th scope="col" rowspan="2">PMTA [psi / bar]</th>
+                            <th scope="col" rowspan="2">Último relatório</th>
+                            <th scope="col" rowspan="2">Data</th>
+                            <th style="text-align: center;" colspan="4">Vencimento das inspeções</th>                        
                         </tr>
-                    <% end %>                    
-                </table>
+                        <tr>                        
+                            <th scope="col">Externa</th>
+                            <th scope="col">Interna</th>
+                            <th scope="col">D.Seg.Ext.</th>
+                            <th scope="col">D.Seg.Int.</th>
+                        </tr>                    
+
+                        <% f.vasos.each do |vaso| %>
+                            <tr scope="row">
+                                <td> <%= vaso.fabricante.nome_curto %> </td>
+                                <td> <%= vaso.num_serie %> </td>
+                                <td> <%= (vaso.volume*1000).round(0) %>&nbsp; </td>
+                                <td> <%= (vaso.pmta_atual*145.03773773).round(0).to_s+"/"+(vaso.pmta_atual*10).round(1).to_s %>&nbsp; </td>
+
+                                <% if vaso.relatorios.any? %>
+                                    <% r = vaso.relatorios.max_by { |relatorio| relatorio.id } %>
+                                    <td> <%= r.id %> </td>
+                                    <td> <%= r.data_relatorio_formatada %> </td>
+                                    
+                                    <%if !f.TemVasoVencido(daqui_seis_meses)%>                                            
+                                        <td style="color: #000000; background-color: #00cc00;"> <%= r.dt_prox_insp_externa_formatada %> </td>
+                                    <%elsif !f.TemVasoVencido(hoje)%>                                            
+                                        <td style="color: #000000; background-color: #ff9900;"> <%= r.dt_prox_insp_externa_formatada %> </td>
+                                    <%else%>                                            
+                                        <td style="color: #000000; background-color: #cc0000;"> <%= r.dt_prox_insp_externa_formatada %> </td>
+                                    <%end%>                               
+
+                                    <td style="color: #000000; background-color: #FFFF00;"> <%= r.dt_prox_insp_interna_formatada %> </td>
+                                    <td style="color: #000000; background-color: #FFFF00;"> <%= r.dt_prox_insp_dispseg_externa_formatada %> </td>
+                                    <td style="color: #000000; background-color: #FFFF00;"> <%= r.dt_prox_insp_dispseg_interna_formatada %> </td>
+                                <% else %>
+                                    <td> <p class="card-text">Sem relatórios</p> </td>
+                                <% end %>
+
+
+
+                            </tr>
+                        <% end %>                    
+                    </table>
+                </div>
             </div>
 
         </div>        
