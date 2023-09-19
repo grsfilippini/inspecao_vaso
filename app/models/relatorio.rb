@@ -48,7 +48,7 @@ class Relatorio < ApplicationRecord
   def self.relatorios_para_imprimir(page)
     includes(:user, :proprietaria, :vaso)
       .where(b_rascunho: false, brel_impresso: false)
-      .order(id: :desc)
+      .order(id: :asc)
       .limit(50)
       .page(page)
       .per(20)  
@@ -96,6 +96,12 @@ class Relatorio < ApplicationRecord
   end
   def dt_prox_insp_interna_formatada
     dt_prox_insp_interna.strftime('%d/%m/%Y') if dt_prox_insp_interna.present?
+  end
+  def dt_prox_insp_dispseg_externa_formatada
+    dt_prox_insp_externa_dispositivo_seguranca.strftime('%d/%m/%Y') if dt_prox_insp_externa_dispositivo_seguranca.present?
+  end
+  def dt_prox_insp_dispseg_interna_formatada
+    dt_prox_insp_interna_dispositivo_seguranca.strftime('%d/%m/%Y') if dt_prox_insp_interna_dispositivo_seguranca.present?
   end  
   
   private

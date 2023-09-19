@@ -59,11 +59,12 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Vasos e disp. de seg.:</h6>
                         <%= link_to admins_backoffice_vasos_path, class:"collapse-item" do %>
-                            Vasos
+                            Vaso
                         <%end%>                        
                         <%= link_to admins_backoffice_disp_segurancas_path, class:"collapse-item" do %>
                             Dispositivo de segurança
                         <%end%>
+                        <hr>
                         <%= link_to admins_backoffice_mtp_num_series_index_path, class:"collapse-item" do %>
                             Série vaso MTP
                         <%end%>
@@ -119,17 +120,14 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <!--<h6 class="collapse-header">Custom Utilities:</h6>-->                        
                         <%= link_to admins_backoffice_catnr13s_path, class:"collapse-item" do %>
-                            Categoria NR13
+                            Categoria
                         <%end%>
                         <%= link_to admins_backoffice_classe_fluidos_path, class:"collapse-item" do %>
-                            Classe de fluido NR13
+                            Classe de fluido
                         <%end%>
                         <%= link_to admins_backoffice_potencial_riscos_path, class:"collapse-item" do %>
-                            Potencial de risco NR13
+                            Potencial de risco
                         <%end%>
-                        
-                        <a class="collapse-item" href="utilities-animation.html">...</a>
-                        <a class="collapse-item" href="utilities-other.html">...</a>
                     </div>
                 </div>
             </li>
@@ -178,9 +176,6 @@
                         <%= link_to admins_backoffice_fluido_servicos_path, class:"collapse-item" do %>
                             Fluído de serviço no vaso
                         <%end%>
-                        
-                        <a class="collapse-item" href="utilities-animation.html">...</a>
-                        <a class="collapse-item" href="utilities-other.html">...</a>
                     </div>
                 </div>
             </li>
@@ -208,7 +203,7 @@
                         <%end%>
                         <hr>
                         <%= link_to admins_backoffice_espessura_vasos_path, class:"collapse-item" do %>
-                            Espessura de vasos
+                            Espessura de vaso
                         <%end%>
                         <hr>
                         <%= link_to admins_backoffice_relatorio_em_aberto_path, class:"collapse-item" do %>
@@ -220,6 +215,7 @@
                         <%= link_to admins_backoffice_relatorios_path, class:"collapse-item" do %>
                             Relatórios concluídos
                         <%end%>
+                        <hr>
                         <%= link_to admins_backoffice_busca_um_relatorio_path, class:"collapse-item" do %>
                             Busca um relatório
                         <%end%>                        

@@ -91,7 +91,7 @@ class AdminsBackoffice::CadastrosController < AdminsBackofficeController
     end
 
     def get_cidades_corps
-      @cidades = Cidade.all
+      @cidades = Cidade.all.ORDER(:nome)
       @corps   = Corp.all.order(:nome)
       @users   = User.order(:nome).order(:sobrenome)
     end

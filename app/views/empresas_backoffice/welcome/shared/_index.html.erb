@@ -1,6 +1,7 @@
 <div class="col-lg-12">    
     <div style="padding: 1rem; align-items: center;">
     <h5><%= @filiais.total_count %>&nbsp; - FILIAIS VINCULADAS A CORPORAÇÃO - <%=current_empresa.corp.nome%> </h5>
+        Vencimento inspeção externa:
         <span class="badge badge-success">Em até 6 meses sem vaso vencido</span>
         <span class="badge badge-warning">Em até 6 meses com vaso vencido</span>
         <span class="badge badge-danger">Tem vaso vencido</span>
@@ -64,11 +65,13 @@
                         <th rowspan="2">PMTA [psi]</th>
                         <th rowspan="2">Último relatório</th>
                         <th rowspan="2">Data</th>
-                        <th colspan="2">Vencimento das inspeções</th>                        
+                        <th colspan="4">Vencimento das inspeções</th>                        
                     </tr>
                     <tr>                        
                         <th>Externa</th>
                         <th>Interna</th>
+                        <th>D.Seg.Ext.</th>
+                        <th>D.Seg.Int.</th>
                     </tr>                    
 
                     <% f.vasos.each do |vaso| %>
@@ -81,9 +84,20 @@
                             <% if vaso.relatorios.any? %>
                                 <% r = vaso.relatorios.max_by { |relatorio| relatorio.id } %>
                                 <td> <p class="card-text"><%= r.id %></p> </td>
-                                <td> <p class="card-text"><%= r.data_relatorio_formatada %></p> </td>
-                                <td> <p class="card-text"><%= r.dt_prox_insp_externa_formatada %></p> </td>
-                                <td> <p class="card-text"><%= r.dt_prox_insp_interna_formatada %></p> </td>
+                                <td> <p class="card-text"><%= r.data_relatorio_formatada %></p> </td>                                
+                                <td style="text-align: center;">
+                                    <%if !f.TemVasoVencido(daqui_seis_meses)%>
+                                        <span class="badge-lg badge-success"><%= r.dt_prox_insp_externa_formatada %></span>
+                                    <%elsif !f.TemVasoVencido(hoje)%>
+                                        <span class="badge-lg badge-warning"><%= r.dt_prox_insp_externa_formatada %></span>
+                                    <%else%>
+                                        <span class="badge-lg badge-danger"><%= r.dt_prox_insp_externa_formatada %></span>
+                                    <%end%>
+                                </td>
+
+                                <td style="color: #000000; background-color: #FFFF00;"> <p class="card-text"><%= r.dt_prox_insp_interna_formatada %></p> </td>
+                                <td style="color: #000000; background-color: #FFFF00;"> <p class="card-text"><%= r.dt_prox_insp_dispseg_externa_formatada %></p> </td>
+                                <td style="color: #000000; background-color: #FFFF00;"> <p class="card-text"><%= r.dt_prox_insp_dispseg_interna_formatada %></p> </td>
                             <% else %>
                                 <td> <p class="card-text">Sem relatórios</p> </td>
                             <% end %>
