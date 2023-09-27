@@ -84,6 +84,8 @@
 
                                 <% if vaso.relatorios.any? %>
                                     <% r = vaso.relatorios.max_by { |relatorio| relatorio.id } %>
+                                    <% rdispseg = vaso.relatorio_dispsegs.max_by{ |relatorio_dispseg| relatorio_dispseg.id  } %>
+
                                     <td> <%= r.id %> </td>
                                     <td> <%= r.data_relatorio_formatada %> </td>
                                     
@@ -96,7 +98,7 @@
                                     <%end%>                               
 
                                     <td style="color: #000000; background-color: #FFFF00;"> <%= r.dt_prox_insp_interna_formatada %> </td>
-                                    <td style="color: #000000; background-color: #FFFF00;"> <%= r.dt_prox_insp_dispseg_externa_formatada %> </td>
+                                    <td style="color: #000000; background-color: #FFFF00;"> <%= rdispseg ? rdispseg.data_prox_insp_formatada : '-' %> </td>
                                     <td style="color: #000000; background-color: #FFFF00;"> <%= r.dt_prox_insp_dispseg_interna_formatada %> </td>
                                 <% else %>
                                     <td> <p class="card-text">Sem relatórios</p> </td>

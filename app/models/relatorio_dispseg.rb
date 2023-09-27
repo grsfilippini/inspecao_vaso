@@ -31,6 +31,10 @@ class RelatorioDispseg < ApplicationRecord
         .per(10)
     end
 
+  # Método para obter a data formatada (campo virtual)
+  def data_prox_insp_formatada
+    data_prox_insp.strftime('%d/%m/%Y') if data_prox_insp.present?
+  end
 
   private
   
