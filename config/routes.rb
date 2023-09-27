@@ -88,7 +88,11 @@ Rails.application.routes.draw do
     get 'get_relatorios_by_vaso/:vaso_id', to: 'relatorios#get_relatorios_by_vaso'
     
 
-    resources :relatorio_dispsegs
+    resources :relatorio_dispsegs do
+      member do
+        post 'marcar_como_impresso'
+      end
+    end
     get 'pesquisa_relatorio_dispseg', to: 'relatorio_dispsegs#pesquisa'
     get 'relatorio_dispseg_impresso', to: 'relatorio_dispsegs#impresso'
     get 'inicia_inspecao_dispseg_proprietario',to: 'relatorio_dispsegs#inicia_inspecao_proprietario'

@@ -36,6 +36,9 @@
                 <th>Disp. Segurança</th>
                 <th>Vaso</th>
                 <th>Proprietária</th>
+                <%if @para_imprimir %>
+                    <th>Impresso</th>
+                <% end %>
                 <th>
                     <%= link_to  new_admins_backoffice_relatorio_dispseg_path, class:"btn btn-success btn-circle btn-sm" do %>
                         <i class="fas fa-plus"></i>
@@ -52,6 +55,13 @@
                     <td><%= r.disp_seguranca.serie %></td>
                     <td><%= r.vaso.num_serie %></td>
                     <td><%= r.cadastro.nome_curto %></td>
+                    
+                    <%if @para_imprimir %>
+                        <td>                        
+                            <%= link_to "Marcar", marcar_como_impresso_admins_backoffice_relatorio_dispseg_path(r), method: :post, class: "btn btn-primary" %>
+                        </td>
+                    <% end %>
+
                     <td style="width: 50px">
                         <%= link_to edit_admins_backoffice_relatorio_dispseg_path(r.id), class:"btn btn-info btn-circle btn-sm" do %> 
                             <i class="fas fa-edit"></i>

@@ -4,6 +4,8 @@ class AdminsBackoffice::RelatorioDispsegsController < AdminsBackofficeController
     
     def index
       @relatorio_dispsegs = RelatorioDispseg.where(bimpresso: false).order(id: :desc).page(params[:page]).per(10)
+      # Indica que esta listagem é de relatórios que não foram impressos
+      @para_imprimir = TRUE
     end
   
     def new        
@@ -53,10 +55,14 @@ class AdminsBackoffice::RelatorioDispsegsController < AdminsBackofficeController
         # O includes abaixo inclui na query a busca 
         # Se não for usado, e usar diretamente na view da index, ele fará a cada cadastro uma nova query para buscar a corporação
         @relatorio_dispsegs = RelatorioDispseg.pesquisa(params[:page], params[:serie_dispseg], params[:serie_vaso])
+        # Indica que esta listagem não é exclusivamente de relatórios que não foram impressos
+        @para_imprimir = FALSE
     end
 
     def impresso
       @relatorio_dispsegs = RelatorioDispseg.where(bimpresso: true).order(id: :desc).page(params[:page]).per(10)
+      # Indica que esta listagem é de relatórios que não foram impressos
+      @para_imprimir = FALSE
     end
 
     def inicia_inspecao_proprietario
@@ -68,6 +74,12 @@ class AdminsBackoffice::RelatorioDispsegsController < AdminsBackofficeController
       relatorios = RelatorioDispseg.where(vaso_id: vaso_id).order(id: :desc)    
       render json: relatorios.select(:id, :data).as_json
     end  
+
+    def marcar_como_impresso
+      @relatorio_dispseg = RelatorioDispseg.find(params[:id])
+      @relatorio_dispseg.update(bimpresso: true)
+      redirect_to admins_backoffice_relatorio_dispsegs_path, notice: "Relatório marcado como impresso."      
+    end
 
     private
   
