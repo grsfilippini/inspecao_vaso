@@ -52,15 +52,10 @@
                     <td><%= r.disp_seguranca.serie %></td>
                     <td><%= r.vaso.num_serie %></td>
                     <td><%= r.cadastro.nome_curto %></td>
-                    <td style="width: 100px">
+                    <td style="width: 50px">
                         <%= link_to edit_admins_backoffice_relatorio_dispseg_path(r.id), class:"btn btn-info btn-circle btn-sm" do %> 
                             <i class="fas fa-edit"></i>
-                        <%end%>
-                        <%= link_to admins_backoffice_relatorio_dispseg_path(r.id), 
-                                    method: :delete, class:"btn btn-danger btn-circle btn-sm", 
-                                    data: { confirm: t('mensagens.confirmar_exclusao', item: r.id)} do %>
-                            <i class="fas fa-minus"></i> 
-                        <%end%>
+                        <%end%>                        
                     </td>
                 </tr>
             <% end %>

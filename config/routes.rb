@@ -56,7 +56,11 @@ Rails.application.routes.draw do
     resources :potencial_riscos
     resources :tipo_inspecaos
     resources :tipo_vasos    
-    resources :relatorios
+    resources :relatorios do
+      member do
+        post 'marcar_como_impresso'
+      end
+    end
     get 'relatorio_para_impressao',    to: 'relatorios#para_imprimir'
     get 'relatorio_em_aberto',         to: 'relatorios#em_aberto'
     get 'pesquisa_relatorio',          to: 'relatorios#pesquisa'
@@ -82,6 +86,7 @@ Rails.application.routes.draw do
     get 'preenche_parecer_conclusivo', to: 'relatorios#preenche_parecer_conclusivo'
     get 'inicia_inspecao_proprietario',to: 'relatorios#inicia_inspecao_proprietario'
     get 'get_relatorios_by_vaso/:vaso_id', to: 'relatorios#get_relatorios_by_vaso'
+    
 
     resources :relatorio_dispsegs
     get 'pesquisa_relatorio_dispseg', to: 'relatorio_dispsegs#pesquisa'

@@ -27,15 +27,10 @@
                     <td><%= a.serie %></td>
                     <td><%= a.cadastro.nome_curto.truncate(30) %></td>
                     <td><%= a.tipo_dispositivo_seguranca.nome.truncate(30) %></td>
-                    <td style="width: 100px">
+                    <td style="width: 50px">
                         <%= link_to edit_admins_backoffice_disp_seguranca_path(a.id), class:"btn btn-info btn-circle btn-sm" do %> 
                             <i class="fas fa-edit"></i>
-                        <%end%>
-                        <%= link_to admins_backoffice_disp_seguranca_path(a.id),
-                                    method: :delete, class:"btn btn-danger btn-circle btn-sm", 
-                                    data: { confirm: t('mensagens.confirmar_exclusao', item: a.serie)} do %>
-                            <i class="fas fa-minus"></i> 
-                        <%end%>
+                        <%end%>                        
                     </td>
                 </tr>
             <% end %>

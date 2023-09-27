@@ -20,6 +20,7 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
     @nome_rel = 'Concluídos'
     @proprietarias = Cadastro.where(eh_fabricante: false, eh_empresa_inspetora: false).order(:nome_curto)
     @em_aberto = FALSE
+    @para_imprimir = FALSE
   end
   
   def para_imprimir
@@ -27,6 +28,7 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
     @nome_rel = 'para Impressão'
     @proprietarias = Cadastro.where(eh_fabricante: false, eh_empresa_inspetora: false).order(:nome_curto)
     @em_aberto = FALSE
+    @para_imprimir = TRUE
   end
   
   def em_aberto
@@ -34,6 +36,7 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
     @nome_rel = 'em Aberto (rascunho)'
     @proprietarias = Cadastro.where(eh_fabricante: false, eh_empresa_inspetora: false).order(:nome_curto)
     @em_aberto = TRUE
+    @para_imprimir = FALSE
   end
 
   def pesquisa    
@@ -41,8 +44,11 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
     @nome_rel = 'Concluídos (pesquisa)'
     @proprietarias = Cadastro.where(eh_fabricante: false, eh_empresa_inspetora: false).order(:nome_curto)
     @em_aberto = FALSE
+    @para_imprimir = FALSE
   end
   
+
+
   def new    
     @relatorio = Relatorio.new
     # Verifica se o parâmetro sel_relatorio_id está presente e não é nil
@@ -308,6 +314,12 @@ end
     relatorios = Relatorio.where(vaso_id: vaso_id).order(id: :desc)    
     render json: relatorios.select(:id, :data_relatorio, :user_id, :tipo_inspecao_id, :art_id, :ph_id, :cidade_id, :vaso_id, :finalidade_vaso_id, :proprietaria_id, :inspetora_id).as_json
   end  
+
+  def marcar_como_impresso
+    @relatorio = Relatorio.find(params[:id])
+    @relatorio.update(brel_impresso: true)
+    redirect_to admins_backoffice_relatorio_para_impressao_path, notice: "Relatório marcado como impresso."
+  end
 
   ##########
   # PRIVATE

@@ -23,14 +23,9 @@
                     <td><%= t.id %></td>
                     <td><%= t.nome.truncate(30) %></td>
                     <td><%= t.descricao.truncate(30) %></td>
-                    <td style="width: 100px">
+                    <td style="width: 50px">
                         <%= link_to edit_admins_backoffice_tipo_dispositivo_seguranca_path(t.id), class:"btn btn-info btn-circle btn-sm" do %> 
                             <i class="fas fa-edit"></i>
-                        <%end%>
-                        <%= link_to admins_backoffice_tipo_dispositivo_seguranca_path(t.id), 
-                                    method: :delete, class:"btn btn-danger btn-circle btn-sm", 
-                                    data: { confirm: t('mensagens.confirmar_exclusao', item: t.nome)} do %>
-                            <i class="fas fa-minus"></i> 
                         <%end%>
                     </td>
                 </tr>
