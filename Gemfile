@@ -55,7 +55,7 @@ gem 'kaminari-i18n', '~> 0.3.2' # Gem que ajusta o i18n para o kaminari em qualq
 gem 'terser'
 
 # Gerador de pdf
-gem 'wicked_pdf'
+gem 'wicked_pdf', '~> 2.7'
 gem 'wkhtmltopdf-binary'
 
 group :development, :test do

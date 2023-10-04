@@ -33,4 +33,7 @@ Rails.application.config.assets.precompile += %w( sb-admin-2.js sb-admin-2.css
 # vendor/assets/stylesheets e javascripts
 Rails.application.config.assets.precompile += %w( jquery-2.2.3/dist/jquery.min.js)
 
+# Adicione seu arquivo pdf.scss à lista de ativos pré-compilados
+Rails.application.config.assets.precompile += %w( pdf.scss )
+
                                                   
