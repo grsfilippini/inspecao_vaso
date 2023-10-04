@@ -54,6 +54,10 @@ gem 'kaminari-i18n', '~> 0.3.2' # Gem que ajusta o i18n para o kaminari em qualq
 # Compressor de assets
 gem 'terser'
 
+# Gerador de pdf
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]  

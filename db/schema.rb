@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_20_190548) do
+ActiveRecord::Schema.define(version: 2023_10_04_175745) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_repack"
@@ -91,6 +91,7 @@ ActiveRecord::Schema.define(version: 2023_08_20_190548) do
     t.decimal "numero", precision: 10
     t.bigint "user_id"
     t.bigint "cidade_id"
+    t.integer "seq_roteiro"
     t.index ["cidade_id"], name: "index_cadastros_on_cidade_id"
     t.index ["user_id"], name: "index_cadastros_on_user_id"
   end

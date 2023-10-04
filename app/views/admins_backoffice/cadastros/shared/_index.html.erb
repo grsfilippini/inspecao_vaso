@@ -19,10 +19,18 @@
                     </div>
                     
                 </div>
-            </div>
+            </div>            
         </div>
     <%end%>
 </div>
+
+<% if @mostrar_botao_pdf %>
+  <div class="text-right">
+    <%= link_to admins_backoffice_cadastros_path(format: :pdf), class: "btn btn-primary btn-sm" do %>
+      <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF
+    <% end %>
+  </div>
+<% end %>
 
 
 <div class="table-responsive">

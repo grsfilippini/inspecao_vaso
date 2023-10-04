@@ -1,0 +1,18 @@
+<h1> <%= t('mensagens.lista_de', model: @cadastros.model_name.human(count: @cadastros.count)) %> </h1>
+
+<table class="table">    
+    <thead>
+        <tr>                                
+            <th><%= traduz_atributos_humanos(@cadastros, :nome_curto) %> </th>
+            <th><%= traduz_atributos_humanos(@cadastros, :corp_id) %> </th>                
+        </tr>
+    </thead>
+    <tbody> 
+        <% @cadastros.each do |cad|%>                                                                              
+            <tr>
+                <td><%= cad.nome_curto %></td>
+                <td><%= cad.corp.nome %></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>

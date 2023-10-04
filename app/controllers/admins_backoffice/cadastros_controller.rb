@@ -5,12 +5,23 @@ class AdminsBackoffice::CadastrosController < AdminsBackofficeController
     def index
       # O includes abaixo inclui na query a busca por cadastro_corp
       # Se não for usado, e usar diretamente na view da index, ele fará a cada cadastro uma nova query para buscar a corporação
-      @cadastros = Cadastro.includes(:corp, :user)
-                           .all
-                           .order(:nome_curto)
-                           .page(params[:page])
-                           .per(50)
-      @corps = Corp.all.order(:nome)
+      @mostrar_botao_pdf = TRUE
+      respond_to do |format|
+        format.html{
+          @cadastros = Cadastro.includes(:corp, :user)
+                               .all
+                               .order(:nome_curto)
+                               .page(params[:page])
+                               .per(50)                           
+          @corps = Corp.all.order(:nome)
+        }
+        #format.json
+        format.pdf {
+          @cadastros = Cadastro.includes(:corp, :user).all.order(:nome_curto)               
+          @corps = Corp.all.order(:nome)
+          render template: 'admins_backoffice/cadastros/relatorio', pdf: 'cadastro_relatorio', layout: 'pdf.html' 
+        }
+      end
     end
   
     def new
@@ -49,17 +60,23 @@ class AdminsBackoffice::CadastrosController < AdminsBackofficeController
     end
   
     def pesquisa
-      @cadastros = Cadastro.pesquisa_nome_corp(params[:page], params[:termo_nome], params[:corp_id])
-      
-      #@cadastros = Cadastro.includes(:corp, :user)
-      #                     .all
-      #                     .order(:nome_curto)
-      #                     .page(params[:page])
-      #                     .per(50)
-      
-      @corps = Corp.all.order(:nome)
+      @mostrar_botao_pdf = FALSE
+      respond_to do |format|
+        format.html{          
+          @cadastros = Cadastro.pesquisa_nome_corp(params[:page], params[:termo_nome], params[:corp_id])      
+          @corps = Corp.all.order(:nome)
+        }
+      end
     end
   
+    # def pesquisa      
+    #   @cadastros = Cadastro.pesquisa_nome_corp(params[:page], params[:termo_nome], params[:corp_id])
+    #   @corps = Corp.all.order(:nome)
+    #   render template: 'admins_backoffice/cadastros/relatorio', pdf: 'cadastro_relatorio'
+      # @cadastros = Cadastro.pesquisa_nome_corp(params[:page], params[:termo_nome], params[:corp_id])
+      # @corps = Corp.all.order(:nome)      
+    # end
+    
   
     private
   
@@ -83,7 +100,8 @@ class AdminsBackoffice::CadastrosController < AdminsBackofficeController
                                        :regiao,
                                        :corp_id,
                                        :numero,
-                                       :user_id)
+                                       :user_id,
+                                       :seq_roteiro)
     end
   
     def set_cadastro
