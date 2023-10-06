@@ -66,6 +66,11 @@ class AdminsBackoffice::CadastrosController < AdminsBackofficeController
           @cadastros = Cadastro.pesquisa_nome_corp(params[:page], params[:termo_nome], params[:corp_id])      
           @corps = Corp.all.order(:nome)
         }
+        format.pdf{
+          @cadastros = Cadastro.pesquisa_nome_corp_pdf(params[:termo_nome], params[:corp_id])
+          @corps = Corp.all.order(:nome)
+          render template: 'admins_backoffice/cadastros/pesquisa', pdf: 'pesquisa_cadastro_relatorio', layout: 'pdf.html'
+        }
       end
     end
   

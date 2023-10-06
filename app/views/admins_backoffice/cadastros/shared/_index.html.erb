@@ -3,13 +3,13 @@
     <%= form_with(url:admins_backoffice_pesquisa_cadastro_path, local: true, method: :get) do |form| %>
         <div class="row">        
                         
-            <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+            <div class="col-lg-4 col-md-5 col-sm-12 mb-3">
                 <div class="input-group">      
                     <%= form.text_field :termo_nome, class:"bg-light border-0 small", placeholder: "Nome curto ...", class:"form-control" %>
                 </div>
             </div>
             
-            <div class="col-lg-4 col-md-6 col-sm-12 mb-3">                 
+            <div class="col-lg-4 col-md-5 col-sm-12 mb-3">                 
                 <div class="input-group">                    
                     <%= form.collection_select :corp_id, @corps, :id, :nome, {include_blank: true }, {style: "width: 120px;", class:"form-control"} %>
                     <div class="input-group-append">
@@ -19,10 +19,33 @@
                     </div>
                     
                 </div>
-            </div>            
+            </div>
+
+            <div class="col-lg-4 col-md-2 col-sm-12 mb-3">                
+                <button class="btn btn-secondary" type="button" id="custom_submit_button">
+                    <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF
+                </button>
+            </div>
         </div>
     <%end%>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const customSubmitButton = document.getElementById("custom_submit_button");
+
+    customSubmitButton.addEventListener("click", function() {
+      const termoNome = document.getElementById("termo_nome").value;
+      const corpId = document.getElementById("corp_id").value;
+      
+      // Construa a URL personalizada com os valores dos campos
+      const customUrl = `/admins_backoffice/pesquisa_cadastro_pdf.pdf?termo_nome=${termoNome}&corp_id=${corpId}`;
+
+      // Redirecione o usuário para a URL personalizada
+      window.location.href = customUrl;
+    });
+  });
+</script>
 
 <% if @mostrar_botao_pdf %>
   <div class="text-right">

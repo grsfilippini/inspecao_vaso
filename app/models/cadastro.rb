@@ -54,6 +54,18 @@ class Cadastro < ApplicationRecord
         end
     end
 
+    def self.pesquisa_nome_corp_pdf(termo_nome, corp_id)                      
+      if corp_id.blank?
+         includes(:corp, :user)
+        .where("lower(nome_curto) LIKE ?", "%#{termo_nome.downcase}%")
+        .order(:nome_curto)
+      else
+         includes(:corp, :user)           
+        .where("lower(nome_curto) LIKE ?", "%#{termo_nome.downcase}%")
+        .where(corp_id: corp_id)
+        .order(:nome_curto)
+      end
+  end
     
     def TemVasoVencido(data_limite)
       vaso_vencido = false
