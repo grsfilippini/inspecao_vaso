@@ -218,7 +218,15 @@
                                     <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
                                         <%= form.number_field :volume, step: 0.001, min: 0.000, class: "form-control", id: "volume_m3", readonly: true %>
                                     </div>
-                                </div>                                
+                                </div>
+                                <div class="form-group row">                                    
+                                    <div class="col-sm-8 mb-2 mb-sm-0">
+                                    </div>
+                                    <%= form.label "Estimado", "Estimado [m<sup>3</sup>]".html_safe, class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                    <div class="col-sm-2 mb-2 mb-sm-0">                                        
+                                        <input type="number" step="0.001" min="0.000" class="form-control" id="volume_estimado" name="volume_estimado" readonly="readonly">
+                                    </div>
+                                </div>   
 
                                 <script>
                                     document.addEventListener("DOMContentLoaded", function() {
@@ -418,7 +426,60 @@
                                         });
                                     </script>
                                 <% end %>
-                                
+
+                                <!--
+                                if (VolumeM3 = 0) AND (PerimetroDiametroExterno > 0) AND (EntreSoldasCorpo > 0) AND (ProfundidadeTampo >0) then
+                                    Raio = PerimetroDiametroExterno/(2*PI) - 0.4 ' desconta espessura média de 4 mm
+                                    Area = PI*Raio*Raio
+                                    Comprimento = EntreSoldasCorpo + 2*ProfundidadeTampo*0.8 'Adota 80% do tampo como cilindro reto
+                                    VolumeM3 = Area * Comprimento * 0.000001 ' Calcula o volume em cm3 e transforma para m3
+                                    
+                                    ' Seta volume em M3 no edit
+                                    main_form.updateDouble(ncolVolumeM3, VolumeM3)
+                                endif
+                                -->
+                                <!-- Calcula o campo :volume quando dimensões forem alteradas -->
+                                <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const perimetroDiametroExterno = document.getElementById('perimetro');
+                                    const entreSoladasCorpo = document.getElementById('vaso_entre_soladas_corpo');
+                                    const profundidadeTampo = document.getElementById('vaso_profundidade_tampo');
+                                    const volume = document.getElementById('volume_estimado');
+
+                                    function updateVolume() {
+                                        const perimetroValue = parseFloat(perimetroDiametroExterno.value) || 0;
+                                        const entreSoladasValue = parseFloat(entreSoladasCorpo.value) || 0;
+                                        const profundidadeValue = parseFloat(profundidadeTampo.value) || 0;
+                                        //const volumeValue = parseFloat(volume.value) || 0;
+
+                                        //console.log(perimetroValue)
+                                        //console.log(entreSoladasValue)
+                                        //console.log(profundidadeValue)
+                                        //console.log(volumeValue)
+
+                                        if (entreSoladasValue > 0 && perimetroValue > 0) {
+                                            const pi = Math.PI
+                                            // Cálculo em cm
+                                            // Calcula o raio e desconta espessura média de 4 mm
+                                            const raioInterno = perimetroValue/(2*pi) - 0.4 
+                                            // calcula a área da base do cilindro
+                                            const areaBase = pi*(raioInterno**2)
+                                            // Adota 80% do tampo como cilindro reto
+                                            const comprimentoCilindro = entreSoladasValue + 2*profundidadeValue*0.8 
+                                            // Calcula o volume em cm3 e transforma para m3
+                                            const novoVolume = areaBase * comprimentoCilindro * 0.000001
+                                                                                        
+                                            volume.value = novoVolume.toFixed(3);
+                                            //console.log(novoVolume)
+                                        }
+                                    }
+
+                                    perimetroDiametroExterno.addEventListener('input', updateVolume);
+                                    entreSoladasCorpo.addEventListener('input', updateVolume);
+                                    profundidadeTampo.addEventListener('input', updateVolume);
+                                });
+                                </script>
+
                             </fieldset>
                             
                             <hr>
