@@ -3,7 +3,7 @@ class AdminsBackoffice::RelatorioDispsegsController < AdminsBackofficeController
     before_action :get_relacoes, only: [:new, :edit]
     
     def index
-      @relatorio_dispsegs = RelatorioDispseg.where(bimpresso: false).order(id: :desc).page(params[:page]).per(10)
+      @relatorio_dispsegs = RelatorioDispseg.where(bimpresso: false).order(id: :asc).page(params[:page]).per(10)
       # Indica que esta listagem é de relatórios que não foram impressos
       @para_imprimir = TRUE
     end
