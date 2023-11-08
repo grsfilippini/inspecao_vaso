@@ -64,16 +64,57 @@
                                     <%= form.collection_select(:proprietaria_id, @proprietarias, :id, :nome_curto, { include_blank: 'Selecione o proprietário'}, {class: 'select-width-150 form-control' }) %>
                                 </div>
                             </div>
-
-                            <div class="form-group row">
-                                <%= form.label :foto_plaqueta, 'Plaqueta', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
-                                <div class="form-label col-sm-4 mb-0 mb-sm-0">                                    
-                                    <% if @relatorio.vaso.foto_plaqueta.present? %>
-                                      <img src="data:image/jpeg;base64,<%= Base64.encode64(@relatorio.vaso.foto_plaqueta) %>" width="auto" height="170">
+                            
+                            <fieldset class="Vaso_dados" style="border: 1px solid #ddd; border-radius: 5px;">                            
+                                <div class="form-group row">
+                                    <div class="col-sm-1 mb-3 mb-sm-0">
+                                        <h6><span class="badge badge-secondary">Vaso</span></h6>
+                                    </div>
+                                    <div class="col-sm-1 mb-2 mb-sm-0">
+                                        <span>PMTA</span>
+                                    </div>
+                                    <div class="col-sm-2 mb-2 mb-sm-0">
+                                        <span><%= @relatorio.vaso.pmta_atual %> [MPa]</span>
+                                    </div>
+                                    <div class="col-sm-1 mb-2 mb-sm-0">
+                                        <span>Volume</span>
+                                    </div>
+                                    <div class="col-sm-2 mb-2 mb-sm-0">
+                                        <span><%= @relatorio.vaso.volume %> [m<sup>3</sup>]</span>
+                                    </div>
+                                    <div class="col-sm-1 mb-2 mb-sm-0">
+                                        <span>Categ.</span>
+                                    </div>
+                                    <div class="col-sm-2 mb-2 mb-sm-0">
+                                        <span><%= @relatorio.vaso.catnr13.categoria %></span>
+                                    </div>                                
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-1 mb-3 mb-sm-0">
+                                        <h6><span class="badge badge-secondary">Disp. seg.</span></h6>
+                                    </div>
+                                    <div class="col-sm-1 mb-2 mb-sm-0">
+                                        <span>Pabre</span>
+                                    </div>
+                                    <div class="col-sm-2 mb-2 mb-sm-0">
+                                    <% if @relatorio.dispositivoseg_pabertura <= @relatorio.vaso.pmta_atual %>
+                                        <span class="badge badge-success"><%= @relatorio.dispositivoseg_pabertura %> [MPa]</span>
+                                    <% elsif %>
+                                        <span class="badge badge-danger"><%= @relatorio.dispositivoseg_pabertura %> [MPa]</span>
                                     <% end %>
-                                </div>                              
-                            </div>
+                                    </div>
+                                </div>
 
+                                <div class="form-group row">
+                                    <%= form.label :foto_plaqueta, 'Plaqueta', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="form-label col-sm-5 mb-0 mb-sm-0">                                    
+                                        <% if @relatorio.vaso.foto_plaqueta.present? %>
+                                        <img src="data:image/jpeg;base64,<%= Base64.encode64(@relatorio.vaso.foto_plaqueta) %>" width="auto" height="170">
+                                        <% end %>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <div class="form-group row"> </div>
                             <div class="form-group row">
                                 <%= form.label :foto_antes_inspecao, 'Antes', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>                                
                                 <div class="form-label col-sm-5 mb-0 mb-sm-0">                                    
