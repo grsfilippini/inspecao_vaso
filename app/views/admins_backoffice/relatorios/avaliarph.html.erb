@@ -33,6 +33,12 @@
                         <%= form_with(model: [ :admins_backoffice, @relatorio ], local: true, :html => { :multipart => true }) do |form| %>
                             
                             <div class="form-group row">
+                                <div class="col-sm-4 mb-0 mb-sm-0">                                    
+                                    <%= form.collection_select(:tipo_inspecao_id, @tipo_inspecaos, :id, :nome, {include_blank: 'Selecione um vaso'}, {class: 'select-width-150 form-control' }) %>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">
                                 <%= form.label :art_id, 'ART', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
                                 <div class="col-sm-3 mb-0 mb-sm-0">                                    
                                     <%= form.collection_select(:art_id, @arts, :id, lambda { |art| "#{art.art} - #{art.cadastro.nome_curto}" }, { include_blank: 'Selecione uma ART'}, {class: 'select-width-150 form-control' }) %>

@@ -116,6 +116,13 @@
                                 </div>
                                     
                                 <div class="form-group row">
+                                    <%= form.label :tag_proprietaria, "Tag proprietária", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-4 mb-3 mb-sm-0">
+                                        <%= form.text_field :tag_proprietaria, {class: "form-control"} %>
+                                    </div>                                    
+                                </div>
+
+                                <div class="form-group row">
                                     <%= form.label :observacoes, "Obs.", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
                                     <div class="col-sm-4 mb-3 mb-sm-0">                                        
                                         <%= form.text_area :observacoes, {class: "form-control"} %>

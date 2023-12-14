@@ -61,7 +61,7 @@
                             <legend>Teste hidrostático</legend>
                             
                             <div class="form-group row">
-                                <%= form.label :foto_antes_inspecao, 'Antes', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>                                
+                                <%= form.label :foto_antes_inspecao, 'Teste Hidrostático', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>                                
                                 <div class="form-label col-sm-5 mb-0 mb-sm-0">                                    
                                     <% if @relatorio.foto_th.present? %>
                                       <img src="data:image/jpeg;base64,<%= Base64.encode64(@relatorio.foto_th) %>" width="auto" height="150">
