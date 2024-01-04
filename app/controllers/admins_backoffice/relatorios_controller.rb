@@ -164,7 +164,46 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
     end
   end
 
-  def update              
+  def update   
+    
+    if (params[:relatorio][:remove_foto_antes]      == '1' || params[:relatorio][:remove_foto_antes]      == 'true')
+      @relatorio.update_attribute(:foto_antes_inspecao, nil)          
+    end
+    if (params[:relatorio][:remove_foto_pos]        == '1' || params[:relatorio][:remove_foto_pos]        == 'true')
+      @relatorio.update_attribute(:foto_pos_inspecao, nil)          
+    end
+    if (params[:relatorio][:remove_foto_corpo]      == '1' || params[:relatorio][:remove_foto_corpo]      == 'true')
+      @relatorio.update_attribute(:foto_corpo, nil)     
+    end
+    if (params[:relatorio][:remove_foto_instalacao] == '1' || params[:relatorio][:remove_foto_instalacao] == 'true')
+      @relatorio.update_attribute(:foto_instalacao, nil)
+    end
+    if (params[:relatorio][:remove_foto_th]         == '1' || params[:relatorio][:remove_foto_th]         == 'true')
+      @relatorio.update_attribute(:foto_th, nil)          
+    end
+    if (params[:relatorio][:remove_foto_interna1]   == '1' || params[:relatorio][:remove_foto_interna1]   == 'true')
+      @relatorio.update_attribute(:foto_interna1, nil)          
+    end
+    if (params[:relatorio][:remove_foto_interna2]   == '1' || params[:relatorio][:remove_foto_interna2]   == 'true')
+      @relatorio.update_attribute(:foto_interna2, nil)          
+    end
+    if (params[:relatorio][:remove_foto_interna3]   == '1' || params[:relatorio][:remove_foto_interna3]   == 'true')
+      @relatorio.update_attribute(:foto_interna3, nil)          
+    end
+    if (params[:relatorio][:remove_foto_interna4]   == '1' || params[:relatorio][:remove_foto_interna4]   == 'true')
+      @relatorio.update_attribute(:foto_interna4, nil)          
+    end
+
+    params[:relatorio].delete(:remove_foto_antes)      if params[:relatorio].key?(:remove_foto_antes)
+    params[:relatorio].delete(:remove_foto_pos)        if params[:relatorio].key?(:remove_foto_pos)
+    params[:relatorio].delete(:remove_foto_corpo)      if params[:relatorio].key?(:remove_foto_corpo)
+    params[:relatorio].delete(:remove_foto_instalacao) if params[:relatorio].key?(:remove_foto_instalacao)
+    params[:relatorio].delete(:remove_foto_th)         if params[:relatorio].key?(:remove_foto_th)
+    params[:relatorio].delete(:remove_foto_interna1)   if params[:relatorio].key?(:remove_foto_interna1)
+    params[:relatorio].delete(:remove_foto_interna2)   if params[:relatorio].key?(:remove_foto_interna2)
+    params[:relatorio].delete(:remove_foto_interna3)   if params[:relatorio].key?(:remove_foto_interna3)
+    params[:relatorio].delete(:remove_foto_interna4)   if params[:relatorio].key?(:remove_foto_interna4)
+
     if params_relatorio.present?      
       if @relatorio.update(params_relatorio)                
         # Verificar se um novo arquivo de imagem foi enviado
@@ -172,34 +211,42 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
           # Atualizar o campo de imagem diretamente com o novo arquivo
           @relatorio.update_attribute(:foto_antes_inspecao, params[:relatorio][:foto_antes_inspecao].read)
         end
+
         if params[:relatorio][:foto_pos_inspecao].present?
           # Atualizar o campo de imagem diretamente com o novo arquivo
           @relatorio.update_attribute(:foto_pos_inspecao, params[:relatorio][:foto_pos_inspecao].read)
         end
+
         if params[:relatorio][:foto_corpo].present?
           # Atualizar o campo de imagem diretamente com o novo arquivo
           @relatorio.update_attribute(:foto_corpo, params[:relatorio][:foto_corpo].read)
         end
+
         if params[:relatorio][:foto_instalacao].present?
           # Atualizar o campo de imagem diretamente com o novo arquivo
           @relatorio.update_attribute(:foto_instalacao, params[:relatorio][:foto_instalacao].read)
         end
+
         if params[:relatorio][:foto_th].present?
           # Atualizar o campo de imagem diretamente com o novo arquivo
           @relatorio.update_attribute(:foto_th, params[:relatorio][:foto_th].read)
         end
+
         if params[:relatorio][:foto_interna1].present?
           # Atualizar o campo de imagem diretamente com o novo arquivo
           @relatorio.update_attribute(:foto_interna1, params[:relatorio][:foto_interna1].read)
         end
+
         if params[:relatorio][:foto_interna2].present?
           # Atualizar o campo de imagem diretamente com o novo arquivo
           @relatorio.update_attribute(:foto_interna2, params[:relatorio][:foto_interna2].read)
         end
+
         if params[:relatorio][:foto_interna3].present?
           # Atualizar o campo de imagem diretamente com o novo arquivo
           @relatorio.update_attribute(:foto_interna3, params[:relatorio][:foto_interna3].read)
         end
+
         if params[:relatorio][:foto_interna4].present?
           # Atualizar o campo de imagem diretamente com o novo arquivo
           @relatorio.update_attribute(:foto_interna4, params[:relatorio][:foto_interna4].read)
@@ -340,7 +387,7 @@ end
     end
    
     def params_relatorio
-      if params.key?(:relatorio)  
+      if params.key?(:relatorio) && !params[:relatorio].empty?
         params.require(:relatorio).permit(:user_id,
                                           :b_rascunho,
                                           :avaliadoph,

@@ -52,14 +52,26 @@ class AdminsBackoffice::VasosController < AdminsBackofficeController
     def edit # Ação de edição    
     end
   
-    def update        
+    def update 
+      # Verifica se veio o flag para remover foto da plaqueta.      
+      bRemoverFoto = (params[:vaso][:remove_foto_plaqueta] == '1' || params[:vaso][:remove_foto_plaqueta] == 'true')
+      
+      # Remover o atributo específico dos parâmetros caso exista.
+      # Isto é feito para que o update adiante não gere erro.
+      params[:vaso].delete(:remove_foto_plaqueta) if params[:vaso].key?(:remove_foto_plaqueta)
+
       if @vaso.update(params_vaso)
         # Verificar se um novo arquivo de imagem foi enviado
         
-        if params[:vaso][:foto_plaqueta].present?
-          # Atualizar o campo de imagem diretamente com o novo arquivo
-          @vaso.update_attribute(:foto_plaqueta, params[:vaso][:foto_plaqueta].read)
+        if params[:vaso][:foto_plaqueta].present?          
+            # Atualizar o campo de imagem diretamente com o novo arquivo
+            @vaso.update_attribute(:foto_plaqueta, params[:vaso][:foto_plaqueta].read)
+        elsif bRemoverFoto
+            # Atualizar o campo de imagem - sem imagem
+            @vaso.update_attribute(:foto_plaqueta, nil)          
+            #@vaso.save
         end
+
         redirect_to admins_backoffice_vasos_path, notice: "Vaso atualizado com sucesso!"    
       else
         get_relacoes
@@ -117,7 +129,13 @@ class AdminsBackoffice::VasosController < AdminsBackofficeController
       render json: vasos.select(:id, :num_serie).as_json
     end
 
-
+    # Método para remover a foto do vaso
+    # def remove_photo
+    #   @vaso = Vaso.find(params[:id])
+    #   @vaso.foto_plaqueta = nil # Define o atributo foto_plaqueta como nil para remover a foto
+    #   @vaso.save
+    #   redirect_to edit_admins_backoffice_vaso_path(@vaso), notice: 'Foto da plaqueta removida com sucesso!'
+    # end    
 
     ##########
     # PRIVATE
@@ -165,7 +183,9 @@ class AdminsBackoffice::VasosController < AdminsBackofficeController
                                    :setor_instalacao_vaso,
                                    :foto_plaqueta,
                                    :diametro_externo_corpo,
-                                   :user_id
+                                   :user_id,
+                                   :remove_foto_plaqueta,
+                                   :tag_proprietaria
                                   )
     end
   

@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     resources :vasos do
       member do
         get :json_data, defaults: { format: 'json' }
+        #delete :remove_photo # Rota para deletar a foto do vaso
       end
     end       
     get 'pesquisa_vaso', to: 'vasos#pesquisa'    

@@ -12,6 +12,8 @@
                                 <div class="form-label col-sm-5 mb-0 mb-sm-0">                                    
                                     <% if @relatorio.foto_antes_inspecao.present? %>
                                       <img src="data:image/jpeg;base64,<%= Base64.encode64(@relatorio.foto_antes_inspecao) %>" width="auto" height="150">
+                                      <%= form.label :remove_foto_antes %>
+                                      <%= form.check_box :remove_foto_antes %>
                                     <% end %>
                                 </div>                                
                                 <div class="form-label col-sm-6 mb-0 mb-sm-0">                                    
@@ -24,6 +26,8 @@
                                 <div class="form-label col-sm-5 mb-0 mb-sm-0">                                    
                                     <% if @relatorio.foto_pos_inspecao.present? %>
                                       <img src="data:image/jpeg;base64,<%= Base64.encode64(@relatorio.foto_pos_inspecao) %>" width="auto" height="150">
+                                      <%= form.label :remove_foto_pos %>
+                                      <%= form.check_box :remove_foto_pos %>
                                     <% end %>
                                 </div>                                
                                 <div class="form-label col-sm-6 mb-0 mb-sm-0">                                    
@@ -36,6 +40,8 @@
                                 <div class="form-label col-sm-5 mb-0 mb-sm-0">                                    
                                     <% if @relatorio.foto_corpo.present? %>
                                       <img src="data:image/jpeg;base64,<%= Base64.encode64(@relatorio.foto_corpo) %>" width="auto" height="150">
+                                      <%= form.label :remove_foto_corpo %>
+                                      <%= form.check_box :remove_foto_corpo %>
                                     <% end %>
                                 </div>                                
                                 <div class="form-label col-sm-6 mb-0 mb-sm-0">                                    
@@ -48,6 +54,8 @@
                                 <div class="form-label col-sm-5 mb-0 mb-sm-0">                                    
                                     <% if @relatorio.foto_instalacao.present? %>
                                       <img src="data:image/jpeg;base64,<%= Base64.encode64(@relatorio.foto_instalacao) %>" width="auto" height="150">
+                                      <%= form.label :remove_foto_instalacao %>
+                                      <%= form.check_box :remove_foto_instalacao %>
                                     <% end %>
                                 </div>                                
                                 <div class="form-label col-sm-6 mb-0 mb-sm-0">                                    
@@ -61,10 +69,12 @@
                             <legend>Teste hidrostático</legend>
                             
                             <div class="form-group row">
-                                <%= form.label :foto_antes_inspecao, 'Teste Hidrostático', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>                                
+                                <%= form.label :foto_th, 'Teste Hidrostático', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>                                
                                 <div class="form-label col-sm-5 mb-0 mb-sm-0">                                    
                                     <% if @relatorio.foto_th.present? %>
                                       <img src="data:image/jpeg;base64,<%= Base64.encode64(@relatorio.foto_th) %>" width="auto" height="150">
+                                      <%= form.label :remove_foto_th %>
+                                      <%= form.check_box :remove_foto_th %>
                                     <% end %>
                                 </div>                                
                                 <div class="form-label col-sm-6 mb-0 mb-sm-0">                                    
@@ -82,6 +92,8 @@
                                 <div class="form-label col-sm-5 mb-0 mb-sm-0">                                    
                                     <% if @relatorio.foto_interna1.present? %>
                                       <img src="data:image/jpeg;base64,<%= Base64.encode64(@relatorio.foto_interna1) %>" width="auto" height="150">
+                                      <%= form.label :remove_foto_interna1 %>
+                                      <%= form.check_box :remove_foto_interna1 %>
                                     <% end %>
                                 </div>                                
                                 <div class="form-label col-sm-6 mb-0 mb-sm-0">                                    
@@ -94,6 +106,8 @@
                                 <div class="form-label col-sm-5 mb-0 mb-sm-0">                                    
                                     <% if @relatorio.foto_interna2.present? %>
                                       <img src="data:image/jpeg;base64,<%= Base64.encode64(@relatorio.foto_interna2) %>" width="auto" height="150">
+                                      <%= form.label :remove_foto_interna2 %>
+                                      <%= form.check_box :remove_foto_interna2 %>
                                     <% end %>
                                 </div>                                
                                 <div class="form-label col-sm-6 mb-0 mb-sm-0">                                    
@@ -106,6 +120,8 @@
                                 <div class="form-label col-sm-5 mb-0 mb-sm-0">                                    
                                     <% if @relatorio.foto_interna3.present? %>
                                       <img src="data:image/jpeg;base64,<%= Base64.encode64(@relatorio.foto_interna3) %>" width="auto" height="150">
+                                      <%= form.label :remove_foto_interna3 %>
+                                      <%= form.check_box :remove_foto_interna3 %>
                                     <% end %>
                                 </div>                                
                                 <div class="form-label col-sm-6 mb-0 mb-sm-0">                                    
@@ -118,7 +134,9 @@
                                 <div class="form-label col-sm-5 mb-0 mb-sm-0">                                    
                                     <% if @relatorio.foto_interna4.present? %>
                                       <img src="data:image/jpeg;base64,<%= Base64.encode64(@relatorio.foto_interna4) %>" width="auto" height="150">
-                                    <% end %>
+                                      <%= form.label :remove_foto_interna4 %>
+                                      <%= form.check_box :remove_foto_interna4 %>
+                                    <% end %>                                    
                                 </div>                                
                                 <div class="form-label col-sm-6 mb-0 mb-sm-0">                                    
                                     <%= form.file_field :foto_interna4 %>
