@@ -55,7 +55,13 @@
                                     <%= form.check_box :insp_contratada_valvsegpop_interna, class: "form-check-input", id: "InspContDSInternaCheckbox" %>
                                     <%= form.label :insp_contratada_valvsegpop_interna, "Interna dispositivo de segurança", class: "form-check-label", for: "InspContDSInternaCheckbox" %>
                                 </div>
-                            </div>                            
+                            </div>
+                            <div class="form-group row">
+                                <div class="form-check col-sm-6 mb-0 mb-sm-0">                                    
+                                    <%= form.check_box :serv_contratado_dispseg_calibracao, class: "form-check-input", id: "ServContDSCalibracao" %>
+                                    <%= form.label :serv_contratado_dispseg_calibracao, "Calibração do dispositivo de segurança", class: "form-check-label", for: "ServContDSCalibracao" %>
+                                </div>
+                            </div>    
                             </fieldset>
                             
                             <fieldset class="ElemOperacao">

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_12_05_151404) do
+ActiveRecord::Schema.define(version: 2024_01_03_150130) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_repack"
@@ -58,7 +58,7 @@ ActiveRecord::Schema.define(version: 2023_12_05_151404) do
   end
 
   create_table "ambiente_insts", force: :cascade do |t|
-    t.string "ambiente"
+    t.string "ambiente", limit: 120
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -68,6 +68,8 @@ ActiveRecord::Schema.define(version: 2023_12_05_151404) do
     t.integer "cadastro_id", null: false
     t.integer "ph_id", default: 0, null: false
     t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_arts_on_user_id"
   end
 
@@ -441,6 +443,7 @@ ActiveRecord::Schema.define(version: 2023_12_05_151404) do
     t.integer "tipo_dreno_id", default: 0
     t.boolean "avaliadoph"
     t.boolean "bBloqueioInadvertidoIntencionalDoDispSeg", default: false
+    t.boolean "serv_contratado_dispseg_calibracao"
     t.index ["ambiente_inst_id"], name: "index_relatorios_on_ambiente_inst_id"
     t.index ["art_id"], name: "index_relatorios_on_art_id"
     t.index ["cidade_id"], name: "index_relatorios_on_cidade_id"
@@ -537,7 +540,7 @@ ActiveRecord::Schema.define(version: 2023_12_05_151404) do
     t.bigint "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string "tag_proprietaria"
+    t.string "tag_proprietaria", limit: 15
     t.index ["user_id"], name: "index_vasos_on_user_id"
   end
 

@@ -34,7 +34,7 @@
                             
                             <div class="form-group row">
                                 <div class="col-sm-4 mb-0 mb-sm-0">                                    
-                                    <%= form.collection_select(:tipo_inspecao_id, @tipo_inspecaos, :id, :nome, {include_blank: 'Selecione um vaso'}, {class: 'select-width-150 form-control' }) %>
+                                    <%= form.collection_select(:tipo_inspecao_id, @tipo_inspecaos, :id, :nome, {include_blank: 'Selecione o tipo de inspeção'}, {class: 'select-width-150 form-control' }) %>
                                 </div>
                             </div>
                             
@@ -231,7 +231,7 @@
 
                                             updateLaudoTH2aViaCheckbox();
                                         });
-                                    </script>
+                                    </script>                                    
                                 </div> 
 
                                 <div class="form-group row">
@@ -248,6 +248,11 @@
                                     <div class="form-check col-sm-3 mb-0 mb-sm-0">
                                         <%= form.check_box :belaborado_mapa_espessura, class: "form-check-input", id: "MapaEspessuraCheckbox", disabled: @relatorio.insp_contratada_vaso_mapa_espessura ? false : true %>
                                         <%= form.label :belaborado_mapa_espessura, "Mapa de medida de espessura", class: "form-check-label", for: "MapaEspessuraCheckbox" %>                                        
+                                    </div>
+                                    
+                                    <div class="form-check col-sm-3 mb-0 mb-sm-0">
+                                        <%= form.check_box :serv_contratado_dispseg_calibracao, class: "form-check-input", id: "ServContDispSegCalCheckbox", disabled: true %>
+                                        <%= form.label :serv_contratado_dispseg_calibracao, "Certificado de calibração do dispositivo de segurança", class: "form-check-label" %>
                                     </div>
                                 </div>
 

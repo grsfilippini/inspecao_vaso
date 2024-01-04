@@ -50,7 +50,7 @@
                             <div class="form-group row">
                                 <%#= form.label :tipo_inspecao, 'Inspeção:', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
                                 <div class="col-sm-4 mb-0 mb-sm-0">                                    
-                                    <%= form.collection_select(:tipo_inspecao_id, @tipo_inspecaos, :id, :nome, {include_blank: 'Selecione um vaso'}, {class: 'select-width-150 form-control' }) %>
+                                    <%= form.collection_select(:tipo_inspecao_id, @tipo_inspecaos, :id, :nome, {include_blank: 'Selecione o tipo de inspeção'}, {class: 'select-width-150 form-control' }) %>
                                 </div>
                                 
                                 <%= form.label :art_id, 'ART', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>

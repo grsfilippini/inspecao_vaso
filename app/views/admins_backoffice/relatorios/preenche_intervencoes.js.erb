@@ -29,7 +29,7 @@ txtIntervencoes.value = '';
     var pAberturaValue = <%= @relatorio.dispositivoseg_pabertura.to_f.round(3) %>;
     txtIntervencoes.value += '# O dispositivo de segurança foi aberto e limpo. Sua abertura foi ajustada para ' + pAberturaValue.toFixed(3) + ' MPa;\n'
 <% end %>
-<% if @relatorio.bdispseg_foifeita_calibracao %>
+<% if @relatorio.serv_contratado_dispseg_calibracao %>
     var pAberturaValue = <%= @relatorio.dispositivoseg_pabertura.to_f.round(3) %>;
     txtIntervencoes.value += '# Foi executada calibração do dispositivo de segurança com emissão de certificado, entregue junto deste relatório. Sua abertura foi ajustada para ' + pAberturaValue.toFixed(3) + ' MPa;\n'
 <% end %>

@@ -54,9 +54,19 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
     # Verifica se o parâmetro sel_relatorio_id está presente e não é nil
     if params[:sel_relatorio_id].present? && params[:sel_relatorio_id] != nil      
       # Faça suas atribuições aqui usando o valor de sel_relatorio_id
+      # puts params[:sel_relatorio_id]
       relatorio_base = Relatorio.find(params[:sel_relatorio_id])
+      #puts '**********************'
+      #puts relatorio_base.tipo_fixacao_vaso
+      #puts '**********************'
       attributes_to_assign = relatorio_base.attributes.except("id", "data_relatorio", "b_rascunho", "avaliadoph", "brel_impresso")  # Excluindo o campo "id"
-      @relatorio.assign_attributes(attributes_to_assign)
+      #attributes_to_assign = relatorio_base.attributes.slice("user_id", "art_id", "ph_id", "cidade_id", "vaso_id", "finalidade_vaso_id", "proprietaria_id", "inspetora_id")  # Excluindo o campo "id"
+      #puts '**********************'
+      #puts attributes_to_assign[:tipo_fixacao_vaso]
+      #puts attributes_to_assign
+      #puts '**********************'
+      @relatorio.assign_attributes(attributes_to_assign)      
+      #puts @relatorio.tipo_fixacao_vaso
     end
   end
   
@@ -400,6 +410,7 @@ end
                                           :insp_contratada_vaso_mapa_espessura,
                                           :insp_contratada_valvsegpop_externa,
                                           :insp_contratada_valvsegpop_interna,
+                                          :serv_contratado_dispseg_calibracao,
                                           :insp_pressostato,
                                           :insp_manometro,
                                           :insp_dreno,
@@ -444,7 +455,6 @@ end
                                           :bdispseg_tem_sinais_manutencao,
                                           :bdispseg_foisubstituido,
                                           :bdispseg_foifeito_ajuste,
-                                          :bdispseg_foifeita_calibracao,
                                           :dispositivoseg_observacoes,
                                           :dispositivoseg_pabertura,
                                           
