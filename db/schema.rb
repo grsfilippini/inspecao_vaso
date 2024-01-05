@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_03_150130) do
+ActiveRecord::Schema.define(version: 2024_01_04_232745) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_repack"
@@ -359,7 +359,6 @@ ActiveRecord::Schema.define(version: 2024_01_03_150130) do
     t.boolean "bman_foi_substituido", default: false, null: false
     t.boolean "bdispseg_tem_sinais_manutencao", default: true, null: false
     t.boolean "bdispseg_foifeito_ajuste", default: false, null: false
-    t.boolean "bdispseg_foifeita_calibracao", default: false, null: false
     t.boolean "bdispseg_foisubstituido", default: false, null: false
     t.boolean "bdreno_tem_sinais_manutencao", default: true, null: false
     t.boolean "bdreno_foiacionado_paradrenar_liqacumulado", default: true, null: false
@@ -533,14 +532,13 @@ ActiveRecord::Schema.define(version: 2024_01_03_150130) do
     t.float "esp_projeto_corpo"
     t.float "esp_projeto_tampo"
     t.string "setor_instalacao_vaso", limit: 50
-    t.string "path_plaqueta_original", limit: 100, default: "fig/fabricante_numserie/plaqueta.jpg"
-    t.string "path_plaqueta_atual", limit: 100, default: "fig/fabricante_numserie/plaqueta_atual.jpg"
     t.binary "foto_plaqueta"
     t.float "diametro_externo_corpo"
     t.bigint "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string "tag_proprietaria", limit: 15
+    t.binary "foto_instalacao"
     t.index ["user_id"], name: "index_vasos_on_user_id"
   end
 

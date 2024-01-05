@@ -32,6 +32,7 @@ class Relatorio < ApplicationRecord
   after_create :seta_relatorio_ini_vaso
   after_create :seta_estatistica
   after_destroy :dec_estatistica  
+  after_save :copiar_foto_instalacao_para_vaso
   
   # **************************************************
   # Método de classe, pode ser chamado sem instanciar    
@@ -122,4 +123,15 @@ class Relatorio < ApplicationRecord
       @vaso.save
     end
   end
+
+  def copiar_foto_instalacao_para_vaso
+    # Verifica se existe uma foto_instalacao
+    if self.foto_instalacao.present?
+      # Encontra o Vaso associado pelo vaso_id
+      vaso_relacionado = Vaso.find_by(id: self.vaso_id)
+      # Atualiza o campo foto_instalacao do Vaso com a foto do Relatorio
+      vaso_relacionado.update(foto_instalacao: self.foto_instalacao)
+    end
+  end
+
 end

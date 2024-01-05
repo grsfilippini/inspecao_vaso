@@ -55,10 +55,12 @@ class AdminsBackoffice::VasosController < AdminsBackofficeController
     def update 
       # Verifica se veio o flag para remover foto da plaqueta.      
       bRemoverFoto = (params[:vaso][:remove_foto_plaqueta] == '1' || params[:vaso][:remove_foto_plaqueta] == 'true')
+      bRemoverFotoInstalacao = (params[:vaso][:remove_foto_instalacao] == '1' || params[:vaso][:remove_foto_instalacao] == 'true') 
       
       # Remover o atributo específico dos parâmetros caso exista.
       # Isto é feito para que o update adiante não gere erro.
       params[:vaso].delete(:remove_foto_plaqueta) if params[:vaso].key?(:remove_foto_plaqueta)
+      params[:vaso].delete(:remove_foto_instalacao) if params[:vaso].key?(:remove_foto_instalacao)
 
       if @vaso.update(params_vaso)
         # Verificar se um novo arquivo de imagem foi enviado
@@ -69,8 +71,15 @@ class AdminsBackoffice::VasosController < AdminsBackofficeController
         elsif bRemoverFoto
             # Atualizar o campo de imagem - sem imagem
             @vaso.update_attribute(:foto_plaqueta, nil)          
-            #@vaso.save
         end
+
+        if params[:vaso][:foto_instalacao].present?          
+          # Atualizar o campo de imagem diretamente com o novo arquivo
+          @vaso.update_attribute(:foto_instalacao, params[:vaso][:foto_instalacao].read)
+        elsif bRemoverFotoInstalacao
+          # Atualizar o campo de imagem - sem imagem
+          @vaso.update_attribute(:foto_instalacao, nil)          
+      end
 
         redirect_to admins_backoffice_vasos_path, notice: "Vaso atualizado com sucesso!"    
       else
@@ -184,8 +193,8 @@ class AdminsBackoffice::VasosController < AdminsBackofficeController
                                    :foto_plaqueta,
                                    :diametro_externo_corpo,
                                    :user_id,
-                                   :remove_foto_plaqueta,
-                                   :tag_proprietaria
+                                   :tag_proprietaria,
+                                   :foto_instalacao
                                   )
     end
   
