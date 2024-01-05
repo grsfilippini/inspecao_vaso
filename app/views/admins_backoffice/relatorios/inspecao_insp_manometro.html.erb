@@ -17,12 +17,6 @@
                                     <%= form.label :bmanometro_ehmantido_calibrado_eemboas_condicoes_operacao, "É mantido calibrado e em boas condições", class: "form-check-label", for: "ManometroBoasCondicoesCheckbox" %>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <div class="form-check col-sm-6 mb-0 mb-sm-0 d-inline">
-                                    <%= form.check_box :bman_tem_sinais_manutencao, class: "form-check-input", id: "ManometroSinaisManCheckbox" %>
-                                    <%= form.label :bman_tem_sinais_manutencao, "Tem sinais de manutenção", class: "form-check-label", for: "ManometroSinaisManCheckbox" %>
-                                </div>
-                            </div>                            
                             
                             <div class="form-group row">
                                 <div class="form-check col-sm-6 mb-0 mb-sm-0 d-inline">
@@ -30,6 +24,25 @@
                                     <%= form.label :bman_foi_substituido, "Foi substituído/instalado", class: "form-check-label orange-label", for: "ManometroSubInsCheckbox" %>
                                 </div>
                             </div>
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const manometroBoasCondicoesCheckbox = document.getElementById('ManometroBoasCondicoesCheckbox');
+                                    const manometroSubInsCheckbox = document.getElementById('ManometroSubInsCheckbox');
+
+                                    // Adiciona um event listener para o segundo campo
+                                    manometroSubInsCheckbox.addEventListener('change', function() {
+                                    if (this.checked) {
+                                        // Desmarca e desabilita o primeiro campo quando o segundo for marcado
+                                        manometroBoasCondicoesCheckbox.checked = false;
+                                        manometroBoasCondicoesCheckbox.disabled = true;
+                                    } else {
+                                        // Habilita o primeiro campo se o segundo estiver desmarcado
+                                        manometroBoasCondicoesCheckbox.disabled = false;
+                                    }
+                                    });
+                                });
+                            </script>
+
 
                             <div class="form-group row">
                                 <div class="form-check col-sm-6 mb-0 mb-sm-0 d-inline">

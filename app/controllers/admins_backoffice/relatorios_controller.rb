@@ -490,7 +490,6 @@ end
                                           :bpossui_manometro_ousimilar,
                                           :bman_foi_substituido,
                                           :bmanometro_ehmantido_calibrado_eemboas_condicoes_operacao,
-                                          :bman_tem_sinais_manutencao,
                                           :bman_foifeito_ajuste,
                                           :bman_foifeita_calibracao,
                                           :manometro_observacoes,
@@ -499,7 +498,6 @@ end
                                           :possui_dispositivo_deseguranca,
                                           :bBloqueioInadvertidoIntencionalDoDispSeg,
                                           :possui_dispositivo_contra_bloqueio_dodisp_seg,
-                                          :bdispseg_tem_sinais_manutencao,
                                           :bdispseg_foisubstituido,
                                           :bdispseg_foifeito_ajuste,
                                           :dispositivoseg_observacoes,
@@ -508,7 +506,6 @@ end
                                           # Inspeção do pressostato
                                           :bpressostato_existe,
                                           :bpressostato_ehmantido_calibrado_eemboas_condicoes_operacao,
-                                          :bpressostato_tem_sinais_manutencao,
                                           :bpressostato_foisubstituido,
                                           :bpressostato_foifeito_ajuste,
                                           :bpressostato_foiverificada_faixadetrabalho,
@@ -518,7 +515,6 @@ end
                                           
                                           # Existe dreno
                                           :bdreno_existe,
-                                          :bdreno_tem_sinais_manutencao,
                                           :tipo_dreno_id,
                                           :bdreno_posicionado_ptomais_baixo,
                                           :bdreno_inclinacao_positiva,

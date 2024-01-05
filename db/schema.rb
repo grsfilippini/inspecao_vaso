@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_04_232745) do
+ActiveRecord::Schema.define(version: 2024_01_05_141604) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_repack"
@@ -353,14 +353,11 @@ ActiveRecord::Schema.define(version: 2024_01_04_232745) do
     t.boolean "bpossui_iluminacao_emergencia", default: true, null: false
     t.integer "possui_dispositivo_deseguranca", default: 1, null: false
     t.integer "possui_dispositivo_contra_bloqueio_dodisp_seg", default: 2, null: false
-    t.boolean "bman_tem_sinais_manutencao", default: true, null: false
     t.boolean "bman_foifeito_ajuste", default: false, null: false
     t.boolean "bman_foifeita_calibracao", default: false, null: false
     t.boolean "bman_foi_substituido", default: false, null: false
-    t.boolean "bdispseg_tem_sinais_manutencao", default: true, null: false
     t.boolean "bdispseg_foifeito_ajuste", default: false, null: false
     t.boolean "bdispseg_foisubstituido", default: false, null: false
-    t.boolean "bdreno_tem_sinais_manutencao", default: true, null: false
     t.boolean "bdreno_foiacionado_paradrenar_liqacumulado", default: true, null: false
     t.boolean "bdreno_foifeita_manutencao", default: false, null: false
     t.boolean "bdreno_posicionado_ptomais_baixo", default: true, null: false
@@ -372,7 +369,6 @@ ActiveRecord::Schema.define(version: 2024_01_04_232745) do
     t.string "dreno_observacoes", limit: 100
     t.float "dreno_qtdadeliquido_drenado", default: 0.0, null: false
     t.boolean "bpressostato_existe", default: true, null: false
-    t.boolean "bpressostato_tem_sinais_manutencao", default: true, null: false
     t.boolean "bpressostato_foifeito_ajuste", default: false, null: false
     t.boolean "bpressostato_foiverificada_faixadetrabalho", default: true, null: false
     t.boolean "bpressostato_foisubstituido", default: false, null: false
