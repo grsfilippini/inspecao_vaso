@@ -113,7 +113,7 @@ class AdminsBackoffice::VasosController < AdminsBackofficeController
     
     def json_data      
       @vaso = Vaso.find(params[:id])
-      render json: { pmta_atual: @vaso.pmta_atual }
+      render json: { pmta_atual: @vaso.pmta_atual, proprietaria_id: @vaso.proprietaria_id }
     end
 
     # Retorna um hash

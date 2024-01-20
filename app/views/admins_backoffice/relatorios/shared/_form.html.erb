@@ -76,9 +76,9 @@
                                     <%= form.date_field :data_relatorio, value: @relatorio.id.present? ? @relatorio.data_relatorio : Date.current, class: "form-control" %>
                                 </div>
                             
-                                <%= form.label :vaso_id, 'Vaso', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                <%= form.label :vaso_id, 'Vaso', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %> 
                                 <div class="col-sm-3 mb-0 mb-sm-0">                                    
-                                    <%= form.collection_select(:vaso_id, @vasos, :id, lambda { |vaso| "#{vaso.num_serie} - #{vaso.fabricante.nome_curto}" }, { include_blank: 'Selecione um vaso' }, {class: 'select-width-150 form-control' }) %>
+                                    <%= form.collection_select(:vaso_id, @vasos, :id, lambda { |vaso| "#{vaso.num_serie} - #{vaso.fabricante.nome_curto}" }, { include_blank: 'Selecione um vaso' }, {class: 'select-width-150 form-control', id: "vaso-select"}) %>
                                 </div>
                             </div>
                                 
@@ -90,13 +90,14 @@
 
                                 <%#= form.label :proprietaria_id, 'Proprietária', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
                                 <div class="col-sm-4 mb-0 mb-sm-0">
-                                    <%= form.collection_select(:proprietaria_id, @proprietarias, :id, :nome_curto, { include_blank: 'Selecione o proprietário'}, {class: 'select-width-150 form-control' }) %>
+                                    <%= form.collection_select(:proprietaria_id, @proprietarias, :id, :nome_curto, { include_blank: 'Selecione o proprietário'}, {class: 'select-width-150 form-control', id: "proprietaria-select"}) %>
                                 </div>
                                 
                                 <%#= form.label :inspetora_id, 'Inspetora', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
                                 <div class="col-sm-4 mb-0 mb-sm-0">                                    
                                     <%= form.collection_select(:inspetora_id, @inspetoras, :id, :nome_curto, { include_blank: 'Selecione a empresa inspetora'}, {class: 'select-width-150 form-control' }) %>
                                 </div>
+
                             </div>
                                                                                  
                             <hr>
@@ -112,3 +113,23 @@
         </div>
     </div>
 </div> <!-- FIM DO CONTAINER DO FORM -->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var vasoSelect = document.getElementById('vaso-select');
+        var proprietariaSelect = document.getElementById('proprietaria-select');
+        
+        vasoSelect.addEventListener('change', function() {                                
+            var vasoId = vasoSelect.value;
+            var confirmDialog = confirm("Deseja atribuir a proprietária do vaso selecionado ao Relatorio de inspeção?");
+            if (confirmDialog) {
+                fetch('/admins_backoffice/vasos/' + vasoId + '/json_data')
+                .then(response => response.json())
+                .then(data => {
+                    proprietariaSelect.value = data.proprietaria_id;
+                })
+                .catch(error => console.error(error));                                
+            }
+        });
+    });
+</script>
