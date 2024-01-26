@@ -15,7 +15,8 @@ namespace :dev do
       #show_spinner("Cadastrando  administrador padrão...")       { %x(rails dev:add_default_admin) }
       #show_spinner("Cadastrando exemplos de administradores...") { %x(rails dev:add_extras_admins) }
       #show_spinner("Cadastrando usuário padrão...")          { %x(rails dev:add_default_user) }
-      show_spinner("Cadastrando empresa padrão...") { %x(rails dev:add_default_empresa) }
+      #show_spinner("Cadastrando empresa padrão...") { %x(rails dev:add_default_empresa) }
+      show_spinner("Cadastrando inspetor padrão...") { %x(rails dev:add_default_inspetor) }
       
       #show_spinner("Cadastrando corporação padrão...")       { %x(rails dev:add_default_corp) }
       #show_spinner("Cadastrando região padrão...")           { %x(rails dev:add_default_regiao) }
@@ -67,6 +68,17 @@ namespace :dev do
       email: 'empresa@empresa.com', 
       nome: 'Empresa',
       corp_id: '0',
+      password: DEFAULT_PASSWORD,
+      password_confirmation: DEFAULT_PASSWORD
+    )
+  end  
+
+  desc "Adiciona o inspetor padrão"
+  task add_default_inspetor: :environment do
+    Inspetor.create!(
+      email: 'inspetor@inspetor.com', 
+      #nome: 'Inspetor',
+      #corp_id: '0',
       password: DEFAULT_PASSWORD,
       password_confirmation: DEFAULT_PASSWORD
     )

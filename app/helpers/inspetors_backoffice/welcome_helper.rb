@@ -1,0 +1,2 @@
+module InspetorsBackoffice::WelcomeHelper
+end

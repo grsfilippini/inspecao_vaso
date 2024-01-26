@@ -34,6 +34,11 @@ class AdminsBackoffice::VasosController < AdminsBackofficeController
           @vaso.update_attribute(:foto_plaqueta, params[:vaso][:foto_plaqueta].read)
         end
 
+        if params[:vaso][:foto_instalacao].present?
+          # Atualizar o campo de imagem diretamente com o novo arquivo
+          @vaso.update_attribute(:foto_instalacao, params[:vaso][:foto_instalacao].read)
+        end
+
         if params[:vaso][:proximomtp] == "1"          
           @mtp_serie = MtpNumSerie.new
           @mtp_serie.serie = @vaso.num_serie

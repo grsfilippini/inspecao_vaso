@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
   
+  namespace :admins_backoffice do
+    get 'inspetors/index'
+  end
+  namespace :inspetors_backoffice do
+    get 'welcome/index'
+  end
+  
   # Name space, define agrupamento de pastas em controllers e views
   # Pode-se referir a estes agrupamentos através de :admins_backoffice por exemplo
   namespace :admins_backoffice do
@@ -12,7 +19,8 @@ Rails.application.routes.draw do
     resources :admins, except: [:delete] # Chama procedimentos dos administradores
     resources :users    
     resources :empresas
-    
+    resources :inspetors
+
     # only diz para gerar somente as rotas especificadas
     # , except: [:destroy, :new] -> diz para não criar as rotas especificadas
     # , only: [:destroy, :new] -> diz para criar as rotas especificadas        
@@ -126,10 +134,12 @@ Rails.application.routes.draw do
   devise_for :admins, skip: [:registrations]
   devise_for :users
   devise_for :empresas
+  devise_for :inspetors
 
   get 'inicio', to: 'site/welcome#index'
   root          to: 'site/welcome#index'
   get 'admin',  to: 'admins_backoffice/welcome#index'
   get 'empresa',to: 'empresas_backoffice/welcome#index'
+  get 'inspetor',to:'inspetors_backoffice/welcome#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

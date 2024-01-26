@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_18_142125) do
+ActiveRecord::Schema.define(version: 2024_01_25_101712) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_repack"
@@ -183,6 +183,19 @@ ActiveRecord::Schema.define(version: 2024_01_18_142125) do
 
   create_table "fluido_servicos", id: :integer, default: -> { "nextval('\"FLUIDO_SERVICO_ID_seq\"'::regclass)" }, force: :cascade do |t|
     t.string "descricao", limit: 40, null: false
+  end
+
+  create_table "inspetors", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "nome"
+    t.index ["email"], name: "index_inspetors_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_inspetors_on_reset_password_token", unique: true
   end
 
   create_table "instrumento_padraos", id: :integer, default: -> { "nextval('\"INSTRUMENTO_PADRAO_ID_seq\"'::regclass)" }, force: :cascade do |t|

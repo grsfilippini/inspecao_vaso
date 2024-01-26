@@ -1,0 +1,2 @@
+module InspetorsBackofficeHelper
+end

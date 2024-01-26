@@ -1,5 +1,4 @@
 class EmpresasBackoffice::WelcomeController < EmpresasBackofficeController
-  layout 'empresas_backoffice'
   before_action :get_relacoes, only: [:index, :pesquisa]
   def index
     @filiais = Cadastro.where(corp_id: current_empresa.corp_id)                       

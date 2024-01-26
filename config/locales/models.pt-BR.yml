@@ -9,6 +9,9 @@
       user:
         one: Usuário
         other: Usuários
+      inspetor:
+        one: Inspetor
+        other: Inspetores
       corp:
         one: Corporação
         other: Corporações
