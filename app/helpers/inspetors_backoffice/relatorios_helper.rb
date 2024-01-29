@@ -1,0 +1,2 @@
+module InspetorsBackoffice::RelatoriosHelper
+end

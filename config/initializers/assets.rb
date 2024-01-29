@@ -20,6 +20,7 @@ Rails.application.config.assets.precompile += %w( admins_backoffice.js admins_ba
                                                   site.js site.css
                                                   empresa_devise.js empresa_devise.css
                                                   empresas_backoffice.js empresas_backoffice.css
+                                                  inspetor_devise.js inspetor_devise.css
                                                   inspetors_backoffice.js inspetors_backoffice.css)
 
 # lib/assets/stylesheets e javascripts

@@ -12,7 +12,7 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag    'application' %>
-    <%#= stylesheet_link_tag    'inspetor_devise' %>
+    <%= stylesheet_link_tag    'inspetor_devise' %>
 
   </head>
 
@@ -20,7 +20,7 @@
     <%= yield %>    
 
     <%= javascript_include_tag 'application' %>
-    <%#= javascript_include_tag 'inspetor_devise' %>
+    <%= javascript_include_tag 'inspetor_devise' %>
 
     <%if flash %>
         <% flash.each do |key, value| %>

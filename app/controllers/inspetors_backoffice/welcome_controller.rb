@@ -1,4 +1,4 @@
 class InspetorsBackoffice::WelcomeController < InspetorsBackofficeController
-  def index
+  def index    
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_25_101712) do
+ActiveRecord::Schema.define(version: 2024_01_29_183349) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_repack"
@@ -453,9 +453,11 @@ ActiveRecord::Schema.define(version: 2024_01_25_101712) do
     t.boolean "avaliadoph"
     t.boolean "bBloqueioInadvertidoIntencionalDoDispSeg", default: false
     t.boolean "serv_contratado_dispseg_calibracao"
+    t.bigint "inspetor_id", default: 1
     t.index ["ambiente_inst_id"], name: "index_relatorios_on_ambiente_inst_id"
     t.index ["art_id"], name: "index_relatorios_on_art_id"
     t.index ["cidade_id"], name: "index_relatorios_on_cidade_id"
+    t.index ["inspetor_id"], name: "index_relatorios_on_inspetor_id"
     t.index ["tipo_dreno_id"], name: "index_relatorios_on_tipo_dreno_id"
     t.index ["user_id"], name: "index_relatorios_on_user_id"
   end
@@ -584,6 +586,7 @@ ActiveRecord::Schema.define(version: 2024_01_25_101712) do
   add_foreign_key "relatorios", "cadastros", column: "inspetora_id", name: "sys_fk_187"
   add_foreign_key "relatorios", "cadastros", column: "proprietaria_id", name: "sys_fk_181"
   add_foreign_key "relatorios", "cidades"
+  add_foreign_key "relatorios", "inspetors"
   add_foreign_key "relatorios", "phs", name: "sys_fk_178"
   add_foreign_key "relatorios", "tipo_drenos"
   add_foreign_key "relatorios", "tipo_inspecaos", name: "sys_fk_334"

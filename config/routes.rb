@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   end
   namespace :inspetors_backoffice do
     get 'welcome/index'
+    resources :relatorios
   end
   
   # Name space, define agrupamento de pastas em controllers e views

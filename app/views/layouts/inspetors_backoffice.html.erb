@@ -53,11 +53,18 @@
                     <%= link_to inspetors_backoffice_welcome_index_path do %>
                       <i class="fa fa-home"></i> Início
                     <% end %>
-                  </li>                  
+                  </li>  
+
+                  <li>                    
+                    <%= link_to inspetors_backoffice_relatorios_path do %>
+                      <i class="fa fa-edit"></i> Inspeções em Aberto
+                    <% end %>
+                  </li>                
                                    
                 </ul>
               </div>
 
+             
               <!-- 
               <div class="menu_section">
                 <h3>General</h3>
@@ -174,7 +181,7 @@
               </a>
               <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-              </a>
+              </a>navbar
             </div>
             <!-- /menu footer buttons -->
           </div>
@@ -191,7 +198,7 @@
                   <li class="nav-item dropdown open" style="padding-left: 15px;">
                     <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
                       <%= image_tag 'img.jpg', alt:""%>
-                      John Doe
+                      <%= current_inspetor.nome %>
                     </a>
                     <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                       <%= link_to destroy_inspetor_session_path, method: :delete, class:"dropdown-item" do %>
@@ -210,12 +217,8 @@
         <!-- page content -->
         <div class="right_col" role="main">
           <div class="">
-            <div class="page-title">
-              <div class="title_left">
-                <h1> LAYOUT INSPETOR BACKOFFICE</h1>
-                <%= yield %>                
-              </div>
-            </div>
+            <h1> LAYOUT INSPETOR BACKOFFICE</h1>
+            <%= yield %>                
           </div>
         </div>
         <!-- /page content -->
@@ -223,7 +226,7 @@
         <!-- footer content -->
         <footer>
           <div class="pull-right">
-            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+            MANTINSP - Mantendo sua inspeção em dia
           </div>
           <div class="clearfix"></div>
         </footer>
