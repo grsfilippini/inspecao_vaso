@@ -1,0 +1,478 @@
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800"> <%= action_messege %> - <%= @relatorio.id %></h1>
+</div>
+
+<!-- Se tiver algum erro dentro de @relatorio, erro devido a processo de salvamento por exemplo, entra no alerta abaixo -->
+<% if @relatorio.errors.any? %>
+    <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>        
+        <ul>
+            <% @relatorio.errors.full_messages.each do |message| %>
+            <li> <%= message -%> </li>
+            <% end %>
+        </ul>
+    </div>
+<% end %>
+
+
+<!-- CONTAINER PARA O FORM -->
+<div class="container">
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+                <!-- div class="col-lg-5 d-none d-lg-block bg-register-image"></div -->
+                
+                <div class="col-lg-12">
+                    <div class="p-5">
+                        <!--div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                        </div-->
+
+                        <%= form_with(model: [ :inspetors_backoffice, @relatorio ], local: true, :html => { :multipart => true }) do |form| %>
+                            
+                            <fieldset class="Identificacao_Inspecao">
+                            <legend>Identificação da inspeção</legend>
+                                
+                                <div class="form-group row">
+                                    <%= form.label :tipo_inspecao, 'Inspeção:', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-3 mb-0 mb-sm-0">                                    
+                                        <%= form.collection_select(:tipo_inspecao_id, @tipo_inspecaos, :id, :nome, {include_blank: 'Selecione o tipo de inspeção'}, {class: 'select-width-150 form-control' }) %>
+                                    </div>
+
+                                    <%= form.label :vaso_id, 'Vaso:', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %> 
+                                    <div class="col-sm-3 mb-0 mb-sm-0">                                    
+                                        <%= form.collection_select(:vaso_id, @vasos, :id, lambda { |vaso| "#{vaso.num_serie} - #{vaso.fabricante.nome_curto}" }, { include_blank: 'Selecione um vaso' }, {class: 'select-width-150 form-control', id: "vaso-select"}) %>
+                                    </div>
+
+                                    <%= form.label :proprietaria_id, 'Empresa:', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-3 mb-0 mb-sm-0">
+                                        <%= form.collection_select(:proprietaria_id, @proprietarias, :id, :nome_curto, { include_blank: 'Selecione o proprietário'}, {class: 'select-width-150 form-control', id: "proprietaria-select"}) %>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <%= form.label :cidade_id, 'Cidade:', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-3 mb-0 mb-sm-0">            
+                                        <%= form.collection_select(:cidade_id, @cidades, :id, :nome, { include_blank: 'Selecione uma cidade'}, {class: 'select-width-150 form-control' }) %>
+                                    </div>
+
+                                    <%= form.label :data_relatorio, 'Data:', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-3 mb-0 mb-sm-0">                                    
+                                        <%= form.date_field :data_relatorio, value: @relatorio.id.present? ? @relatorio.data_relatorio : Date.current, class: "form-control" %>
+                                    </div>
+                                    
+                                    
+                                </div>
+                                    
+                                <div class="form-group row">
+                                    <%= form.label :finalidade_vaso_id, 'Finalidade:', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-3 mb-0 mb-sm-0">                                    
+                                        <%= form.collection_select(:finalidade_vaso_id, @finalidade_vasos, :id, :finalidade, { include_blank: 'Selecione a finalidade' }, {class: 'select-width-150 form-control' }) %>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                            
+                            <hr>
+
+                            <fieldset class="Inspecoes_Contratadas_Vaso">
+                            <legend>Inspeções contratadas para o vaso</legend>
+                                <div class="checkbox">
+                                    <label>
+                                        <%= form.check_box :insp_contratada_vaso_inicial %>
+                                        "Início de operação (vaso novo)"
+                                    </label> 
+                                </div>
+                                
+                                <div class="checkbox">                               
+                                    <label>                                  
+                                        <%= form.check_box :insp_contratada_vaso_reconstituicao_prontuario %>
+                                        Reconstituição de prontuário
+                                    </label> 
+                                </div>
+                                
+                                <div class="checkbox">                               
+                                    <label>                                   
+                                        <%= form.check_box :insp_contratada_vaso_externa %>
+                                        Externa
+                                    </label> 
+
+                                <div class="checkbox">                               
+                                    <label>                                    
+                                        <%= form.check_box :insp_contratada_vaso_interna %>
+                                        Interna
+                                    </label>
+                                </div>
+                                
+                                <div class="checkbox">                               
+                                    <label>                                   
+                                        <%= form.check_box :insp_contratada_vaso_teste_hidrostatico %>
+                                        Teste hidrostático
+                                    </label> 
+                                </div>
+
+                                <div class="checkbox">                               
+                                    <label>                                  
+                                        <%= form.check_box :insp_contratada_vaso_mapa_espessura %>
+                                        Medida espessura das paredes
+                                    </label>
+                                </div> 
+                            </fieldset>
+                            
+                            <fieldset class="Inspecoes_Contratadas_Dispositivo_Seguranca">
+                            <legend>Inspeções contratadas para o dispositivo de segurança</legend>
+                                <div class="checkbox">                               
+                                    <label>                                  
+                                        <%= form.check_box :insp_contratada_valvsegpop_externa %>
+                                        Externa dispositivo de segurança
+                                    </label>
+                                </div>
+
+                                <div class="checkbox">                               
+                                    <label>                                   
+                                        <%= form.check_box :insp_contratada_valvsegpop_interna %>
+                                        Interna dispositivo de segurança
+                                    </label>
+                                </div>
+                                
+                                <div class="checkbox">                               
+                                    <label>                                    
+                                        <%= form.check_box :serv_contratado_dispseg_calibracao %>
+                                        Calibração do dispositivo de segurança
+                                    </label>
+                                </div>    
+
+                            </fieldset>
+
+                            <fieldset class="ElemOperacao">
+                            <legend>Elementos de operação</legend>
+                                <div class="checkbox">                               
+                                    <label>                                    
+                                        <%= form.check_box :insp_pressostato %>
+                                        Pressostato
+                                    </label>
+                                </div>
+
+                                <div class="checkbox">                               
+                                    <label>                                    
+                                        <%= form.check_box :insp_manometro %>
+                                        Manômetro
+                                    </label>
+                                </div>
+
+                                <div class="checkbox">                               
+                                    <label>                                   
+                                        <%= form.check_box :insp_dreno %>
+                                        Dreno
+                                    </label>                                
+                                </div>  
+                            </fieldset>
+
+                            <hr>
+
+                            <fieldset class="Verificacoes_Iniciais">
+                            <legend>Verificações iniciais</legend>
+
+                                <div class="form-group row">
+                                    <%= form.label :'relatorio[tipo_fixacao_vaso]', 'Fixação vaso:', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="btn-group col-sm-6 mb-0 mb-sm-0" data-toggle="buttons">
+                                        <% options = { "Fixo" => 0, "Móvel" => 1, "Misto" => 2 } %>
+                                        <% options.each do |label, value| %>
+                                            <label class="btn btn-dark">
+                                                <%= radio_button_tag :'relatorio[tipo_fixacao_vaso]', value, @relatorio.tipo_fixacao_vaso == value %>                                            
+                                                <%= label %>
+                                            </label>
+                                        <% end %>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <%= form.label :'relatorio[possui_acesso_visual_externo]', 'Acesso externo:', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="btn-group col-sm-6 mb-0 mb-sm-0" data-toggle="buttons">
+                                        <% options = { "Não" => 0, "Total" => 1, "Parcial" => 2 } %>
+                                        <% options.each do |label, value| %>
+                                            <label class="btn btn-dark">
+                                                <%= radio_button_tag :'relatorio[possui_acesso_visual_externo]', value, @relatorio.possui_acesso_visual_externo == value %>                                            
+                                                <%= label %>
+                                            </label>
+                                        <% end %>
+                                    </div>
+                                </div> 
+
+                                <div class="form-group row">
+                                    <%= form.label :'relatorio[tipo_acesso_interno]', 'Acesso interno:', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="btn-group col-sm-6 mb-0 mb-sm-0" data-toggle="buttons">
+                                        <% options = { "Janela de visita" => 0, "Pequena abertura" => 1, "Não" => 2 } %>
+                                        <% options.each do |label, value| %>
+                                            <label class="btn btn-dark">
+                                                <%= radio_button_tag :'relatorio[tipo_acesso_interno]', value, @relatorio.tipo_acesso_interno == value %>
+                                                <%= label %>
+                                            </label>
+                                        <% end %>
+                                    </div>
+                                </div> 
+
+                                <div class="checkbox">
+                                    <label>
+                                        <%= form.check_box :b_vaso_inativo_mais_doze_meses %>
+                                        Está inativo há mais de 12 meses                                    
+                                    </label>
+                                </div>
+                                
+                                <div class="form-group row">
+                                    <%= form.label :'relatorio[tipo_apresenta_sinais_reparo]', 'Tem sinais de reparo:', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="btn-group col-sm-6 mb-0 mb-sm-0" data-toggle="buttons">
+                                        <% options = { "Não" => 0, "Sim - com projeto" => 1, "Sim - sem projeto" => 2 } %>
+                                        <% options.each do |label, value| %>
+                                            <label class="btn btn-dark">
+                                                <%= radio_button_tag :'relatorio[tipo_apresenta_sinais_reparo]', value, @relatorio.tipo_apresenta_sinais_reparo == value %>
+                                                <%= label %>
+                                            </label>
+                                        <% end %>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">                                
+                                    <%= form.label :reparos_observados, 'Reparos observados:', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="form-check col-sm-6 mb-0 mb-sm-0">
+                                        <%= form.text_field :reparos_observados, class: "form-control"  %>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <%= form.label :'relatorio[tipo_houve_alteracao_local_instalacao]', 'Local inst. alterado:', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="btn-group col-sm-6 mb-0 mb-sm-0" data-toggle="buttons">
+                                        <% options = { "Não" => 0, "Sim" => 1, "1a Inspeção" => 2, "Vaso móvel" => 3 } %>
+                                        <% options.each do |label, value| %>
+                                            <label class="btn btn-dark">
+                                                <%= radio_button_tag :'relatorio[tipo_houve_alteracao_local_instalacao]', value, @relatorio.tipo_houve_alteracao_local_instalacao == value %>                                            
+                                                <%= label %>
+                                            </label>
+                                        <% end %>
+                                    </div>
+                                </div>
+                            
+                            </fieldset>
+
+                            <hr>
+
+                            <fieldset class="Ambiente_Instalacao">
+                            <legend>Ambiente de instalação</legend>
+
+                                <div class="checkbox">                               
+                                    <label>  
+                                        <%= form.check_box :bpossui_placa_dolocal_deinstalacao %>
+                                        Possui placa indicando o local de instalação do vaso
+                                    </label>                                   
+                                </div>                            
+                                
+                                <div class="form-group row">                                
+                                    <%= form.label :ambiente_inst_id, 'Ambiente de instalação:', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-6 mb-0 mb-sm-0">            
+                                        <%= form.collection_select(:ambiente_inst_id, @ambiente_insts, :id, :ambiente, { include_blank: 'Selecione um ambiente de instalação'}, {class: 'select-width-150 form-control' }) %>
+                                    </div>
+                                </div>                            
+                                                            
+                                <div class="form-group row">
+                                    <%= form.label :'relatorio[tipo_cobetura]', 'Cobertura:', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="btn-group col-sm-6 mb-0 mb-sm-0" data-toggle="buttons">
+                                        <% options = { "Não tem" => 0, "Tem cobertura" => 1, "Cobertura improvisada" => 2 } %>
+                                        <% options.each do |label, value| %>
+                                            <label class="btn btn-dark">
+                                                <% if  @relatorio.tipo_cobetura == value %>
+                                                    <%= radio_button_tag :'relatorio[tipo_cobetura]', value, checked: true %>
+                                                <%else%>
+                                                    <%= radio_button_tag :'relatorio[tipo_cobetura]', value %>
+                                                <%end%>
+                                                <%= label %>
+                                            </label>
+                                        <% end %>
+                                    </div>
+                                </div>
+                                
+                                <div class="checkbox">                               
+                                    <label> 
+                                        <%= form.check_box :bdispoe_duassaidas_amplas_sinalizadas_desobstruidas %>
+                                        Dispões de duas saídas amplas sinalizadas
+                                    </label>                                   
+                                </div>
+                                
+                                <div class="checkbox">                               
+                                    <label> 
+                                        <%= form.check_box :bdispor_acesso_facil_seguro_paraoperacao_manutencao %>
+                                        Dispões de acesso fácil e seguro para operação e manutenção
+                                    </label>                                   
+                                </div>
+                                
+                                <div class="checkbox">                               
+                                    <label> 
+                                        <%= form.check_box :bdispor_ventilacao_permanente %>
+                                        Dispõe de ventilação permanente com entradas de ar que não possam ser bloqueadas %>
+                                    </label>                                   
+                                </div>                                                                                    
+                                
+                                <div class="checkbox">                               
+                                    <label> 
+                                        <%= form.check_box :bdispor_iluminacao_artificial %>
+                                        Dispõe de iluminação artificial
+                                    </label>                                   
+                                </div>
+                                
+                                <div class="checkbox">                               
+                                    <label> 
+                                        <%= form.check_box :bpossui_iluminacao_emergencia %>
+                                        Dispõe de iluminação de emergência
+                                    </label>                                   
+                                </div>
+                                
+                                <div class="checkbox">                               
+                                    <label> 
+                                        <%= form.check_box :belementos_facilmente_acessiveis_drenosrespiroseoutros %>
+                                        Os elementos de controle são acessíveis, drenos, respiros e outros
+                                    </label>                                   
+                                </div>
+                            
+                            </fieldset>
+
+                            <hr>
+
+                            <fieldset class="Inspecao_Manometro">
+                            <legend>Inspeção no manômetro</legend>
+
+                                <div class="checkbox">                               
+                                    <label> 
+                                        <%= form.check_box :bpossui_manometro_ousimilar %>
+                                        Existe manômetro
+                                    </label>
+                                </div>
+
+                                <div class="checkbox">                               
+                                    <label> 
+                                        <%= form.check_box :bmanometro_ehmantido_calibrado_eemboas_condicoes_operacao, id: "ManometroBoasCondicoesCheckbox" %>
+                                        É mantido calibrado e em boas condições
+                                    </label>
+                                </div>
+                                
+                                <div class="checkbox">                               
+                                    <label> 
+                                        <%= form.check_box :bman_foi_substituido, id: "ManometroSubInsCheckbox" %>
+                                        Foi substituído/instalado
+                                    </label>
+                                </div>
+
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const manometroBoasCondicoesCheckbox = document.getElementById('ManometroBoasCondicoesCheckbox');
+                                        const manometroSubInsCheckbox = document.getElementById('ManometroSubInsCheckbox');
+
+                                        // Adiciona um event listener para o segundo campo
+                                        manometroSubInsCheckbox.addEventListener('change', function() {
+                                        if (this.checked) {
+                                            // Desmarca e desabilita o primeiro campo quando o segundo for marcado
+                                            manometroBoasCondicoesCheckbox.checked = false;
+                                            manometroBoasCondicoesCheckbox.disabled = true;
+                                        } else {
+                                            // Habilita o primeiro campo se o segundo estiver desmarcado
+                                            manometroBoasCondicoesCheckbox.disabled = false;
+                                        }
+                                        });
+                                    });
+                                </script>
+                                
+                                <div class="form-group row">                                
+                                    <%= form.label :manometro_observacoes, 'Observações:', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="form-check col-sm-6 mb-0 mb-sm-0">
+                                        <%= form.text_field :manometro_observacoes, class: "form-control"  %>
+                                    </div>
+                                </div>
+                            
+                            </fieldset>
+
+                            <hr>
+
+                            <fieldset class="Inspecao_Dispositivo_Seguranca">
+                            <legend>Inspeção no dispositivo de segurança</legend>
+
+                                <div class="form-group row">
+                                    <%= form.label :'relatorio[possui_dispositivo_deseguranca]', 'Existe disp. de segurança', {class: "col-sm-2 col-form-label text-sm-left text-lg-right red-label"} %>
+                                    <div class="btn-group col-sm-6 mb-0 mb-sm-0" data-toggle="buttons">
+                                        <% options = { "Não" => 0, "Válvula de segurança" => 1, "Válvula de alívio" => 2, "Válvula de segurança e alívio" => 3 } %>
+                                        <% options.each do |label, value| %>
+                                            <label class="btn btn-dark">
+                                                <% if  @relatorio.possui_dispositivo_deseguranca == value %>
+                                                    <%= radio_button_tag :'relatorio[possui_dispositivo_deseguranca]', value, checked: true %>
+                                                <%else%>
+                                                    <%= radio_button_tag :'relatorio[possui_dispositivo_deseguranca]', value %>
+                                                <%end%>
+                                                <%= label %>
+                                            </label>
+                                        <% end %>
+                                    </div>
+                                </div>
+                                
+                                <div class="checkbox">                               
+                                    <label class="red-label"> 
+                                        <%= form.check_box :bBloqueioInadvertidoIntencionalDoDispSeg %>
+                                        Dispositivo de segurança bloqueado
+                                    </label>
+                                </div>
+
+                                <div class="checkbox">                               
+                                    <label class="orange-label">
+                                        <%= form.check_box :bdispseg_foisubstituido %>
+                                        Foi substituído/instalado
+                                    </label>
+                                </div>
+                                
+                                <div class="form-group row">
+                                    <%= form.label :dispositivoseg_observacoes, 'Pressão de abertura:', {class: "col-sm-2 col-form-label text-sm-left text-lg-right red-label"} %>
+                                    <div class="col-sm-4 mb-0 mb-sm-0">
+                                        <%= form.number_field :dispositivoseg_pabertura, step: 0.001, min: -10, required: false, style: 'width: 150px;' %>
+                                        [MPa]
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">                                
+                                    <%= form.label :dispositivoseg_observacoes, 'Observações:', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="form-check col-sm-6 mb-0 mb-sm-0">
+                                        <%= form.text_field :dispositivoseg_observacoes, class: "form-control"  %>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+
+                            <hr>
+                            
+                            <%= button_tag "Gravar", type: "submit", class: "btn btn-primary" %>
+                            
+                                                        
+                        <% end %>                                                                     
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- FIM DO CONTAINER DO FORM -->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var vasoSelect = document.getElementById('vaso-select');
+        var proprietariaSelect = document.getElementById('proprietaria-select');
+        
+        vasoSelect.addEventListener('change', function() {                                
+            var vasoId = vasoSelect.value;
+            var confirmDialog = confirm("Deseja atribuir a proprietária do vaso selecionado ao Relatorio de inspeção?");
+            if (confirmDialog) {
+                fetch('/admins_backoffice/vasos/' + vasoId + '/json_data')
+                .then(response => response.json())
+                .then(data => {
+                    proprietariaSelect.value = data.proprietaria_id;
+                })
+                .catch(error => console.error(error));                                
+            }
+        });
+    });
+</script>

@@ -1,1 +1,23 @@
-<h1>welcome inspetor backoffice</h1>
+<h1>Área do Inspetor</h1>
+<p>
+Nesta área você poderá iniciar uma nova inspeção, editar uma inspeção que esteja aberta e excluir uma inspeção.
+Todas estas opções estão no menu "Inspeções em Aberto".
+</p>
+<p>
+<%= link_to "#", class:"btn btn-success btn-sm" do %>
+    <i class="fa fa-plus"></i>
+<% end %>
+&rarr; Para Adicionar uma nova inspeção;
+</p>
+<p>
+<%= link_to "#", class:"btn btn-info btn-sm" do %>
+    <i class="fa fa-edit"></i>
+<% end %>
+&rarr; Para Editar uma inspeção aberta;
+</p>
+<p>
+<%= link_to "#", class:"btn btn-danger btn-sm" do %>
+    <i class="fa fa-minus"></i>
+<% end %>
+&rarr; Para Apagar uma inspeção aberta.
+</p>

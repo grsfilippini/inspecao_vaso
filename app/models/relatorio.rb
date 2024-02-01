@@ -63,7 +63,17 @@ class Relatorio < ApplicationRecord
       .page(page)
       .per(20)  
   end
-    
+  
+  def self.relatorios_em_aberto_inspetor(inspetor, page)
+    includes(:proprietaria, :vaso)
+    .where(b_rascunho: true, inspetor_id: inspetor)
+    .order(created_at: :desc)
+    .limit(50)
+    .page(page)
+    .per(20) 
+  end
+
+
   # ***************************************************
   # Método de classe, pode ser chamado sem instanciar    
   # ***************************************************    

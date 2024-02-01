@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_29_183349) do
+ActiveRecord::Schema.define(version: 2024_01_29_205635) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_repack"
@@ -445,8 +445,8 @@ ActiveRecord::Schema.define(version: 2024_01_29_183349) do
     t.boolean "b_vaso_inativo_mais_doze_meses", default: false
     t.integer "possui_acesso_visual_externo", default: 1
     t.integer "fluido_servico_id", default: 0
-    t.bigint "user_id"
-    t.bigint "art_id"
+    t.bigint "user_id", default: 1
+    t.bigint "art_id", default: 0
     t.bigint "cidade_id"
     t.integer "ambiente_inst_id", default: 2
     t.integer "tipo_dreno_id", default: 0
@@ -454,6 +454,8 @@ ActiveRecord::Schema.define(version: 2024_01_29_183349) do
     t.boolean "bBloqueioInadvertidoIntencionalDoDispSeg", default: false
     t.boolean "serv_contratado_dispseg_calibracao"
     t.bigint "inspetor_id", default: 1
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.index ["ambiente_inst_id"], name: "index_relatorios_on_ambiente_inst_id"
     t.index ["art_id"], name: "index_relatorios_on_art_id"
     t.index ["cidade_id"], name: "index_relatorios_on_cidade_id"

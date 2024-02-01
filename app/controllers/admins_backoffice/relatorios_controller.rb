@@ -47,11 +47,10 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
     @para_imprimir = FALSE
   end
   
-
-
   def new    
     @relatorio = Relatorio.new
     # Verifica se o parâmetro sel_relatorio_id está presente e não é nil
+    # sel_relatorio_id contém dados a serem usados neste novo relatório
     if params[:sel_relatorio_id].present? && params[:sel_relatorio_id] != nil      
       # Faça suas atribuições aqui usando o valor de sel_relatorio_id
       # puts params[:sel_relatorio_id]
@@ -70,7 +69,6 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
     end
   end
   
-
   def edit # Ação de edição        
   end
 
@@ -124,7 +122,7 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
   end
   
   def inspecao_insp_instalacoes
-    @ambiente_insts = AmbienteInst.all
+    @ambiente_insts = AmbienteInst.order(:ambiente)
     @etapa = 'Instalações'
   end
   
@@ -401,6 +399,7 @@ end
                                           :finalidade_vaso_id,
                                           :proprietaria_id,                                   
                                           :inspetora_id,
+                                          :inspetor_id,
                                           
                                           # Docs existentes
                                           :bexiste_prontuario,

@@ -85,7 +85,6 @@ class AdminsBackoffice::RelatorioDispsegsController < AdminsBackofficeController
   
     
     def params_relatorio_dispseg
-      puts params
       params.require(:relatorio_dispseg).permit(:user_id, 
                                                 :data, 
                                                 :vaso_id,
