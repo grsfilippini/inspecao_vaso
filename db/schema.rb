@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_29_205635) do
+ActiveRecord::Schema.define(version: 2024_02_02_184030) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_repack"
@@ -553,6 +553,7 @@ ActiveRecord::Schema.define(version: 2024_01_29_205635) do
     t.datetime "updated_at"
     t.string "tag_proprietaria", limit: 15
     t.binary "foto_instalacao"
+    t.boolean "rascunho", default: false
     t.index ["user_id"], name: "index_vasos_on_user_id"
   end
 

@@ -172,6 +172,48 @@
 
                             <hr>
 
+                            <fieldset class="Foto_Antes_Inspecao">
+                            <legend>Foto antes da inspeção</legend>
+                                <div class="form-group row">
+                                    <%#= form.label :foto_antes_inspecao, 'Foto antes inspeção:', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>                                                                
+                                    <% if @relatorio.foto_antes_inspecao.present? %>
+                                        <div class="form-label col-sm-3 mb-0 mb-sm-0">
+                                        <img src="data:image/jpeg;base64,<%= Base64.encode64(@relatorio.foto_antes_inspecao) %>" width="auto" height="150">
+                                        </div>
+                                    <% end %>
+                                    <div class="form-label col-sm-3 mb-0 mb-sm-0">                                    
+                                        <%= form.file_field :foto_antes_inspecao, id: 'foto-antes-inspecao-input', class: 'input-file' %>
+                                    </div>
+                                    <div class="form-label col-sm-3 mb-0 mb-sm-0">  
+                                        <img id="foto-antes-inspecao-preview" src="#" alt="Preview da Foto" style="display: none; max-width: 200px; max-height: 200px;" />
+                                    </div>
+                                </div>
+
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                    var fileInput = document.getElementById('foto-antes-inspecao-input');
+                                    var previewImage = document.getElementById('foto-antes-inspecao-preview');
+
+                                    fileInput.addEventListener('change', function(event) {
+                                        var file = event.target.files[0];
+                                        var reader = new FileReader();
+
+                                        reader.onload = function() {
+                                        previewImage.src = reader.result;
+                                        previewImage.style.display = 'block';
+                                        }
+
+                                        if (file) {
+                                        reader.readAsDataURL(file);
+                                        }
+                                    });
+                                    });
+                                </script>
+                            </fieldset>
+
+
+                            <hr>
+
                             <fieldset class="Verificacoes_Iniciais">
                             <legend>Verificações iniciais</legend>
 
@@ -338,6 +380,108 @@
 
                             <hr>
 
+                            <fieldset class="Inspecao_Dreno">
+                            <legend>Inspeção no dreno</legend>
+
+                                <div class="checkbox">                               
+                                    <label> 
+                                        <%= form.check_box :bdreno_existe %>
+                                        Existe dreno
+                                    </label>
+                                </div>
+
+                                <div class="form-group row">
+                                    <%= form.label :tipo_dreno_id, 'Tipo dreno:', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-3 mb-0 mb-sm-0">            
+                                        <%= form.collection_select(:tipo_dreno_id, @tipo_drenos, :id, :tipo_dreno, { include_blank: 'Selecione o tipo de dreno'}, {class: 'select-width-150 form-control' }) %>
+                                    </div>
+                                </div>
+                                    
+                                <div class="checkbox">                               
+                                    <label> 
+                                        <%= form.check_box :bdreno_posicionado_ptomais_baixo %>
+                                        Posicionado no ponto mais baixo
+                                    </label>
+                                </div>                                                        
+                                
+                                <div class="checkbox">                               
+                                    <label> 
+                                        <%= form.check_box :bdreno_inclinacao_positiva, id: "DrenoInclinPosCheckbox" %>
+                                        Inclinação positiva
+                                    </label>
+                                </div>
+
+                                <div class="checkbox">                               
+                                    <label class="orange-label">
+                                        <%= form.check_box :bajuste_inclinacao, id: "DrenoAjusteInclinaCheckbox" %>
+                                        Foi ajustada a inclinação
+                                    </label>
+                                </div>
+
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", function() {
+                                        var inclinacaoPositivaCheckbox = document.getElementById("DrenoInclinPosCheckbox");
+                                        var ajusteInclinacaoCheckbox = document.getElementById("DrenoAjusteInclinaCheckbox");
+
+                                        function updateAjusteInclinacaoCheckbox() {
+                                        if (inclinacaoPositivaCheckbox.checked) {
+                                            ajusteInclinacaoCheckbox.checked = false;
+                                            ajusteInclinacaoCheckbox.disabled = true;
+                                        } else {
+                                            ajusteInclinacaoCheckbox.disabled = false;
+                                        }
+                                        }
+
+                                        inclinacaoPositivaCheckbox.addEventListener("change", function() {
+                                        updateAjusteInclinacaoCheckbox();
+                                        });
+
+                                        updateAjusteInclinacaoCheckbox();
+                                    });
+                                </script>
+                                
+                                <div class="checkbox">                               
+                                    <label class="orange-label">
+                                        <%= form.check_box :bdreno_foisubstituido %>
+                                        Foi substituido/instalado
+                                    </label>
+                                </div>
+                                
+                                <div class="checkbox">                               
+                                    <label class="orange-label">
+                                        <%= form.check_box :bdreno_foiacionado_paradrenar_liqacumulado, id:"DrenoAcionCheckbox" %>
+                                        Foi acionado para drenar líquido acumulado
+                                    </label>
+                                </div>
+
+                                <div class="form-group row">
+                                    <%= form.label :dreno_qtdadeliquido_drenado, 'Volume drenado:', {class: "col-sm-2 col-form-label text-sm-left text-lg-right red-label"} %>
+                                    <div class="col-sm-4 mb-0 mb-sm-0">
+                                        <%= form.number_field :dreno_qtdadeliquido_drenado, step: 10, min: 0, required: false, style: 'width: 150px;', disabled: !@relatorio.bdreno_foiacionado_paradrenar_liqacumulado?, id:"object_volume_drenado" %>
+                                        [ml]
+                                    </div>
+                                </div>
+                                                                        
+                                <script>
+                                    const checkbox = document.getElementById("DrenoAcionCheckbox");
+                                    const volumeDrenadoInput = document.getElementById("object_volume_drenado");
+                                    
+                                    checkbox.addEventListener("change", function() {
+                                        volumeDrenadoInput.disabled = !this.checked;                            
+                                    });
+                                </script>
+                                
+                                <div class="form-group row">                                
+                                    <%= form.label :dreno_observacoes, 'Observações:', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="form-check col-sm-6 mb-0 mb-sm-0">
+                                        <%= form.text_field :dreno_observacoes, class: "form-control"  %>
+                                    </div>
+                                </div>
+
+                            </fieldset> 
+
+                            <hr>
+
                             <fieldset class="Inspecao_Manometro">
                             <legend>Inspeção no manômetro</legend>
 
@@ -427,7 +571,7 @@
                                 </div>
                                 
                                 <div class="form-group row">
-                                    <%= form.label :dispositivoseg_observacoes, 'Pressão de abertura:', {class: "col-sm-2 col-form-label text-sm-left text-lg-right red-label"} %>
+                                    <%= form.label :dispositivoseg_pabertura, 'Pressão de abertura:', {class: "col-sm-2 col-form-label text-sm-left text-lg-right red-label"} %>
                                     <div class="col-sm-4 mb-0 mb-sm-0">
                                         <%= form.number_field :dispositivoseg_pabertura, step: 0.001, min: -10, required: false, style: 'width: 150px;' %>
                                         [MPa]
@@ -444,9 +588,327 @@
                             </fieldset>
 
                             <hr>
+
+                            <fieldset class="Inspecao_Pressostato">
+                            <legend>Inspeção no pressostato</legend>
+
+                                <div class="checkbox">                               
+                                    <label> 
+                                        <%= form.check_box :bpressostato_existe %>
+                                        Existe pressostato
+                                    </label>
+                                </div>
+                                
+                                <div class="checkbox">                               
+                                    <label> 
+                                        <%= form.check_box :bpressostato_ehmantido_calibrado_eemboas_condicoes_operacao, id: "PressostatoManCalCheckbox" %>
+                                        É mantido calibrado e em boas condições
+                                    </label>
+                                </div>
+                                
+                                <div class="checkbox">                               
+                                    <label class="orange-label"> 
+                                        <%= form.check_box :bpressostato_foisubstituido, id: "PressostatoSubsCheckbox" %>
+                                        Foi substituido/instalado
+                                    </label>
+                                </div> 
+
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const pressostatoBoasCondicoesCheckbox = document.getElementById('PressostatoManCalCheckbox');
+                                        const pressostatoSubInsCheckbox = document.getElementById('PressostatoSubsCheckbox');
+
+                                        // Adiciona um event listener para o segundo campo
+                                        pressostatoSubInsCheckbox.addEventListener('change', function() {
+                                        if (this.checked) {
+                                            // Desmarca e desabilita o primeiro campo quando o segundo for marcado
+                                            pressostatoBoasCondicoesCheckbox.checked = false;
+                                            pressostatoBoasCondicoesCheckbox.disabled = true;
+                                        } else {
+                                            // Habilita o primeiro campo se o segundo estiver desmarcado
+                                            pressostatoBoasCondicoesCheckbox.disabled = false;
+                                        }
+                                        });
+                                    });
+                                </script>                           
+                                
+                                <div class="checkbox">                               
+                                    <label class="orange-label">
+                                        <%= form.check_box :bpressostato_foiverificada_faixadetrabalho, id: "PressostatoVerifFaixaCheckbox" %>
+                                        Foi verificada a faixa de trabalho
+                                    </label>
+                                </div>
+
+                                <div class="form-group row">
+                                    <%= form.label :pressostato_pliga, 'Pressão liga:', {class: "col-sm-2 col-form-label text-sm-left text-lg-right red-label"} %>
+                                    <div class="col-sm-4 mb-0 mb-sm-0">
+                                        <%= form.number_field :pressostato_pliga, step: 0.001, min: -10, required: false, style: 'width: 150px;', disabled: !@relatorio.bpressostato_foiverificada_faixadetrabalho?, id:"object_pressostato_pliga"  %>
+                                        [MPa]
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <%= form.label :pressostato_pdesliga, 'Pressão desliga:', {class: "col-sm-2 col-form-label text-sm-left text-lg-right red-label"} %>
+                                    <div class="col-sm-4 mb-0 mb-sm-0">
+                                        <%= form.number_field :pressostato_pdesliga, step: 0.001, min: -10, required: false, style: 'width: 150px;', disabled: !@relatorio.bpressostato_foiverificada_faixadetrabalho?, id:"object_pressostato_pdesliga"  %>
+                                        [MPa]
+                                    </div>
+                                </div>
+                                
+                                <script>
+                                    const checkboxPressostato = document.getElementById("PressostatoVerifFaixaCheckbox");
+                                    const pligaInput = document.getElementById("object_pressostato_pliga");
+                                    const pdesligaInput = document.getElementById("object_pressostato_pdesliga");
+                                    
+                                    checkboxPressostato.addEventListener("change", function() {
+                                        pligaInput.disabled = !this.checked;
+                                        pdesligaInput.disabled = !this.checked;
+                                    });
+                                </script>
+                                            
+                                <div class="form-group row">                                
+                                    <%= form.label :pressostato_observacoes, 'Observações:', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="form-check col-sm-6 mb-0 mb-sm-0">
+                                        <%= form.text_field :pressostato_observacoes, class: "form-control"  %>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+
+                            <hr>
+
+                            <fieldset class="Inspecao_Externa_Vaso">
+                            <legend>Inspeção externa no vaso</legend>
+
+                                <div class="checkbox">                               
+                                    <label>
+                                        <%= form.check_box :bpintura_emboas_condicoes %>
+                                        A pintura está em boas condições
+                                    </label>
+                                </div>
+
+                                <div class="checkbox">                               
+                                    <label class="red-label">
+                                        <%= form.check_box :bexiste_deformacoes_trincas_vazamentos_vaso %>
+                                        Existem deformações, trincas, vazamentos ou outros que comprometam a integridade estrutural do vaso
+                                     </label>
+                                </div>
                             
+                                <div class="checkbox">                               
+                                    <label>
+                                        <%= form.check_box :bexiste_corrosaoacentuada_trincas_oupartes_soltas %>
+                                        Existe corrosão acentuada, trincas ou partes soltas
+                                     </label>
+                                </div>
+
+                                <div class="checkbox">                               
+                                    <label>
+                                        <%= form.check_box :bexiste_falha_nasolda_entreberco_ecasco_dovaso %>
+                                        Existe falha na solda entre o berço e o casco do vaso
+                                     </label>
+                                </div> 
+
+                                <div class="checkbox">                               
+                                    <label>
+                                        <%= form.check_box :bexiste_corrosao_outrincas_noselementos_fixacao %>
+                                        Existe corrosão ou trinca nos elementos de fixação
+                                     </label>
+                                </div>
+
+                                <fieldset class="Foto_Corpo">
+                                <legend>Foto corpo</legend>
+                                    <div class="form-group row">
+                                        <% if @relatorio.foto_corpo.present? %>
+                                            <div class="form-label col-sm-3 mb-0 mb-sm-0">
+                                            <img src="data:image/jpeg;base64,<%= Base64.encode64(@relatorio.foto_corpo) %>" width="auto" height="150">
+                                            </div>
+                                        <% end %>
+                                        <div class="form-label col-sm-3 mb-0 mb-sm-0">                                    
+                                            <%= form.file_field :foto_corpo, id: 'foto-corpo-input', class: 'input-file' %>
+                                        </div>
+                                        <div class="form-label col-sm-3 mb-0 mb-sm-0">  
+                                            <img id="foto-corpo-preview" src="#" alt="Preview da Foto" style="display: none; max-width: 200px; max-height: 200px;" />
+                                        </div>
+                                    </div>
+
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                        var fileInput = document.getElementById('foto-corpo-input');
+                                        var previewImage = document.getElementById('foto-corpo-preview');
+
+                                        fileInput.addEventListener('change', function(event) {
+                                            var file = event.target.files[0];
+                                            var reader = new FileReader();
+
+                                            reader.onload = function() {
+                                            previewImage.src = reader.result;
+                                            previewImage.style.display = 'block';
+                                            }
+
+                                            if (file) {
+                                            reader.readAsDataURL(file);
+                                            }
+                                        });
+                                        });
+                                    </script>
+                                </fieldset>
+
+                                <fieldset class="Inspecao_Externa_Vaso_Outros">
+                                <legend>Inspeção externa no vaso - outros</legend>
+
+                                    <div class="checkbox">                               
+                                        <label class="red-label">
+                                            <%= form.check_box :baspartes_moveis_estao_protegidas %>
+                                            As partes móveis estão protegidas
+                                        </label>
+                                    </div>
+
+                                    <div class="checkbox">                               
+                                        <label>
+                                            <%= form.check_box :basconexoes_eacessorios_estao_emboas_condicoesfisicas %>
+                                            As conexões e acessórios estão em boas condições
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="checkbox">                               
+                                        <label>
+                                            <%= form.check_box :basconexoes_acessorios_apresentamvazamentos %>
+                                            As conexões e/ou acessórios apresentam vazamentos
+                                        </label>
+                                    </div>
+
+                                </fieldset>
+
+                                <fieldset class="Inspecao_Externa_Vaso_Acesso">
+                                <legend>Inspeção externa no vaso - acesso</legend>
+
+                                    <div class="form-group row">
+                                        <%= form.label :'relatorio[tipo_degrausacesso_eguardacorpo_boascondicoes]', 'Degraus de acesso e guarda corpo em boas condições:', {class: "col-sm-5 col-form-label text-sm-left text-lg-right"} %>
+                                        <div class="btn-group col-sm-6 mb-0 mb-sm-0" data-toggle="buttons">
+                                            <% options = { "Não" => 0, "Sim" => 1, "Não necessário" => 2, "Não existe" => 3 } %>
+                                            <% options.each do |label, value| %>
+                                                <label class="btn btn-dark">
+                                                    <% if  @relatorio.tipo_degrausacesso_eguardacorpo_boascondicoes == value %>
+                                                        <%= radio_button_tag :'relatorio[tipo_degrausacesso_eguardacorpo_boascondicoes]', value, checked: true %>
+                                                    <%else%>
+                                                        <%= radio_button_tag :'relatorio[tipo_degrausacesso_eguardacorpo_boascondicoes]', value %>
+                                                    <%end%>
+                                                    <%= label %>
+                                                </label>
+                                            <% end %>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group row">
+                                        <%= form.label :'relatorio[partesup_pisos_passarelas_platafor_eos_perfis_sustent_emboascon]', 'Passarelas, plataformas e perfís de sustentação em boas condições:', {class: "col-sm-5 col-form-label text-sm-left text-lg-right"} %>
+                                        <div class="btn-group col-sm-6 mb-0 mb-sm-0" data-toggle="buttons">
+                                            <% options = { "Não" => 0, "Sim" => 1, "Não necessário" => 2, "Não existe" => 3 } %>
+                                            <% options.each do |label, value| %>
+                                                <label class="btn btn-dark">
+                                                    <% if  @relatorio.partesup_pisos_passarelas_platafor_eos_perfis_sustent_emboascon == value %>
+                                                        <%= radio_button_tag :'relatorio[partesup_pisos_passarelas_platafor_eos_perfis_sustent_emboascon]', value, checked: true %>
+                                                    <%else%>
+                                                        <%= radio_button_tag :'relatorio[partesup_pisos_passarelas_platafor_eos_perfis_sustent_emboascon]', value %>
+                                                    <%end%>
+                                                    <%= label %>
+                                                </label>
+                                            <% end %>
+                                        </div>
+                                    </div> 
+
+                                </fieldset>
+
+                                <div class="form-group row">                                
+                                    <%= form.label :obs_inspecao_elementos_sobre_o_vaso_ou_nao, 'Observações:', {class: "col-sm-0 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="form-check col-sm-6 mb-0 mb-sm-0">
+                                        <%= form.text_field :obs_inspecao_elementos_sobre_o_vaso_ou_nao, class: "form-control"  %>
+                                    </div>
+                                </div>   
+                                
+                            </fieldset>
+
+                            <hr>
+                            
+                            <fieldset class="Foto_Pos_Inspecao">
+                            <legend>Foto depois da inspeção</legend>
+                                <div class="form-group row">
+                                    <% if @relatorio.foto_pos_inspecao.present? %>
+                                        <div class="form-label col-sm-3 mb-0 mb-sm-0">
+                                        <img src="data:image/jpeg;base64,<%= Base64.encode64(@relatorio.foto_pos_inspecao) %>" width="auto" height="150">
+                                        </div>
+                                    <% end %>
+                                    <div class="form-label col-sm-3 mb-0 mb-sm-0">                                    
+                                        <%= form.file_field :foto_pos_inspecao, id: 'foto-pos-inspecao-input', class: 'input-file' %>
+                                    </div>
+                                    <div class="form-label col-sm-3 mb-0 mb-sm-0">  
+                                        <img id="foto-pos-inspecao-preview" src="#" alt="Preview da Foto" style="display: none; max-width: 200px; max-height: 200px;" />
+                                    </div>
+                                </div>
+
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                    var fileInput = document.getElementById('foto-pos-inspecao-input');
+                                    var previewImage = document.getElementById('foto-pos-inspecao-preview');
+
+                                    fileInput.addEventListener('change', function(event) {
+                                        var file = event.target.files[0];
+                                        var reader = new FileReader();
+
+                                        reader.onload = function() {
+                                        previewImage.src = reader.result;
+                                        previewImage.style.display = 'block';
+                                        }
+
+                                        if (file) {
+                                        reader.readAsDataURL(file);
+                                        }
+                                    });
+                                    });
+                                </script>
+                            </fieldset>
+
+                            <fieldset class="Foto_Instalacao">
+                            <legend>Foto da instalação</legend>
+                                <div class="form-group row">
+                                    <% if @relatorio.foto_instalacao.present? %>
+                                        <div class="form-label col-sm-3 mb-0 mb-sm-0">
+                                        <img src="data:image/jpeg;base64,<%= Base64.encode64(@relatorio.foto_instalacao) %>" width="auto" height="150">
+                                        </div>
+                                    <% end %>
+                                    <div class="form-label col-sm-3 mb-0 mb-sm-0">                                    
+                                        <%= form.file_field :foto_instalacao, id: 'foto-instalacao-input', class: 'input-file' %>
+                                    </div>
+                                    <div class="form-label col-sm-3 mb-0 mb-sm-0">  
+                                        <img id="foto-instalacao-preview" src="#" alt="Preview da Foto" style="display: none; max-width: 200px; max-height: 200px;" />
+                                    </div>
+                                </div>
+
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                    var fileInput = document.getElementById('foto-instalacao-input');
+                                    var previewImage = document.getElementById('foto-instalacao-preview');
+
+                                    fileInput.addEventListener('change', function(event) {
+                                        var file = event.target.files[0];
+                                        var reader = new FileReader();
+
+                                        reader.onload = function() {
+                                        previewImage.src = reader.result;
+                                        previewImage.style.display = 'block';
+                                        }
+
+                                        if (file) {
+                                        reader.readAsDataURL(file);
+                                        }
+                                    });
+                                    });
+                                </script>
+                            </fieldset>
+
+                            <hr>
+
                             <%= button_tag "Gravar", type: "submit", class: "btn btn-primary" %>
-                            
+                            <%= button_tag "Cancelar", type: "button", class: "btn btn-secondary", onclick: "window.history.back();" %>
                                                         
                         <% end %>                                                                     
                         

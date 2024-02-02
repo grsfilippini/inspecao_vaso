@@ -1,0 +1,2 @@
+module InspetorsBackoffice::VasosHelper
+end

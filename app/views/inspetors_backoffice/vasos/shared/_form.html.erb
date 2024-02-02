@@ -25,62 +25,16 @@
                 <!-- div class="col-lg-5 d-none d-lg-block bg-register-image"></div -->
                 
                 <div class="col-lg-12">
+
                     <div class="p-5">
-                        <!--div class="text-center">
-                            <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
-                        </div-->
 
-                        <%= form_with(model: [ :admins_backoffice, @vaso ], local: true, html:{ multipart: true }) do |form| %>
-
-                            <div class="checkbox">
-                                <label>
-                                    <%= form.check_box :rascunho %>
-                                    Rascunho
-                                </label>
-                            </div>
-                            
-                            <div class="form-group row">
-                                <%= form.label :user_id, "Usuário", {class: "col-sm-1 col-form-label text-sm-left text-lg-left"} %>                                
-                                <div class="col-sm-4 mb-0 mb-sm-0">                                    
-                                    <%= form.collection_select(:user_id, @users, :id, :nome_completo, {include_blank: 'Selecione um usuário'}, {selected: nil, class: 'form-control'}) %>
-                                </div>
-                            </div>
-                                
-                            <div class="form-group row">
-                                <%= form.label :foto_plaqueta, 'Plaqueta', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
-                                <div class="form-label col-sm-4 mb-0 mb-sm-0">                                    
-                                    <% if @vaso.foto_plaqueta.present? && @vaso.id.present? %>
-                                      <img src="data:image/jpeg;base64,<%= Base64.encode64(@vaso.foto_plaqueta) %>" width="auto" height="120">
-                                      <%= form.label :remove_foto_plaqueta %>
-                                      <%= form.check_box :remove_foto_plaqueta %>
-                                    <% end %>
-                                </div>                                
-                                <div class="form-label col-sm-3 mb-0 mb-sm-0">                                    
-                                    <%= form.file_field :foto_plaqueta %>
-                                </div>
-                                
-                            </div>
-
-                            <div class="form-group row">
-                                <%= form.label :foto_instalacao, 'Instalação', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
-                                <div class="form-label col-sm-4 mb-0 mb-sm-0">                                    
-                                    <% if @vaso.foto_instalacao.present? && @vaso.id.present? %>
-                                      <img src="data:image/jpeg;base64,<%= Base64.encode64(@vaso.foto_instalacao) %>" width="auto" height="120">
-                                      <%= form.label :remove_foto_instalacao %>
-                                      <%= form.check_box :remove_foto_instalacao %>
-                                    <% end %>
-                                </div>                                
-                                <div class="form-label col-sm-3 mb-0 mb-sm-0">                                    
-                                    <%= form.file_field :foto_instalacao %>
-                                </div>
-                                
-                            </div>
-                                                        
+                        <%= form_with(model: [ :inspetors_backoffice, @vaso ], local: true, html:{ multipart: true }) do |form| %>
+                                                                                    
                             <fieldset class="Vaso_identificacao">
                             <legend>Identificação do vaso</legend>
                             
                                 <div class="form-group row">
-                                    <%= form.label :num_serie, "Série", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                    <%= form.label :num_serie, "# série", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
                                     <div class="col-sm-2 mb-3 mb-sm-0">                                        
                                         <%= form.text_field :num_serie, class: "form-control", id: "SerieMTP" %>
                                     </div>
@@ -106,7 +60,7 @@
                                             if (proximoMTPCheckbox.checked) {
                                                 
                                                 //alert('O checkbox está marcado!');
-                                                fetch('/admins_backoffice/obter_ultima_serie_mtp') // Substitua o caminho pela rota correta em seu aplicativo
+                                                fetch('/inspetors_backoffice/obter_ultima_serie_mtp') // Substitua o caminho pela rota correta em seu aplicativo
                                                 .then(response => response.json())
                                                 .then(data => {
                                                     // Atualiza o valor do campo de texto com a série obtida
@@ -121,22 +75,20 @@
                                         });
                                     </script>
                                     
+                                </div>                                                            
+
+                                <div class="form-group row">
                                     <%= form.label :fabricante_id, "Fabricante", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
                                     <div class="col-sm-4 mb-3 mb-sm-0">                                        
                                         <%= form.collection_select(:fabricante_id, @fabricantes, :id, :nome_curto, { include_blank: true }, {selected: nil, class: "form-control"}) %>
                                     </div>
-                                </div>                                                            
+                                </div>
                                 
                                 <div class="form-group row">
                                     <%= form.label :proprietaria_id, "Proprietária", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
                                     <div class="col-sm-4 mb-3 mb-sm-0">
                                         <%= form.collection_select(:proprietaria_id, @proprietarias, :id, :nome_curto, {include_blank: true }, {selected: nil, class: "form-control"}) %>
-                                    </div>
-                                    
-                                    <%= form.label :data_instalacao, "Data instalação", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
-                                    <div class="col-sm-3 mb-3 mb-sm-0">
-                                        <%= form.date_field :data_instalacao, value: @vaso.data_instalacao.presence || Date.new(1980, 1, 1), class: "form-control" %>                                        
-                                    </div>                                    
+                                    </div>                            
                                 </div>
                                     
                                 <div class="form-group row">
@@ -151,13 +103,6 @@
                                     <div class="col-sm-4 mb-3 mb-sm-0">                                        
                                         <%= form.text_area :observacoes, {class: "form-control"} %>
                                     </div>
-                                    
-                                    <%= form.label :relatorio_ini_id, "Rel. inicial", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
-                                    <div class="col-sm-4 mb-3 mb-sm-0">                                                                         
-                                        <%= form.number_field :relatorio_ini_id, step: 1, min: -1, style: 'width: 100px;', class: "form-control" %>
-                                        Deixe com valor "0" caso não exista.
-                                    </div>
-                                
                                 </div>
                                     
                             </fieldset>
@@ -182,7 +127,9 @@
                                     <div class="col-sm-4 mb-3 mb-sm-0">
                                         <%= form.collection_select(:tipo_vaso_id, @tipo_vasos, :id, :tipo_vaso, {include_blank: 'Selecione um tipo de vaso'}, {selected: nil, class: "form-control"}) %>
                                     </div>
-                                
+                                </div>
+
+                                <div class="form-group row">
                                     <%= form.label :tipo_compressor_id, "Tipo compressor", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
                                     <div class="col-sm-4 mb-3 mb-sm-0">                                    
                                         <%= form.collection_select :tipo_compressor_id, @tipo_compressors, :id, :tipo_compressor, {include_blank: 'Selecione um tipo de compressor'}, {selected: nil, class: "form-control"} %>
@@ -194,18 +141,9 @@
                                     <div class="col-sm-4 mb-3 mb-sm-0">                                    
                                         <%= form.collection_select :tipo_dreno_id, @tipo_drenos, :id, :tipo_dreno, {include_blank: 'Selecione um tipo de dreno'}, {selected: nil, class: "form-control"} %>
                                     </div>
-                                    <%= form.label :classe_fluido_id, "Classe fluído", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
-                                    <div class="col-sm-4 mb-3 mb-sm-0">                                    
-                                        <%= form.collection_select :classe_fluido_id, @classe_fluidos, :id, :descricao, {include_blank: 'Selecione um tipo de dreno'}, {selected: nil, class: "form-control"} %>
-                                    </div>
                                 </div>
                                 
                                 <div class="form-group row">                                    
-                                    <%= form.label :fluido_servico_id, "Fluído serviço", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
-                                    <div class="col-sm-4 mb-3 mb-sm-0">                                    
-                                        <%= form.collection_select :fluido_servico_id, @fluido_servicos, :id, :descricao, {include_blank: 'Selecione um fluído'}, {selected: nil, class: "form-control"} %>
-                                    </div>
-                                
                                     <%= form.label :tipo_dispositivo_seguranca_id, "Tipo disp. seg.", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
                                     <div class="col-sm-4 mb-3 mb-sm-0">                                    
                                         <%= form.collection_select :tipo_dispositivo_seguranca_id, @tipo_dispositivo_segurancas, :id, :nome, {include_blank: 'Selecione um tipo de disp. de seg.'}, {selected: nil, class: "form-control"} %>
@@ -223,36 +161,20 @@
                                
                             <fieldset class="Vaso_projeto">
                             <legend>Dados de projeto e operação</legend>
-                            
-                                <div class="form-group row">                                        
-                                    <%= form.label :catnr13_id, "Categoria NR13", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
-                                    <div class="col-sm-4 mb-3 mb-sm-0">                                    
-                                        <%= form.collection_select :catnr13_id, @catnr13s, :id, :categoria, {include_blank: 'Selecione uma categoria'}, {selected: nil, class: "form-control"} %>
-                                    </div>
-
-                                    <%= form.label :potencial_risco_id, "Potencial de risco", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
-                                    <div class="col-sm-4 mb-3 mb-sm-0">                                    
-                                        <%= form.collection_select :potencial_risco_id, @potencial_riscos, :id, :descricao, {include_blank: 'Selecione um potencial de risco'}, {selected: nil, class: "form-control"} %>
-                                    </div>                                                                                                  
-                                </div>
-                                
                                 <div class="form-group row">
-                                    <%= form.label :codigo_construcao_id, "Código construção", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
-                                    <div class="col-sm-4 mb-3 mb-sm-0">                                    
-                                        <%= form.collection_select :codigo_construcao_id, @codigo_construcaos, :id, :codigo, {include_blank: 'Selecione um código de construção'}, {selected: nil, class: "form-control"} %>
-                                    </div>                                                                                                  
-                                    
                                     <%= form.label "Volume [l]", class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
-                                    <input type="number" step="1" min="0" style="width: 100px;" class="form-control col-sm-1 text-sm-left text-lg-right" id="volume_litros">
-                                    
-                                    <%= form.label :volume, "[m<sup>3</sup>]".html_safe, class: "col-sm-1 col-form-label text-sm-left text-lg-right" %>
+                                    <div class="col-sm-2 mb-2 mb-sm-0">   
+                                        <input type="number" step="1" min="0" class="form-control text-sm-left text-lg-right" id="volume_litros">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <%= form.label :volume, "[m<sup>3</sup>]".html_safe, class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
                                     <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
                                         <%= form.number_field :volume, step: 0.001, min: 0.000, class: "form-control", id: "volume_m3", readonly: true %>
                                     </div>
                                 </div>
+
                                 <div class="form-group row">                                    
-                                    <div class="col-sm-8 mb-2 mb-sm-0">
-                                    </div>
                                     <%= form.label "Estimado", "Estimado [m<sup>3</sup>]".html_safe, class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
                                     <div class="col-sm-2 mb-2 mb-sm-0">                                        
                                         <input type="number" step="0.001" min="0.000" class="form-control" id="volume_estimado" name="volume_estimado" readonly="readonly">
@@ -278,116 +200,20 @@
                                     </div>
                                 </div>
                                 
-                                <div class="form-group row">                                    
-                                    <%= form.label :p_projeto, 'Projeto [MPa]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
-                                    <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
-                                        <%= form.number_field :p_projeto, step: 0.001, min: -10,  class: "form-control", id: "pressao_projeto" %>
-                                    </div>
-                                </div>
-                                
                                 <div class="form-group row">
                                     <%= form.label :pmta_original, 'PMTA orig.[MPa]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
                                     <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
                                         <%= form.number_field :pmta_original, step: 0.001, min: -10,  class: "form-control", id: "pmta_original" %>
-                                    </div>
-                                    <%= form.label :pmta_atual, 'PMTA atual[MPa]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
-                                    <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
-                                        <%= form.number_field :pmta_atual, step: 0.001, min: -10,  class: "form-control", id: "pmta_atual" %>
-                                    </div>
-                                </div>
-                                <!-- Atualiza pressões  caso esteja inserindo um novo vaso -->
-                                <% if !@vaso.id.present? %>
-                                    <script>
-                                        document.addEventListener("DOMContentLoaded", function() {
-                                            var pressaoProjetoInput = document.getElementById("pressao_projeto");
-                                            var pmtaOriginalInput = document.getElementById("pmta_original");
-                                            var pmtaAtualInput = document.getElementById("pmta_atual");
-                                    
-                                            pressaoProjetoInput.addEventListener("input", function() {
-                                                var pressao = pressaoProjetoInput.value;                                            
-                                                pmtaOriginalInput.value = pressao;
-                                                pmtaAtualInput.value = pressao;
-                                            });
-                                        });
-                                    </script>
-                                <% end %>
-
-                                <div class="form-group row">
-                                    <%= form.label :pth_original, 'PTH orig.[MPa]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
-                                    <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
-                                        <%= form.number_field :pth_original, step: 0.001, min: -10,  class: "form-control", id: "pth_original" %>
-                                    </div>
-                                    <%= form.label :pth_atual, 'PTH atual[MPa]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
-                                    <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
-                                        <%= form.number_field :pth_atual, step: 0.001, min: -10,  class: "form-control", id: "pth_atual" %>
-                                    </div>
-                                </div>
-
-                                <!-- Atualiza pressões  caso esteja inserindo um novo vaso -->
-                                <% if !@vaso.id.present? %>
-                                    <script>
-                                        document.addEventListener("DOMContentLoaded", function() {
-                                            var pthOriginalInput = document.getElementById("pth_original");                                            
-                                            var pthAtualInput = document.getElementById("pth_atual");
-                                    
-                                            pthOriginalInput.addEventListener("input", function() {
-                                                var pressao = pthOriginalInput.value;                                            
-                                                pthAtualInput.value = pressao;
-                                            });
-                                        });
-                                    </script>
-                                <% end %>
-
-                                <div class="form-group row">
-                                    <%= form.label :p_inf_operacao_fabricante, 'Operação inf.[MPa]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
-                                    <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
-                                        <%= form.number_field :p_inf_operacao_fabricante, step: 0.001, min: -10,  class: "form-control" %>
-                                    </div>
-                                    <%= form.label :p_sup_operacao_fabricante, 'Operação sp.[MPa]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
-                                    <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
-                                        <%= form.number_field :p_sup_operacao_fabricante, step: 0.001, min: -10,  class: "form-control" %>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <div class="col-sm-2 mb-3 mb-sm-0">
-                                        <h6><span class="badge badge-secondary">Outras informações</span></h6>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <%= form.label :temp_min_prj, 'Temp. min.[°C]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
-                                    <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
-                                        <%= form.number_field :temp_min_prj, step: 1, min: -100,  class: "form-control" %>
-                                    </div>
-                                    <%= form.label :temp_max_prj, 'Temp. máx.[°C]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
-                                    <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
-                                        <%= form.number_field :temp_max_prj, step: 1, min: -100,  class: "form-control" %>
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group row">
-                                    <%= form.label :material_id, "Material", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
-                                    <div class="col-sm-4 mb-3 mb-sm-0">                                    
-                                        <%= form.collection_select :material_id, @materials, :id, :descricao, {include_blank: 'Selecione um material'}, {selected: nil, class: "form-control"} %>
                                     </div>                                    
                                 </div>
                                 
                                 <div class="form-group row">
-                                    <%= form.label :efic_solda_tampo, 'Efic. solda tampo', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                    <%= form.label :pth_original, 'PTH orig.[MPa]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
                                     <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
-                                        <%= form.number_field :efic_solda_tampo, step: 0.01, min: 0,  class: "form-control" %>
-                                    </div>
-                                    <%= form.label :efic_solda_costado, 'Efic. solda costado', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
-                                    <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
-                                        <%= form.number_field :efic_solda_costado, step: 0.01, min: 0,  class: "form-control" %>
-                                    </div>
-                                    <%= form.label :efic_solda_costado_tampo, 'Efc. sol. cos. tampo', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
-                                    <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
-                                        <%= form.number_field :efic_solda_costado_tampo, step: 0.01, min: 0,  class: "form-control" %>
-                                    </div>
+                                        <%= form.number_field :pth_original, step: 0.001, min: -10,  class: "form-control", id: "pth_original" %>
+                                    </div>                                    
                                 </div>
-                                
+
                                 <div class="form-group row">
                                     <div class="col-sm-2 mb-3 mb-sm-0">
                                         <h6><span class="badge badge-secondary">Dimensões</span></h6>
@@ -399,10 +225,14 @@
                                     <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
                                         <%= form.number_field :perimetro_diametro_externo, step: 0.1, min: 0,  class: "form-control", id: "perimetro" %>
                                     </div>
+                                </div>
+                                <div class="form-group row">
                                     <%= form.label :entre_soladas_corpo, 'Entre soldas [cm]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
                                     <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
                                         <%= form.number_field :entre_soladas_corpo, step: 0.1, min: 0,  class: "form-control" %>
                                     </div>
+                                </div>
+                                <div class="form-group row">
                                     <%= form.label :profundidade_tampo, 'Profun. tampo [cm]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
                                     <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
                                         <%= form.number_field :profundidade_tampo, step: 0.1, min: 0,  class: "form-control" %>
@@ -413,15 +243,7 @@
                                     <%= form.label :diametro_externo_corpo, 'Diâm. externo [cm]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
                                     <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
                                         <%= form.number_field :diametro_externo_corpo, step: 0.1, min: 0,  class: "form-control", id: "diametro" %>
-                                    </div>
-                                    <%= form.label :esp_projeto_corpo, 'E. prj. corpo [mm]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
-                                    <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
-                                        <%= form.number_field :esp_projeto_corpo, step: 0.01, min: 0,  class: "form-control" %>
-                                    </div>
-                                    <%= form.label :esp_projeto_tampo, 'E. prj. tampo [mm]', class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
-                                    <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
-                                        <%= form.number_field :esp_projeto_tampo, step: 0.01, min: 0,  class: "form-control" %>
-                                    </div>
+                                    </div>                                    
                                 </div>
 
                                 <!-- Atualiza diâmetro caso perímetro seja alterado -->

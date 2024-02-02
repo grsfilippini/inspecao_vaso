@@ -88,6 +88,17 @@ class Vaso < ApplicationRecord
       end
     end
     
+    #
+    # Filtra vasos pelo número de série
+    #
+    def self.pesquisa_serie(page, num_serie)      
+      includes(:proprietaria,  :fabricante)
+        .where("lower(num_serie) LIKE ?", "%#{num_serie.downcase}%")
+        .order(rascunho: :desc, num_serie: :asc)
+        .page(page)
+        .per(20)
+    end
+
     # ***************************************************
     # Método de classe, pode ser chamado sem instanciar
     # OS MÉTODOS ABAIXO FILTRAM POR current_user.id

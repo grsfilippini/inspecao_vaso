@@ -27,7 +27,7 @@ class AdminsBackoffice::VasosController < AdminsBackofficeController
         @vaso.num_serie = obter_ultima_serie_mtp_hash        
       end      
 
-      # Salva o novo dispositivo de segurança
+      # Salva o novo vaso
       if @vaso.save
         if params[:vaso][:foto_plaqueta].present?
           # Atualizar o campo de imagem diretamente com o novo arquivo
@@ -157,7 +157,8 @@ class AdminsBackoffice::VasosController < AdminsBackofficeController
     private
    
     def params_vaso
-      params.require(:vaso).permit(:fabricante_id,
+      params.require(:vaso).permit(:rascunho,
+                                   :fabricante_id,
                                    :num_serie,
                                    :catnr13_id,
                                    :dt_fabricacao_reconstituicao,

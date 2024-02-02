@@ -53,19 +53,9 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
     # sel_relatorio_id contém dados a serem usados neste novo relatório
     if params[:sel_relatorio_id].present? && params[:sel_relatorio_id] != nil      
       # Faça suas atribuições aqui usando o valor de sel_relatorio_id
-      # puts params[:sel_relatorio_id]
       relatorio_base = Relatorio.find(params[:sel_relatorio_id])
-      #puts '**********************'
-      #puts relatorio_base.tipo_fixacao_vaso
-      #puts '**********************'
       attributes_to_assign = relatorio_base.attributes.except("id", "data_relatorio", "b_rascunho", "avaliadoph", "brel_impresso")  # Excluindo o campo "id"
-      #attributes_to_assign = relatorio_base.attributes.slice("user_id", "art_id", "ph_id", "cidade_id", "vaso_id", "finalidade_vaso_id", "proprietaria_id", "inspetora_id")  # Excluindo o campo "id"
-      #puts '**********************'
-      #puts attributes_to_assign[:tipo_fixacao_vaso]
-      #puts attributes_to_assign
-      #puts '**********************'
       @relatorio.assign_attributes(attributes_to_assign)      
-      #puts @relatorio.tipo_fixacao_vaso
     end
   end
   

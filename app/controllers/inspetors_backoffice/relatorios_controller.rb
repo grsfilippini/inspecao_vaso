@@ -19,6 +19,18 @@ class InspetorsBackoffice::RelatoriosController < InspetorsBackofficeController
     def create      
         @relatorio = Relatorio.new(params_relatorio)    
         if @relatorio.save   
+            if params[:relatorio][:foto_antes_inspecao].present?
+                @vaso.update_attribute(:foto_antes_inspecao, params[:relatorio][:foto_antes_inspecao].read)
+            end
+            if params[:relatorio][:foto_corpo].present?
+                @vaso.update_attribute(:foto_corpo, params[:relatorio][:foto_corpo].read)
+            end
+            if params[:relatorio][:foto_pos_inspecao].present?
+                @relatorio.update_attribute(:foto_pos_inspecao, params[:relatorio][:foto_pos_inspecao].read)
+            end
+            if params[:relatorio][:foto_instalacao].present?
+                @relatorio.update_attribute(:foto_instalacao, params[:relatorio][:foto_instalacao].read)
+            end
             redirect_to inspetors_backoffice_relatorios_path, notice: "Relatório criado com sucesso!"
         else
             get_relacoes
@@ -28,7 +40,19 @@ class InspetorsBackoffice::RelatoriosController < InspetorsBackofficeController
 
     def update        
         if @relatorio.update(params_relatorio)
-            redirect_to inspetors_backoffice_relatorio_path, notice: "Relatório atualizado com sucesso!"
+            if params[:relatorio][:foto_antes_inspecao].present?
+                @relatorio.update_attribute(:foto_antes_inspecao, params[:relatorio][:foto_antes_inspecao].read)
+            end
+            if params[:relatorio][:foto_corpo].present?
+                @relatorio.update_attribute(:foto_corpo, params[:relatorio][:foto_corpo].read)
+            end
+            if params[:relatorio][:foto_pos_inspecao].present?
+                @relatorio.update_attribute(:foto_pos_inspecao, params[:relatorio][:foto_pos_inspecao].read)
+            end
+            if params[:relatorio][:foto_instalacao].present?
+                @relatorio.update_attribute(:foto_instalacao, params[:relatorio][:foto_instalacao].read)
+            end
+            redirect_to inspetors_backoffice_relatorios_path, notice: "Relatório atualizado com sucesso!"
         else
             get_relacoes
             render :edit
@@ -138,46 +162,28 @@ class InspetorsBackoffice::RelatoriosController < InspetorsBackofficeController
                                           :baspartes_moveis_estao_protegidas,                                        
                                           :basconexoes_eacessorios_estao_emboas_condicoesfisicas,
                                           :basconexoes_acessorios_apresentamvazamentos,
+                                          # acesso
+                                          :tipo_degrausacesso_eguardacorpo_boascondicoes,
+                                          :partesup_pisos_passarelas_platafor_eos_perfis_sustent_emboascon,
+                                          :obs_inspecao_elementos_sobre_o_vaso_ou_nao,
                                           
                                           # Fotos
                                           # inspeção externa
                                           :foto_antes_inspecao,
                                           :foto_pos_inspecao,
                                           :foto_corpo,
-                                          :foto_instalacao,
-                                          # teste hidrostático
-                                          :foto_th,
-                                          # inspeção interna                                          
-                                          :foto_interna1,
-                                          :foto_interna2,
-                                          :foto_interna3,
-                                          :foto_interna4,
+                                          :foto_instalacao                                          
                                     )
     end
     
     def get_relacoes
-      #@fabricantes        = Cadastro.where(eh_fabricante: true).order(:nome_curto)      
-      #@proprietarias      = Cadastro.order(:nome_curto)
-      #@catnr13s           = Catnr13.order(:id)
-      #@tipo_compressors   = TipoCompressor.order(:tipo_compressor)      
-      #@relatorio_inis     = Relatorio.order(:id)
-      #@tipo_vasos         = TipoVaso.order(:tipo_vaso)
-      #@codigo_construcaos = CodigoConstrucao.order(:codigo)
-      #@fluido_servicos    = FluidoServico.order(:descricao)
-      #@potencial_riscos   = PotencialRisco.order(:descricao)
-      #@classe_fluidos     = ClasseFluido.order(:descricao)
-      #@tipo_dispositivo_segurancas = TipoDispositivoSeguranca.order(:descricao)
-      #@materials          = Material.order(:descricao)
-      #@users              = User.order(:nome).order(:sobrenome)
       @tipo_inspecaos     = TipoInspecao.order(:nome)
-      #@arts               = Art.includes(:cadastro).order(id: :desc)
-      #@phs                = Ph.order(:nome)
       @cidades            = Cidade.order(:nome)
       @vasos              = Vaso.includes(:fabricante).order(:num_serie)
       @finalidade_vasos   = FinalidadeVaso.all
       @proprietarias      = Cadastro.order(:nome_curto)
-      #@inspetoras         = Cadastro.where(eh_empresa_inspetora: true).order(:nome_curto)      
       @ambiente_insts     = AmbienteInst.order(:ambiente)
+      @tipo_drenos        = TipoDreno.order(:tipo_dreno)
     end
   
 end    
