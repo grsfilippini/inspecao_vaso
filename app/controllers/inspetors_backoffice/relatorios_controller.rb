@@ -20,10 +20,10 @@ class InspetorsBackoffice::RelatoriosController < InspetorsBackofficeController
         @relatorio = Relatorio.new(params_relatorio)    
         if @relatorio.save   
             if params[:relatorio][:foto_antes_inspecao].present?
-                @vaso.update_attribute(:foto_antes_inspecao, params[:relatorio][:foto_antes_inspecao].read)
+                @relatorio.update_attribute(:foto_antes_inspecao, params[:relatorio][:foto_antes_inspecao].read)
             end
             if params[:relatorio][:foto_corpo].present?
-                @vaso.update_attribute(:foto_corpo, params[:relatorio][:foto_corpo].read)
+                @relatorio.update_attribute(:foto_corpo, params[:relatorio][:foto_corpo].read)
             end
             if params[:relatorio][:foto_pos_inspecao].present?
                 @relatorio.update_attribute(:foto_pos_inspecao, params[:relatorio][:foto_pos_inspecao].read)

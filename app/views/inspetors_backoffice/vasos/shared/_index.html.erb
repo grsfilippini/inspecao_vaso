@@ -15,10 +15,12 @@
             </div>
         </div>
     <%end%>
+    
     <h6>
         <span class="badge badge-danger">Em análise</span>
         <span class="badge badge-secondary">Aprovado</span>
     </h6>
+    
 </div> <!-- FIM DO CONTAINER DO FORM -->            
             
 
@@ -40,10 +42,12 @@
         <tbody> 
             <% @vasos.each do |v|%>
                 <tr>
-                    <td style="width: 50px">                        
-                        <%= link_to edit_inspetors_backoffice_vaso_path(v), class:"btn btn-info btn-sm" do %> 
-                            <i class="fa fa-edit"></i>
-                        <%end%>
+                    <td style="width: 50px"> 
+                        <% if v.rascunho %>                       
+                            <%= link_to edit_inspetors_backoffice_vaso_path(v), class:"btn btn-info btn-sm" do %> 
+                                <i class="fa fa-edit"></i>
+                            <%end%>
+                        <% end %>
                     </td>
                     <td style="width: 50px">
                         <% if v.rascunho %>

@@ -8,7 +8,7 @@ class AdminsBackoffice::VasosController < AdminsBackofficeController
       # Se não for usado, e usar diretamente na view da index, ele fará a cada cadastro uma nova query para buscar a corporação
       @vasos = Vaso.includes(:proprietaria,  :fabricante, :user)
                    .all
-                   .order(:num_serie)
+                   .order(rascunho: :desc, num_serie: :asc)
                    .page(params[:page])
                    .per(100)
       @proprietarios = Cadastro.where(eh_fabricante: false, eh_empresa_inspetora: false).order(:nome_curto)

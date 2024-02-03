@@ -28,6 +28,12 @@
             </div>
         </div>
     <%end%>
+    
+    <h6>
+        <span class="badge badge-danger">Em análise</span>
+        <span class="badge badge-secondary">Aprovado</span>
+    </h6>
+    
 </div> <!-- FIM DO CONTAINER DO FORM -->            
             
 
@@ -36,7 +42,7 @@
         <thead>
             <tr>
                 <th>#</th>
-                <th><%= traduz_atributos_humanos(@vasos, :user_id) %> </th>
+                <!--<th><%= traduz_atributos_humanos(@vasos, :user_id) %> </th>-->
                 <th><%= traduz_atributos_humanos(@vasos, :num_serie) %> </th>               
                 <th><%= traduz_atributos_humanos(@vasos, :fabricante_id) %> </th>
                 <th><%= traduz_atributos_humanos(@vasos, :proprietaria_id) %> </th>
@@ -51,12 +57,19 @@
             <% @vasos.each do |v|%>
                 <tr>
                     <td><%= v.id %></td>
+                    <!--
                     <% if !v.user.blank? %>
                         <td><%= v.user.nome_completo.truncate(10) %></td>
                     <% else %>
                         <td>Sem usuário</td>
                     <% end %>
-                    <td><%= v.num_serie %></td>
+                    -->
+                    <% if !v.rascunho %>
+                        <td><h6><span class="badge badge-secondary badge-lg"><%= v.num_serie %></span></h6></td>
+                    <% else %>
+                        <td><h6><span class="badge badge-danger badge-lg"><%= v.num_serie %></span></h6></td>
+                    <% end %>
+
                     <td><%= v.fabricante.nome_curto.truncate(30) %></td>
                     <td><%= v.proprietaria.nome_curto %></td>
 
