@@ -100,6 +100,11 @@ class InspetorsBackoffice::VasosController < InspetorsBackofficeController
         render json: { serie: serie }
     end
 
+    def json_data      
+      @vaso = Vaso.find(params[:id])
+      render json: { pmta_atual: @vaso.pmta_atual, proprietaria_id: @vaso.proprietaria_id }
+    end
+
     private
 
     def set_vaso

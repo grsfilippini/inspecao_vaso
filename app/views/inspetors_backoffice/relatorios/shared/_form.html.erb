@@ -928,7 +928,7 @@
             var vasoId = vasoSelect.value;
             var confirmDialog = confirm("Deseja atribuir a proprietária do vaso selecionado ao Relatorio de inspeção?");
             if (confirmDialog) {
-                fetch('/admins_backoffice/vasos/' + vasoId + '/json_data')
+                fetch('/inspetors_backoffice/vasos/' + vasoId + '/json_data')
                 .then(response => response.json())
                 .then(data => {
                     proprietariaSelect.value = data.proprietaria_id;

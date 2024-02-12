@@ -6,7 +6,11 @@ Rails.application.routes.draw do
   namespace :inspetors_backoffice do
     get 'welcome/index'
     resources :relatorios
-    resources :vasos
+    resources :vasos do
+      member do
+        get :json_data, defaults: { format: 'json' }
+      end
+    end   
     get 'pesquisa_vaso', to: 'vasos#pesquisa'
     get '/obter_ultima_serie_mtp', to: 'vasos#obter_ultima_serie_mtp'
   end
