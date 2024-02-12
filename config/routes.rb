@@ -10,7 +10,12 @@ Rails.application.routes.draw do
       member do
         get :json_data, defaults: { format: 'json' }
       end
-    end   
+    end 
+    resources :cadastros do
+      member do
+        get :json_data, defaults: { format: 'json' }
+      end
+    end    
     get 'pesquisa_vaso', to: 'vasos#pesquisa'
     get '/obter_ultima_serie_mtp', to: 'vasos#obter_ultima_serie_mtp'
   end

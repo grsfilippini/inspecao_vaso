@@ -55,7 +55,7 @@
                                 <div class="form-group row">
                                     <%= form.label :cidade_id, 'Cidade:', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
                                     <div class="col-sm-3 mb-0 mb-sm-0">            
-                                        <%= form.collection_select(:cidade_id, @cidades, :id, :nome, { include_blank: 'Selecione uma cidade'}, {class: 'select-width-150 form-control' }) %>
+                                        <%= form.collection_select(:cidade_id, @cidades, :id, :nome, { include_blank: 'Selecione uma cidade'}, {class: 'select-width-150 form-control', id: "cidade-select" }) %>
                                     </div>
 
                                     <%= form.label :data_relatorio, 'Data:', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
@@ -920,6 +920,7 @@
 </div> <!-- FIM DO CONTAINER DO FORM -->
 
 <script>
+    // Seleciona a empresa automáticamente pelo vaso
     document.addEventListener('DOMContentLoaded', function() {
         var vasoSelect = document.getElementById('vaso-select');
         var proprietariaSelect = document.getElementById('proprietaria-select');
@@ -932,6 +933,27 @@
                 .then(response => response.json())
                 .then(data => {
                     proprietariaSelect.value = data.proprietaria_id;
+                    // Dispara o evento de mudança no proprietariaSelect
+                    proprietariaSelect.dispatchEvent(new Event('change'));
+                })
+                .catch(error => console.error(error));                                
+            }
+        });
+    });
+
+    // Seleciona a cidade automáticamente pela proprietária
+    document.addEventListener('DOMContentLoaded', function() {
+        var proprietariaSelect = document.getElementById('proprietaria-select');
+        var cidadeSelect = document.getElementById('cidade-select');
+        
+        proprietariaSelect.addEventListener('change', function() {                                
+            var proprietariaId = proprietariaSelect.value;
+            var confirmDialog = confirm("Deseja atribuir a cidade da proprietária selecionada a cidade do Relatorio de inspeção?");
+            if (confirmDialog) {
+                fetch('/inspetors_backoffice/cadastros/' + proprietariaId + '/json_data')
+                .then(response => response.json())
+                .then(data => {
+                    cidadeSelect.value = data.cidade_id;
                 })
                 .catch(error => console.error(error));                                
             }
