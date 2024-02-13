@@ -32,6 +32,12 @@ class Vaso < ApplicationRecord
     has_many :relatorio_dispsegs
     
     has_one :corp, through: :proprietaria
+
+    # Callback method, RoR
+    after_create :seta_estatistica
+    after_destroy :dec_estatistica
+    after_create :define_pressao_projeto
+      
     
     # ***************************************************
     # Método de classe, pode ser chamado sem instanciar    
@@ -175,12 +181,7 @@ class Vaso < ApplicationRecord
     #scope :pesquisa_corp_sem_pagina, -> (corp) {where(corp_id: corp)}
     #scope :pesquisa_prop_sem_pagina, -> (proprietaria) {where(proprietaria_id: proprietaria)}
     
-        
-    
-  # Callback method, RoR
-  after_create :seta_estatistica
-  after_destroy :dec_estatistica
-  
+
   private
   
   
@@ -190,6 +191,12 @@ class Vaso < ApplicationRecord
     
   def dec_estatistica
     AdminEstatistica.dec_evento(AdminEstatistica::EVENTOS[:total_vasos])
+  end
+
+  def define_pressao_projeto
+    if !self.p_projeto.present? && self.pmta_atual.present?
+      self.update(p_projeto: self.pmta_atual)
+    end
   end
     
 end
