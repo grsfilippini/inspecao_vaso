@@ -67,7 +67,7 @@ class Relatorio < ApplicationRecord
   
   def self.relatorios_em_aberto_inspetor(inspetor, page)
     includes(:proprietaria, :vaso)
-    .where(b_rascunho: true, inspetor_id: inspetor)
+    .where(b_rascunho: true)
     .order(created_at: :desc)
     .limit(50)
     .page(page)
