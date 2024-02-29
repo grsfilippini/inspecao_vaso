@@ -17,7 +17,8 @@ class InspetorsBackoffice::RelatoriosController < InspetorsBackofficeController
     end
 
     def create      
-        @relatorio = Relatorio.new(params_relatorio)    
+        @relatorio = Relatorio.new(params_relatorio) 
+        @relatorio.inspetor_id = current_inspetor.id   
         if @relatorio.save   
             if params[:relatorio][:foto_antes_inspecao].present?
                 @relatorio.update_attribute(:foto_antes_inspecao, params[:relatorio][:foto_antes_inspecao].read)
