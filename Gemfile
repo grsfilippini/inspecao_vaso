@@ -58,6 +58,10 @@ gem 'terser'
 gem 'wicked_pdf', '~> 2.7'
 gem 'wkhtmltopdf-binary'
 
+# Utiliza o timer cron do linux
+# usado para definir tarefas de tempos em tempos
+gem 'whenever', require: false
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]  
