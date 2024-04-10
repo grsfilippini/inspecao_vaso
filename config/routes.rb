@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     end    
     get 'pesquisa_vaso', to: 'vasos#pesquisa'
     get '/obter_ultima_serie_mtp', to: 'vasos#obter_ultima_serie_mtp'
+    get 'pesquisa_relatorio_dispseg', to: 'relatorio_dispsegs#pesquisa'
   end
   
   # Name space, define agrupamento de pastas em controllers e views
