@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_02_02_184030) do
+ActiveRecord::Schema.define(version: 2024_04_16_161444) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_repack"
@@ -170,6 +170,7 @@ ActiveRecord::Schema.define(version: 2024_02_02_184030) do
     t.float "esp_min_corpo"
     t.float "esp_min_tampo"
     t.bigint "user_id"
+    t.boolean "b_rascunho", default: true
     t.index ["user_id"], name: "index_espessura_vasos_on_user_id"
   end
 
@@ -548,7 +549,7 @@ ActiveRecord::Schema.define(version: 2024_02_02_184030) do
     t.string "setor_instalacao_vaso", limit: 50
     t.binary "foto_plaqueta"
     t.float "diametro_externo_corpo"
-    t.bigint "user_id"
+    t.bigint "user_id", default: 1
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string "tag_proprietaria", limit: 15
