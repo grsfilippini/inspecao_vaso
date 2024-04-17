@@ -3,15 +3,19 @@ class AdminsBackoffice::EspessuraVasosController < AdminsBackofficeController
     before_action :get_relacoes, only: [:new, :edit]
 
     def index
-        @espessura_vasos = EspessuraVaso.pesquisa(params[:page], nil, nil)
+        @espessura_vasos = EspessuraVaso.pesquisa(params[:page], nil, nil, false)
         @proprietarias = Cadastro.order(:nome_curto)
     end
 
     def pesquisa        
-        @espessura_vasos = EspessuraVaso.pesquisa(params[:page], params[:num_serie], params[:proprietaria_id])                
+        @espessura_vasos = EspessuraVaso.pesquisa(params[:page], params[:num_serie], params[:proprietaria_id], false)                
         @proprietarias = Cadastro.order(:nome_curto)
     end
 
+    def em_aberto
+        @espessura_vasos = EspessuraVaso.pesquisa(params[:page], nil, nil, true)                
+        @proprietarias = Cadastro.order(:nome_curto)
+    end
 
     def new
         @espessura_vaso = EspessuraVaso.new
@@ -20,7 +24,7 @@ class AdminsBackoffice::EspessuraVasosController < AdminsBackofficeController
     def create
         @espessura_vaso = EspessuraVaso.new(params_espessura_vaso)
         if @espessura_vaso.save
-          redirect_to admins_backoffice_espessura_vasos_path, notice: "Espessura de vaso criada com sucesso!"
+          redirect_to admins_backoffice_espessura_em_aberto_path, notice: "Espessura de vaso criada com sucesso!"
         else
           get_relacoes
           render :new
@@ -32,7 +36,7 @@ class AdminsBackoffice::EspessuraVasosController < AdminsBackofficeController
 
     def update        
         if @espessura_vaso.update(params_espessura_vaso)
-            redirect_to admins_backoffice_espessura_vasos_path, notice: "Espessura vaso atualizada com sucesso!"
+            redirect_to admins_backoffice_espessura_em_aberto_path, notice: "Espessura vaso atualizada com sucesso!"
         else
             get_relacoes
             render :edit
@@ -41,7 +45,7 @@ class AdminsBackoffice::EspessuraVasosController < AdminsBackofficeController
 
     def destroy
         if @espessura_vaso.destroy
-            redirect_to admins_backoffice_espessura_vasos_path, notice: "Espessura vaso excluída com sucesso!"
+            redirect_to admins_backoffice_espessura_em_aberto_path, notice: "Espessura vaso excluída com sucesso!"
         else
             render :index
         end
@@ -52,7 +56,8 @@ class AdminsBackoffice::EspessuraVasosController < AdminsBackofficeController
     
 
     def params_espessura_vaso        
-        params.require(:espessura_vaso).permit(:user_id, 
+        params.require(:espessura_vaso).permit(:b_rascunho,
+                                               :user_id, 
                                                :vaso_id,
                                                :data,
                                                :instrumento_padrao_id,

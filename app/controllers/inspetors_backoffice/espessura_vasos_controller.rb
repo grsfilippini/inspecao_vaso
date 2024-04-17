@@ -3,7 +3,8 @@ class InspetorsBackoffice::EspessuraVasosController < InspetorsBackofficeControl
     before_action :get_relacoes, only: [:new, :edit]
 
     def index
-        @espessura_vasos = EspessuraVaso.includes(:vaso).all
+        @espessura_vasos = EspessuraVaso.includes(:vaso)
+                                        .where(b_rascunho: true)
                                         .order(id: :desc)
                                         .page(params[:page])
                                         .per(20)
@@ -23,8 +24,9 @@ class InspetorsBackoffice::EspessuraVasosController < InspetorsBackofficeControl
     
     def create
         @espessura_vaso = EspessuraVaso.new(params_espessura_vaso)
+        
         if @espessura_vaso.save
-          redirect_to admins_backoffice_espessura_vasos_path, notice: "Espessura de vaso criada com sucesso!"
+          redirect_to inspetors_backoffice_espessura_vasos_path, notice: "Espessura de vaso criada com sucesso!"
         else
           get_relacoes
           render :new
@@ -36,7 +38,7 @@ class InspetorsBackoffice::EspessuraVasosController < InspetorsBackofficeControl
 
     def update        
         if @espessura_vaso.update(params_espessura_vaso)
-            redirect_to admins_backoffice_espessura_vasos_path, notice: "Espessura vaso atualizada com sucesso!"
+            redirect_to inspetors_backoffice_espessura_vasos_path, notice: "Espessura vaso atualizada com sucesso!"
         else
             get_relacoes
             render :edit
@@ -45,7 +47,7 @@ class InspetorsBackoffice::EspessuraVasosController < InspetorsBackofficeControl
 
     def destroy
         if @espessura_vaso.destroy
-            redirect_to admins_backoffice_espessura_vasos_path, notice: "Espessura vaso excluída com sucesso!"
+            redirect_to inspetors_backoffice_espessura_vasos_path, notice: "Espessura vaso excluída com sucesso!"
         else
             render :index
         end

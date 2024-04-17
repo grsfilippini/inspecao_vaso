@@ -47,7 +47,8 @@ Rails.application.routes.draw do
     resources :cidades
     resources :catnr13s
     resources :espessura_vasos
-    get 'pesquisa_espessura_vaso', to: 'espessura_vasos#pesquisa' 
+    get 'pesquisa_espessura_vaso', to: 'espessura_vasos#pesquisa'
+    get 'espessura_em_aberto',     to: 'espessura_vasos#em_aberto' 
     resources :finalidade_vasos    
     resources :vasos do
       member do

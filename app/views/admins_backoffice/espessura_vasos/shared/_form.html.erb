@@ -32,6 +32,13 @@
 
                         <%= form_with(model: [ :admins_backoffice, @espessura_vaso ], local: true) do |form| %>
 
+                            <div class="checkbox">
+                                <label>
+                                    <%= form.check_box :b_rascunho %>
+                                    Rascunho
+                                </label>
+                            </div>
+
                             <div class="form-group row">
                                 <%= form.label :user_id, "Usuário", {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
                                 <div class="col-sm-4 mb-0 mb-sm-0">                                    
