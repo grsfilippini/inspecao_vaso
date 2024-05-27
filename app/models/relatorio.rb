@@ -42,7 +42,6 @@ class Relatorio < ApplicationRecord
     includes(:user, :proprietaria, :vaso)
       .where(b_rascunho: false, brel_impresso: true)
       .order(id: :desc)
-      .limit(50)
       .page(page)
       .per(20)  
   end
@@ -51,7 +50,6 @@ class Relatorio < ApplicationRecord
     includes(:user, :proprietaria, :vaso)
       .where(b_rascunho: false, brel_impresso: false)
       .order(id: :asc)
-      .limit(50)
       .page(page)
       .per(20)  
   end
@@ -60,7 +58,6 @@ class Relatorio < ApplicationRecord
     includes(:user, :proprietaria, :vaso)
       .where(b_rascunho: true)
       .order(id: :asc)
-      .limit(50)
       .page(page)
       .per(20)  
   end
@@ -69,7 +66,6 @@ class Relatorio < ApplicationRecord
     includes(:proprietaria, :vaso)
     .where(b_rascunho: true, inspetor_id: inspetor)
     .order(created_at: :desc)
-    .limit(50)
     .page(page)
     .per(20) 
   end
