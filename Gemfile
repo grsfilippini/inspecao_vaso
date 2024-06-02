@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.8'
+ruby '2.6.6'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.8', '>= 5.2.8.1'
@@ -77,7 +77,7 @@ group :development do
   # Rails < 6
   #gem 'rails_db', '2.2.1'
   #gem 'capistrano', '~> 3.11', require: false
-  gem 'capistrano', '~> 3.17.1', require: false
+  gem 'capistrano', '~> 3.18.1', require: false
   gem 'capistrano-rvm'
   gem 'capistrano-bundler', '~> 1.5'
   gem 'capistrano-rails', '~> 1.4', require: false
@@ -101,3 +101,5 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# Última linha
