@@ -332,7 +332,7 @@ DEPENDENCIES
   web-console (>= 3.3.0)
   whenever
   wicked_pdf (~> 2.7)
-  wkhtmltopdf-binary
+  wkhtmltopdf-binary (~> 0.12.6)
 
 RUBY VERSION
    ruby 2.6.6p146

@@ -41,8 +41,9 @@ Rails.application.routes.draw do
     # , only: [:destroy, :new] -> diz para criar as rotas especificadas        
     resources :corps
     resources :cadastros
-    get 'pesquisa_cadastro', to: 'cadastros#pesquisa'    
+    get 'pesquisa_cadastro',     to: 'cadastros#pesquisa'    
     get 'pesquisa_cadastro_pdf', to: 'cadastros#pesquisa'
+    get 'imprime_cadastro_pdf',  to: 'cadastros#imprime_cadastro'
 
     resources :cidades
     resources :catnr13s

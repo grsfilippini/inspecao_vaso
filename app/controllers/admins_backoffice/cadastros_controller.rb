@@ -19,7 +19,9 @@ class AdminsBackoffice::CadastrosController < AdminsBackofficeController
         format.pdf {
           @cadastros = Cadastro.includes(:corp, :user).all.order(:nome_curto)               
           @corps = Corp.all.order(:nome)
-          render template: 'admins_backoffice/cadastros/relatorio', pdf: 'cadastro_relatorio', layout: 'pdf.html' 
+          render template: 'admins_backoffice/cadastros/relatorio', 
+                 pdf: 'cadastro_relatorio', 
+                 layout: 'pdf.html' 
         }
       end
     end
@@ -69,11 +71,23 @@ class AdminsBackoffice::CadastrosController < AdminsBackofficeController
         format.pdf{
           @cadastros = Cadastro.pesquisa_nome_corp_pdf(params[:termo_nome], params[:corp_id])
           @corps = Corp.all.order(:nome)
-          render template: 'admins_backoffice/cadastros/pesquisa', pdf: 'pesquisa_cadastro_relatorio', layout: 'pdf.html'
+          render template: 'admins_backoffice/cadastros/pesquisa', 
+                 pdf: 'pesquisa_cadastro_relatorio', # Excluding ".pdf" extension.
+                 disposition: 'inline', # Valor default, se usar attachment, irá abrir um popup para salvar o pdf
+                 layout: 'pdf.html',
+                 page_size: 'A4'
         }
       end
     end
   
+    def imprime_cadastro
+      respond_to do |format|      
+        format.html{
+          #@cadastro = Cadastro.find(params[:id])
+        }
+      end
+    end
+
     # def pesquisa      
     #   @cadastros = Cadastro.pesquisa_nome_corp(params[:page], params[:termo_nome], params[:corp_id])
     #   @corps = Corp.all.order(:nome)
