@@ -29,6 +29,10 @@ class InspetorsBackoffice::VasosController < InspetorsBackofficeController
         # Para o inspetor, a pmta_atual será igual a original
         #                  o lançamento ficará no modo rascunho
         @vaso.pmta_atual = @vaso.pmta_original
+        @vaso.pth_atual  = @vaso.pth_original
+        #puts '***************************'        
+        #puts @vaso.pmta_atual
+        #puts @vaso.pmta_original
         @vaso.rascunho = true
         if @vaso.save  
             #puts '***************************'        

@@ -83,8 +83,16 @@ class AdminsBackoffice::CadastrosController < AdminsBackofficeController
     def imprime_cadastro
       respond_to do |format|      
         format.html{
-          #@cadastro = Cadastro.find(params[:id])
+          @cadastro = Cadastro.find(params[:id])
         }
+        format.pdf{
+          @cadastro = Cadastro.find(params[:id])
+          render template: 'admins_backoffice/cadastros/imprime_cadastro_pdf',
+                 pdf: 'cadastro',
+                 disposition: 'inline',
+                 layout: 'pdf.html',
+                 page_size: 'A4'
+        }      
       end
     end
 
