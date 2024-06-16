@@ -1,0 +1,83 @@
+<h1>Administração de Documentos Gerados</h1>
+<p>Você está na administração de documentos pdf gerados pelo sistema.</p>
+<p>Atualmente existem &nbsp <%= @numero_arquivos_empresa %> &nbsp arquivos na pasta da empresa e <%= @numero_arquivos_equipamentos %> na pasta dos equipamentos.</p>
+<br>
+<br>
+<p>
+<button class="btn btn-dark" type="button" id="custom_submit_button" onclick="compactarDocumentos();">
+    <i class="fas fa-file-archive fa-sm"></i> Compactar
+</button>
+&nbsp Compacta pasta pdf com suas sub-pastas e arquivos. </p>
+<br>
+<p>
+<%
+arquivo_download_empresa = File.join(gera_nome_pasta_principal(current_admin), 'empresa.zip')
+%>
+<!-- <= link_to 'Baixa EMPRESA', "/#{arquivo_download_empresa}", class: 'btn btn-primary', download: 'empresa.zip' %> -->
+<button class="btn btn-primary" type="button" onclick="window.location.href='/<%= arquivo_download_empresa %>';" download="empresa.zip">
+    <i class="fas fa-download fa-sm"></i> Baixar EMPRESA
+</button>
+&nbsp Baixa o arquivo da empresa compactado. </p>
+<p>
+<%
+arquivo_download_equipamentos = File.join(gera_nome_pasta_principal(current_admin), 'equipamentos.zip')
+%>
+<!--<= link_to 'Baixa EQUIPAMENTOS', "/#{arquivo_download_equipamentos}", class: 'btn btn-primary', download: 'equipamentos.zip' %>-->
+<button class="btn btn-primary" type="button" onclick="window.location.href='/<%= arquivo_download_equipamentos %>';" download="equipamentos.zip">
+    <i class="fas fa-download fa-sm"></i> Baixar EQUIPAMENTOS
+</button>
+&nbsp Baixa o arquivo dos equipamentos; </p>
+<br>
+<button class="btn btn-danger" type="button" id="custom_submit_button" onclick="apagarDocumentos();">
+    <i class="fas fa-eraser fa-sm"></i> Limpar
+</button>
+&nbsp Apaga todos arquivos remotos (empresa e equipamentos). </p>
+<br>
+<br>
+<hr>
+<%= button_tag "Retornar", type: "button", class: "btn btn-secondary", onclick: "window.history.back();" %>
+
+<script>
+function compactarDocumentos() {
+    fetch('<%= admins_backoffice_compactar_documentos_path %>', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': '<%= form_authenticity_token %>'
+        },
+        body: JSON.stringify({})
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Documentos compactados com sucesso!');
+        } else {
+            alert('Erro ao compactar documentos.');
+        }
+    })
+    .catch(error => console.error('Erro:', error));
+}
+
+function apagarDocumentos() {
+    fetch('<%= admins_backoffice_apagar_documentos_path %>', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': '<%= form_authenticity_token %>'
+        },
+        body: JSON.stringify({})
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Documentos apagados com sucesso!');
+            window.location.reload(); // Recarrega a página
+        } else {
+            alert('Erro ao apagar documentos.');
+        }
+    })
+    .catch(error => console.error('Erro:', error));
+}
+</script>
+
+

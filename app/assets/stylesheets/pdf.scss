@@ -1,8 +1,3 @@
-/* 
- *= require bootstrap/dist/css/bootstrap.min 
- */
-
-
 /* Aplicação de fontes mais comuns para poder renderizar de html para pdf */
 body {
     font-family: sans-serif, Arial, Helvetica;
@@ -10,23 +5,7 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
     font-family: sans-serif, Arial, Helvetica;
-}
-
-
-
-/* Tabela */
-
-tr{
-    border-bottom: solid;
-    border-width: 1px;
-}
-td,th{
-    text-align: left;
-}
-
-th{
-    background-color: #000;
-    color: white;
+    page-break-inside: avoid; /* Evita quebra de página dentro de tabelas */
 }
 
 table, tr, td, th, tbody, thead, tfoot {

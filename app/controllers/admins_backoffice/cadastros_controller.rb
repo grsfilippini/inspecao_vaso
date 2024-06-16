@@ -1,4 +1,11 @@
+require 'openssl'
+#require 'hexapdf'
+require 'origami'
+include Origami
+
 class AdminsBackoffice::CadastrosController < AdminsBackofficeController
+    include SharedMethods
+    
     before_action :set_cadastro, only: [:edit, :update, :destroy]
     before_action :get_cidades_corps, only: [:new, :edit]
     
@@ -81,19 +88,47 @@ class AdminsBackoffice::CadastrosController < AdminsBackofficeController
     end
   
     def imprime_cadastro
-      respond_to do |format|      
+
+      respond_to do |format|
         format.html{
           @cadastro = Cadastro.find(params[:id])
         }
-        format.pdf{
+
+        format.pdf do
           @cadastro = Cadastro.find(params[:id])
-          render template: 'admins_backoffice/cadastros/imprime_cadastro_pdf',
-                 pdf: 'cadastro',
-                 disposition: 'inline',
-                 layout: 'pdf.html',
-                 page_size: 'A4'
-        }      
+          if params[:b_assinar] == 'false'
+            render template: 'admins_backoffice/cadastros/imprime_cadastro_pdf',
+                   pdf: 'cadastro',
+                   disposition: 'inline',
+                   layout: 'pdf.html',
+                   page_size: 'A4'
+          else
+            gerar_arquivo_pdf_assinado(@cadastro)
+          end
+
+        end
       end
+
+      # respond_to do |format|      
+      #   format.html{
+      #     @cadastro = Cadastro.find(params[:id])
+      #   }
+      #   format.pdf{
+      #     @cadastro = Cadastro.find(params[:id])
+      #     render template: 'admins_backoffice/cadastros/imprime_cadastro_pdf',
+      #            pdf: 'cadastro',
+      #            disposition: 'inline',
+      #            layout: 'pdf.html',
+      #            page_size: 'A4'
+      #   }      
+      # end
+    end
+
+    def gerar_arquivo_pdf_assinado(cadastro)
+      
+      path_doc_assinado = gera_pdf_empresa_equipamento_assinado(current_admin, cadastro, nil, "admins_backoffice/cadastros/imprime_cadastro_pdf", "cadastro_assinado.pdf")
+
+      send_file path_doc_assinado, type: 'application/pdf', disposition: 'attachment'
     end
 
     # def pesquisa      

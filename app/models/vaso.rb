@@ -1,6 +1,7 @@
 class Vaso < ApplicationRecord
     # Campos com seleção obrigatória
     validates :num_serie, presence: true
+    validates :num_serie, format: { with: /\A[a-zA-Z0-9\-.]+\z/, message: 'apenas permite letras, números, hífens e pontos. Ex.: "RT14.125-4".' }
     validates :fabricante_id, presence: true
     validates :catnr13_id, presence: true
     validates :volume, presence: true

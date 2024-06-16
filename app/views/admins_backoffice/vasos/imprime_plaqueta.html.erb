@@ -1,0 +1,126 @@
+<div class="container page">
+    <table class="tableCabecalho">
+        <tr>
+            <td class="col1"><%= image_tag asset_url('logo.png'), width: '94.5px' %></td>
+            <td class="col2">
+                <span style="font-size: 18pt; font-weight: bold;">ENGENHARIA MANTINSP LTDA</span><br>
+                <span style="font-size: 9pt;">CNPJ 23.526.523/0001-71</span><br>
+                <span style="font-size: 9pt;">Rua Pinto Bandeira, 900 / Fone: 45-98807-2020</span><br>
+                <span style="font-size: 9pt;">Toledo/PR / e-mail: mantinsp@gmail.com</span><br>
+            </td>
+        </tr>
+    </table>
+    <br>
+    <br>
+    <div style='text-align: center'>
+        <span style="font-size: 12pt; font-weight: bold;"> MODELO DE PLAQUETA DE IDENTIFICAÇÃO </span>
+    </div>
+    <br>
+    <div style="width: 100%; margin: 0 auto; text-align: center;">
+        <svg width="233mm" height="60mm">
+            <svg x=50mm y=0mm width="152mm" height="60mm">
+                <!-- Draw a rectangle -->
+                <rect width="130mm" height="50mm" style="fill:white; stroke:black; stroke-width:3;" />
+                <svg x="1mm" y="1mm" width="5mm" height="5mm">
+                    <circle cx="2.5mm" cy="2.5mm" r="2.5mm" stroke="black" fill="none" />
+                </svg>
+                <svg x="124mm" y="1mm" width="5mm" height="5mm">
+                    <circle cx="2.5mm" cy="2.5mm" r="2.5mm" stroke="black" fill="none" />
+                </svg>
+                <svg x="124mm" y="44mm" width="5mm" height="5mm">
+                    <circle cx="2.5mm" cy="2.5mm" r="2.5mm" stroke="black" fill="none" />
+                </svg>
+                <svg x="1mm" y="44mm" width="5mm" height="5mm">
+                    <circle cx="2.5mm" cy="2.5mm" r="2.5mm" stroke="black" fill="none" />
+                </svg>
+                <text x="5mm" y="6mm" font-family="Arial" font-size="18" fill="black" text-anchor="start" dominant-baseline="text-before-edge">
+                    FAB: <%=@vaso.fabricante.nome_curto%>
+                </text>
+                <text x="65mm" y="6mm" font-family="Arial" font-size="18" fill="black" text-anchor="start" dominant-baseline="text-before-edge">
+                    CNPJ: <%=@vaso.fabricante.cnpj%>
+                </text>
+                <text x="5mm" y="15mm" font-family="Arial" font-size="18" fill="black" text-anchor="start" dominant-baseline="text-before-edge">
+                    SÉRIE: <%=@vaso.num_serie%>
+                </text>
+                <text x="65mm" y="15mm" font-family="Arial" font-size="18" fill="black" text-anchor="start" dominant-baseline="text-before-edge">
+                    DATA FAB: <%=@vaso.dt_fabricacao_reconstituicao%>
+                </text>
+                <text x="5mm" y="24mm" font-family="Arial" font-size="18" fill="black" text-anchor="start" dominant-baseline="text-before-edge">
+                    PMTA: <%=@vaso.pmta_atual%> &nbsp MPa
+                </text>
+                <text x="65mm" y="24mm" font-family="Arial" font-size="18" fill="black" text-anchor="start" dominant-baseline="text-before-edge">
+                    PTH: <%=@vaso.pth_atual%> &nbsp MPa
+                </text>
+                <text x="5mm" y="33mm" font-family="Arial" font-size="18" fill="black" text-anchor="start" dominant-baseline="text-before-edge">
+                    VOL: <%= number_with_precision(@vaso.volume * 1000, precision: 1) %> &nbsp litros
+                </text>
+                <text x="65mm" y="33mm" font-family="Arial" font-size="18" fill="black" text-anchor="start" dominant-baseline="text-before-edge">
+                    CAT: <%= @vaso.catnr13.categoria %>
+                </text>
+                <text x="65mm" y="42mm" font-family="Arial" font-size="12" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">
+                    EM ATENDIMENTO A NR13
+                </text>
+
+                <line x1="0mm"   y1="57mm" x2="130mm"   y2="57mm" style="stroke:black; stroke-width:1;" />
+                <line x1="0mm"   y1="51mm" x2="0mm"     y2="58mm" style="stroke:black; stroke-width:1;" />
+                <line x1="130mm" y1="51mm" x2="130mm"   y2="58mm" style="stroke:black; stroke-width:1;" />
+                <text x="65mm" y="54mm" font-family="Arial" font-size="12" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">
+                    130 mm
+                </text>
+
+                <line x1="137mm" y1="0mm"  x2="137mm"   y2="50mm" style="stroke:black; stroke-width:1;" />
+                <line x1="131mm" y1="0mm"  x2="138mm"   y2="0mm"  style="stroke:black; stroke-width:1;" />
+                <line x1="131mm" y1="50mm" x2="138mm"   y2="50mm" style="stroke:black; stroke-width:1;" />
+                <text x="138mm" y="25mm" font-family="Arial" font-size="12" fill="black">
+                    50 mm
+                </text>
+
+            </svg>
+        </svg>
+    </div>
+    <br>
+    <br>
+    <div style='text-align: center'>
+        <div style="display: inline-block;">
+            <table class="tableAssinatura">
+                <tr>
+                    <td class="col1" style="text-align: center; vertical-align: middle;">
+                        <div style="display: inline-block; text-align: center;">
+                            <span style="font-size: 10pt;">Local e data: <%= @relatorio.inspetora.cidade.nome %>, <%= @relatorio.data_relatorio.strftime("%d/%m/%Y") %></span><br>
+                            <br>
+                            <span style="font-size: 10pt;">.................................................</span><br>
+                            <span style="font-size: 8pt;">(Carimbo e assinatura)</span>
+                            <br>
+                            <br>
+                            <br>
+                        </div>
+                    </td>            
+                    <td class="col2" style="text-align: center; vertical-align: middle;">
+                        <div style="display: inline-block; text-align: center;">
+                            <span style="font-size: 10pt;">ou</span>
+                        </div>
+                    </td>
+                    <td class="col3">
+                        <span style="font-size: 10pt;">DOCUMENTO ASSINADO DIGITALMENTE</span><br>
+                        <span style="font-size: 10pt; font-weight: bold;"><%=@relatorio.ph.nome%> </span> <span style="font-size: 10pt;"> - <%= Time.now.strftime("%d de %b de %Y") %></span><br>
+                        <span style="font-size: 10pt; font-weight: bold;"><%=@relatorio.ph.titulo%> </span> <span style="font-size: 10pt;"> CREA <%=@relatorio.ph.crea%></span><br>                
+                        <span style="font-size: 10pt;">Verifique em https://validar.iti.gov.br</span><br>
+                    </td>            
+                </tr>
+            </table>
+        </div>
+    </div>
+    
+</div>
+
+<hr>
+
+<%= button_tag "Retornar", type: "button", class: "btn btn-secondary", onclick: "window.history.back();" %>
+
+<button class="btn btn-secondary" type="button" id="custom_submit_button" onclick="window.location.href='<%= admins_backoffice_vasos_imprime_plaqueta_path(@vaso.id, format: :pdf, b_assinar: false) %>';">
+    <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF
+</button>
+
+<button class="btn btn-secondary" type="button" id="custom_submit_button" onclick="window.location.href='<%= admins_backoffice_vasos_imprime_plaqueta_path(@vaso.id, format: :pdf, b_assinar: true) %>';">
+    <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF assinado
+</button>

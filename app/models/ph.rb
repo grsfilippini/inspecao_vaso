@@ -5,4 +5,5 @@ class Ph < ApplicationRecord
     
     # Relações
     belongs_to :user
+    belongs_to :cidade
 end

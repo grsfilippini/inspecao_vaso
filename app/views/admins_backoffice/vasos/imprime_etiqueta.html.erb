@@ -1,0 +1,267 @@
+<style>
+    .table-etiqueta {
+        border-collapse: collapse;
+    }
+
+    .table-etiqueta, th, td {
+        border: 1px solid black;
+        text-align: center; /* Centraliza horizontalmente */
+        vertical-align: middle; /* Centraliza verticalmente */
+    }
+</style>
+
+
+<table class="table-etiqueta">
+        <tr>
+            <td>
+                <span style="font-weight: bold;  font-size: 18px;">REGISTRO DE SEGURANÇA</span><br>
+                <br>
+                <span style="font-size: 16px;">de Vaso de Pressão</span><br>
+                <span style="font-size: 16px;"><%= @vaso.fabricante.nome_curto%></span><br>
+                <span style="font-weight: bold;  font-size: 16px;"><%= @vaso.num_serie %></span><br>
+                <br>
+                <span style="font-size: 16px;">Volume: <%= number_with_precision(@vaso.volume*1000, precision: 0) %> litros</span><br>
+                <span style="font-size: 16px;">Categoria: <%= @vaso.catnr13.categoria%></span><br>
+                <span style="font-size: 16px;">PMTA:  <%= number_with_precision(@vaso.pmta_atual*10, precision: 0) %> bar</span><br>
+                <br>
+                <span style="font-size: 16px;">Ano: <%= @vaso.dt_fabricacao_reconstituicao.strftime("%m/%Y") %>
+                    <%if @vaso.bsem_data_fabricacao%>
+                        <%="Reconstituição"%>
+                    <%end%>
+                </span><br>
+                <button class="btn btn-secondary" type="button" id="custom_submit_button" onclick="window.location.href='<%= admins_backoffice_vasos_imprime_etiqueta_path(@vaso.id, format: :pdf, num_etiqueta: 11) %>';">
+                    <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF 11
+                </button>
+            </td>
+            <td>
+                <span style="font-weight: bold;  font-size: 18px;">REGISTRO DE SEGURANÇA</span><br>
+                <br>
+                <span style="font-size: 16px;">de Vaso de Pressão</span><br>
+                <span style="font-size: 16px;"><%= @vaso.fabricante.nome_curto%></span><br>
+                <span style="font-weight: bold;  font-size: 16px;"><%= @vaso.num_serie %></span><br>
+                <br>
+                <span style="font-size: 16px;">Volume: <%= number_with_precision(@vaso.volume*1000, precision: 0) %> litros</span><br>
+                <span style="font-size: 16px;">Categoria: <%= @vaso.catnr13.categoria%></span><br>
+                <span style="font-size: 16px;">PMTA:  <%= number_with_precision(@vaso.pmta_atual*10, precision: 0) %> bar</span><br>
+                <br>
+                <span style="font-size: 16px;">Ano: <%= @vaso.dt_fabricacao_reconstituicao.strftime("%m/%Y") %>
+                    <%if @vaso.bsem_data_fabricacao%>
+                        <%="Reconstituição"%>
+                    <%end%>
+                </span><br>
+                <button class="btn btn-secondary" type="button" id="custom_submit_button" onclick="window.location.href='<%= admins_backoffice_vasos_imprime_etiqueta_path(@vaso.id, format: :pdf, num_etiqueta: 12) %>';">
+                    <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF 12
+                </button>
+            </td>
+            <td>
+                <span style="font-weight: bold;  font-size: 18px;">REGISTRO DE SEGURANÇA</span><br>
+                <br>
+                <span style="font-size: 16px;">de Vaso de Pressão</span><br>
+                <span style="font-size: 16px;"><%= @vaso.fabricante.nome_curto%></span><br>
+                <span style="font-weight: bold;  font-size: 16px;"><%= @vaso.num_serie %></span><br>
+                <br>
+                <span style="font-size: 16px;">Volume: <%= number_with_precision(@vaso.volume*1000, precision: 0) %> litros</span><br>
+                <span style="font-size: 16px;">Categoria: <%= @vaso.catnr13.categoria%></span><br>
+                <span style="font-size: 16px;">PMTA:  <%= number_with_precision(@vaso.pmta_atual*10, precision: 0) %> bar</span><br>
+                <br>
+                <span style="font-size: 16px;">Ano: <%= @vaso.dt_fabricacao_reconstituicao.strftime("%m/%Y") %>
+                    <%if @vaso.bsem_data_fabricacao%>
+                        <%="Reconstituição"%>
+                    <%end%>
+                </span><br>
+                <button class="btn btn-secondary" type="button" id="custom_submit_button" onclick="window.location.href='<%= admins_backoffice_vasos_imprime_etiqueta_path(@vaso.id, format: :pdf, num_etiqueta: 13) %>';">
+                    <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF 13
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span style="font-weight: bold;  font-size: 18px;">REGISTRO DE SEGURANÇA</span><br>
+                <br>
+                <span style="font-size: 16px;">de Vaso de Pressão</span><br>
+                <span style="font-size: 16px;"><%= @vaso.fabricante.nome_curto%></span><br>
+                <span style="font-weight: bold;  font-size: 16px;"><%= @vaso.num_serie %></span><br>
+                <br>
+                <span style="font-size: 16px;">Volume: <%= number_with_precision(@vaso.volume*1000, precision: 0) %> litros</span><br>
+                <span style="font-size: 16px;">Categoria: <%= @vaso.catnr13.categoria%></span><br>
+                <span style="font-size: 16px;">PMTA:  <%= number_with_precision(@vaso.pmta_atual*10, precision: 0) %> bar</span><br>
+                <br>
+                <span style="font-size: 16px;">Ano: <%= @vaso.dt_fabricacao_reconstituicao.strftime("%m/%Y") %>
+                    <%if @vaso.bsem_data_fabricacao%>
+                        <%="Reconstituição"%>
+                    <%end%>
+                </span><br>
+                <button class="btn btn-secondary" type="button" id="custom_submit_button" onclick="window.location.href='<%= admins_backoffice_vasos_imprime_etiqueta_path(@vaso.id, format: :pdf, num_etiqueta: 21) %>';">
+                    <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF 21
+                </button>
+            </td>
+            <td>
+                <span style="font-weight: bold;  font-size: 18px;">REGISTRO DE SEGURANÇA</span><br>
+                <br>
+                <span style="font-size: 16px;">de Vaso de Pressão</span><br>
+                <span style="font-size: 16px;"><%= @vaso.fabricante.nome_curto%></span><br>
+                <span style="font-weight: bold;  font-size: 16px;"><%= @vaso.num_serie %></span><br>
+                <br>
+                <span style="font-size: 16px;">Volume: <%= number_with_precision(@vaso.volume*1000, precision: 0) %> litros</span><br>
+                <span style="font-size: 16px;">Categoria: <%= @vaso.catnr13.categoria%></span><br>
+                <span style="font-size: 16px;">PMTA:  <%= number_with_precision(@vaso.pmta_atual*10, precision: 0) %> bar</span><br>
+                <br>
+                <span style="font-size: 16px;">Ano: <%= @vaso.dt_fabricacao_reconstituicao.strftime("%m/%Y") %>
+                    <%if @vaso.bsem_data_fabricacao%>
+                        <%="Reconstituição"%>
+                    <%end%>
+                </span><br>
+                <button class="btn btn-secondary" type="button" id="custom_submit_button" onclick="window.location.href='<%= admins_backoffice_vasos_imprime_etiqueta_path(@vaso.id, format: :pdf, num_etiqueta: 22) %>';">
+                    <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF 22
+                </button>
+            </td>
+            <td>
+                <span style="font-weight: bold;  font-size: 18px;">REGISTRO DE SEGURANÇA</span><br>
+                <br>
+                <span style="font-size: 16px;">de Vaso de Pressão</span><br>
+                <span style="font-size: 16px;"><%= @vaso.fabricante.nome_curto%></span><br>
+                <span style="font-weight: bold;  font-size: 16px;"><%= @vaso.num_serie %></span><br>
+                <br>
+                <span style="font-size: 16px;">Volume: <%= number_with_precision(@vaso.volume*1000, precision: 0) %> litros</span><br>
+                <span style="font-size: 16px;">Categoria: <%= @vaso.catnr13.categoria%></span><br>
+                <span style="font-size: 16px;">PMTA:  <%= number_with_precision(@vaso.pmta_atual*10, precision: 0) %> bar</span><br>
+                <br>
+                <span style="font-size: 16px;">Ano: <%= @vaso.dt_fabricacao_reconstituicao.strftime("%m/%Y") %>
+                    <%if @vaso.bsem_data_fabricacao%>
+                        <%="Reconstituição"%>
+                    <%end%>
+                </span><br>
+                <button class="btn btn-secondary" type="button" id="custom_submit_button" onclick="window.location.href='<%= admins_backoffice_vasos_imprime_etiqueta_path(@vaso.id, format: :pdf, num_etiqueta: 23) %>';">
+                    <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF 23
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td><span style="font-weight: bold;  font-size: 18px;">REGISTRO DE SEGURANÇA</span><br>
+                <br>
+                <span style="font-size: 16px;">de Vaso de Pressão</span><br>
+                <span style="font-size: 16px;"><%= @vaso.fabricante.nome_curto%></span><br>
+                <span style="font-weight: bold;  font-size: 16px;"><%= @vaso.num_serie %></span><br>
+                <br>
+                <span style="font-size: 16px;">Volume: <%= number_with_precision(@vaso.volume*1000, precision: 0) %> litros</span><br>
+                <span style="font-size: 16px;">Categoria: <%= @vaso.catnr13.categoria%></span><br>
+                <span style="font-size: 16px;">PMTA:  <%= number_with_precision(@vaso.pmta_atual*10, precision: 0) %> bar</span><br>
+                <br>
+                <span style="font-size: 16px;">Ano: <%= @vaso.dt_fabricacao_reconstituicao.strftime("%m/%Y") %>
+                    <%if @vaso.bsem_data_fabricacao%>
+                        <%="Reconstituição"%>
+                    <%end%>
+                </span><br>
+                <button class="btn btn-secondary" type="button" id="custom_submit_button" onclick="window.location.href='<%= admins_backoffice_vasos_imprime_etiqueta_path(@vaso.id, format: :pdf, num_etiqueta: 31) %>';">
+                    <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF 31
+                </button></td>
+            <td>
+                <span style="font-weight: bold;  font-size: 18px;">REGISTRO DE SEGURANÇA</span><br>
+                <br>
+                <span style="font-size: 16px;">de Vaso de Pressão</span><br>
+                <span style="font-size: 16px;"><%= @vaso.fabricante.nome_curto%></span><br>
+                <span style="font-weight: bold;  font-size: 16px;"><%= @vaso.num_serie %></span><br>
+                <br>
+                <span style="font-size: 16px;">Volume: <%= number_with_precision(@vaso.volume*1000, precision: 0) %> litros</span><br>
+                <span style="font-size: 16px;">Categoria: <%= @vaso.catnr13.categoria%></span><br>
+                <span style="font-size: 16px;">PMTA:  <%= number_with_precision(@vaso.pmta_atual*10, precision: 0) %> bar</span><br>
+                <br>
+                <span style="font-size: 16px;">Ano: <%= @vaso.dt_fabricacao_reconstituicao.strftime("%m/%Y") %>
+                    <%if @vaso.bsem_data_fabricacao%>
+                        <%="Reconstituição"%>
+                    <%end%>
+                </span><br>
+                <button class="btn btn-secondary" type="button" id="custom_submit_button" onclick="window.location.href='<%= admins_backoffice_vasos_imprime_etiqueta_path(@vaso.id, format: :pdf, num_etiqueta: 32) %>';">
+                    <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF 32
+                </button>
+            </td>
+            <td>
+                <span style="font-weight: bold;  font-size: 18px;">REGISTRO DE SEGURANÇA</span><br>
+                <br>
+                <span style="font-size: 16px;">de Vaso de Pressão</span><br>
+                <span style="font-size: 16px;"><%= @vaso.fabricante.nome_curto%></span><br>
+                <span style="font-weight: bold;  font-size: 16px;"><%= @vaso.num_serie %></span><br>
+                <br>
+                <span style="font-size: 16px;">Volume: <%= number_with_precision(@vaso.volume*1000, precision: 0) %> litros</span><br>
+                <span style="font-size: 16px;">Categoria: <%= @vaso.catnr13.categoria%></span><br>
+                <span style="font-size: 16px;">PMTA:  <%= number_with_precision(@vaso.pmta_atual*10, precision: 0) %> bar</span><br>
+                <br>
+                <span style="font-size: 16px;">Ano: <%= @vaso.dt_fabricacao_reconstituicao.strftime("%m/%Y") %>
+                    <%if @vaso.bsem_data_fabricacao%>
+                        <%="Reconstituição"%>
+                    <%end%>
+                </span><br>
+                <button class="btn btn-secondary" type="button" id="custom_submit_button" onclick="window.location.href='<%= admins_backoffice_vasos_imprime_etiqueta_path(@vaso.id, format: :pdf, num_etiqueta: 33) %>';">
+                    <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF 33
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span style="font-weight: bold;  font-size: 18px;">REGISTRO DE SEGURANÇA</span><br>
+                <br>
+                <span style="font-size: 16px;">de Vaso de Pressão</span><br>
+                <span style="font-size: 16px;"><%= @vaso.fabricante.nome_curto%></span><br>
+                <span style="font-weight: bold;  font-size: 16px;"><%= @vaso.num_serie %></span><br>
+                <br>
+                <span style="font-size: 16px;">Volume: <%= number_with_precision(@vaso.volume*1000, precision: 0) %> litros</span><br>
+                <span style="font-size: 16px;">Categoria: <%= @vaso.catnr13.categoria%></span><br>
+                <span style="font-size: 16px;">PMTA:  <%= number_with_precision(@vaso.pmta_atual*10, precision: 0) %> bar</span><br>
+                <br>
+                <span style="font-size: 16px;">Ano: <%= @vaso.dt_fabricacao_reconstituicao.strftime("%m/%Y") %>
+                    <%if @vaso.bsem_data_fabricacao%>
+                        <%="Reconstituição"%>
+                    <%end%>
+                </span><br>
+                <button class="btn btn-secondary" type="button" id="custom_submit_button" onclick="window.location.href='<%= admins_backoffice_vasos_imprime_etiqueta_path(@vaso.id, format: :pdf, num_etiqueta: 41) %>';">
+                    <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF 41
+                </button>
+            </td>
+            <td>
+                <span style="font-weight: bold;  font-size: 18px;">REGISTRO DE SEGURANÇA</span><br>
+                <br>
+                <span style="font-size: 16px;">de Vaso de Pressão</span><br>
+                <span style="font-size: 16px;"><%= @vaso.fabricante.nome_curto%></span><br>
+                <span style="font-weight: bold;  font-size: 16px;"><%= @vaso.num_serie %></span><br>
+                <br>
+                <span style="font-size: 16px;">Volume: <%= number_with_precision(@vaso.volume*1000, precision: 0) %> litros</span><br>
+                <span style="font-size: 16px;">Categoria: <%= @vaso.catnr13.categoria%></span><br>
+                <span style="font-size: 16px;">PMTA:  <%= number_with_precision(@vaso.pmta_atual*10, precision: 0) %> bar</span><br>
+                <br>
+                <span style="font-size: 16px;">Ano: <%= @vaso.dt_fabricacao_reconstituicao.strftime("%m/%Y") %>
+                    <%if @vaso.bsem_data_fabricacao%>
+                        <%="Reconstituição"%>
+                    <%end%>
+                </span><br>
+                <button class="btn btn-secondary" type="button" id="custom_submit_button" onclick="window.location.href='<%= admins_backoffice_vasos_imprime_etiqueta_path(@vaso.id, format: :pdf, num_etiqueta: 42) %>';">
+                    <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF 42
+                </button>
+            </td>
+            <td>
+                <span style="font-weight: bold;  font-size: 18px;">REGISTRO DE SEGURANÇA</span><br>
+                <br>
+                <span style="font-size: 16px;">de Vaso de Pressão</span><br>
+                <span style="font-size: 16px;"><%= @vaso.fabricante.nome_curto%></span><br>
+                <span style="font-weight: bold;  font-size: 16px;"><%= @vaso.num_serie %></span><br>
+                <br>
+                <span style="font-size: 16px;">Volume: <%= number_with_precision(@vaso.volume*1000, precision: 0) %> litros</span><br>
+                <span style="font-size: 16px;">Categoria: <%= @vaso.catnr13.categoria%></span><br>
+                <span style="font-size: 16px;">PMTA:  <%= number_with_precision(@vaso.pmta_atual*10, precision: 0) %> bar</span><br>
+                <br>
+                <span style="font-size: 16px;">Ano: <%= @vaso.dt_fabricacao_reconstituicao.strftime("%m/%Y") %>
+                    <%if @vaso.bsem_data_fabricacao%>
+                        <%="Reconstituição"%>
+                    <%end%>
+                </span><br>
+                <button class="btn btn-secondary" type="button" id="custom_submit_button" onclick="window.location.href='<%= admins_backoffice_vasos_imprime_etiqueta_path(@vaso.id, format: :pdf, num_etiqueta: 43) %>';">
+                    <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF 43
+                </button>
+            </td>
+        </tr>
+    </table>
+
+<hr>
+
+<%= button_tag "Retornar", type: "button", class: "btn btn-secondary", onclick: "window.history.back();" %>
+
+

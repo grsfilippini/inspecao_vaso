@@ -1,0 +1,264 @@
+
+
+<div class="container page">
+    <table class="etiqueta-table">
+        <tr>
+            <td>
+                <%if @num_etiqueta == 11%>
+                    <span style="font-weight: bold;  font-size: 10px;"><%=@vaso.proprietaria.nome_curto%> / <%=@vaso.proprietaria.cidade.nome%></span><br>
+                    <br>
+                    <span style="font-weight: bold;  font-size: 18px;">REGISTRO DE SEGURANÇA</span><br>
+                    <br>
+                    <span style="font-size: 16px;">de Vaso de Pressão</span><br>
+                    <span style="font-size: 16px;"><%= @vaso.fabricante.nome_curto%></span><br>
+                    <span style="font-weight: bold;  font-size: 16px;"><%= @vaso.num_serie %></span><br>
+                    <br>
+                    <span style="font-size: 16px;">Volume: <%= number_with_precision(@vaso.volume*1000, precision: 0) %> litros</span><br>
+                    <span style="font-size: 16px;">Categoria: <%= @vaso.catnr13.categoria%></span><br>
+                    <span style="font-size: 16px;">PMTA:  <%= number_with_precision(@vaso.pmta_atual*10, precision: 0) %> bar</span><br>
+                    <br>
+                    <span style="font-size: 16px;">Ano: <%= @vaso.dt_fabricacao_reconstituicao.strftime("%m/%Y") %>
+                        <%if @vaso.bsem_data_fabricacao%>
+                            <%="Reconstituição"%>
+                        <%end%>
+                    </span><br>
+                <%end%>
+            </td>
+            <td>
+                <%if @num_etiqueta == 12%>
+                    <span style="font-weight: bold;  font-size: 10px;"><%=@vaso.proprietaria.nome_curto%> / <%=@vaso.proprietaria.cidade.nome%></span><br>
+                    <br>
+                    <span style="font-weight: bold;  font-size: 18px;">REGISTRO DE SEGURANÇA</span><br>
+                    <br>
+                    <span style="font-size: 16px;">de Vaso de Pressão</span><br>
+                    <span style="font-size: 16px;"><%= @vaso.fabricante.nome_curto%></span><br>
+                    <span style="font-weight: bold;  font-size: 16px;"><%= @vaso.num_serie %></span><br>
+                    <br>
+                    <span style="font-size: 16px;">Volume: <%= number_with_precision(@vaso.volume*1000, precision: 0) %> litros</span><br>
+                    <span style="font-size: 16px;">Categoria: <%= @vaso.catnr13.categoria%></span><br>
+                    <span style="font-size: 16px;">PMTA:  <%= number_with_precision(@vaso.pmta_atual*10, precision: 0) %> bar</span><br>
+                    <br>
+                    <span style="font-size: 16px;">Ano: <%= @vaso.dt_fabricacao_reconstituicao.strftime("%m/%Y") %>
+                        <%if @vaso.bsem_data_fabricacao%>
+                            <%="Reconstituição"%>
+                        <%end%>
+                    </span><br>
+                <%end%>
+            </td>
+            <td>
+                <%if @num_etiqueta == 13%>
+                    <span style="font-weight: bold;  font-size: 10px;"><%=@vaso.proprietaria.nome_curto%> / <%=@vaso.proprietaria.cidade.nome%></span><br>
+                    <br>
+                    <span style="font-weight: bold;  font-size: 18px;">REGISTRO DE SEGURANÇA</span><br>
+                    <br>
+                    <span style="font-size: 16px;">de Vaso de Pressão</span><br>
+                    <span style="font-size: 16px;"><%= @vaso.fabricante.nome_curto%></span><br>
+                    <span style="font-weight: bold;  font-size: 16px;"><%= @vaso.num_serie %></span><br>
+                    <br>
+                    <span style="font-size: 16px;">Volume: <%= number_with_precision(@vaso.volume*1000, precision: 0) %> litros</span><br>
+                    <span style="font-size: 16px;">Categoria: <%= @vaso.catnr13.categoria%></span><br>
+                    <span style="font-size: 16px;">PMTA:  <%= number_with_precision(@vaso.pmta_atual*10, precision: 0) %> bar</span><br>
+                    <br>
+                    <span style="font-size: 16px;">Ano: <%= @vaso.dt_fabricacao_reconstituicao.strftime("%m/%Y") %>
+                        <%if @vaso.bsem_data_fabricacao%>
+                            <%="Reconstituição"%>
+                        <%end%>
+                    </span><br>
+                <%end%>
+            </td>
+        </tr>
+        <tr>
+            <td><%if @num_etiqueta == 21%>
+                    <span style="font-weight: bold;  font-size: 10px;"><%=@vaso.proprietaria.nome_curto%> / <%=@vaso.proprietaria.cidade.nome%></span><br>
+                    <br>
+                    <span style="font-weight: bold;  font-size: 18px;">REGISTRO DE SEGURANÇA</span><br>
+                    <br>
+                    <span style="font-size: 16px;">de Vaso de Pressão</span><br>
+                    <span style="font-size: 16px;"><%= @vaso.fabricante.nome_curto%></span><br>
+                    <span style="font-weight: bold;  font-size: 16px;"><%= @vaso.num_serie %></span><br>
+                    <br>
+                    <span style="font-size: 16px;">Volume: <%= number_with_precision(@vaso.volume*1000, precision: 0) %> litros</span><br>
+                    <span style="font-size: 16px;">Categoria: <%= @vaso.catnr13.categoria%></span><br>
+                    <span style="font-size: 16px;">PMTA:  <%= number_with_precision(@vaso.pmta_atual*10, precision: 0) %> bar</span><br>
+                    <br>
+                    <span style="font-size: 16px;">Ano: <%= @vaso.dt_fabricacao_reconstituicao.strftime("%m/%Y") %>
+                        <%if @vaso.bsem_data_fabricacao%>
+                            <%="Reconstituição"%>
+                        <%end%>
+                    </span><br>
+                <%end%></td>
+            <td>
+                <%if @num_etiqueta == 22%>
+                    <span style="font-weight: bold;  font-size: 10px;"><%=@vaso.proprietaria.nome_curto%> / <%=@vaso.proprietaria.cidade.nome%></span><br>
+                    <br>
+                    <span style="font-weight: bold;  font-size: 18px;">REGISTRO DE SEGURANÇA</span><br>
+                    <br>
+                    <span style="font-size: 16px;">de Vaso de Pressão</span><br>
+                    <span style="font-size: 16px;"><%= @vaso.fabricante.nome_curto%></span><br>
+                    <span style="font-weight: bold;  font-size: 16px;"><%= @vaso.num_serie %></span><br>
+                    <br>
+                    <span style="font-size: 16px;">Volume: <%= number_with_precision(@vaso.volume*1000, precision: 0) %> litros</span><br>
+                    <span style="font-size: 16px;">Categoria: <%= @vaso.catnr13.categoria%></span><br>
+                    <span style="font-size: 16px;">PMTA:  <%= number_with_precision(@vaso.pmta_atual*10, precision: 0) %> bar</span><br>
+                    <br>
+                    <span style="font-size: 16px;">Ano: <%= @vaso.dt_fabricacao_reconstituicao.strftime("%m/%Y") %>
+                        <%if @vaso.bsem_data_fabricacao%>
+                            <%="Reconstituição"%>
+                        <%end%>
+                    </span><br>
+                <%end%>
+            </td>
+            <td>
+                <%if @num_etiqueta == 23%>
+                    <span style="font-weight: bold;  font-size: 10px;"><%=@vaso.proprietaria.nome_curto%> / <%=@vaso.proprietaria.cidade.nome%></span><br>
+                    <br>
+                    <span style="font-weight: bold;  font-size: 18px;">REGISTRO DE SEGURANÇA</span><br>
+                    <br>
+                    <span style="font-size: 16px;">de Vaso de Pressão</span><br>
+                    <span style="font-size: 16px;"><%= @vaso.fabricante.nome_curto%></span><br>
+                    <span style="font-weight: bold;  font-size: 16px;"><%= @vaso.num_serie %></span><br>
+                    <br>
+                    <span style="font-size: 16px;">Volume: <%= number_with_precision(@vaso.volume*1000, precision: 0) %> litros</span><br>
+                    <span style="font-size: 16px;">Categoria: <%= @vaso.catnr13.categoria%></span><br>
+                    <span style="font-size: 16px;">PMTA:  <%= number_with_precision(@vaso.pmta_atual*10, precision: 0) %> bar</span><br>
+                    <br>
+                    <span style="font-size: 16px;">Ano: <%= @vaso.dt_fabricacao_reconstituicao.strftime("%m/%Y") %>
+                        <%if @vaso.bsem_data_fabricacao%>
+                            <%="Reconstituição"%>
+                        <%end%>
+                    </span><br>
+                <%end%>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <%if @num_etiqueta == 31%>
+                    <span style="font-weight: bold;  font-size: 10px;"><%=@vaso.proprietaria.nome_curto%> / <%=@vaso.proprietaria.cidade.nome%></span><br>
+                    <br>
+                    <span style="font-weight: bold;  font-size: 18px;">REGISTRO DE SEGURANÇA</span><br>
+                    <br>
+                    <span style="font-size: 16px;">de Vaso de Pressão</span><br>
+                    <span style="font-size: 16px;"><%= @vaso.fabricante.nome_curto%></span><br>
+                    <span style="font-weight: bold;  font-size: 16px;"><%= @vaso.num_serie %></span><br>
+                    <br>
+                    <span style="font-size: 16px;">Volume: <%= number_with_precision(@vaso.volume*1000, precision: 0) %> litros</span><br>
+                    <span style="font-size: 16px;">Categoria: <%= @vaso.catnr13.categoria%></span><br>
+                    <span style="font-size: 16px;">PMTA:  <%= number_with_precision(@vaso.pmta_atual*10, precision: 0) %> bar</span><br>
+                    <br>
+                    <span style="font-size: 16px;">Ano: <%= @vaso.dt_fabricacao_reconstituicao.strftime("%m/%Y") %>
+                        <%if @vaso.bsem_data_fabricacao%>
+                            <%="Reconstituição"%>
+                        <%end%>
+                    </span><br>
+                <%end%>
+            </td>
+            <td>
+                <%if @num_etiqueta == 32%>
+                    <span style="font-weight: bold;  font-size: 10px;"><%=@vaso.proprietaria.nome_curto%> / <%=@vaso.proprietaria.cidade.nome%></span><br>
+                    <br>
+                    <span style="font-weight: bold;  font-size: 18px;">REGISTRO DE SEGURANÇA</span><br>
+                    <br>
+                    <span style="font-size: 16px;">de Vaso de Pressão</span><br>
+                    <span style="font-size: 16px;"><%= @vaso.fabricante.nome_curto%></span><br>
+                    <span style="font-weight: bold;  font-size: 16px;"><%= @vaso.num_serie %></span><br>
+                    <br>
+                    <span style="font-size: 16px;">Volume: <%= number_with_precision(@vaso.volume*1000, precision: 0) %> litros</span><br>
+                    <span style="font-size: 16px;">Categoria: <%= @vaso.catnr13.categoria%></span><br>
+                    <span style="font-size: 16px;">PMTA:  <%= number_with_precision(@vaso.pmta_atual*10, precision: 0) %> bar</span><br>
+                    <br>
+                    <span style="font-size: 16px;">Ano: <%= @vaso.dt_fabricacao_reconstituicao.strftime("%m/%Y") %>
+                        <%if @vaso.bsem_data_fabricacao%>
+                            <%="Reconstituição"%>
+                        <%end%>
+                    </span><br>
+                <%end%>
+            </td>
+            <td>
+                <%if @num_etiqueta == 33%>
+                    <span style="font-weight: bold;  font-size: 10px;"><%=@vaso.proprietaria.nome_curto%> / <%=@vaso.proprietaria.cidade.nome%></span><br>
+                    <br>
+                    <span style="font-weight: bold;  font-size: 18px;">REGISTRO DE SEGURANÇA</span><br>
+                    <br>
+                    <span style="font-size: 16px;">de Vaso de Pressão</span><br>
+                    <span style="font-size: 16px;"><%= @vaso.fabricante.nome_curto%></span><br>
+                    <span style="font-weight: bold;  font-size: 16px;"><%= @vaso.num_serie %></span><br>
+                    <br>
+                    <span style="font-size: 16px;">Volume: <%= number_with_precision(@vaso.volume*1000, precision: 0) %> litros</span><br>
+                    <span style="font-size: 16px;">Categoria: <%= @vaso.catnr13.categoria%></span><br>
+                    <span style="font-size: 16px;">PMTA:  <%= number_with_precision(@vaso.pmta_atual*10, precision: 0) %> bar</span><br>
+                    <br>
+                    <span style="font-size: 16px;">Ano: <%= @vaso.dt_fabricacao_reconstituicao.strftime("%m/%Y") %>
+                        <%if @vaso.bsem_data_fabricacao%>
+                            <%="Reconstituição"%>
+                        <%end%>
+                    </span><br>
+                <%end%>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <%if @num_etiqueta == 41%>
+                    <span style="font-weight: bold;  font-size: 10px;"><%=@vaso.proprietaria.nome_curto%> / <%=@vaso.proprietaria.cidade.nome%></span><br>
+                    <br>
+                    <span style="font-weight: bold;  font-size: 18px;">REGISTRO DE SEGURANÇA</span><br>
+                    <br>
+                    <span style="font-size: 16px;">de Vaso de Pressão</span><br>
+                    <span style="font-size: 16px;"><%= @vaso.fabricante.nome_curto%></span><br>
+                    <span style="font-weight: bold;  font-size: 16px;"><%= @vaso.num_serie %></span><br>
+                    <br>
+                    <span style="font-size: 16px;">Volume: <%= number_with_precision(@vaso.volume*1000, precision: 0) %> litros</span><br>
+                    <span style="font-size: 16px;">Categoria: <%= @vaso.catnr13.categoria%></span><br>
+                    <span style="font-size: 16px;">PMTA:  <%= number_with_precision(@vaso.pmta_atual*10, precision: 0) %> bar</span><br>
+                    <br>
+                    <span style="font-size: 16px;">Ano: <%= @vaso.dt_fabricacao_reconstituicao.strftime("%m/%Y") %>
+                        <%if @vaso.bsem_data_fabricacao%>
+                            <%="Reconstituição"%>
+                        <%end%>
+                    </span><br>
+                <%end%>
+            </td>
+            <td>
+                <%if @num_etiqueta == 42%>
+                    <span style="font-weight: bold;  font-size: 10px;"><%=@vaso.proprietaria.nome_curto%> / <%=@vaso.proprietaria.cidade.nome%></span><br>
+                    <br>
+                    <span style="font-weight: bold;  font-size: 18px;">REGISTRO DE SEGURANÇA</span><br>
+                    <br>
+                    <span style="font-size: 16px;">de Vaso de Pressão</span><br>
+                    <span style="font-size: 16px;"><%= @vaso.fabricante.nome_curto%></span><br>
+                    <span style="font-weight: bold;  font-size: 16px;"><%= @vaso.num_serie %></span><br>
+                    <br>
+                    <span style="font-size: 16px;">Volume: <%= number_with_precision(@vaso.volume*1000, precision: 0) %> litros</span><br>
+                    <span style="font-size: 16px;">Categoria: <%= @vaso.catnr13.categoria%></span><br>
+                    <span style="font-size: 16px;">PMTA:  <%= number_with_precision(@vaso.pmta_atual*10, precision: 0) %> bar</span><br>
+                    <br>
+                    <span style="font-size: 16px;">Ano: <%= @vaso.dt_fabricacao_reconstituicao.strftime("%m/%Y") %>
+                        <%if @vaso.bsem_data_fabricacao%>
+                            <%="Reconstituição"%>
+                        <%end%>
+                    </span><br>
+                <%end%>
+            </td>
+            <td>
+                <%if @num_etiqueta == 43%>
+                    <span style="font-weight: bold;  font-size: 10px;"><%=@vaso.proprietaria.nome_curto%> / <%=@vaso.proprietaria.cidade.nome%></span><br>
+                    <br>
+                    <span style="font-weight: bold;  font-size: 18px;">REGISTRO DE SEGURANÇA</span><br>
+                    <br>
+                    <span style="font-size: 16px;">de Vaso de Pressão</span><br>
+                    <span style="font-size: 16px;"><%= @vaso.fabricante.nome_curto%></span><br>
+                    <span style="font-weight: bold;  font-size: 16px;"><%= @vaso.num_serie %></span><br>
+                    <br>
+                    <span style="font-size: 16px;">Volume: <%= number_with_precision(@vaso.volume*1000, precision: 0) %> litros</span><br>
+                    <span style="font-size: 16px;">Categoria: <%= @vaso.catnr13.categoria%></span><br>
+                    <span style="font-size: 16px;">PMTA:  <%= number_with_precision(@vaso.pmta_atual*10, precision: 0) %> bar</span><br>
+                    <br>
+                    <span style="font-size: 16px;">Ano: <%= @vaso.dt_fabricacao_reconstituicao.strftime("%m/%Y") %>
+                        <%if @vaso.bsem_data_fabricacao%>
+                            <%="Reconstituição"%>
+                        <%end%>
+                    </span><br>
+                <%end%>
+            </td>
+        </tr>
+    </table>
+</div>

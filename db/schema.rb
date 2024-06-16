@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_04_17_165145) do
+ActiveRecord::Schema.define(version: 2024_06_12_164342) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_repack"
@@ -34,7 +34,14 @@ ActiveRecord::Schema.define(version: 2024_04_17_165145) do
     t.bigint "byte_size", null: false
     t.string "checksum", null: false
     t.datetime "created_at", null: false
+    t.string "service_name", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
   create_table "admin_estatisticas", force: :cascade do |t|
@@ -169,7 +176,7 @@ ActiveRecord::Schema.define(version: 2024_04_17_165145) do
     t.integer "inspetora_id", default: 52, null: false
     t.float "esp_min_corpo"
     t.float "esp_min_tampo"
-    t.bigint "user_id"
+    t.bigint "user_id", default: 1
     t.boolean "b_rascunho", default: true
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
@@ -287,6 +294,8 @@ ActiveRecord::Schema.define(version: 2024_04_17_165145) do
     t.integer "art_id", default: 0, null: false
     t.bigint "user_id"
     t.date "data_prox_insp"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_relatorio_dispsegs_on_user_id"
   end
 
@@ -561,6 +570,7 @@ ActiveRecord::Schema.define(version: 2024_04_17_165145) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "arts", "users"
   add_foreign_key "cadastros", "cidades"
   add_foreign_key "cadastros", "corps", name: "sys_fk_634"

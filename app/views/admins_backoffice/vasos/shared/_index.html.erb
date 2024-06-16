@@ -41,21 +41,33 @@
     <table class="table table-striped table-bordered table-hover">    
         <thead>
             <tr>
-                <th>#</th>
-                <!--<th><%= traduz_atributos_humanos(@vasos, :user_id) %> </th>-->
-                <th><%= traduz_atributos_humanos(@vasos, :num_serie) %> </th>               
-                <th><%= traduz_atributos_humanos(@vasos, :fabricante_id) %> </th>
-                <th><%= traduz_atributos_humanos(@vasos, :proprietaria_id) %> </th>
                 <th>
                     <%= link_to  new_admins_backoffice_vaso_path, class:"btn btn-success btn-circle btn-sm" do %>
                         <i class="fas fa-plus"></i>
                     <% end %>
                 </th>
+                <th>#</th>
+                <!--<th><%= traduz_atributos_humanos(@vasos, :user_id) %> </th>-->
+                <th><%= traduz_atributos_humanos(@vasos, :num_serie) %> </th>               
+                <th><%= traduz_atributos_humanos(@vasos, :fabricante_id) %> </th>
+                <th><%= traduz_atributos_humanos(@vasos, :proprietaria_id) %> </th>
+                
+                <th>Pr</th>
+                <th>TH</th>
+                <th>RS</th>
+                <th>Et</th>
+                <th>Pq</th>
             </tr>
         </thead>
         <tbody> 
             <% @vasos.each do |v|%>
                 <tr>
+                    <td style="width: 50px">
+                        <%= link_to edit_admins_backoffice_vaso_path(v), class:"btn btn-info btn-circle btn-sm" do %> 
+                            <i class="fas fa-edit"></i>
+                        <%end%>
+                    </td>
+
                     <td><%= v.id %></td>
                     <!--
                     <% if !v.user.blank? %>
@@ -74,9 +86,40 @@
                     <td><%= v.proprietaria.nome_curto %></td>
 
                     <td style="width: 50px">
-                        <%= link_to edit_admins_backoffice_vaso_path(v), class:"btn btn-info btn-circle btn-sm" do %> 
-                            <i class="fas fa-edit"></i>
-                        <%end%>
+                        <%= link_to admins_backoffice_vasos_imprime_prontuario_path(v.id, format: :html), class: "btn btn-info btn-circle btn-sm" do %>
+                            <i class="fas fa-file"></i>
+                        <% end %>
+                    </td>
+
+                    <td style="width: 50px">
+                        <% @r = Relatorio.where(vaso_id: v.id, insp_contratada_vaso_teste_hidrostatico: true).order(id: :desc).first %>
+                        <%= link_to admins_backoffice_vasos_imprime_laudo_th_path(v.id, format: :html), 
+                                    class: "btn btn-info btn-circle btn-sm #{'disabled' if @r.nil?}", 
+                                    disabled: @r.nil? do %>
+                            <i class="fas fa-table"></i>
+                        <% end %>
+                    </td>
+
+
+                    <td style="width: 50px">
+                        <% @r = Relatorio.where(vaso_id: v.id).order(id: :asc).first %>
+                        <%= link_to admins_backoffice_vasos_imprime_abertura_rs_path(v.id, format: :html), 
+                                    class: "btn btn-info btn-circle btn-sm #{'disabled' unless @r}" do %>
+                            <i class="fas fa-book"></i>
+                        <% end %>
+                    </td>
+
+
+                    <td style="width: 50px">
+                        <%= link_to admins_backoffice_vasos_imprime_etiqueta_path(v.id, format: :html), class: "btn btn-info btn-circle btn-sm" do %>
+                            <i class="fas fa-tag"></i>
+                        <% end %>
+                    </td>
+
+                    <td style="width: 50px">
+                        <%= link_to admins_backoffice_vasos_imprime_plaqueta_path(v.id, format: :html), class: "btn btn-info btn-circle btn-sm" do %>
+                            <i class="fas fa-credit-card"></i>
+                        <% end %>
                     </td>
                 </tr>
             <% end %>

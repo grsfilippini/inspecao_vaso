@@ -1,0 +1,112 @@
+<div class="container page">
+    <div style='text-align: center'>
+        <span style="font-size: 16pt; font-weight: bold;">REGISTRO DE SEGURANÇA DO VASO DE PRESSÃO</span><br>
+    </div>
+    <div style='text-align: center'>
+        <span style="font-size: 10pt;">Fabricante:</span> <span style="font-size: 10pt; font-weight: bold;"><%= @vaso.fabricante.nome %> &nbsp &nbsp &nbsp</span>
+        <span style="font-size: 10pt;">Número de série:</span> <span style="font-size: 10pt; font-weight: bold;"><%= @vaso.num_serie %></span> <br>
+    </div>
+    <br>
+    <br>
+    <div style='text-align: center'>
+        <span style="font-size: 16pt; font-weight: bold;">TERMO DE ABERTURA</span><br>
+    </div>
+    <br>
+    <br>
+    <div style='text-align: justify'>
+        <span style="font-size: 12pt;">Este documento contém folhas numeradas de 01 a 50, e serve de registro de segurança de vaso de pressão, especificado neste prontuário, da empresa:</span><br>
+    </div>
+    <span style="font-size: 12pt;"><%= @vaso.proprietaria.nome %>;</span> <br>
+    <span style="font-size: 12pt;">CNPJ: <%= @vaso.proprietaria.cnpj %>;</span> <br>
+    <span style="font-size: 12pt;">Endereço: <%= @vaso.proprietaria.endereco %>, <%=@vaso.proprietaria.numero %>;</span> <br>
+    <span style="font-size: 12pt;">Bairro: <%= @vaso.proprietaria.bairro %>;</span> <br>
+    <span style="font-size: 12pt;">Cidade: <%= @vaso.proprietaria.cidade.nome %>, CEP:<%=@vaso.proprietaria.cep %>;</span> <br>
+    <br>
+    <div style='text-align: justify'>
+        <span style="font-size: 12pt;">Este registro atende à NR13 e é destinado a anotação da condição operacional e de segurança do vaso após cada inspeção. Também deve receber anotação quando houverem ocorrências importantes, capazes de interferir nas condições de segurança do vaso de pressão.</span><br>
+    </div>
+    <br>
+    <span style="font-size: 12pt; font-weight: bold;">DADOS DO VASO DE PRESSÃO</span> <br>
+    <table style="border-collapse: collapse; width: 100%; border: none;">
+        <tr>
+            <td style="padding: 10px;">
+                <span style="font-size: 10pt;">Fabricante:</span> <span style="font-size: 10pt; font-weight: bold;"><%= @vaso.fabricante.nome %></span> <br>
+                <span style="font-size: 10pt;">Número de série:</span> <span style="font-size: 10pt; font-weight: bold;"><%= @vaso.num_serie %></span> <br>
+                <span style="font-size: 10pt;">Data de fabricação:</span> <span style="font-size: 10pt;"><%= @vaso.dt_fabricacao_reconstituicao.strftime("%d/%m/%Y") %></span>
+                <span style="font-size: 8pt;">
+                    <% if @vaso.bsem_data_fabricacao %>
+                        <%="(Reconstituição de prontuário)" %>
+                    <% end %>
+                </span><br>
+                <span style="font-size: 10pt;">Categoria NR-13:</span> <span style="font-size: 10pt;"><%= @vaso.catnr13.categoria %></span> &nbsp;&nbsp;&nbsp; <span style="font-size: 10pt;">Volume interno:</span> <span style="font-size: 10pt;"><%= number_with_precision(@vaso.volume, precision: 3) %> m&sup3;</span> <br>
+            </td>
+            <td style="padding: 10px;">
+                <span style="font-size: 10pt;">Endereço e contato do fabricante:</span> <br>
+                <span style="font-size: 10pt;">Endereço: <%=@vaso.fabricante.endereco%>, <%=@vaso.fabricante.numero%>, bairro: <%=@vaso.fabricante.bairro%></span> <br>
+                <span style="font-size: 10pt;">Cidade: <%=@vaso.fabricante.cidade.nome%>, CEP: <%=@vaso.fabricante.cep%></span> <br>
+                <span style="font-size: 10pt;">Fone: <%=@vaso.fabricante.fone%>, e-mail: <%=@vaso.fabricante.email%></span> <br>
+                <span style="font-size: 10pt;">Website: <%=@vaso.fabricante.website%></span> <br>
+            </td>
+        </tr>
+    </table>
+    <br>
+    <span style="font-size: 12pt; font-weight: bold;">PROFISSIONAL HABILITADO (PH) RESPONSÁVEL PELA INSPEÇÃO INICIAL</span> <br>
+    <span style="font-size: 12pt;">Nome: <%= @relatorio.ph.nome %>, CREA: <%=@relatorio.ph.crea%></span> <br>
+    <span style="font-size: 12pt;">Endereço: <%= @relatorio.ph.endereco %>, <%=@relatorio.ph.bairro%>, <%=@relatorio.ph.cidade.nome%>, <%=@relatorio.ph.cep%></span> <br>
+    <span style="font-size: 12pt;">Fone: <%=@relatorio.ph.fone%>, Email:<%=@relatorio.ph.email%></span> <br>
+    <br>
+    <span style="font-size: 12pt; font-weight: bold;">DATA DA INSTALAÇÃO DO VASO: </span> <span style="font-size: 12pt;"> <%=@vaso.data_instalacao.strftime("%d/%m/%Y")%></span> <br>
+    <br>
+    <hr>
+    <br>
+    <span style="font-size: 12pt; font-weight: bold;">REGISTRO DA INSPEÇÃO INICIAL</span><br>
+    <div style='text-align: justify'>
+        <span style="font-size: 12pt;">Foi verificada a documentação do vaso que entrará em operação, fornecido pelo fabricante:
+        <%=@vaso.fabricante.nome%>, com número de identificação: <%=@vaso.num_serie%>, conforme relatório de inspeção número: <%= @relatorio.id %>, 
+        com abertura do registro de segurança pelo PH: <%=@relatorio.ph.nome%>, CREA <%=@relatorio.ph.crea%>, 
+        sendo que o equipamento foi liberado para operação com recomendações realizadas no relatório de inspeção em referência, que faz parte integrante deste registro.
+        ART desta inspeção: <%=@relatorio.art.art%>.
+        </span>
+    </div>
+    <br>
+    <br>
+    <table class="tableAssinatura">
+        <tr>
+            <td class="col1" style="text-align: center; vertical-align: middle;">
+                <div style="display: inline-block; text-align: center;">
+                    <span style="font-size: 10pt;">Local e data: <%= @relatorio.inspetora.cidade.nome %>, <%= @relatorio.data_relatorio.strftime("%d/%m/%Y") %></span><br>
+                    <br>
+                    <span style="font-size: 10pt;">.................................................</span><br>
+                    <span style="font-size: 8pt;">(Carimbo e assinatura)</span>
+                    <br>
+                    <br>
+                    <br>
+                </div>
+            </td>            
+            <td class="col2" style="text-align: center; vertical-align: middle;">
+                <div style="display: inline-block; text-align: center;">
+                    <span style="font-size: 10pt;">ou</span>
+                </div>
+            </td>
+            <td class="col3">
+                <span style="font-size: 10pt;">DOCUMENTO ASSINADO DIGITALMENTE</span><br>
+                <span style="font-size: 10pt; font-weight: bold;"><%=@relatorio.ph.nome%> </span> <span style="font-size: 10pt;"> - <%= Time.now.strftime("%d de %b de %Y") %></span><br>
+                <span style="font-size: 10pt; font-weight: bold;"><%=@relatorio.ph.titulo%> </span> <span style="font-size: 10pt;"> CREA <%=@relatorio.ph.crea%></span><br>                
+                <span style="font-size: 10pt;">Verifique em https://validar.iti.gov.br</span><br>
+            </td>            
+        </tr>
+    </table>
+
+</div>
+
+<hr>
+
+<%= button_tag "Retornar", type: "button", class: "btn btn-secondary", onclick: "window.history.back();" %>
+
+<button class="btn btn-secondary" type="button" id="custom_submit_button" onclick="window.location.href='<%= admins_backoffice_vasos_imprime_abertura_rs_path(@vaso.id, format: :pdf, b_assinar: false) %>';">
+    <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF
+</button>
+
+<button class="btn btn-secondary" type="button" id="custom_submit_button" onclick="window.location.href='<%= admins_backoffice_vasos_imprime_abertura_rs_path(@vaso.id, format: :pdf, b_assinar: true) %>';">
+    <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF assinado
+</button>

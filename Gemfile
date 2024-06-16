@@ -102,4 +102,11 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
+# Usada para assinar arquivos pdf
+#gem 'hexapdf'
+gem 'origami', require: 'origami'
+
+# Usada para compactar arquivos
+gem 'rubyzip', '~> 2.3'
+
 # Última linha

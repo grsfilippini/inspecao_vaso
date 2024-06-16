@@ -1,4 +1,10 @@
+require 'openssl'
+require 'origami'
+include Origami
+
 class AdminsBackoffice::VasosController < AdminsBackofficeController
+    include SharedMethods
+
     before_action :set_vaso, only: [:edit, :update, :destroy]
     before_action :get_relacoes, only: [:new, :edit]
     after_action :get_relacoes_cad_corp, only: [:index, :pesquisa]
@@ -116,6 +122,162 @@ class AdminsBackoffice::VasosController < AdminsBackofficeController
       @corps = Corp.all.order(:nome)
     end
     
+    #***********
+    # PRONTUÁRIO
+    #***********
+    def imprime_prontuario
+      
+      @vaso = Vaso.find(params[:id])
+      @ultimo_relatorio_dispseg = RelatorioDispseg.where(vaso_id: @vaso.id).order(id: :desc).first
+      if @ultimo_relatorio_dispseg.nil?
+        @ultimo_relatorio_dispseg = RelatorioDispseg.new
+        @ultimo_relatorio_dispseg.pressao_ajuste = @vaso.pmta_atual
+      end
+      @relatorio = Relatorio.where(vaso_id: @vaso.id, insp_contratada_vaso_teste_hidrostatico: true).order(id: :desc).first
+      if @relatorio.nil?
+        @relatorio = Relatorio.where(vaso_id: @vaso.id).order(id: :asc).first
+      end
+      
+      respond_to do |format|
+        format.html{          
+        }
+
+        format.pdf do      
+          if params[:b_assinar] == 'false'
+            render template: 'admins_backoffice/vasos/imprime_prontuario_pdf',
+                   pdf: 'prontuario',
+                   locals: { asset_path: "#{Rails.root.join('app/assets/images')}" },
+                   disposition: 'inline',
+                   layout: 'pdf.html',
+                   page_size: 'A4'
+          else
+            path_doc_assinado = gera_pdf_empresa_equipamento_assinado(current_admin, @vaso.proprietaria, @vaso, "admins_backoffice/vasos/imprime_prontuario_pdf", "prontuario_assinado.pdf", "pdf.html", "Portrait")
+            send_file path_doc_assinado, type: 'application/pdf', disposition: 'attachment'
+          end
+
+        end
+      end
+
+    end
+
+    #*********
+    # LAUDO TH
+    #*********
+    def imprime_laudo_th
+      
+      @vaso = Vaso.find(params[:id])      
+      @relatorio = Relatorio.where(vaso_id: @vaso.id, insp_contratada_vaso_teste_hidrostatico: true).order(id: :desc).first
+            
+      respond_to do |format|
+        format.html{          
+        }
+
+        format.pdf do      
+          if params[:b_assinar] == 'false'
+            render template: 'admins_backoffice/vasos/imprime_laudo_th_pdf',
+                   pdf: 'laudo_th',
+                   locals: { asset_path: "#{Rails.root.join('app/assets/images')}" },
+                   disposition: 'inline',
+                   layout: 'pdf.html',
+                   page_size: 'A4'
+          else
+            path_doc_assinado = gera_pdf_empresa_equipamento_assinado(current_admin, @vaso.proprietaria, @vaso, "admins_backoffice/vasos/imprime_laudo_th_pdf", "laudo_th_assinado.pdf", "pdf.html", "Portrait")
+            send_file path_doc_assinado, type: 'application/pdf', disposition: 'attachment'
+          end
+
+        end
+      end
+
+    end
+
+    #*******************************
+    # ABERTURA REGISTRO DE SEGURANÇA
+    #*******************************
+    def imprime_abertura_rs
+      
+      @vaso = Vaso.find(params[:id])      
+      @relatorio = Relatorio.where(vaso_id: @vaso.id).order(id: :asc).first
+            
+      respond_to do |format|
+        format.html{          
+        }
+
+        format.pdf do      
+          if params[:b_assinar] == 'false'
+            render template: 'admins_backoffice/vasos/imprime_abertura_rs_pdf',
+                   pdf: 'abertura_rs',
+                   locals: { asset_path: "#{Rails.root.join('app/assets/images')}" },
+                   disposition: 'inline',
+                   layout: 'abertura_rs_pdf.html',
+                   page_size: 'A4'
+          else
+            path_doc_assinado = gera_pdf_empresa_equipamento_assinado(current_admin, @vaso.proprietaria, @vaso, "admins_backoffice/vasos/imprime_abertura_rs_pdf", "abertura_rs_assinado.pdf", 'abertura_rs_pdf.html', "Portrait")
+            send_file path_doc_assinado, type: 'application/pdf', disposition: 'attachment'
+          end
+
+        end
+      end
+
+    end
+
+    #*********
+    # ETIQUETA
+    #*********
+    def imprime_etiqueta
+      
+      @vaso = Vaso.find(params[:id])
+      @num_etiqueta = params[:num_etiqueta].to_i
+
+      respond_to do |format|
+        format.html{          
+        }
+
+        format.pdf do      
+          render template: 'admins_backoffice/vasos/imprime_etiqueta_pdf',
+                  pdf: 'etiqueta',
+                  locals: { asset_path: "#{Rails.root.join('app/assets/images')}" },
+                  disposition: 'inline',
+                  layout: 'etiqueta_pdf.html',
+                  page_size: 'A4'
+        end
+      end
+
+    end
+
+    #*********
+    # PLAQUETA
+    #*********
+    def imprime_plaqueta
+      
+      @vaso = Vaso.find(params[:id])
+      @relatorio = Relatorio.where(vaso_id: @vaso.id, insp_contratada_vaso_teste_hidrostatico: true).order(id: :desc).first
+      if @relatorio.nil?
+        @relatorio = Relatorio.where(vaso_id: @vaso.id).order(id: :asc).first
+      end
+      
+      respond_to do |format|
+        format.html{          
+        }
+
+        format.pdf do      
+          if params[:b_assinar] == 'false'
+            render template: 'admins_backoffice/vasos/imprime_plaqueta_pdf',
+                   pdf: 'plaqueta',
+                   locals: { asset_path: "#{Rails.root.join('app/assets/images')}" },
+                   disposition: 'inline',
+                   layout: 'pdf.html',
+                   page_size: 'A4',
+                   orientation: 'Portrait'
+          else
+            path_doc_assinado = gera_pdf_empresa_equipamento_assinado(current_admin, @vaso.proprietaria, @vaso, "admins_backoffice/vasos/imprime_plaqueta_pdf", "plaqueta_assinado.pdf", "pdf.html", "Portrait")
+            send_file path_doc_assinado, type: 'application/pdf', disposition: 'attachment'
+          end
+
+        end
+      end
+
+    end
+
     def json_data      
       @vaso = Vaso.find(params[:id])
       render json: { pmta_atual: @vaso.pmta_atual, proprietaria_id: @vaso.proprietaria_id }

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <%= wicked_pdf_stylesheet_link_tag 'pdf' %>        
+    <meta charset="UTF-8">
+
+    <style>
+        /* Configuração da página para impressão */
+        @page {
+            size: A4;
+            bleed: 5mm; /* Define a área de sangramento de 5mm */
+            margin: 0mm 0mm 0mm 0mm; /* Margens padrão para a página */
+            marks: crop cross; /* Adiciona marcas de corte e cruzes */
+            /*border: 2mm solid black; /* Adiciona uma borda de 2mm de espessura e cor preta */
+        }
+        /* Estilo para a classe .page */
+        .page {
+            width: calc(210mm - 0mm); /* Largura da página A4 menos margens */
+            height: calc(297mm - 0mm); /* Altura da página A4 menos margens */
+            margin: auto; /* Centraliza a página horizontalmente */
+            padding: 10mm;
+            box-sizing: border-box;
+            /*page-break-after: always;*/
+            border: none; /* Remove borda para impressão */
+        }
+        /* Estilo para o corpo do documento */
+        body {
+            font-family: "Times New Roman", serif; /* Fonte específica para impressão */
+            margin: 0mm 20mm 20mm 0mm; /* Topo e esquerda 0mm, direita e inferior 40mm */
+            padding: 5;
+            border: 1px solid #ccc; /* Borda fina de 1 pixel sólido cinza claro */
+            color: #000; /* Garante que o texto seja preto para impressão */
+            background: none; /* Remove qualquer cor de fundo */
+            font-size: 10pt; /* Tamanho da fonte */
+            /*line-height: 14pt; /* Altura da linha (line-height) */
+            line-height: 1.4; /* Espaçamento entre linhas de 1.5 */
+        }
+        /* Estilos para impressão */
+        @media print {
+            body, .page {
+                margin: 0;
+                box-shadow: none;
+                page-break-after: auto;
+            }
+            
+            /* Esconder elementos específicos na impressão */
+            .no-print {
+                display: none;
+            }
+        }
+
+
+        /* Estilo de tabela para Assinatura escrita e digital */
+        .tableAssinatura {
+            width: 196mm;
+            border-collapse: collapse;
+            margin-bottom: 20px; /* Espaço entre as tabelas */
+            border: 1px solid black;
+        }
+        .tableAssinatura th, .tableAssinatura td {
+            /*border: 1px solid black;*/
+            /*border: none;*/ /* Remove as bordas das células */
+            height: 25mm; /* Definindo a altura da linha */
+        }
+        .tableAssinatura .col1 {
+            width: 78mm; 
+        }
+        .tableAssinatura .col2 {
+            width: 40mm;
+        }
+        .tableAssinatura .col3 {
+            width: 78mm;
+        }
+    </style>
+
+</head>
+<body>
+    <%= yield %>
+</body>
+</html>
+
+
+

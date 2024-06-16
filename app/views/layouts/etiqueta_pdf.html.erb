@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <!--<= wicked_pdf_stylesheet_link_tag 'pdf' %>-->
+    <meta charset="UTF-8">
+
+    <style>
+        /* Estilo de página para etiqueta */
+        @page {
+            size: A4; /* 210 x 297 mm */
+            margin-top: 0mm;
+            margin-bottom: 0mm;
+            margin-left: 0mm;
+            margin-right: 0mm;
+            padding: 0mm;
+        }
+
+        .page {
+            /*width: calc(210mm - 10mm - 10mm); /* Largura da página A4 menos margens */
+            /*height: calc(297mm - 10mm - 10mm); /* Altura da página A4 menos margens */
+            /*margin: auto; */
+            margin: 0mm;
+            padding: 0mm;
+            box-sizing: border-box;
+            page-break-after: always;
+            /*border: 1px solid black;*/ /* Adiciona uma borda */
+        }
+
+        @media print {
+            body, .page {
+                margin: 0;
+                padding: 0;
+                box-shadow: none;
+                page-break-after: auto;
+            }
+        }
+
+        .etiqueta-table {
+            width: 249mm; /* Largura total da tabela: 66mm * 3 colunas */
+            height: 267mm;
+            border-collapse: collapse; /* Remover espaços entre as bordas das células */
+            border: 1px solid black;
+        }
+
+        .etiqueta-table td {
+            width: 83mm; /* Largura de cada coluna */
+            height: 90.1mm; /* Altura de cada linha */
+            border: 1px solid black; /* Borda das células */
+            text-align: center; /* Centralizar o texto nas células */
+            vertical-align: middle; /* Centralizar verticalmente o texto nas células */
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Altura total da janela de visualização */
+            margin: 0; /* Remover margens padrão do body */
+            background-color: #f0f0f0; /* Cor de fundo do body */
+        }
+
+        /* Classe exclusiva para a tabela interna */
+        .inner-table {
+            width: 83mm; /* Largura total da tabela interna */
+            height: 90.1;
+            border-collapse: collapse; /* Remover espaços entre as bordas das células */
+        }
+
+        .inner-table td {
+            width: 41.5mm; /* Largura de cada coluna na tabela interna */
+            height: 12mm; /* Altura de cada linha na tabela interna */
+            /*border: 1px solid black; /* Borda das células */
+            text-align: center; /* Centralizar o texto nas células */
+            vertical-align: middle; /* Centralizar verticalmente o texto nas células */
+        }
+    </style>
+
+</head>
+<body>
+    <%= yield %>
+</body>
+</html>
+

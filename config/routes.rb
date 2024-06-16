@@ -25,6 +25,12 @@ Rails.application.routes.draw do
   # Name space, define agrupamento de pastas em controllers e views
   # Pode-se referir a estes agrupamentos através de :admins_backoffice por exemplo
   namespace :admins_backoffice do
+    
+    # Administração de documentos pdf gerados pelo app
+    get  'administra_docs',      to: 'administra_docs#administra'
+    post 'compactar_documentos', to: 'administra_docs#compactar'
+    post 'apagar_documentos',    to: 'administra_docs#apagar'
+
     get 'welcome/index' # Chama o dashboard (painel principal do admins_backoffice)
     post 'ajusta_estatisticas', to: 'ajusta_estatisticas#estatisticas'
     #get 'admins/index'
@@ -40,26 +46,36 @@ Rails.application.routes.draw do
     # , except: [:destroy, :new] -> diz para não criar as rotas especificadas
     # , only: [:destroy, :new] -> diz para criar as rotas especificadas        
     resources :corps
+
     resources :cadastros
-    get 'pesquisa_cadastro',     to: 'cadastros#pesquisa'    
-    get 'pesquisa_cadastro_pdf', to: 'cadastros#pesquisa'
+    get 'pesquisa_cadastro',         to: 'cadastros#pesquisa'    
+    get 'pesquisa_cadastro_pdf',     to: 'cadastros#pesquisa'
     get 'imprime_cadastro_pdf/:id',  to: 'cadastros#imprime_cadastro'
 
     resources :cidades
+    
     resources :catnr13s
+
     resources :espessura_vasos
     get 'pesquisa_espessura_vaso', to: 'espessura_vasos#pesquisa'
     get 'espessura_em_aberto',     to: 'espessura_vasos#em_aberto' 
+
     resources :finalidade_vasos    
+
     resources :vasos do
       member do
         get :json_data, defaults: { format: 'json' }
         #delete :remove_photo # Rota para deletar a foto do vaso
       end
     end       
-    get 'pesquisa_vaso', to: 'vasos#pesquisa'    
-    get '/obter_ultima_serie_mtp', to: 'vasos#obter_ultima_serie_mtp'
+    get 'pesquisa_vaso',                              to: 'vasos#pesquisa'    
+    get '/obter_ultima_serie_mtp',                    to: 'vasos#obter_ultima_serie_mtp'
     get 'get_vasos_by_proprietaria/:proprietaria_id', to: 'vasos#get_vasos_by_proprietaria'
+    get 'imprime_prontuario_pdf/:id',                 to: 'vasos#imprime_prontuario', as: 'vasos_imprime_prontuario'
+    get 'imprime_etiqueta_pdf/:id',                   to: 'vasos#imprime_etiqueta', as: 'vasos_imprime_etiqueta'
+    get 'imprime_laudo_th_pdf/:id',                   to: 'vasos#imprime_laudo_th', as: 'vasos_imprime_laudo_th'
+    get 'imprime_abertura_rs_pdf/:id',                to: 'vasos#imprime_abertura_rs', as: 'vasos_imprime_abertura_rs'
+    get 'imprime_plaqueta_pdf/:id',                   to: 'vasos#imprime_plaqueta', as: 'vasos_imprime_plaqueta'
 
     resources :tipo_compressors
     resources :tipo_drenos

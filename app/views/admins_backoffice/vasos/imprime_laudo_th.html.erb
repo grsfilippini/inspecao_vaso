@@ -1,0 +1,100 @@
+<div class="container page">
+    <table class="tableCabecalho">
+        <tr>
+            <td class="col1"><%= image_tag asset_url('logo.png'), width: '94.5px' %></td>
+            <td class="col2">
+                <span style="font-size: 18pt; font-weight: bold;">ENGENHARIA MANTINSP LTDA</span><br>
+                <span style="font-size: 9pt;">CNPJ 23.526.523/0001-71</span><br>
+                <span style="font-size: 9pt;">Rua Pinto Bandeira, 900 / Fone: 45-98807-2020</span><br>
+                <span style="font-size: 9pt;">Toledo/PR / e-mail: mantinsp@gmail.com</span><br>
+            </td>
+        </tr>
+    </table>
+    <br>
+    <div style='text-align: center'>
+        <span style="font-size: 16pt; font-weight: bold;">LAUDO DE TESTE HIDROSTÁTICO</span><br>
+    </div>
+    <br>
+    <br>
+    <span style="font-size: 14pt; font-weight: bold;">IDENTIFICAÇÃO DO VASO E CARACTERÍSTICAS</span><br>
+    <span style="font-size: 12pt;">Fabricante:</span> <span style="font-size: 12pt; font-weight: bold;"><%= @vaso.fabricante.nome %></span> <br>
+    <span style="font-size: 12pt;">Número de série:</span> <span style="font-size: 12pt; font-weight: bold;"><%= @vaso.num_serie %></span> <br>
+    <span style="font-size: 12pt;">Data de fabricação:</span> <span style="font-size: 12pt;"><%= @vaso.dt_fabricacao_reconstituicao.strftime("%d/%m/%Y") %></span> 
+    <span style="font-size: 8pt;">
+        <%if @vaso.bsem_data_fabricacao%>
+            <%="(Reconstituição de prontuário)"%>
+        <%end%>
+    </span><br>
+    <span style="font-size: 12pt;">Código de projeto: <%= @vaso.codigo_construcao.codigo %></span> <span style="font-size: 8pt;"> (original ou adotado na reconstituição); </span> <br>
+    <span style="font-size: 12pt;">Categoria NR-13:</span> <span style="font-size: 12pt;"><%= @vaso.catnr13.categoria %></span>
+    <span style="font-size: 12pt;">Volume interno:</span> <span style="font-size: 12pt;"><%= number_with_precision(@vaso.volume, precision: 3) %> m&sup3. </span> <br>
+    <span style="font-size: 12pt;">PMTA (*a):</span> <span style="font-size: 12pt; font-weight: bold;"> <%= number_with_precision(@vaso.pmta_atual, precision: 3) %> </span> <span  style="font-size: 12pt;"> MPa </span><br>
+    <br>
+    <br>
+    <span style="font-size: 14pt; font-weight: bold;">DESCRIÇÃO DO TESTE</span><br>
+    <div style="font-size: 12pt; text-align: justify;">
+        O fluido usado no teste hidrostático foi a água a temperatura ambiente. Os apoios do vaso de pressão tem resistência suficiente para suportarem o peso do vaso cheio de água. O vaso foi submetido ao teste hidrostático de acordo com a norma NR13 e ASME UG-99.
+    </div><br>
+    <br>
+    <span style="font-size: 14pt; font-weight: bold;">PRESSÃO DE TESTE</span><br>
+    <span style="font-size: 12pt;">PTH (*b):</span> <span style="font-size: 12pt; font-weight: bold;"> <%= number_with_precision(@vaso.pth_atual, precision: 3) %> </span> <span  style="font-size: 12pt;"> MPa </span><br>
+    <div style="font-size: 12pt; text-align: justify;">
+        A PTH foi utilizada de acordo com a placa de identificação do fabricante, ou de acordo com o código de construção adotado. A PTH é um múltiplo da PMTA, esta última calculada conforme a espessura de parede remanescente do vaso. Atendendo os requisitos de segurança do projeto. A velocidade de aumento de pressão foi de aproximadamente 2 bar/min. A PTH foi mantida por 30 min.
+    </div><br>
+    <br>
+
+    <span style="font-size: 14pt; font-weight: bold;">RESULTADO DO TESTE</span><br>
+    <div style="font-size: 12pt; text-align: justify">
+        O Teste Hidrostático serve para avaliar a existência de trincas no interior das paredes que compõe o vaso. Com este pode-se garantir que o vaso não irá falhar por fadiga trabalhando nos seus ciclos Pressão Alta-Baixa. Estes ciclos provocam o crescimento das possíveis trincas ou falhas do material. No presente caso o vaso passou no teste sem falhar por colapso, não apresentando nenhuma ruptura, deformação ou vazamento. Consequentemente pode operar durante sua vida remanescente sem riscos de falha catastrófica. Portanto O VASO É APROVADO PARA USO dentro da PMTA proposta.
+    </div>
+    <br>
+    <br>
+    <br>
+    <span style="font-size: 12pt;">Nada mais havendo a acrescentar, subscrevo-me.</span><br>
+    <br>
+    <br>
+    <br>
+    <table class="tableAssinatura">
+        <tr>
+            <td class="col1" style="text-align: center; vertical-align: middle;">
+                <div style="display: inline-block; text-align: center;">
+                    <span style="font-size: 10pt;">Local e data: <%= @relatorio.inspetora.cidade.nome %>, <%= @relatorio.data_relatorio.strftime("%d/%m/%Y") %></span><br>
+                    <br>
+                    <span style="font-size: 10pt;">.................................................</span><br>
+                    <span style="font-size: 8pt;">(Carimbo e assinatura)</span>
+                    <br>
+                    <br>
+                    <br>
+                </div>
+            </td>            
+            <td class="col2" style="text-align: center; vertical-align: middle;">
+                <div style="display: inline-block; text-align: center;">
+                    <span style="font-size: 10pt;">ou</span>
+                </div>
+            </td>
+            <td class="col3">
+                <span style="font-size: 10pt;">DOCUMENTO ASSINADO DIGITALMENTE</span><br>
+                <span style="font-size: 10pt; font-weight: bold;"><%=@relatorio.ph.nome%> </span> <span style="font-size: 10pt;"> - <%= Time.now.strftime("%d de %b de %Y") %></span><br>
+                <span style="font-size: 10pt; font-weight: bold;"><%=@relatorio.ph.titulo%> </span> <span style="font-size: 10pt;"> CREA <%=@relatorio.ph.crea%></span><br>                
+                <span style="font-size: 10pt;">Verifique em https://validar.iti.gov.br</span><br>
+            </td>            
+        </tr>
+    </table>
+    <br>
+    <br>
+    <div style="font-size: 8pt; text-align: justify">
+        (*a) PMTA - Pressão Máxima de Trabalho; (*b) PTH - Pressão de Teste Hidrostático.
+    </div>
+
+</div>
+<hr>
+
+<%= button_tag "Retornar", type: "button", class: "btn btn-secondary", onclick: "window.history.back();" %>
+
+<button class="btn btn-secondary" type="button" id="custom_submit_button" onclick="window.location.href='<%= admins_backoffice_vasos_imprime_laudo_th_path(@vaso.id, format: :pdf, b_assinar: false) %>';">
+    <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF
+</button>
+
+<button class="btn btn-secondary" type="button" id="custom_submit_button" onclick="window.location.href='<%= admins_backoffice_vasos_imprime_laudo_th_path(@vaso.id, format: :pdf, b_assinar: true) %>';">
+    <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF assinado
+</button>

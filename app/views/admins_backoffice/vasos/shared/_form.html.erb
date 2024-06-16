@@ -135,7 +135,7 @@
                                     
                                     <%= form.label :data_instalacao, "Data instalação", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
                                     <div class="col-sm-3 mb-3 mb-sm-0">
-                                        <%= form.date_field :data_instalacao, value: @vaso.data_instalacao.presence || Date.new(1980, 1, 1), class: "form-control" %>                                        
+                                        <%= form.date_field :data_instalacao, value: @vaso.data_instalacao.presence, class: "form-control" %>
                                     </div>                                    
                                 </div>
                                     
