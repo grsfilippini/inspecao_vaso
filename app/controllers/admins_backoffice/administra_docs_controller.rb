@@ -41,6 +41,10 @@ class AdminsBackoffice::AdministraDocsController < AdminsBackofficeController
       output_file = File.join(pasta_principal, 'equipamentos.zip')
       # Chama o método para compactar
       zip_folders_and_files(input_folders, output_file)
+      
+      respond_to do |format|
+        format.json { render json: { success: sucesso } }
+      end
     end
 
     def apagar

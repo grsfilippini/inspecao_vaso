@@ -55,7 +55,7 @@
     <span style="font-size: 12pt;">Endereço: <%= @relatorio.ph.endereco %>, <%=@relatorio.ph.bairro%>, <%=@relatorio.ph.cidade.nome%>, <%=@relatorio.ph.cep%></span> <br>
     <span style="font-size: 12pt;">Fone: <%=@relatorio.ph.fone%>, Email:<%=@relatorio.ph.email%></span> <br>
     <br>
-    <span style="font-size: 12pt; font-weight: bold;">DATA DA INSTALAÇÃO DO VASO: </span> <span style="font-size: 12pt;"> <%=@vaso.data_instalacao.strftime("%d/%m/%Y")%></span> <br>
+    <span style="font-size: 12pt; font-weight: bold;">DATA DA INSTALAÇÃO DO VASO: </span> <span style="font-size: 12pt;"> <%= @vaso.data_instalacao.present? ? @vaso.data_instalacao.strftime("%d/%m/%Y") : "Desconhecida" %></span> <br>
     <br>
     <hr>
     <br>
