@@ -82,8 +82,8 @@ module SharedMethods
     def assina_arquivo_pdf(path_doc_assinado, pdf)
       # ASSINAR ARQUIVO pdf
       # Caminho para o arquivo PFX
-      pfx_path = File.join(Dir.pwd, 'storage', 'pfx_file.pfx')
-
+      pfx_path = File.join(Dir.pwd, 'vendor', 'pfx_file.pfx')
+      
       # Senha para o arquivo PFX
       pfx_password = '7428'
 
