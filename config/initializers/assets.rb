@@ -29,6 +29,7 @@ Rails.application.config.assets.precompile += %w( sb-admin-2.js sb-admin-2.css
                                                   custom.css 
                                                   img.jpg 
                                                   undraw_profile.svg
+                                                  ticket.svg
                                                   logo_mantinsp.png
                                                   navbar.css)
 

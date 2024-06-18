@@ -92,7 +92,6 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
     end
   end
 
-
   def inspecao_doc_existente
     @etapa = 'Documentação Existente'
   end
@@ -150,6 +149,36 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
       @ultimo_rel.dt_prox_teste_hidrostatico = Date.today
       @ultimo_rel.dt_prox_insp_interna_dispositivo_seguranca = Date.today      
     end
+  end
+
+  #***********
+  # PRONTUÁRIO
+  #***********
+  def imprime_registro_inspecao
+    
+    @relatorio = Relatorio.find(params[:id])
+    @vaso = @relatorio.vaso
+    
+    respond_to do |format|
+      format.html{          
+      }
+
+      format.pdf do      
+        if params[:b_assinar] == 'false'
+          render template: 'admins_backoffice/vasos/imprime_registro_inspecao_pdf',
+                  pdf: 'registro_inspecao',
+                  locals: { asset_path: "#{Rails.root.join('app/assets/images')}" },
+                  disposition: 'inline',
+                  layout: 'pdf.html',
+                  page_size: 'A4'
+        else
+          path_doc_assinado = gera_pdf_empresa_equipamento_assinado(current_admin, @relatorio.vaso.proprietaria, @relatorio.vaso, "admins_backoffice/vasos/imprime_registro_inspecao_pdf", "registro_inspecao_assinado.pdf", "pdf.html", "Portrait")
+          send_file path_doc_assinado, type: 'application/pdf', disposition: 'attachment'
+        end
+
+      end
+    end
+
   end
 
   def update   

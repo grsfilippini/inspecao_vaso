@@ -28,17 +28,6 @@
     <table class="table table-striped table-bordered table-hover">    
         <thead>
             <tr>
-                <th>#</th>
-                <th>Usuário</th>
-                <th># série</th>
-                <th>Fabricante</th>
-                <th>Proprietaria</th>
-                <th align="center">Avaliado PH</th>
-                
-                <%if @para_imprimir %>
-                    <th>Impresso</th>
-                <% end %>
-                
                 <th>
                     <% if @em_aberto  %>
                         <%= link_to new_admins_backoffice_relatorio_path, class:"btn btn-success btn-circle btn-sm" do %>
@@ -46,17 +35,34 @@
                         <% end %>
                     <% end %>
                 </th>
+                <th>#</th>
+                <!--<th>Usuário</th>-->
+                <th># série</th>
+                <th>Fabricante</th>
+                <th>Proprietaria</th>
+                <th align="center">Avaliado PH</th>                
+                <%if @para_imprimir %>
+                    <th>Impresso</th>
+                <% end %>
+                <th>RgI</th>
             </tr>
         </thead>
         <tbody> 
             <% @relatorios.each do |r|%>
                 <tr>
+                    <td style="width: 50px">                        
+                        <%= link_to edit_admins_backoffice_relatorio_path(r), class:"btn btn-info btn-circle btn-sm" do %> 
+                            <i class="fas fa-edit"></i>
+                        <%end%>                        
+                    </td>
                     <td><%= r.id %></td>
+                    <!--
                     <% if !r.user.blank? %>
                         <td><%= r.user.nome_completo.truncate(10) %></td>
                     <% else %>
                         <td>Sem usuário</td>
                     <% end %>
+                    -->
                     <td><%= r.vaso.num_serie %></td>
                     <td><%= r.vaso.fabricante.nome_curto.truncate(20) %></td>
                     <td><%= r.proprietaria.nome_curto %></td>
@@ -72,11 +78,11 @@
                             <%= link_to "Marcar", marcar_como_impresso_admins_backoffice_relatorio_path(r), method: :post, class: "btn btn-primary" %>
                         </td>
                     <% end %>
-                    
-                    <td style="width: 50px">                        
-                        <%= link_to edit_admins_backoffice_relatorio_path(r), class:"btn btn-info btn-circle btn-sm" do %> 
-                            <i class="fas fa-edit"></i>
-                        <%end%>                        
+                    <td style="width: 50px">
+                        <%= link_to admins_backoffice_relatorios_imprime_registro_inspecao_path(r.id, format: :html), class: "btn btn-info btn-circle btn-sm" do %>
+                            <img src="<%= asset_path('ticket.svg') %>" alt="Registro de inspeção" style="width: 1em; height: 1em;">
+                        <% end %>
+
                     </td>
                 </tr>
             <% end %>

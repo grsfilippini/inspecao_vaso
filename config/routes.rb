@@ -76,6 +76,7 @@ Rails.application.routes.draw do
     get 'imprime_laudo_th_pdf/:id',                   to: 'vasos#imprime_laudo_th', as: 'vasos_imprime_laudo_th'
     get 'imprime_abertura_rs_pdf/:id',                to: 'vasos#imprime_abertura_rs', as: 'vasos_imprime_abertura_rs'
     get 'imprime_plaqueta_pdf/:id',                   to: 'vasos#imprime_plaqueta', as: 'vasos_imprime_plaqueta'
+    #get 'imprime_registro_inspecao_pdf/:id',          to: 'vasos#imprime_registro_inspecao', as: 'vasos_imprime_registro_inspecao'
 
     resources :tipo_compressors
     resources :tipo_drenos
@@ -108,6 +109,8 @@ Rails.application.routes.draw do
     get 'relatorio_para_impressao',    to: 'relatorios#para_imprimir'
     get 'relatorio_em_aberto',         to: 'relatorios#em_aberto'
     get 'pesquisa_relatorio',          to: 'relatorios#pesquisa'
+    get 'imprime_registro_inspecao_pdf/:id', to: 'relatorios#imprime_registro_inspecao', as: 'relatorios_imprime_registro_inspecao'
+    # Referente aos forms de inspeção
     get 'inspecao_doc_existente',      to: 'relatorios#inspecao_doc_existente'
     get 'inspecao_verif_iniciais',     to: 'relatorios#inspecao_verif_iniciais'
     get 'inspecao_insp_contratadas',   to: 'relatorios#inspecao_insp_contratadas'
@@ -130,6 +133,7 @@ Rails.application.routes.draw do
     get 'preenche_parecer_conclusivo', to: 'relatorios#preenche_parecer_conclusivo'
     get 'inicia_inspecao_proprietario',to: 'relatorios#inicia_inspecao_proprietario'
     get 'get_relatorios_by_vaso/:vaso_id', to: 'relatorios#get_relatorios_by_vaso'
+    
     
 
     resources :relatorio_dispsegs do
