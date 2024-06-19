@@ -1,71 +1,13 @@
 <div class="container page">
-    <table class="tableCabecalho">
-        <tr>
-            <td class="col1"><%= image_tag asset_url('logo.png'), width: '94.5px' %></td>
-            <td class="col2">
-                <span style="font-size: 18pt; font-weight: bold;">ENGENHARIA MANTINSP LTDA</span><br>
-                <span style="font-size: 9pt;">CNPJ 23.526.523/0001-71</span><br>
-                <span style="font-size: 9pt;">Rua Pinto Bandeira, 900 / Fone: 45-98807-2020</span><br>
-                <span style="font-size: 9pt;">Toledo/PR / e-mail: mantinsp@gmail.com</span><br>
-            </td>
-        </tr>
-    </table>
-
-    <div style='text-align: center'>
-        <span style="font-size: 16pt; font-weight: bold;">PRONTUÁRIO DO VASO DE PRESSÃO</span><br>
-    </div>
-    <br>
-    <span style="font-size: 10pt;">Fabricante:</span> <span style="font-size: 10pt; font-weight: bold;"><%= @vaso.fabricante.nome %></span> <br>
-    <span style="font-size: 10pt;">Número de série:</span> <span style="font-size: 10pt; font-weight: bold;"><%= @vaso.num_serie %></span> <br>
-    <span style="font-size: 10pt;">Data de fabricação:</span> <span style="font-size: 10pt;"><%= @vaso.dt_fabricacao_reconstituicao.strftime("%d/%m/%Y") %></span> 
-    <span style="font-size: 8pt;">
-        <%if @vaso.bsem_data_fabricacao%>
-            <%="(Reconstituição de prontuário)"%>
-        <%end%>
-    </span><br>
-    <span style="font-size: 10pt;">Categoria NR-13:</span> <span style="font-size: 10pt;"><%= @vaso.catnr13.categoria %></span> &nbsp&nbsp&nbsp <span style="font-size: 10pt;">Volume interno:</span> <span style="font-size: 10pt;"><%= number_with_precision(@vaso.volume, precision: 3) %> m&sup3. </span> <br>
-    <br>
-    <span style="font-size: 12pt; font-weight: bold;">DADOS DE OPERAÇÃO</span><br>
-    <span style="font-size: 10pt;">Fluido: Ar comprimido com ou sem umidade, isento de substâncias corrosivas;</span><br>
-    <span style="font-size: 10pt;">A temperatura de trabalho deverá estar compreendida entre: <%= number_with_precision(@vaso.temp_min_prj, precision: 1) %> °C e <%= number_with_precision(@vaso.temp_max_prj, precision: 1) %> °C;</span> <br>
-    <span style="font-size: 10pt;">Pressão manométrica mínima: 0,000 MPa (não deve trabalhar sob vácuo).</span><br>
-    <span style="font-size: 10pt;">PMTA (*a):</span> <span style="font-size: 10pt; font-weight: bold;"> <%= number_with_precision(@vaso.pmta_atual, precision: 3) %> </span> <span  style="font-size: 10pt;"> MPa = <%= number_with_precision(@vaso.pmta_atual*10, precision: 2) %> bar = <%= number_with_precision(@vaso.pmta_atual*100/9.81, precision: 2) %> kgf/cm&sup2 = <%= number_with_precision(@vaso.pmta_atual*10*14.503774, precision: 0) %> psi.</span><br>
-    <br>
-    <span style="font-size: 12pt; font-weight: bold;">DADOS DE PROJETO</span><br>
-    <span style="font-size: 10pt;">Código de projeto: <%= @vaso.codigo_construcao.codigo %></span> <span style="font-size: 8pt;"> (original ou adotado na reconstituição); </span> <br>
-    <span style="font-size: 10pt;">Pp (*b):</span> <span style="font-size: 10pt; font-weight: bold;"> <%= number_with_precision(@vaso.p_projeto, precision: 3) %> </span> <span style="font-size: 10pt;"> MPa;</span>
-    <span style="font-size: 10pt;">MATERIAIS</span>
-    <span style="font-size: 10pt;">Corpo: <%= @vaso.material.descricao %> e Tampos: <%= @vaso.material.descricao %>.</span> <br>
-    <br>
-    <span style="font-size: 12pt; font-weight: bold;">PROCEDIMENTOS DE FABRICAÇÃO, MONTAGEM E INSPEÇÃO FINAL</span><br>
+    <span style="font-size: 16pt; font-weight: bold;">INSPEÇÃO <%=@relatorio.tipo_inspecao.nome%></span>
+    <span style="font-size: 10pt;">no vaso número de série: </span> <span style="font-size: 10pt; font-weight: bold;"><%=@relatorio.vaso.num_serie%></span><br>
     <div style="font-size: 10pt; text-align: justify">
-        Trata-se de um prontuário reconstituído, portanto cabe aqui apenas o procedimento de inspeção final. Foi executado o exame visual esterno e interno, tanto no vaso como nos elementos que o acompanham. Foi executado o teste hidrostático, conforme laudo entregue a parte desta documentação. Por fim foi feita a medição da espessura das paredes do vaso. Esta última também foi entregue a parte desta documentação.
+        <span style="font-size: 10pt;">Em </span><span style="font-size: 10pt; font-weight: bold;"><%= @relatorio.data_relatorio.strftime("%d/%m/%Y") %></span> 
+        <span style="font-size: 10pt;">executou-se inspeção de segurança  conforme descrito no relatório de inspeção número: </span>
+        <span style="font-size: 10pt; font-weight: bold;"><%=@relatorio.id%></span>
+        <span style="font-size: 10pt;">, pelo PH: <%=@relatorio.ph.nome%>, CREA <%=@relatorio.ph.crea%>, sendo que o equipamento foi liberado para operação com recomendações realizadas no  relatório  de  inspeção em referência, que faz parte integrante deste registro. A ART desta inspeção é <%=@relatorio.art.art%>.</span> <br>
+        <span style="font-size: 10pt;">A próxima inspeção externa deverá ser feita em </span><span style="font-size: 10pt; font-weight: bold;"><%=@relatorio.dt_prox_insp_externa.strftime("%d/%m/%Y")%></span><span style="font-size: 10pr;">.</span>
     </div>
-    <br>
-    <span style="font-size: 12pt; font-weight: bold;">METODOLOGIA PARA ESTABELECIMENTO DA PMTA</span><br>
-    <div style="font-size: 10pt; text-align: justify">
-        A PMTA foi definida pela Pp. A Pp foi definida como parâmetro de uso do reservatório. Por fim, a espessura do casco e tampos foram calculadas levando em conta a Pp. O cálculo de tc (*c), foi executado tomando-se o roteiro apresentado no código de projeto adotado.
-    </div>
-    <br>
-    <span style="font-size: 12pt; font-weight: bold;">DESENHOS E DADOS PARA MONITORAMENTO DA VIDA ÚTIL DO VASO</span><br>
-    <div style="font-size: 10pt; text-align: justify">
-        O monitoramente da vida remanescente do vaso deverá ser feito através do acompanhamento da espessura de parede do vaso de pressão (casco e tampos), até atingir o valor limite de espessura. Além disso os exames periódicos externos e internos, e os eventuais testes hidrostáticos devem ser levados em consideração. Sempre que houver algum incidente relevante que possa afetar a integridade estrutural do vaso, como: incêndios, quedas, colisão, explosão devem ser reportados ao PH (*d), para que este possa tomar as devidas providencias técnicas.
-    </div>
-    <br>
-    <span style="font-size: 12pt; font-weight: bold;">REGISTRO DO TESTE HIDROSTÁTICO</span><br>
-    <span style="font-size: 10pt;">O teste hidrostático foi realizado e seu lado entregue em anexo a este prontuário. </span> <br>
-    <br>
-    <span style="font-size: 12pt; font-weight: bold;">DISPOSITIVO DE SEGURANÇA</span><br>
-    <span style="font-size: 10pt;">O vaso está equipado com <%= @vaso.tipo_dispositivo_seguranca.nome %>;</span> <br>
-    <span style="font-size: 10pt;">Está ajustado para abrir com uma pressão próxima da PMTA, Pab (*e) = </span> <span style="font-size: 10pt; font-weight: bold;"> &nbsp <%= number_with_precision(@ultimo_relatorio_dispseg.pressao_ajuste, precision: 3) %> </span><span style="font-size: 10pt;"> MPa. </span> <br>
-    <br>
-    <span style="font-size: 12pt; font-weight: bold;">CUIDADOS NA OPERAÇÃO DO VASO</span><br>
-    <div style="font-size: 10pt; text-align: justify">
-        Verificar semanalmente o funcionamento da válvula de segurança, acionando a mesma manualmente durante o trabalho; Não efetuar reparos ou soldas sobre o corpo do vaso (casco e tampos); Este documento perde a validade se o vaso de pressão vier a sofrer qualquer alteração das suas características originais; A conexão com a rede pneumática deve ser feita através de mangueira e/ou juntas expansíveis; Não fixar rigidamente o vaso sobre o piso.
-    </div>
-    <br>
-    <br>
-    <span style="font-size: 10pt;">Nada mais havendo a acrescentar, subscrevo-me.</span><br>
     <br>
     <table class="tableAssinatura">
         <tr>
@@ -93,8 +35,4 @@
             </td>            
         </tr>
     </table>
-    <div style="font-size: 8pt; text-align: justify">
-        (*a) PMTA - Pressão Máxima de Trabalho; (*b) Pp - Pressão de Projeto; (*c) tc - Espessura de parede do casco e tampo; (*d) PH - Profissional Habilitado: Engo Mecânico ou que possua habilitação equivalente perante o CREA; (*e) Pab - Pressão de abertura do dispositivo de segurança.        
-    </div>
-
 </div>

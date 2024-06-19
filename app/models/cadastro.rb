@@ -65,7 +65,7 @@ class Cadastro < ApplicationRecord
         .where(corp_id: corp_id)
         .order(:nome_curto)
       end
-  end
+    end
     
     def TemVasoVencido(data_limite)
       vaso_vencido = false
@@ -81,7 +81,6 @@ class Cadastro < ApplicationRecord
       return vaso_vencido
     end
 
-    
     private
     
     def seta_estatistica

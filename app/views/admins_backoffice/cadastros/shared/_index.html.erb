@@ -170,9 +170,11 @@
                                 <td> <%= r.id %> </td>
                                 <td> <%= r.data_relatorio_formatada %> </td>
                                 
-                                <%if !cad.TemVasoVencido(daqui_seis_meses)%>                                            
+                                <%#if !cad.TemVasoVencido(daqui_seis_meses, r.dt_prox_insp_externa)%>  
+                                <%if r.dt_prox_insp_externa >= daqui_seis_meses %>                                          
                                     <td style="color: #000000; background-color: #00cc00;"> <%= r.dt_prox_insp_externa_formatada %> </td>
-                                <%elsif !cad.TemVasoVencido(hoje)%>                                            
+                                <%#elsif !cad.TemVasoVencido(hoje)%>                                            
+                                <%elsif r.dt_prox_insp_externa > hoje%>
                                     <td style="color: #000000; background-color: #ff9900;"> <%= r.dt_prox_insp_externa_formatada %> </td>
                                 <%else%>                                            
                                     <td style="color: #000000; background-color: #cc0000;"> <%= r.dt_prox_insp_externa_formatada %> </td>

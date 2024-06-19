@@ -208,10 +208,10 @@ class AdminsBackoffice::VasosController < AdminsBackofficeController
                    pdf: 'abertura_rs',
                    locals: { asset_path: "#{Rails.root.join('app/assets/images')}" },
                    disposition: 'inline',
-                   layout: 'abertura_rs_pdf.html',
+                   layout: 'recorte_pdf.html',
                    page_size: 'A4'
           else
-            path_doc_assinado = gera_pdf_empresa_equipamento_assinado(current_admin, @vaso.proprietaria, @vaso, "admins_backoffice/vasos/imprime_abertura_rs_pdf", "abertura_rs_assinado.pdf", 'abertura_rs_pdf.html', "Portrait")
+            path_doc_assinado = gera_pdf_empresa_equipamento_assinado(current_admin, @vaso.proprietaria, @vaso, "admins_backoffice/vasos/imprime_abertura_rs_pdf", "abertura_rs_assinado.pdf", 'recorte_pdf.html', "Portrait")
             send_file path_doc_assinado, type: 'application/pdf', disposition: 'attachment'
           end
 

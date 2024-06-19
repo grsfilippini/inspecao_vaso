@@ -1,4 +1,6 @@
 class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
+  include SharedMethods
+  
   before_action :set_relatorio, only: [:edit, :update, :destroy,
                                        :inspecao_doc_existente,
                                        :inspecao_verif_iniciais,
@@ -165,14 +167,14 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
 
       format.pdf do      
         if params[:b_assinar] == 'false'
-          render template: 'admins_backoffice/vasos/imprime_registro_inspecao_pdf',
+          render template: 'admins_backoffice/relatorios/imprime_registro_inspecao_pdf',
                   pdf: 'registro_inspecao',
                   locals: { asset_path: "#{Rails.root.join('app/assets/images')}" },
                   disposition: 'inline',
-                  layout: 'pdf.html',
+                  layout: 'recorte_pdf.html',
                   page_size: 'A4'
         else
-          path_doc_assinado = gera_pdf_empresa_equipamento_assinado(current_admin, @relatorio.vaso.proprietaria, @relatorio.vaso, "admins_backoffice/vasos/imprime_registro_inspecao_pdf", "registro_inspecao_assinado.pdf", "pdf.html", "Portrait")
+          path_doc_assinado = gera_pdf_empresa_equipamento_assinado(current_admin, @relatorio.vaso.proprietaria, @relatorio.vaso, "admins_backoffice/relatorios/imprime_registro_inspecao_pdf", "registro_inspecao_assinado.pdf", "recorte_pdf.html", "Portrait")
           send_file path_doc_assinado, type: 'application/pdf', disposition: 'attachment'
         end
 
