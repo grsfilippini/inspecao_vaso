@@ -54,18 +54,24 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
     if @status.nil? 
       @status = 'nova_venda_em_aberto'
     end
+
+    # Step 1: Identificar o relatório com maior id para cada vaso
+    subquery = Relatorio.select("DISTINCT ON (vaso_id) *")
+                        .order("vaso_id, id DESC")
+
     if @status == 'nova_venda_em_aberto'
-      @relatorios = Relatorio.where(nova_venda_fora_lista: false, nova_venda_aguarda_resposta: false, nova_venda_fazer_inspecao: false).order(:dt_prox_insp_externa).page(params[:page]).per(20)
-      @total_relatorios = Relatorio.where(nova_venda_fora_lista: false, nova_venda_aguarda_resposta: false, nova_venda_fazer_inspecao: false).count
+      # Step 2: Aplicar a condição desejada
+      @relatorios = Relatorio.from(subquery, :relatorios).where(nova_venda_fora_lista: false, nova_venda_aguarda_resposta: false, nova_venda_fazer_inspecao: false).order(:dt_prox_insp_externa).page(params[:page]).per(20)
+      @total_relatorios = Relatorio.from(subquery, :relatorios).where(nova_venda_fora_lista: false, nova_venda_aguarda_resposta: false, nova_venda_fazer_inspecao: false).count
     elsif @status == 'nova_venda_aguarda_resposta'
-      @relatorios = Relatorio.where(nova_venda_aguarda_resposta: true).order(:dt_prox_insp_externa).page(params[:page]).per(20)
-      @total_relatorios = Relatorio.where(nova_venda_aguarda_resposta: true).count
+      @relatorios = Relatorio.from(subquery, :relatorios).where(nova_venda_aguarda_resposta: true).order(:dt_prox_insp_externa).page(params[:page]).per(20)
+      @total_relatorios = Relatorio.from(subquery, :relatorios).where(nova_venda_aguarda_resposta: true).count
     elsif @status == 'nova_venda_fazer_inspecao'
-      @relatorios = Relatorio.where(nova_venda_fazer_inspecao: true).order(:dt_prox_insp_externa).page(params[:page]).per(20)
-      @total_relatorios = Relatorio.where(nova_venda_fazer_inspecao: true).count
+      @relatorios = Relatorio.from(subquery, :relatorios).where(nova_venda_fazer_inspecao: true).order(:dt_prox_insp_externa).page(params[:page]).per(20)
+      @total_relatorios = Relatorio.from(subquery, :relatorios).where(nova_venda_fazer_inspecao: true).count
     elsif @status == 'nova_venda_fora_lista'
-      @relatorios = Relatorio.where(nova_venda_fora_lista: true).order(:dt_prox_insp_externa).page(params[:page]).per(20)
-      @total_relatorios = Relatorio.where(nova_venda_fora_lista: true).count
+      @relatorios = Relatorio.from(subquery, :relatorios).where(nova_venda_fora_lista: true).order(:dt_prox_insp_externa).page(params[:page]).per(20)
+      @total_relatorios = Relatorio.from(subquery, :relatorios).where(nova_venda_fora_lista: true).count
     end
     
     @nome_rel = 'Vendas'
