@@ -1,8 +1,41 @@
-<%=@relatorio.id%> <br>
-<%=@relatorio.vaso.num_serie%> <br>
-<%=@relatorio.vaso.fabricante.nome_curto%> <br>
-
-
+<div class="container page">
+    <span style="font-size: 16pt; font-weight: bold;">INSPEÇÃO <%=@relatorio.tipo_inspecao.nome%></span>
+    <span style="font-size: 10pt;">no vaso número de série: </span> <span style="font-size: 10pt; font-weight: bold;"><%=@relatorio.vaso.num_serie%></span><br>
+    <div style="font-size: 10pt; text-align: justify">
+        <span style="font-size: 10pt;">Em </span><span style="font-size: 10pt; font-weight: bold;"><%= @relatorio.data_relatorio.strftime("%d/%m/%Y") %></span> 
+        <span style="font-size: 10pt;">executou-se inspeção de segurança  conforme descrito no relatório de inspeção número: </span>
+        <span style="font-size: 10pt; font-weight: bold;"><%=@relatorio.id%></span>
+        <span style="font-size: 10pt;">, pelo PH: <%=@relatorio.ph.nome%>, CREA <%=@relatorio.ph.crea%>, sendo que o equipamento foi liberado para operação com recomendações realizadas no  relatório  de  inspeção em referência, que faz parte integrante deste registro. A ART desta inspeção é <%=@relatorio.art.art%>.</span> <br>
+        <span style="font-size: 10pt;">A próxima inspeção externa deverá ser feita em </span><span style="font-size: 10pt; font-weight: bold;"><%=@relatorio.dt_prox_insp_externa.strftime("%d/%m/%Y")%></span><span style="font-size: 10pr;">.</span>
+    </div>
+    <br>
+    <table class="tableAssinatura">
+        <tr>
+            <td class="col1" style="text-align: center; vertical-align: middle;">
+                <div style="display: inline-block; text-align: center;">
+                    <span style="font-size: 10pt;">Local e data: <%= @relatorio.inspetora.cidade.nome %>, <%= @relatorio.data_relatorio.strftime("%d/%m/%Y") %></span><br>
+                    <br>
+                    <span style="font-size: 10pt;">.................................................</span><br>
+                    <span style="font-size: 8pt;">(Carimbo e assinatura)</span>
+                    <br>
+                    <br>
+                    <br>
+                </div>
+            </td>            
+            <td class="col2" style="text-align: center; vertical-align: middle;">
+                <div style="display: inline-block; text-align: center;">
+                    <span style="font-size: 10pt;">ou</span>
+                </div>
+            </td>
+            <td class="col3">
+                <span style="font-size: 10pt;">DOCUMENTO ASSINADO DIGITALMENTE</span><br>
+                <span style="font-size: 10pt; font-weight: bold;"><%=@relatorio.ph.nome%> </span> <span style="font-size: 10pt;"> - <%= Time.now.strftime("%d de %b de %Y") %></span><br>
+                <span style="font-size: 10pt; font-weight: bold;"><%=@relatorio.ph.titulo%> </span> <span style="font-size: 10pt;"> CREA <%=@relatorio.ph.crea%></span><br>                
+                <span style="font-size: 10pt;">Verifique em https://validar.iti.gov.br</span><br>
+            </td>            
+        </tr>
+    </table>
+</div>
 <hr>
 
 <%= button_tag "Retornar", type: "button", class: "btn btn-secondary", onclick: "window.history.back();" %>

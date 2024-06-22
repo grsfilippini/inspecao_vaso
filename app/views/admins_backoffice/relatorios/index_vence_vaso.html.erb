@@ -1,0 +1,98 @@
+<div class="col-lg-12">
+    <%if !@relatorios.nil? %>    
+        <h1 class="h3 mb-2 text-gray-800">
+            <%= t('mensagens.lista_de', model: @relatorios.model_name.human(count: @relatorios.count)) %> 
+            &nbsp;
+            <%= @nome_rel %>&nbsp; - <%= @total_relatorios %> </h1>
+    <%end%>
+
+    <%= form_with(url: admins_backoffice_index_vence_vaso_path, local: true, method: :get) do |form| %>
+    <div class="row">
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+        <div class="form-check">
+            <%= form.radio_button :status, 'nova_venda_em_aberto', checked: @status == 'nova_venda_em_aberto', class: 'form-check-input', id: 'nova_venda_em_aberto' %>
+            <%= form.label :status, 'Em aberto', for: 'nova_venda_em_aberto', class: 'form-check-label' %>
+        </div>
+
+        <div class="form-check">
+            <%= form.radio_button :status, 'nova_venda_aguarda_resposta', checked: @status == 'nova_venda_aguarda_resposta', class: 'form-check-input', id: 'nova_venda_aguarda_resposta' %>
+            <%= form.label :status, 'Aguarda resposta', for: 'nova_venda_aguarda_resposta', class: 'form-check-label' %>
+        </div>
+
+        <div class="form-check">
+            <%= form.radio_button :status, 'nova_venda_fazer_inspecao', checked: @status == 'nova_venda_fazer_inspecao', class: 'form-check-input', id: 'nova_venda_fazer_inspecao' %>
+            <%= form.label :status, 'Fazer inspeção', for: 'nova_venda_fazer_inspecao', class: 'form-check-label' %>
+        </div>
+
+        <div class="form-check">
+            <%= form.radio_button :status, 'nova_venda_fora_lista', checked: @status == 'nova_venda_fora_lista', class: 'form-check-input', id: 'nova_venda_fora_lista' %>
+            <%= form.label :status, 'Fora lista', for: 'nova_venda_fora_lista', class: 'form-check-label' %>
+        </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+        <button class="btn btn-primary" type="submit" id="form-submit-button">
+            <i class="fas fa-search fa-sm"></i>
+        </button>
+        </div>
+    </div>
+    <% end %>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const radioButtons = document.querySelectorAll('input[name="status"]');
+        const submitButton = document.getElementById('form-submit-button');
+
+        radioButtons.forEach(radio => {
+        radio.addEventListener("change", function() {
+            submitButton.click();
+        });
+        });
+    });
+    </script>
+
+
+
+
+    
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover">    
+        <thead>
+            <tr>
+                <th> </th>
+                <th>Vence</th>
+                <th>Negociação</th>
+                <th>#</th>
+                <th># série</th>
+                <th>Fabricante</th>
+                <th>Proprietaria</th>
+            </tr>
+        </thead>
+        <tbody>
+            <%if !@relatorios.nil? %> 
+                <% @relatorios.each do |r|%>
+                    <tr>
+                        <td style="width: 50px">                        
+                            <%= link_to admins_backoffice_nova_venda_path(r), class:"btn btn-info btn-circle btn-sm" do %> 
+                                <i class="fas fa-edit"></i>
+                            <%end%>                        
+                        </td>
+                        <td><%= r.dt_prox_insp_externa %></td>
+                        <td><%= r.nova_venda_obs %></td>
+                        <td><%= r.id %></td>
+                        <td><%= r.vaso.num_serie %></td>
+                        <td><%= r.vaso.fabricante.nome_curto.truncate(20) %></td>
+                        <td><%= r.proprietaria.nome_curto %></td>
+                    </tr>
+                <% end %>
+            <%end%>
+        </tbody>
+    </table>
+
+    <% if !@relatorios.nil? %>
+        <%= paginate @relatorios %>
+    <% end %>
+    
+</div>

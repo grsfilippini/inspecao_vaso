@@ -101,15 +101,18 @@ Rails.application.routes.draw do
     resources :potencial_riscos
     resources :tipo_inspecaos
     resources :tipo_vasos    
-    resources :relatorios do
+    resources :relatorios, except: :show do
       member do
         post 'marcar_como_impresso'
+        patch :update_nova_venda
       end
     end
     get 'relatorio_para_impressao',    to: 'relatorios#para_imprimir'
     get 'relatorio_em_aberto',         to: 'relatorios#em_aberto'
     get 'pesquisa_relatorio',          to: 'relatorios#pesquisa'
     get 'imprime_registro_inspecao_pdf/:id', to: 'relatorios#imprime_registro_inspecao', as: 'relatorios_imprime_registro_inspecao'
+    get 'vence_vaso',       to: 'relatorios#index_vence_vaso', as: 'index_vence_vaso'
+    get 'relatorios/nova_venda/:id',   to: 'relatorios#nova_venda', as: 'nova_venda'
     # Referente aos forms de inspeção
     get 'inspecao_doc_existente',      to: 'relatorios#inspecao_doc_existente'
     get 'inspecao_verif_iniciais',     to: 'relatorios#inspecao_verif_iniciais'
