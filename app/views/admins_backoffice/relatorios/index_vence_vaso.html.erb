@@ -61,35 +61,36 @@
     <table class="table table-striped table-bordered table-hover">    
         <thead>
             <tr>
-                <th> </th>
-                <th>Vence</th>
-                <th>Negociação</th>
-                <th>#</th>
-                <th># série</th>
-                <th>Fabricante</th>
-                <th>Proprietaria</th>
+                <th style="color: black;"> </th>
+                <th style="color: black;">Vence</th>
+                <th style="color: black;">Negociação</th>
+                <th style="color: black;">#</th>
+                <th style="color: black;"># série</th>
+                <th style="color: black;">Fabricante</th>
+                <th style="color: black;">Proprietaria</th>
             </tr>
         </thead>
         <tbody>
-            <%if !@relatorios.nil? %> 
-                <% @relatorios.each do |r|%>
+            <% if @relatorios.present? %> 
+                <% @relatorios.each do |r| %>
                     <tr>
-                        <td style="width: 50px">                        
-                            <%= link_to admins_backoffice_nova_venda_path(r), class:"btn btn-info btn-circle btn-sm" do %> 
+                        <td style="width: 50px; color: black;">                        
+                            <%= link_to admins_backoffice_nova_venda_path(r), class: "btn btn-info btn-circle btn-sm" do %> 
                                 <i class="fas fa-edit"></i>
-                            <%end%>                        
+                            <% end %>                        
                         </td>
-                        <td><%= r.dt_prox_insp_externa %></td>
-                        <td><%= r.nova_venda_obs %></td>
-                        <td><%= r.id %></td>
-                        <td><%= r.vaso.num_serie %></td>
-                        <td><%= r.vaso.fabricante.nome_curto.truncate(20) %></td>
-                        <td><%= r.proprietaria.nome_curto %></td>
+                        <td style="color: black;"><%= r.dt_prox_insp_externa %></td>
+                        <td style="color: black;"><%= r.nova_venda_obs %></td>
+                        <td style="color: black;"><%= r.id %></td>
+                        <td style="color: black;"><%= r.vaso.num_serie %></td>
+                        <td style="color: black;"><%= r.vaso.fabricante.nome_curto.truncate(20) %></td>
+                        <td style="color: black;"><%= r.proprietaria.nome_curto %></td>
                     </tr>
                 <% end %>
-            <%end%>
+            <% end %>
         </tbody>
     </table>
+
 
     <% if !@relatorios.nil? %>
         <%= paginate @relatorios %>
