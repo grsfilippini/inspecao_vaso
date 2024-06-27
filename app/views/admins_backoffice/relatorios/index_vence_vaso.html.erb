@@ -63,11 +63,12 @@
             <tr>
                 <th style="color: black;"> </th>
                 <th style="color: black;">Vence</th>
-                <th style="color: black;">Negociação</th>
-                <th style="color: black;">#</th>
-                <th style="color: black;"># série</th>
-                <th style="color: black;">Fabricante</th>
                 <th style="color: black;">Proprietaria</th>
+                <th style="color: black;">N.V.</th>
+                <th style="color: black;">Negociação</th>
+                <th style="color: black;">Contato</th>
+                <th style="color: black;">fone</th>
+                <th style="color: black;">#</th>                
             </tr>
         </thead>
         <tbody>
@@ -80,11 +81,12 @@
                             <% end %>                        
                         </td>
                         <td style="color: black;"><%= r.dt_prox_insp_externa %></td>
-                        <td style="color: black;"><%= r.nova_venda_obs %></td>
-                        <td style="color: black;"><%= r.id %></td>
-                        <td style="color: black;"><%= r.vaso.num_serie %></td>
-                        <td style="color: black;"><%= r.vaso.fabricante.nome_curto.truncate(20) %></td>
                         <td style="color: black;"><%= r.proprietaria.nome_curto %></td>
+                        <td style="color: black;"><%= r.proprietaria.vasos.count %></td>
+                        <td style="color: black;"><%= r.nova_venda_obs %></td>
+                        <td style="color: black;"><%= r.proprietaria.contato %></td>
+                        <td style="color: black;"><%= r.proprietaria.fone %></td>
+                        <td style="color: black;"><%= r.id %></td>
                     </tr>
                 <% end %>
             <% end %>
