@@ -80,7 +80,7 @@
                                 <i class="fas fa-edit"></i>
                             <% end %>                        
                         </td>
-                        <td style="color: black;"><%= r.dt_prox_insp_externa %></td>
+                        <td style="color: black;"><%= r.dt_prox_insp_externa.strftime("%d/%m/%Y") %></td>
                         <td style="color: black;"><%= link_to r.proprietaria.nome_curto, edit_admins_backoffice_cadastro_path(r.proprietaria.id, bListIndexCadastro: false) %></td>
                         <td style="color: black;"><%= r.proprietaria.vasos.count %></td>
                         <td style="color: black;"><%= r.nova_venda_obs %></td>
