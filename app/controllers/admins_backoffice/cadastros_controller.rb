@@ -48,12 +48,17 @@ class AdminsBackoffice::CadastrosController < AdminsBackofficeController
     end
   
   
-    def edit # Ação de edição    
+    def edit # Ação de edição 
+      @bListIndexCadastro = params[:bListIndexCadastro]=="true"   
     end
   
     def update        
       if @cadastro.update(params_cadastro)
-        redirect_to admins_backoffice_cadastros_path, notice: "Cadastro atualizado com sucesso!"    
+        if params[:bListIndexCadastro] == "true"
+          redirect_to admins_backoffice_cadastros_path, notice: "Cadastro atualizado com sucesso!"    
+        else
+          redirect_to admins_backoffice_index_vence_vaso_path
+        end
       else
         get_cidades_corps
         render :edit
@@ -165,7 +170,8 @@ class AdminsBackoffice::CadastrosController < AdminsBackofficeController
                                        :corp_id,
                                        :numero,
                                        :user_id,
-                                       :seq_roteiro)
+                                       :seq_roteiro,
+                                       :bListIndexCadastro)
     end
   
     def set_cadastro
