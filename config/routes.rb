@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
   
-  namespace :admins_backoffice do
-    get 'inspetors/index'
-  end
   namespace :inspetors_backoffice do
     get 'welcome/index'
     resources :relatorios
@@ -22,6 +19,11 @@ Rails.application.routes.draw do
     get 'pesquisa_relatorio_dispseg', to: 'relatorio_dispsegs#pesquisa'
   end
   
+
+  # namespace :admins_backoffice do
+  #   get 'inspetors/index'
+  # end
+
   # Name space, define agrupamento de pastas em controllers e views
   # Pode-se referir a estes agrupamentos através de :admins_backoffice por exemplo
   namespace :admins_backoffice do
@@ -40,7 +42,9 @@ Rails.application.routes.draw do
     resources :admins, except: [:delete] # Chama procedimentos dos administradores
     resources :users    
     resources :empresas
+    
     resources :inspetors
+    get 'inspetors/index'
 
     # only diz para gerar somente as rotas especificadas
     # , except: [:destroy, :new] -> diz para não criar as rotas especificadas
@@ -90,8 +94,10 @@ Rails.application.routes.draw do
     resources :classe_fluidos
     resources :codigo_construcaos
     resources :tipo_dispositivo_segurancas
+
     resources :disp_segurancas
     get '/obter_ultima_serie_mtpds', to: 'disp_segurancas#obter_ultima_serie_mtpds'
+
     resources :fluido_calibracao_valv_segs
     resources :fluido_servicos
     resources :instrumento_padraos
@@ -100,7 +106,8 @@ Rails.application.routes.draw do
     resources :mtpds_num_series
     resources :potencial_riscos
     resources :tipo_inspecaos
-    resources :tipo_vasos    
+    resources :tipo_vasos   
+
     resources :relatorios, except: :show do
       member do
         post 'marcar_como_impresso'
