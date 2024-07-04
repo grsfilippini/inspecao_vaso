@@ -960,35 +960,78 @@
         });
     });
 
+    // document.getElementById('foto-antes-inspecao-input').addEventListener('change', function(event) {
+    //     var file = event.target.files[0];
+    //     if (file && file.type.match('image.*')) {
+    //         var reader = new FileReader();
+    //         reader.onload = function(e) {
+    //             var img = new Image();
+    //             img.onload = function() {
+    //                 var canvas = document.createElement('canvas');
+    //                 var ctx = canvas.getContext('2d');
+
+    //                 var MAX_WIDTH = 1280;
+    //                 var MAX_HEIGHT = 960;
+    //                 var width = img.width;
+    //                 var height = img.height;
+
+    //                 if (width > height) {
+    //                     if (width > MAX_WIDTH) {
+    //                         height *= MAX_WIDTH / width;
+    //                         width = MAX_WIDTH;
+    //                     }
+    //                 } else {
+    //                     if (height > MAX_HEIGHT) {
+    //                         width *= MAX_HEIGHT / height;
+    //                         height = MAX_HEIGHT;
+    //                     }
+    //                 }
+    //                 canvas.width = width;
+    //                 canvas.height = height;
+    //                 ctx.drawImage(img, 0, 0, width, height);
+
+    //                 canvas.toBlob(function(blob) {
+    //                     var newFile = new File([blob], file.name, { type: file.type });
+    //                     var dataTransfer = new DataTransfer();
+    //                     dataTransfer.items.add(newFile);
+    //                     event.target.files = dataTransfer.files;
+    //                 }, file.type);
+    //             };
+    //             img.src = e.target.result;
+    //         };
+    //         reader.readAsDataURL(file);
+    //     }
+    // });
+
     // Restringe o tamanho da foto para 400 k
-    document.getElementById('form_inspecao').addEventListener('submit', function(event) {
-        var fotoAntesInspecaoInput = document.getElementById('foto-antes-inspecao-input');
-        var file = fotoAntesInspecaoInput.files[0];
-        if (file && file.size > 400 * 1024) { // 400 KB em bytes
-            alert('A foto de antes da inspeção é muito grande. Por favor, escolha uma foto menor que 400 KB.');
-            event.preventDefault(); // Evita o envio do formulário
-        }
+    // document.getElementById('form_inspecao').addEventListener('submit', function(event) {
+    //     var fotoAntesInspecaoInput = document.getElementById('foto-antes-inspecao-input');
+    //     var file = fotoAntesInspecaoInput.files[0];
+    //     if (file && file.size > 400 * 1024) { // 400 KB em bytes
+    //         alert('A foto de antes da inspeção é muito grande. Por favor, escolha uma foto menor que 400 KB.');
+    //         event.preventDefault(); // Evita o envio do formulário
+    //     }
 
-        var fotoCorpoInput = document.getElementById('foto-corpo-input');
-        var file1 = fotoCorpoInput.files[0];
-        if (file1 && file1.size > 400 * 1024) { // 400 KB em bytes
-            alert('A foto do corpo do vaso é muito grande. Por favor, escolha uma foto menor que 400 KB.');
-            event.preventDefault(); // Evita o envio do formulário
-        }
+    //     var fotoCorpoInput = document.getElementById('foto-corpo-input');
+    //     var file1 = fotoCorpoInput.files[0];
+    //     if (file1 && file1.size > 400 * 1024) { // 400 KB em bytes
+    //         alert('A foto do corpo do vaso é muito grande. Por favor, escolha uma foto menor que 400 KB.');
+    //         event.preventDefault(); // Evita o envio do formulário
+    //     }
 
-        var fotoPosInspecaoInput = document.getElementById('foto-pos-inspecao-input');
-        var file2 = fotoPosInspecaoInput.files[0];
-        if (file2 && file2.size > 400 * 1024) { // 400 KB em bytes
-            alert('A foto de depois da inspeção é muito grande. Por favor, escolha uma foto menor que 400 KB.');
-            event.preventDefault(); // Evita o envio do formulário
-        }
+    //     var fotoPosInspecaoInput = document.getElementById('foto-pos-inspecao-input');
+    //     var file2 = fotoPosInspecaoInput.files[0];
+    //     if (file2 && file2.size > 400 * 1024) { // 400 KB em bytes
+    //         alert('A foto de depois da inspeção é muito grande. Por favor, escolha uma foto menor que 400 KB.');
+    //         event.preventDefault(); // Evita o envio do formulário
+    //     }
 
-        var fotoInstalacaoInput = document.getElementById('foto-instalacao-input');
-        var file3 = fotoInstalacaoInput.files[0];
-        if (file3 && file3.size > 400 * 1024) { // 400 KB em bytes
-            alert('A foto da instalação é muito grande. Por favor, escolha uma foto menor que 400 KB.');
-            event.preventDefault(); // Evita o envio do formulário
-        }
-    });
+    //     var fotoInstalacaoInput = document.getElementById('foto-instalacao-input');
+    //     var file3 = fotoInstalacaoInput.files[0];
+    //     if (file3 && file3.size > 400 * 1024) { // 400 KB em bytes
+    //         alert('A foto da instalação é muito grande. Por favor, escolha uma foto menor que 400 KB.');
+    //         event.preventDefault(); // Evita o envio do formulário
+    //     }
+    // });
 
 </script>

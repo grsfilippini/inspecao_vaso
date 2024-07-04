@@ -109,4 +109,7 @@ gem 'origami', require: 'origami'
 # Usada para compactar arquivos
 gem 'rubyzip', '~> 2.3'
 
+# Usada para reduzir tamanho de imagens (fotos) carregadas no relatório ...
+gem 'mini_magick'
+
 # Última linha
