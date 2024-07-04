@@ -23,45 +23,45 @@ class InspetorsBackoffice::RelatoriosController < InspetorsBackofficeController
         if @relatorio.save   
 
             # Processar a imagem antes de salvar
-            # if params[:relatorio][:foto_antes_inspecao].present?
-            #     @relatorio.update_attribute(:foto_antes_inspecao, params[:relatorio][:foto_antes_inspecao].read)
-            # end
             if params[:relatorio][:foto_antes_inspecao].present?
-                original_filename = params[:relatorio][:foto_antes_inspecao].original_filename
-                processed_image_data = process_image(params[:relatorio][:foto_antes_inspecao].read, original_filename)
-                #@relatorio.foto_antes_inspecao = processed_image_data
-                @relatorio.update_attribute(:foto_antes_inspecao, processed_image_data)    
+                @relatorio.update_attribute(:foto_antes_inspecao, params[:relatorio][:foto_antes_inspecao].read)
             end
-
-            # if params[:relatorio][:foto_corpo].present?
-            #     @relatorio.update_attribute(:foto_corpo, params[:relatorio][:foto_corpo].read)
+            # if params[:relatorio][:foto_antes_inspecao].present?
+            #     original_filename = params[:relatorio][:foto_antes_inspecao].original_filename
+            #     processed_image_data = process_image(params[:relatorio][:foto_antes_inspecao].read, original_filename)
+            #     #@relatorio.foto_antes_inspecao = processed_image_data
+            #     @relatorio.update_attribute(:foto_antes_inspecao, processed_image_data)    
             # end
+
             if params[:relatorio][:foto_corpo].present?
-                original_filename = params[:relatorio][:foto_corpo].original_filename
-                processed_image_data = process_image(params[:relatorio][:foto_corpo].read, original_filename)
-                #@relatorio.foto_antes_inspecao = processed_image_data
-                @relatorio.update_attribute(:foto_corpo, processed_image_data)    
+                @relatorio.update_attribute(:foto_corpo, params[:relatorio][:foto_corpo].read)
             end
-
-            # if params[:relatorio][:foto_pos_inspecao].present?
-            #     @relatorio.update_attribute(:foto_pos_inspecao, params[:relatorio][:foto_pos_inspecao].read)
+            # if params[:relatorio][:foto_corpo].present?
+            #     original_filename = params[:relatorio][:foto_corpo].original_filename
+            #     processed_image_data = process_image(params[:relatorio][:foto_corpo].read, original_filename)
+            #     #@relatorio.foto_antes_inspecao = processed_image_data
+            #     @relatorio.update_attribute(:foto_corpo, processed_image_data)    
             # end
+
             if params[:relatorio][:foto_pos_inspecao].present?
-                original_filename = params[:relatorio][:foto_pos_inspecao].original_filename
-                processed_image_data = process_image(params[:relatorio][:foto_pos_inspecao].read, original_filename)
-                #@relatorio.foto_antes_inspecao = processed_image_data
-                @relatorio.update_attribute(:foto_pos_inspecao, processed_image_data)    
+                @relatorio.update_attribute(:foto_pos_inspecao, params[:relatorio][:foto_pos_inspecao].read)
             end
-
-            # if params[:relatorio][:foto_instalacao].present?
-            #     @relatorio.update_attribute(:foto_instalacao, params[:relatorio][:foto_instalacao].read)
+            # if params[:relatorio][:foto_pos_inspecao].present?
+            #     original_filename = params[:relatorio][:foto_pos_inspecao].original_filename
+            #     processed_image_data = process_image(params[:relatorio][:foto_pos_inspecao].read, original_filename)
+            #     #@relatorio.foto_antes_inspecao = processed_image_data
+            #     @relatorio.update_attribute(:foto_pos_inspecao, processed_image_data)    
             # end
+
             if params[:relatorio][:foto_instalacao].present?
-                original_filename = params[:relatorio][:foto_instalacao].original_filename
-                processed_image_data = process_image(params[:relatorio][:foto_instalacao].read, original_filename)
-                #@relatorio.foto_antes_inspecao = processed_image_data
-                @relatorio.update_attribute(:foto_instalacao, processed_image_data)    
+                @relatorio.update_attribute(:foto_instalacao, params[:relatorio][:foto_instalacao].read)
             end
+            # if params[:relatorio][:foto_instalacao].present?
+            #     original_filename = params[:relatorio][:foto_instalacao].original_filename
+            #     processed_image_data = process_image(params[:relatorio][:foto_instalacao].read, original_filename)
+            #     #@relatorio.foto_antes_inspecao = processed_image_data
+            #     @relatorio.update_attribute(:foto_instalacao, processed_image_data)    
+            # end
 
             redirect_to inspetors_backoffice_relatorios_path, notice: "Relatório criado com sucesso!"
         else
@@ -72,45 +72,45 @@ class InspetorsBackoffice::RelatoriosController < InspetorsBackofficeController
 
     def update        
         if @relatorio.update(params_relatorio)
-            # if params[:relatorio][:foto_antes_inspecao].present?
-            #     @relatorio.update_attribute(:foto_antes_inspecao, params[:relatorio][:foto_antes_inspecao].read)
-            # end
             if params[:relatorio][:foto_antes_inspecao].present?
-                original_filename = params[:relatorio][:foto_antes_inspecao].original_filename
-                processed_image_data = process_image(params[:relatorio][:foto_antes_inspecao].read, original_filename)
-                #@relatorio.foto_antes_inspecao = processed_image_data
-                @relatorio.update_attribute(:foto_antes_inspecao, processed_image_data)    
+                @relatorio.update_attribute(:foto_antes_inspecao, params[:relatorio][:foto_antes_inspecao].read)
             end
-
-            # if params[:relatorio][:foto_corpo].present?
-            #     @relatorio.update_attribute(:foto_corpo, params[:relatorio][:foto_corpo].read)
+            # if params[:relatorio][:foto_antes_inspecao].present?
+            #     original_filename = params[:relatorio][:foto_antes_inspecao].original_filename
+            #     processed_image_data = process_image(params[:relatorio][:foto_antes_inspecao].read, original_filename)
+            #     #@relatorio.foto_antes_inspecao = processed_image_data
+            #     @relatorio.update_attribute(:foto_antes_inspecao, processed_image_data)    
             # end
+
             if params[:relatorio][:foto_corpo].present?
-                original_filename = params[:relatorio][:foto_corpo].original_filename
-                processed_image_data = process_image(params[:relatorio][:foto_corpo].read, original_filename)
-                #@relatorio.foto_antes_inspecao = processed_image_data
-                @relatorio.update_attribute(:foto_corpo, processed_image_data)    
+                @relatorio.update_attribute(:foto_corpo, params[:relatorio][:foto_corpo].read)
             end
-
-            # if params[:relatorio][:foto_pos_inspecao].present?
-            #     @relatorio.update_attribute(:foto_pos_inspecao, params[:relatorio][:foto_pos_inspecao].read)
+            # if params[:relatorio][:foto_corpo].present?
+            #     original_filename = params[:relatorio][:foto_corpo].original_filename
+            #     processed_image_data = process_image(params[:relatorio][:foto_corpo].read, original_filename)
+            #     #@relatorio.foto_antes_inspecao = processed_image_data
+            #     @relatorio.update_attribute(:foto_corpo, processed_image_data)    
             # end
+
             if params[:relatorio][:foto_pos_inspecao].present?
-                original_filename = params[:relatorio][:foto_pos_inspecao].original_filename
-                processed_image_data = process_image(params[:relatorio][:foto_pos_inspecao].read, original_filename)
-                #@relatorio.foto_antes_inspecao = processed_image_data
-                @relatorio.update_attribute(:foto_pos_inspecao, processed_image_data)    
+                @relatorio.update_attribute(:foto_pos_inspecao, params[:relatorio][:foto_pos_inspecao].read)
             end
-
-            # if params[:relatorio][:foto_instalacao].present?
-            #     @relatorio.update_attribute(:foto_instalacao, params[:relatorio][:foto_instalacao].read)
+            # if params[:relatorio][:foto_pos_inspecao].present?
+            #     original_filename = params[:relatorio][:foto_pos_inspecao].original_filename
+            #     processed_image_data = process_image(params[:relatorio][:foto_pos_inspecao].read, original_filename)
+            #     #@relatorio.foto_antes_inspecao = processed_image_data
+            #     @relatorio.update_attribute(:foto_pos_inspecao, processed_image_data)    
             # end
+
             if params[:relatorio][:foto_instalacao].present?
-                original_filename = params[:relatorio][:foto_instalacao].original_filename
-                processed_image_data = process_image(params[:relatorio][:foto_instalacao].read, original_filename)
-                #@relatorio.foto_antes_inspecao = processed_image_data
-                @relatorio.update_attribute(:foto_instalacao, processed_image_data)    
+                @relatorio.update_attribute(:foto_instalacao, params[:relatorio][:foto_instalacao].read)
             end
+            # if params[:relatorio][:foto_instalacao].present?
+            #     original_filename = params[:relatorio][:foto_instalacao].original_filename
+            #     processed_image_data = process_image(params[:relatorio][:foto_instalacao].read, original_filename)
+            #     #@relatorio.foto_antes_inspecao = processed_image_data
+            #     @relatorio.update_attribute(:foto_instalacao, processed_image_data)    
+            # end
 
             redirect_to inspetors_backoffice_relatorios_path, notice: "Relatório atualizado com sucesso!"
         else
@@ -246,6 +246,8 @@ class InspetorsBackoffice::RelatoriosController < InspetorsBackofficeController
       @tipo_drenos        = TipoDreno.order(:tipo_dreno)
     end
 
+    # Usado para compactar imagem no save e no update
+    # Atualmente está sem uso, pois a compactação da imagem é feita no cliente, usando JS.
     def process_image(image_data, original_filename)
         # Verificar o tamanho da imagem original
         # Se for menor que 400 KB, então retorna sem comprimir
