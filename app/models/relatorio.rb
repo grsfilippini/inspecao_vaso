@@ -33,6 +33,7 @@ class Relatorio < ApplicationRecord
   after_create :seta_estatistica
   after_destroy :dec_estatistica  
   after_save :copiar_foto_instalacao_para_vaso
+  after_update :copiar_foto_instalacao_para_vaso
   after_create :copiar_pressao_operacao
   
   # **************************************************
@@ -145,7 +146,7 @@ class Relatorio < ApplicationRecord
     if self.pressostato_pliga.present? && self.pressostato_pdesliga.present?
       # Encontra o Vaso associado pelo vaso_id
       vaso_relacionado = Vaso.find_by(id: self.vaso_id)
-      # Atualiza o campo foto_instalacao do Vaso com a foto do Relatorio
+      # Atualiza o campo pressão pressostato do Vaso com a do Relatorio
       vaso_relacionado.update(p_inf_operacao_fabricante: self.pressostato_pliga)
       vaso_relacionado.update(p_sup_operacao_fabricante: self.pressostato_pdesliga)
     end
