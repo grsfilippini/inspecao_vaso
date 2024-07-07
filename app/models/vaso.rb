@@ -38,6 +38,8 @@ class Vaso < ApplicationRecord
     after_create :seta_estatistica
     after_destroy :dec_estatistica
     after_create :define_pressao_projeto
+    before_save :define_diametro_externo
+    before_update :define_diametro_externo
       
     
     # ***************************************************
@@ -197,6 +199,13 @@ class Vaso < ApplicationRecord
   def define_pressao_projeto
     if !self.p_projeto.present? && self.pmta_atual.present?
       self.update(p_projeto: self.pmta_atual)
+    end
+  end
+
+  # Calcula o diâmetro externo caso não foi definido.
+  def define_diametro_externo
+    if !self.diametro_externo_corpo.present? && self.perimetro_diametro_externo.present?
+      self.update(diametro_externo_corpo: Math.sqrt(4*self.perimetro_diametro_externo/Math::PI).round(1))
     end
   end
     

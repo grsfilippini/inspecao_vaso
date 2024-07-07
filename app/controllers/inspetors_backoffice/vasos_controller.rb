@@ -15,57 +15,65 @@ class InspetorsBackoffice::VasosController < InspetorsBackofficeController
 
     def new
         @vaso = Vaso.new     
-      end
+    end
     
-      def create      
-        @vaso = Vaso.new(params_vaso)
-        
-        if params[:vaso][:proximomtp] == "1"
-          # Resgata o próximo número de série disponível e atribui ao dispositivo de segurança                
-          @vaso.num_serie = obter_ultima_serie_mtp_hash        
-        end      
-  
-        # Salva o novo vaso
-        # Para o inspetor, a pmta_atual será igual a original
-        #                  o lançamento ficará no modo rascunho
-        @vaso.pmta_atual = @vaso.pmta_original
-        @vaso.pth_atual  = @vaso.pth_original
-        #puts '***************************'        
-        #puts @vaso.pmta_atual
-        #puts @vaso.pmta_original
-        @vaso.rascunho = true
-        if @vaso.save  
-            #puts '***************************'        
-            #puts params
-            #puts '***************************'
-            #puts params[:vaso]
-          if params[:vaso][:proximomtp] == "1"          
-            @mtp_serie = MtpNumSerie.new
-            @mtp_serie.serie = @vaso.num_serie
-            @mtp_serie.vaso_id = @vaso.id
-            @mtp_serie.save          
-          end
-          
-          redirect_to inspetors_backoffice_vasos_path, notice: "Vaso criado com sucesso!"        
-        else
-          get_relacoes
-          render :new
-        end
-      end
-    
-    
-      def edit # Ação de edição    
-      end
-    
+    def create      
+      @vaso = Vaso.new(params_vaso)
+      
+      if params[:vaso][:proximomtp] == "1"
+        # Resgata o próximo número de série disponível e atribui ao dispositivo de segurança                
+        @vaso.num_serie = obter_ultima_serie_mtp_hash        
+      end      
 
-      def update 
-        if @vaso.update(params_vaso)
-          redirect_to inspetors_backoffice_vasos_path, notice: "Vaso atualizado com sucesso!"    
-        else
-          get_relacoes
-          render :edit
+      # Salva o novo vaso
+      # Para o inspetor, a pmta_atual será igual a original
+      #                  o lançamento ficará no modo rascunho
+      @vaso.pmta_atual = @vaso.pmta_original
+      @vaso.pth_atual  = @vaso.pth_original
+      #puts '***************************'        
+      #puts @vaso.pmta_atual
+      #puts @vaso.pmta_original
+      @vaso.rascunho = true
+      if @vaso.save  
+        if params[:vaso][:foto_plaqueta].present?
+          # Atualizar o campo de imagem diretamente com o novo arquivo
+          @vaso.update_attribute(:foto_plaqueta, params[:vaso][:foto_plaqueta].read)
         end
+          #puts '***************************'        
+          #puts params
+          #puts '***************************'
+          #puts params[:vaso]
+        if params[:vaso][:proximomtp] == "1"          
+          @mtp_serie = MtpNumSerie.new
+          @mtp_serie.serie = @vaso.num_serie
+          @mtp_serie.vaso_id = @vaso.id
+          @mtp_serie.save          
+        end
+        
+        redirect_to inspetors_backoffice_vasos_path, notice: "Vaso criado com sucesso!"        
+      else
+        get_relacoes
+        render :new
       end
+    end
+    
+    
+    def edit # Ação de edição    
+    end
+  
+
+    def update 
+      if @vaso.update(params_vaso)
+        if params[:vaso][:foto_plaqueta].present?          
+          # Atualizar o campo de imagem diretamente com o novo arquivo
+          @vaso.update_attribute(:foto_plaqueta, params[:vaso][:foto_plaqueta].read)
+        end
+        redirect_to inspetors_backoffice_vasos_path, notice: "Vaso atualizado com sucesso!"    
+      else
+        get_relacoes
+        render :edit
+      end
+    end
 
 
     def pesquisa
@@ -116,7 +124,8 @@ class InspetorsBackoffice::VasosController < InspetorsBackofficeController
     end
 
     def params_vaso
-        params.require(:vaso).permit(:fabricante_id,
+        params.require(:vaso).permit(:foto_plaqueta,
+                                     :fabricante_id,
                                      :num_serie,
                                      :dt_fabricacao_reconstituicao,
                                      :bsem_data_fabricacao,

@@ -29,8 +29,86 @@
                         <!--div class="text-center">
                             <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                         </div-->
-
+                        
                         <%= form_with(model: [ :inspetors_backoffice, @relatorio ], local: true, :html => { :multipart => true }, id: "form_inspecao") do |form| %>
+                            
+                            <!-- A INTENÇÃO DO FORM ABAIXO ERA INSERIR CAMPOS DO VASO -->
+                            <% if false && @relatorio.vaso.present? %>
+                                <%= form.fields_for :vaso do  |vaso_form| %>
+                                    COLOCAR AQUI 
+                                    Foto plaqueta (com redução de imagem)
+                                    foto_plaqueta
+                                    <fieldset class="Foto_Plaqueta">
+                                    <legend>Foto plaqueta</legend>
+                                        <div class="form-group row">
+                                            <% if @relatorio.vaso.foto_plaqueta.present? %>
+                                                <div class="form-label col-sm-3 mb-0 mb-sm-0">
+                                                <img src="data:image/jpeg;base64,<%= Base64.encode64(@relatorio.vaso.foto_plaqueta) %>" width="auto" height="150">
+                                                </div>
+                                            <% end %>
+                                            <div class="form-label col-sm-3 mb-0 mb-sm-0">                                    
+                                                <%= vaso_form.file_field :foto_plaqueta, id: 'foto-plaqueta-input', class: 'input-file', accept: "image/*" %>
+                                            </div>
+                                            <div class="form-label col-sm-3 mb-0 mb-sm-0">  
+                                                <img id="foto-plaqueta-preview" src="#" alt="Preview da Foto" style="display: none; max-width: 200px; max-height: 200px;" />
+                                            </div>
+                                        </div>
+
+                                        <script>
+                                            document.addEventListener('DOMContentLoaded', function() {
+                                            var fileInput = document.getElementById('foto-plaqueta-input');
+                                            var previewImage = document.getElementById('foto-plaqueta-preview');
+
+                                            fileInput.addEventListener('change', function(event) {
+                                                var file = event.target.files[0];
+                                                var reader = new FileReader();
+
+                                                reader.onload = function() {
+                                                previewImage.src = reader.result;
+                                                previewImage.style.display = 'block';
+                                                }
+
+                                                if (file) {
+                                                reader.readAsDataURL(file);
+                                                }
+                                            });
+                                            });                                    
+                                        </script>
+                                    </fieldset>
+
+                                    Dimensões do vaso
+                                    perimetro_diametro_externo
+                                    entre_soladas_corpo
+                                    profundidade_tampo
+                                    <div class="form-group row">
+                                        <%= vaso_form.label :perimetro_diametro_externo, 'Perímetro:', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                        <div class="col-sm-4 mb-0 mb-sm-0">
+                                            <%= vaso_form.number_field :perimetro_diametro_externo, step: 0.1, min: 0 %>
+                                            [cm]
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <%= vaso_form.label :entre_soladas_corpo, 'Entre soldas:', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                        <div class="col-sm-4 mb-0 mb-sm-0">
+                                            <%= vaso_form.number_field :entre_soladas_corpo, step: 0.1, min: 0 %>
+                                            [cm]
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <%= vaso_form.label :profundidade_tampo, 'Prof. tampo:', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                        <div class="col-sm-4 mb-0 mb-sm-0">
+                                            <%= vaso_form.number_field :profundidade_tampo, step: 0.1, min: 0 %>
+                                            [cm]
+                                        </div>
+                                    </div>
+
+                                <% end %>
+                            <% end %>
+
+
+
                             
                             <fieldset class="Identificacao_Inspecao">
                             <legend>Identificação da inspeção</legend>

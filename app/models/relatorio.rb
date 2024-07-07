@@ -14,7 +14,7 @@ class Relatorio < ApplicationRecord
   belongs_to :tipo_inspecao
   belongs_to :art
   belongs_to :cidade  
-  belongs_to :vaso  
+  #belongs_to :vaso  
   belongs_to :proprietaria,  class_name: 'Cadastro'
   belongs_to :inspetora, class_name: 'Cadastro'
   #belongs_to :ambiente_inst
@@ -27,6 +27,9 @@ class Relatorio < ApplicationRecord
   belongs_to :user
   
   has_one :corp, through: :proprietaria
+
+  belongs_to :vaso
+  accepts_nested_attributes_for :vaso, reject_if: :all_blank
   
   # Callback method, RoR
   after_create :seta_relatorio_ini_vaso

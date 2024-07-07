@@ -13,7 +13,8 @@ class InspetorsBackoffice::RelatoriosController < InspetorsBackofficeController
         @relatorio = Relatorio.new
     end
 
-    def edit # Ação de edição        
+    def edit # Ação de edição    
+        #@relatorio.build_vaso if @relatorio.vaso.blank?    
     end
 
     def create      
@@ -232,7 +233,11 @@ class InspetorsBackoffice::RelatoriosController < InspetorsBackofficeController
                                           :foto_antes_inspecao,
                                           :foto_pos_inspecao,
                                           :foto_corpo,
-                                          :foto_instalacao                                          
+                                          :foto_instalacao#,
+                                          #vaso_attributes: [:foto_plaqueta, 
+                                          #                  :perimetro_diametro_externo,
+                                                            # :entre_soladas_corpo,
+                                                            # :profundidade_tampo]
                                     )
     end
     
