@@ -100,7 +100,7 @@
         if (proximoMTPDSCheckbox.checked) {
             
             //alert('O checkbox está marcado!');
-            fetch('/admins_backoffice/obter_ultima_serie_mtpds') // Substitua o caminho pela rota correta em seu aplicativo
+            fetch('/inspetors_backoffice/obter_ultima_serie_mtpds') // Substitua o caminho pela rota correta em seu aplicativo
             .then(response => response.json())
             .then(data => {
                 // Atualiza o valor do campo de texto com a série obtida

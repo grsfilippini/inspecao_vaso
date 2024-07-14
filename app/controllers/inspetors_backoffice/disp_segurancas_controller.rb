@@ -44,6 +44,12 @@ class InspetorsBackoffice::DispSegurancasController < InspetorsBackofficeControl
       def edit # Ação de edição    
       end
 
+      # Retorna u json
+      def obter_ultima_serie_mtpds            
+        serie = obter_ultima_serie_mtpds_hash
+        render json: { serie: serie }
+      end
+
     private
 
     def params_disp_seguranca
@@ -61,11 +67,12 @@ class InspetorsBackoffice::DispSegurancasController < InspetorsBackofficeControl
 
     # Retorna um hash
     def obter_ultima_serie_mtpds_hash
-        last_record = MtpdsNumSerie.where("serie LIKE ?", "MTPDS%").order(serie: :desc).first
-        serie = last_record&.serie || 'MTPDS0000' # Caso não haja registro, define um valor padrão vazio
-        serie = last_record.serie[-4..-1]
-        next_serie_val = serie.to_i + 1      
-        serie = 'MTPDS'+ next_serie_val.to_s.rjust(4, '0')
-        serie      
-      end
+      last_record = MtpdsNumSerie.where("serie LIKE ?", "MTPDS%").order(serie: :desc).first
+      serie = last_record&.serie || 'MTPDS0000' # Caso não haja registro, define um valor padrão vazio
+      serie = last_record.serie[-4..-1]
+      next_serie_val = serie.to_i + 1      
+      serie = 'MTPDS'+ next_serie_val.to_s.rjust(4, '0')
+      serie      
+    end
+    
 end

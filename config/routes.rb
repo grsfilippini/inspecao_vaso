@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       end
     end 
     resources :disp_segurancas
+    get '/obter_ultima_serie_mtpds', to: 'disp_segurancas#obter_ultima_serie_mtpds'
     resources :cadastros do
       member do
         get :json_data, defaults: { format: 'json' }
