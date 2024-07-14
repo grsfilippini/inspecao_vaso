@@ -3,12 +3,14 @@ Rails.application.routes.draw do
   namespace :inspetors_backoffice do
     get 'welcome/index'
     resources :relatorios
+    resources :relatorio_dispsegs
     resources :espessura_vasos
     resources :vasos do
       member do
         get :json_data, defaults: { format: 'json' }
       end
     end 
+    resources :disp_segurancas
     resources :cadastros do
       member do
         get :json_data, defaults: { format: 'json' }
@@ -148,10 +150,12 @@ Rails.application.routes.draw do
     resources :relatorio_dispsegs do
       member do
         post 'marcar_como_impresso'
+        post 'marcar_como_revisado'
       end
     end
     get 'pesquisa_relatorio_dispseg', to: 'relatorio_dispsegs#pesquisa'
     get 'relatorio_dispseg_impresso', to: 'relatorio_dispsegs#impresso'
+    get 'relatorio_dispseg_a_imprimir', to: 'relatorio_dispsegs#a_imprimir'
     get 'inicia_inspecao_dispseg_proprietario',to: 'relatorio_dispsegs#inicia_inspecao_proprietario'
     get 'get_relatorios_dispseg_by_vaso/:vaso_id', to: 'relatorio_dispsegs#get_relatorios_by_vaso'
   end

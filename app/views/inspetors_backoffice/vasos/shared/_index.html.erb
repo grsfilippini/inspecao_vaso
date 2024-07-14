@@ -24,7 +24,12 @@
 </div> <!-- FIM DO CONTAINER DO FORM -->            
             
 
-<div class="table-responsive">    
+<div class="table-responsive">   
+    <% if flash[:alert] %>
+        <div class="alert alert-danger">
+            <%= flash[:alert] %>
+        </div>
+    <% end %> 
     <table class="table table-striped table-bordered table-hover">    
         <thead>
             <tr>

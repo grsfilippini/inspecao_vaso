@@ -31,11 +31,13 @@
         <thead>
             <tr>
                 <th>#</th>
-                <th>Usuário</th>
                 <th>Data</th>
                 <th>Disp. Segurança</th>
                 <th>Vaso</th>
                 <th>Proprietária</th>
+                <%if @em_aberto %>
+                    <th>Revisar</th>
+                <% end %>
                 <%if @para_imprimir %>
                     <th>Impresso</th>
                 <% end %>
@@ -50,7 +52,6 @@
             <% @relatorio_dispsegs.each do |r|%>
                 <tr>
                     <td><%= r.id %></td>
-                    <td><%= r.user.nome %></td>
                     <td><%= r.data %></td>
                     <td><%= r.disp_seguranca.serie %></td>
                     <td><%= r.vaso.num_serie %></td>
@@ -59,6 +60,12 @@
                     <%if @para_imprimir %>
                         <td>                        
                             <%= link_to "Marcar", marcar_como_impresso_admins_backoffice_relatorio_dispseg_path(r), method: :post, class: "btn btn-primary" %>
+                        </td>
+                    <% end %>
+
+                    <%if @em_aberto %>
+                        <td>                        
+                            <%= link_to "Revisado", marcar_como_revisado_admins_backoffice_relatorio_dispseg_path(r), method: :post, class: "btn btn-primary" %>
                         </td>
                     <% end %>
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_06_21_102656) do
+ActiveRecord::Schema.define(version: 2024_07_13_200810) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_repack"
@@ -292,10 +292,11 @@ ActiveRecord::Schema.define(version: 2024_06_21_102656) do
     t.boolean "bimpresso", default: false
     t.integer "ph_id", default: 0, null: false
     t.integer "art_id", default: 0, null: false
-    t.bigint "user_id"
+    t.bigint "user_id", default: 1
     t.date "data_prox_insp"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "brascunho", default: true
     t.index ["user_id"], name: "index_relatorio_dispsegs_on_user_id"
   end
 

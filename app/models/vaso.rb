@@ -1,6 +1,10 @@
 class Vaso < ApplicationRecord
+    # attr_accessor :uploaded_foto_plaqueta
+    #cattr_accessor :foto_plaqueta_aux
+
     # Campos com seleção obrigatória
     validates :num_serie, presence: true
+    validates :num_serie, length: {maximum: 15}
     validates :num_serie, format: { with: /\A[a-zA-Z0-9\-.]+\z/, message: 'apenas permite letras, números, hífens e pontos. Ex.: "RT14.125-4".' }
     validates :fabricante_id, presence: true
     validates :catnr13_id, presence: true
@@ -11,6 +15,7 @@ class Vaso < ApplicationRecord
     validates :perimetro_diametro_externo, presence: true
     validates :entre_soladas_corpo, presence: true
     validates :profundidade_tampo, presence: true
+    validates :tag_proprietaria, length: { maximum: 15 }
 
     # Duas chaves estrangeiras com mesma tabela
     belongs_to :fabricante,    class_name: 'Cadastro'
@@ -29,8 +34,10 @@ class Vaso < ApplicationRecord
     
     belongs_to :user
     
-    has_many :relatorios
-    has_many :relatorio_dispsegs
+    has_many :relatorios, dependent: :restrict_with_error
+    has_many :relatorio_dispsegs, dependent: :restrict_with_error
+    has_many :espessura_vasos, dependent: :restrict_with_error
+    before_destroy :check_for_associations
     
     has_one :corp, through: :proprietaria
 
@@ -41,6 +48,12 @@ class Vaso < ApplicationRecord
     before_save :define_diametro_externo
     before_update :define_diametro_externo
       
+    # Método para processar o arquivo carregado e convertê-lo para o formato necessário
+    # def process_uploaded_foto_plaqueta
+    #   if uploaded_foto_plaqueta.present?
+    #     self.foto_plaqueta = uploaded_foto_plaqueta.read
+    #   end
+    # end
     
     # ***************************************************
     # Método de classe, pode ser chamado sem instanciar    
@@ -209,4 +222,10 @@ class Vaso < ApplicationRecord
     end
   end
     
+  def check_for_associations
+    if relatorios.exists? || relatorio_dispsegs.exists? || espessura_vasos.exists?
+      errors.add(:base, "Não é possível excluir um vaso que possui relacionamentos.")
+      throw :abort
+    end
+  end
 end

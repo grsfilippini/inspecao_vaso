@@ -3,9 +3,10 @@ class AdminsBackoffice::RelatorioDispsegsController < AdminsBackofficeController
     before_action :get_relacoes, only: [:new, :edit]
     
     def index
-      @relatorio_dispsegs = RelatorioDispseg.where(bimpresso: false).order(id: :asc).page(params[:page]).per(10)
+      @relatorio_dispsegs = RelatorioDispseg.where(brascunho: true).order(id: :asc).page(params[:page]).per(10)
       # Indica que esta listagem é de relatórios que não foram impressos
-      @para_imprimir = TRUE
+      @para_imprimir = FALSE
+      @em_aberto = TRUE
     end
   
     def new        
@@ -57,12 +58,21 @@ class AdminsBackoffice::RelatorioDispsegsController < AdminsBackofficeController
         @relatorio_dispsegs = RelatorioDispseg.pesquisa(params[:page], params[:serie_dispseg], params[:serie_vaso])
         # Indica que esta listagem não é exclusivamente de relatórios que não foram impressos
         @para_imprimir = FALSE
+        @em_aberto = FALSE
     end
 
     def impresso
       @relatorio_dispsegs = RelatorioDispseg.where(bimpresso: true).order(id: :desc).page(params[:page]).per(10)
       # Indica que esta listagem é de relatórios que não foram impressos
       @para_imprimir = FALSE
+      @em_aberto = FALSE
+    end
+
+    def a_imprimir
+      @relatorio_dispsegs = RelatorioDispseg.where(brascunho: false, bimpresso: false).order(id: :desc).page(params[:page]).per(10)
+      # Indica que esta listagem é de relatórios que não foram impressos
+      @para_imprimir = TRUE
+      @em_aberto = FALSE
     end
 
     def inicia_inspecao_proprietario
@@ -78,7 +88,13 @@ class AdminsBackoffice::RelatorioDispsegsController < AdminsBackofficeController
     def marcar_como_impresso
       @relatorio_dispseg = RelatorioDispseg.find(params[:id])
       @relatorio_dispseg.update(bimpresso: true)
-      redirect_to admins_backoffice_relatorio_dispsegs_path, notice: "Relatório marcado como impresso."      
+      redirect_to admins_backoffice_relatorio_dispseg_a_imprimir_path, notice: "Relatório marcado como impresso."      
+    end
+
+    def marcar_como_revisado
+      @relatorio_dispseg = RelatorioDispseg.find(params[:id])
+      @relatorio_dispseg.update(brascunho: false)
+      redirect_to admins_backoffice_relatorio_dispsegs_path, notice: "Relatório marcado como revisado."      
     end
 
     private

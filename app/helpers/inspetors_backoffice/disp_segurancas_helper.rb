@@ -1,0 +1,2 @@
+module InspetorsBackoffice::DispSegurancasHelper
+end

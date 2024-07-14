@@ -1,0 +1,187 @@
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800"> <%= action_messege %> - <%= @relatorio_dispseg.id %></h1>
+</div>
+
+<!-- Se tiver algum erro dentro de @relatorio_dispseg, erro devido a processo de salvamento por exemplo, entra no alerta abaixo -->
+<% if @relatorio_dispseg.errors.any? %>
+    <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>        
+        <ul>
+            <% @relatorio_dispseg.errors.full_messages.each do |message| %>
+            <li> <%= message -%> </li>
+            <% end %>
+        </ul>
+    </div>
+<% end %>
+
+
+<!-- CONTAINER PARA O FORM -->
+<div class="container">
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+                <!-- div class="col-lg-5 d-none d-lg-block bg-register-image"></div -->
+                
+                <div class="col-lg-12">
+                    <div class="p-5">
+                        
+                        <%= form_with(model: [ :inspetors_backoffice, @relatorio_dispseg ], local: true, :html => { :multipart => true }, id: "form_inspecao_dispseg") do |form| %>
+                            
+                            <fieldset class="Identificacao_Inspecao">
+                            <legend>Identificação da inspeção</legend>
+                                
+                                <div class="form-group row">
+                                    <%= form.label :data, 'Data', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-3 mb-0 mb-sm-0">                                    
+                                        <%= form.date_field :data, value: @relatorio_dispseg.id.present? ? @relatorio_dispseg.data : Date.current, class: "form-control" %>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <%= form.label :vaso_id, 'Vaso', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-3 mb-0 mb-sm-0">
+                                        <%= form.collection_select(:vaso_id, @vasos, :id, lambda { |vaso| "#{vaso.num_serie} - #{vaso.fabricante.nome_curto}" }, { include_blank: 'Selecione um vaso'}, {class: 'form-control', id: 'vaso-select'}) %>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="pmta" class="col-sm-1 col-form-label text-sm-left text-lg-right">PMTA</label>
+                                    <div class="col-sm-2 mb-0 mb-sm-0">
+                                        <input type="number" step="0.001" min="-10" class="form-control" id="value-pmta" value="0" readonly>
+                                    </div>       
+                                    <div class="col-sm-1 mb-0 mb-sm-0 d-flex align-items-center justify-content-end">
+                                        <span>[MPa]</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <%= form.label :cadastro_id, 'Propriet.', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-3 mb-0 mb-sm-0">
+                                        <%= form.collection_select(:cadastro_id, @cadastros, :id, :nome_curto, { include_blank: 'Selecione o proprietário'}, {class: 'form-control', id: 'cadastro-select' }) %>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <%= form.label :disp_seguranca_id, 'Disp. seg.', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="col-sm-3 mb-0 mb-sm-0">
+                                        <%= form.collection_select(:disp_seguranca_id, @disp_segurancas, :id, lambda { |disp_seguranca| "#{disp_seguranca.serie} - #{disp_seguranca.cadastro.nome_curto}" }, { include_blank: 'Selecione um dispositivo de segurança' }, {class: 'form-control', id: 'dispseg-select'  }) %>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            
+                            <fieldset class="Relatorio_DispSeg_Inspecao">
+                                <legend>Inspeção</legend>
+                                <div class="form-group row">
+                                    <div class="form-check col-sm-6 mb-0 mb-sm-0 d-inline">
+                                        <%= form.check_box :bvalv_eh_estanque, class: "form-check-input", id: "ValvEstanqueCheckbox"%>
+                                        <%= form.label :bvalv_eh_estanque, "A válvula é estanque", class: "form-check-label", for: "ValvEstanqueCheckbox" %>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group row">                            
+                                    <small class="form-text text-muted">Elementos físicos (desmarcar os que não estiverem em bom estado).</small>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="form-check col-sm-4 mb-0 mb-sm-0 d-inline">
+                                        <%= form.check_box :bcorpo_bom_estado, class: "form-check-input", id: "CorpoBomEstadoCheckbox"%>
+                                        <%= form.label :bcorpo_bom_estado, "Corpo em bom estado", class: "form-check-label", for: "CorpoBomEstadoCheckbox" %>
+                                    </div>
+                                </div>
+                                <div class="form-group row">    
+                                    <div class="form-check col-sm-4 mb-0 mb-sm-0 d-inline">
+                                        <%= form.check_box :broscas_bom_estado, class: "form-check-input", id: "RoscasBomEstadoCheckbox"%>
+                                        <%= form.label :broscas_bom_estado, "Roscas em bom estado", class: "form-check-label", for: "RoscasBomEstadoCheckbox" %>
+                                    </div>
+                                </div>
+                                <div class="form-group row">    
+                                    <div class="form-check col-sm-4 mb-0 mb-sm-0 d-inline">
+                                        <%= form.check_box :bdiscovedacao_bom_estado, class: "form-check-input", id: "DiscoBomEstadoCheckbox"%>
+                                        <%= form.label :bdiscovedacao_bom_estado, "Disco de vedação em bom estado", class: "form-check-label", for: "DiscoBomEstadoCheckbox" %>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="form-check col-sm-4 mb-0 mb-sm-0 d-inline">
+                                        <%= form.check_box :bhaste_bom_estado, class: "form-check-input", id: "HasteBomEstadoCheckbox"%>
+                                        <%= form.label :bhaste_bom_estado, "Haste em bom estado", class: "form-check-label", for: "HasteBomEstadoCheckbox" %>
+                                    </div>
+                                </div>
+                                <div class="form-group row">    
+                                    <div class="form-check col-sm-4 mb-0 mb-sm-0 d-inline">
+                                        <%= form.check_box :bmola_bom_estado, class: "form-check-input", id: "MolaBomEstadoCheckbox"%>
+                                        <%= form.label :bmola_bom_estado, "Haste em bom estado", class: "form-check-label", for: "MolaBomEstadoCheckbox" %>
+                                    </div>
+                                </div>
+                                <div class="form-group row">    
+                                    <div class="form-check col-sm-4 mb-0 mb-sm-0 d-inline">
+                                        <%= form.check_box :bparafusoregulagem_bom_etado, class: "form-check-input", id: "ParafusoBomEstadoCheckbox"%>
+                                        <%= form.label :bparafusoregulagem_bom_etado, "Parafuso de regulagem em bom estado", class: "form-check-label", for: "ParafusoBomEstadoCheckbox" %>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="form-check col-sm-4 mb-0 mb-sm-0 d-inline">
+                                        <%= form.check_box :balavanca_bom_estado, class: "form-check-input", id: "AlavancaBomEstadoCheckbox"%>
+                                        <%= form.label :balavanca_bom_estado, "Alavanca em bom estado", class: "form-check-label", for: "AlavancaBomEstadoCheckbox" %>
+                                    </div>
+                                </div>
+                                <div class="form-group row">                                        
+                                    <%= form.label :obs, 'Obs.', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                    <div class="form-check col-sm-3 mb-0 mb-sm-0">
+                                        <%= form.text_field :obs, class: "form-control"  %>
+                                    </div>                            
+                                </div>                            
+                            </fieldset>
+
+                            <div class="form-group row">                                    
+                                <%= form.label :pressao_ajuste, 'P ajuste', class: "col-sm-1 col-form-label text-sm-left text-lg-right" %>
+                                <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
+                                    <%= form.number_field :pressao_ajuste, step: 0.001, min: -10,  class: "form-control", id: "pressao_ajuste" %>
+                                </div>
+                                <div class="col-sm-1 mb-0 mb-sm-0 d-flex align-items-center justify-content-end">
+                                    <span>[MPa]</span>
+                                </div>
+                            </div> 
+
+                            <hr>
+
+                            <%= button_tag "Gravar", type: "submit", class: "btn btn-primary" %>
+                            <%= button_tag "Cancelar", type: "button", class: "btn btn-secondary", onclick: "window.history.back();" %>
+                                                        
+                        <% end %>                                                                     
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- FIM DO CONTAINER DO FORM -->
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var vasoSelect = document.getElementById('vaso-select');
+        var pmta = document.getElementById('value-pmta');
+        var cadastroSelect = document.getElementById('cadastro-select');
+        var dispsegSelect = document.getElementById('dispseg-select')
+        
+        vasoSelect.addEventListener('change', function() {                                
+            var vasoId = vasoSelect.value;
+            var confirmDialog = confirm("Deseja atribuir a proprietária e o dispositivo de segurança do vaso selecionado a este relatório?");
+            fetch('/admins_backoffice/vasos/' + vasoId + '/json_data')
+            .then(response => response.json())
+            .then(data => {
+                pmta.value = data.pmta_atual;
+                if (confirmDialog) {
+                    cadastroSelect.value = data.proprietaria_id;
+                    dispsegSelect.value = data.disp_seguranca_id;
+                }
+            })
+            .catch(error => console.error(error));                                
+        });
+    });
+</script>
+

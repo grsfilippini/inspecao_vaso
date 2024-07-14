@@ -67,6 +67,10 @@ class InspetorsBackoffice::RelatoriosController < InspetorsBackofficeController
             redirect_to inspetors_backoffice_relatorios_path, notice: "Relatório criado com sucesso!"
         else
             get_relacoes
+            @vaso.foto_antes_inspecao = nil
+            @vaso.foto_corpo = nil
+            @vaso.foto_pos_inspecao = nil
+            @vaso.foto_instalacao = nil
             render :new
         end
     end

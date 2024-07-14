@@ -14,12 +14,21 @@ class InspetorsBackoffice::VasosController < InspetorsBackofficeController
 
 
     def new
-        @vaso = Vaso.new     
+        @vaso = Vaso.new
+        #Vaso.foto_plaqueta_aux = nil     
     end
     
     def create      
       @vaso = Vaso.new(params_vaso)
-      
+      # @vaso.uploaded_foto_plaqueta = params[:vaso][:foto_plaqueta] if params[:vaso][:foto_plaqueta].present?
+      # @vaso.process_uploaded_foto_plaqueta
+      #Vaso.foto_plaqueta_aux = params[:vaso][:foto_plaqueta] if params[:vaso][:foto_plaqueta].present?
+
+      #@vaso.foto_plaqueta = params[:vaso][:foto_plaqueta].read if params[:vaso][:foto_plaqueta].present?
+      # Atribui a foto ao modelo @vaso
+      # if params[:vaso][:foto_plaqueta].present?
+      #   @vaso.foto_plaqueta = params[:vaso][:foto_plaqueta].read
+      # end
       if params[:vaso][:proximomtp] == "1"
         # Resgata o próximo número de série disponível e atribui ao dispositivo de segurança                
         @vaso.num_serie = obter_ultima_serie_mtp_hash        
@@ -34,10 +43,12 @@ class InspetorsBackoffice::VasosController < InspetorsBackofficeController
       #puts @vaso.pmta_atual
       #puts @vaso.pmta_original
       @vaso.rascunho = true
+      
       if @vaso.save  
         if params[:vaso][:foto_plaqueta].present?
           # Atualizar o campo de imagem diretamente com o novo arquivo
           @vaso.update_attribute(:foto_plaqueta, params[:vaso][:foto_plaqueta].read)
+          #@vaso.update_attribute(:foto_plaqueta, Vaso.foto_plaqueta_aux.read)
         end
           #puts '***************************'        
           #puts params
@@ -53,12 +64,15 @@ class InspetorsBackoffice::VasosController < InspetorsBackofficeController
         redirect_to inspetors_backoffice_vasos_path, notice: "Vaso criado com sucesso!"        
       else
         get_relacoes
+        #@uploaded_file_foto_plaqueta = params[:vaso][:foto_plaqueta]
+        @vaso.foto_plaqueta = nil
         render :new
       end
     end
     
     
     def edit # Ação de edição    
+      #Vaso.foto_plaqueta_aux = nil   
     end
   
 
@@ -84,7 +98,8 @@ class InspetorsBackoffice::VasosController < InspetorsBackofficeController
         if @vaso.destroy
           redirect_to inspetors_backoffice_vasos_path, notice: "Vaso excluído com sucesso!"
         else
-          render :index
+          # render :index
+          redirect_to inspetors_backoffice_vasos_path, alert: @vaso.errors.full_messages.to_sentence
         end
     end
 
