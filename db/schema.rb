@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_07_13_200810) do
+ActiveRecord::Schema.define(version: 2024_07_14_000525) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_repack"
@@ -297,6 +297,8 @@ ActiveRecord::Schema.define(version: 2024_07_13_200810) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "brascunho", default: true
+    t.bigint "inspetor_id"
+    t.index ["inspetor_id"], name: "index_relatorio_dispsegs_on_inspetor_id"
     t.index ["user_id"], name: "index_relatorio_dispsegs_on_user_id"
   end
 
@@ -596,6 +598,7 @@ ActiveRecord::Schema.define(version: 2024_07_13_200810) do
   add_foreign_key "relatorio_dispsegs", "cadastros", name: "RELATORIO_INSP_VAL_SEG_E_ALIVIO_cadastro_id_fkey"
   add_foreign_key "relatorio_dispsegs", "cadastros", name: "RELATORIO_INSP_VAL_SEG_E_ALIVIO_cadastro_id_fkey1"
   add_foreign_key "relatorio_dispsegs", "fluido_calibracao_valv_segs", name: "RELATORIO_INSP_VAL_SEG_E_ALIVIO_fluido_calibracao_id_fkey"
+  add_foreign_key "relatorio_dispsegs", "inspetors"
   add_foreign_key "relatorio_dispsegs", "instrumento_padraos", name: "RELATORIO_INSP_VAL_SEG_E_ALIVIO_manometro_padrao_id_fkey"
   add_foreign_key "relatorio_dispsegs", "users"
   add_foreign_key "relatorio_dispsegs", "vasos", name: "RELATORIO_INSP_VAL_SEG_E_ALIVIO_vaso_pressao_protegido_id_fkey"

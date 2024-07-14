@@ -4,7 +4,7 @@ class InspetorsBackoffice::RelatorioDispsegsController < InspetorsBackofficeCont
 
     def index
         @relatorio_dispsegs = RelatorioDispseg
-                              .where(brascunho: true)
+                              .where(brascunho: true, inspetor_id: current_inspetor.id)
                               .order(id: :desc)
                               .page(params[:page])
                               .per(50)
@@ -17,6 +17,7 @@ class InspetorsBackoffice::RelatorioDispsegsController < InspetorsBackofficeCont
 
     def create      
         @relatorio_dispseg = RelatorioDispseg.new(params_relatorio_dispseg)
+        @relatorio_dispseg.inspetor_id = current_inspetor.id
         
         if @relatorio_dispseg.save  
           redirect_to inspetors_backoffice_relatorio_dispsegs_path, notice: "Relatório criado com sucesso!"        

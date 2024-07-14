@@ -78,7 +78,7 @@
                             <div class="form-group row">
                                 <%= form.label :cadastro_id, "Fabricante", {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
                                 <div class="col-sm-4 mb-3 mb-sm-0">                                        
-                                    <%= form.collection_select(:cadastro_id, @cadastros, :id, :nome_curto, { include_blank: true }, {selected: nil, class: "form-control"}) %>
+                                    <%= form.collection_select(:cadastro_id, @cadastros, :id, :nome_curto, { prompt: "Selecione o fabricante" }, {selected: nil, class: "form-control"}) %>
                                 </div>                                
                             </div>
 

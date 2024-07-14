@@ -1,0 +1,116 @@
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800"> <%= action_messege %> </h1>
+</div>
+
+<!-- Se tiver algum erro dentro de @disp_seguranca, erro devido a processo de salvamento por exemplo, entra no alerta abaixo -->
+<% if @disp_seguranca.errors.any? %>
+    <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>        
+        <ul>
+            <% @disp_seguranca.errors.full_messages.each do |message| %>
+            <li> <%= message -%> </li>
+            <% end %>
+        </ul>
+    </div>
+<% end %>
+
+<!-- CONTAINER PARA O FORM -->
+<div class="container">
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+                <!-- div class="col-lg-5 d-none d-lg-block bg-register-image"></div -->
+                <div class="col-lg-12">
+                    <div class="p-5">
+                        <!--div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                        </div-->
+                        
+                        <%= form_with(model: [ :inspetors_backoffice, @disp_seguranca ], local: true) do |form| %>
+
+                            <div class="form-group row">        
+                                <%= form.label :serie, "Série", {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="col-sm-3 mb-2 mb-sm-0">
+                                    <%= form.text_field :serie, class: "form-control", id: "SerieMTPDS"%>
+                                </div>
+                                <%if @disp_seguranca.id.blank? %>
+                                    <div class="col-sm-2 mb-2 mb-sm-0">
+                                        <%= form.check_box :proximomtpds, class: "form-check-input", id: "ProximoMTPDSCheckbox" %>
+                                        <%= form.label :proximomtpds, "<< Próximo MTPDS", class: "form-check-label", for: "ProximoMTPDSCheckbox" %>
+                                    </div>
+                                <%end%>
+                            </div>
+
+                            <div class="form-group row">
+                                <%= form.label :cadastro_id, "Fabricante", {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="col-sm-3 mb-2 mb-sm-0">                                        
+                                    <%= form.collection_select(:cadastro_id, @cadastros, :id, :nome_curto, { include_blank: "Selecione o fabricante" }, {class: "form-control"}) %>
+                                </div>                                
+                            </div>
+
+                            <div class="form-group row">
+                                <%= form.label :tipo_dispositivo_seguranca_id, "Tipo DS", {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="col-sm-3 mb-2 mb-sm-0">                                        
+                                    <%= form.collection_select(:tipo_dispositivo_seguranca_id, @tipo_dispositivo_segurancas, :id, :nome, { include_blank: true }, {selected: nil, class: "form-control"}) %>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <%= form.label :castelo, {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="col-sm-3 mb-2 mb-sm-0">                                    
+                                    <%= form.select(:castelo, options_for_select([["Uma peça", "uma_peca"], ["Duas peças", "duas_pecas"], ["Múltiplas peças", "multiplas_pecas"]]), {}, { class: "form-control" }) %>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <%= form.label :bitola, {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="col-sm-3 mb-2 mb-sm-0">                                
+                                    <%= form.text_field :bitola, class: "form-control" %>
+                                </div>                
+                            </div>
+
+                            <div class="form-group row">
+                                
+                            </div>    
+                            
+                            <button type="submit" class="btn btn-primary"><%=t('botoes.gravar')%></button>
+                            <%= button_tag "Cancelar", type: "button", class: "btn btn-secondary", onclick: "window.history.back();" %>
+                            
+                            <hr>    
+                        <% end %>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- FIM DO CONTAINER DO FORM -->
+
+<script>
+    // Captura o checkbox e o campo de texto
+    var proximoMTPDSCheckbox = document.getElementById('ProximoMTPDSCheckbox');
+    var serieTextField = document.getElementById('SerieMTPDS');
+
+    // Adiciona um evento de clique ao checkbox
+    proximoMTPDSCheckbox.addEventListener('change', () => {                                
+        // Se o checkbox estiver marcado, faz a chamada AJAX para obter a série do último registro                                    
+        if (proximoMTPDSCheckbox.checked) {
+            
+            //alert('O checkbox está marcado!');
+            fetch('/admins_backoffice/obter_ultima_serie_mtpds') // Substitua o caminho pela rota correta em seu aplicativo
+            .then(response => response.json())
+            .then(data => {
+                // Atualiza o valor do campo de texto com a série obtida
+                serieTextField.value = data.serie;
+                serieTextField.readOnly = true; // Desabilita o campo
+            })
+        
+        } else {                                        
+            serieTextField.value = '';
+            serieTextField.readOnly = false; 
+        }
+    });
+</script>
