@@ -30,6 +30,15 @@ class InspetorsBackoffice::RelatorioDispsegsController < InspetorsBackofficeCont
     def edit # Ação de edição    
     end
 
+    def update        
+      if @relatorio_dispseg.update(params_relatorio_dispseg)
+        redirect_to inspetors_backoffice_relatorio_dispsegs_path, notice: "Relatório atualizado com sucesso!"
+      else
+        get_relacoes
+        render :edit
+      end
+    end
+
     def destroy
         if @relatorio_dispseg.destroy
           redirect_to inspetors_backoffice_relatorio_dispsegs_path, notice: "Relatório excluído com sucesso!"

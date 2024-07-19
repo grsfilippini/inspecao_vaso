@@ -1,4 +1,9 @@
 
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800"><%= t('mensagens.lista_de', model: @relatorio_dispsegs.model_name.human(count: @relatorio_dispsegs.count)) %> - <%= @relatorio_dispsegs.total_count %> </h1>
+</div>
+
 <div class="table-responsive">    
     <table class="table table-striped table-bordered table-hover">    
         <thead>
