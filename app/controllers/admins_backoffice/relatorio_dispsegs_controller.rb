@@ -69,7 +69,7 @@ class AdminsBackoffice::RelatorioDispsegsController < AdminsBackofficeController
     end
 
     def a_imprimir
-      @relatorio_dispsegs = RelatorioDispseg.where(brascunho: false, bimpresso: false).order(id: :desc).page(params[:page]).per(10)
+      @relatorio_dispsegs = RelatorioDispseg.where(brascunho: false, bimpresso: false).order(id: :asc).page(params[:page]).per(10)
       # Indica que esta listagem é de relatórios que não foram impressos
       @para_imprimir = TRUE
       @em_aberto = FALSE

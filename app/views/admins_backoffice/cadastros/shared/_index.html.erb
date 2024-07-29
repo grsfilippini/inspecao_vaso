@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <h1 class="h3 mb-4 text-gray-800"><%= t('mensagens.lista_de', model: @cadastros.model_name.human(count: @cadastros.count)) %> </h1>
+    <h1 class="h3 mb-4 text-gray-800"><%= t('mensagens.lista_de', model: @cadastros.model_name.human(count: @cadastros.count)) %> - <%= @relatorio_dispsegs.total_count %></h1>
     <%= form_with(url:admins_backoffice_pesquisa_cadastro_path, local: true, method: :get) do |form| %>
         <div class="row">        
                         
