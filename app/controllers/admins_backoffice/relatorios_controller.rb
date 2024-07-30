@@ -202,9 +202,9 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
     end
   end
 
-  #***********
-  # PRONTUÁRIO
-  #***********
+  #*********************
+  # REGISTRO DE INSPEÇÃO
+  #*********************
   def imprime_registro_inspecao
     
     @relatorio = Relatorio.find(params[:id])
