@@ -5,6 +5,8 @@ class AdminsBackoffice::AdministraDocsController < AdminsBackofficeController
     include SharedMethods
 
     def administra
+        pasta_admin = File.join(Dir.pwd, 'public', gera_nome_pasta_principal(current_admin))
+        Dir.mkdir(pasta_admin) unless Dir.exist?(pasta_admin)
         pasta_empresa = File.join(Dir.pwd, 'public', gera_nome_pasta_principal(current_admin), 'pdfs')
         Dir.mkdir(pasta_empresa) unless Dir.exist?(pasta_empresa)
         @numero_arquivos_empresa = count_files_in_directory(pasta_empresa)
