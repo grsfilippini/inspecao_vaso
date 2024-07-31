@@ -281,7 +281,7 @@ class AdminsBackoffice::VasosController < AdminsBackofficeController
     def json_data      
       @vaso = Vaso.find(params[:id])
       @relatorio_dispseg = RelatorioDispseg.where(vaso_id: @vaso.id).order(id: :desc).first
-      render json: { pmta_atual: @vaso.pmta_atual, proprietaria_id: @vaso.proprietaria_id, disp_seguranca_id: @relatorio_dispseg.disp_seguranca_id}
+      render json: { pmta_atual: @vaso.pmta_atual, proprietaria_id: @vaso.proprietaria_id, disp_seguranca_id: @relatorio_dispseg.disp_seguranca_id, pressao_ajuste: @relatorio_dispseg.pressao_ajuste}
     end
 
     # Retorna um hash

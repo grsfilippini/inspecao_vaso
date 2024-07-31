@@ -166,11 +166,12 @@
         var vasoSelect = document.getElementById('vaso-select');
         var pmta = document.getElementById('value-pmta');
         var cadastroSelect = document.getElementById('cadastro-select');
-        var dispsegSelect = document.getElementById('dispseg-select')
+        var dispsegSelect = document.getElementById('dispseg-select');
+        var pressao_ajuste = document.getElementById('pressao_ajuste');
         
         vasoSelect.addEventListener('change', function() {                                
             var vasoId = vasoSelect.value;
-            var confirmDialog = confirm("Deseja atribuir a proprietária e o dispositivo de segurança do vaso selecionado a este relatório?");
+            var confirmDialog = confirm("Deseja atribuir a proprietária, o dispositivo de segurança e a pressão de ajuste do vaso selecionado a este relatório?");
             fetch('/admins_backoffice/vasos/' + vasoId + '/json_data')
             .then(response => response.json())
             .then(data => {
@@ -178,6 +179,7 @@
                 if (confirmDialog) {
                     cadastroSelect.value = data.proprietaria_id;
                     dispsegSelect.value = data.disp_seguranca_id;
+                    pressao_ajuste.value = data.pressao_ajuste;
                 }
             })
             .catch(error => console.error(error));                                

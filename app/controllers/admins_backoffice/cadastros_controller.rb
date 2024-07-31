@@ -131,7 +131,7 @@ class AdminsBackoffice::CadastrosController < AdminsBackofficeController
 
     def gerar_arquivo_pdf_assinado(cadastro)
       
-      path_doc_assinado = gera_pdf_empresa_equipamento_assinado(current_admin, cadastro, nil, "admins_backoffice/cadastros/imprime_cadastro_pdf", "cadastro_assinado.pdf")
+      path_doc_assinado = gera_pdf_empresa_equipamento_assinado(current_admin, cadastro, nil, "admins_backoffice/cadastros/imprime_cadastro_pdf", "cadastro_assinado.pdf", "pdf.html", "Portrait")
 
       send_file path_doc_assinado, type: 'application/pdf', disposition: 'attachment'
     end
