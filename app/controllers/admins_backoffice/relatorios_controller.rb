@@ -636,6 +636,11 @@ end
                                           :foto_interna4,
 
                                           # intervenções
+                                          :belaborado_memorial_calculo,
+                                          :belaborado_laudo_vaso_condenado,
+                                          :belaborado_relatorio_inspecao,
+                                          :belaborado_registro_inspecao,
+                                          :belaborado_registro_inspecao_dispseg,
                                           :belaborado_reg_seg,
                                           :belaborado_prontuario,
                                           :belaborado_laudo_th,

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_07_14_000525) do
+ActiveRecord::Schema.define(version: 2024_08_02_223110) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_repack"
@@ -472,6 +472,11 @@ ActiveRecord::Schema.define(version: 2024_07_14_000525) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean "nova_venda_fazer_inspecao", default: false
+    t.boolean "belaborado_memorial_calculo"
+    t.boolean "belaborado_laudo_vaso_condenado"
+    t.boolean "belaborado_relatorio_inspecao", default: true
+    t.boolean "belaborado_registro_inspecao"
+    t.boolean "belaborado_registro_inspecao_dispseg"
     t.index ["ambiente_inst_id"], name: "index_relatorios_on_ambiente_inst_id"
     t.index ["art_id"], name: "index_relatorios_on_art_id"
     t.index ["cidade_id"], name: "index_relatorios_on_cidade_id"

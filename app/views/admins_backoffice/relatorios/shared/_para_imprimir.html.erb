@@ -1,0 +1,164 @@
+<div class="col-lg-12">    
+    <h1 class="h3 mb-2 text-gray-800"><%= t('mensagens.lista_de', model: @relatorios.model_name.human(count: @relatorios.count)) %> &nbsp;<%= @nome_rel %>&nbsp; - <%= @relatorios.total_count %> </h1>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover">    
+        <thead>
+            <tr>
+                <th> </th>
+                <th>Res.</th>
+                <th>#</th>
+                <!--<th>Usuário</th>-->
+                <th># série</th>
+                <th>Fabricante</th>
+                <th>Proprietaria</th>
+                <th align="center">Avaliado PH</th>                
+                <th>Impresso</th>
+                <th>RgI</th>
+            </tr>
+        </thead>
+        <tbody> 
+            <% @relatorios.each do |r|%>
+                <tr>
+                    <td style="width: 50px">                        
+                        <%= link_to edit_admins_backoffice_relatorio_path(r), class:"btn btn-info btn-circle btn-sm" do %> 
+                            <i class="fas fa-edit"></i>
+                        <%end%>                        
+                    </td>
+                    <td> 
+                        <!-- Botão para acionar modal mostrando resumo de docs a emitir e peças a serem sobradas do cliente -->
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalRelatorio<%= r.id %>">
+                            R
+                        </button>
+                    </td>
+                    <td><%= r.id %></td>
+                    <!--
+                    <% if !r.user.blank? %>
+                        <td><%= r.user.nome_completo.truncate(10) %></td>
+                    <% else %>
+                        <td>Sem usuário</td>
+                    <% end %>
+                    -->
+                    <td><%= r.vaso.num_serie %></td>
+                    <td><%= r.vaso.fabricante.nome_curto.truncate(20) %></td>
+                    <td><%= r.proprietaria.nome_curto %></td>
+
+                    <td align="center"><% if r.avaliadoph == true %>
+                        <%= link_to "SIM", admins_backoffice_avaliarph_path(r) %>
+                        <% else %>
+                        <%= link_to "NÃO", admins_backoffice_avaliarph_path(r) %>
+                        <% end %> </td>
+                    
+                    <td>                        
+                        <%= link_to "Marcar", marcar_como_impresso_admins_backoffice_relatorio_path(r), method: :post, class: "btn btn-primary" %>
+                    </td>
+                    
+                    <td style="width: 50px">
+                        <%= link_to admins_backoffice_relatorios_imprime_registro_inspecao_path(r.id, format: :html), class: "btn btn-info btn-circle btn-sm" do %>
+                            <img src="<%= asset_path('ticket.svg') %>" alt="Registro de inspeção" style="width: 1em; height: 1em;">
+                        <% end %>
+
+                    </td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+
+    <%= paginate @relatorios %>
+    
+</div>
+
+
+
+
+<!-- estilo para tabela que contém os vasos de pressão do cadastro -->
+<style>
+  .table_relatorio td, .table_relatorio th {
+    font-size: 8px;
+  }
+</style>
+
+<% @relatorios.each do |r| %>
+    <!-- Modal -->
+    <div class="modal fade" id="modalRelatorio<%= r.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"><%= r.vaso.num_serie %>&nbsp;-&nbsp;Inspeção &nbsp;<%= r.tipo_inspecao.nome.upcase %></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">  <!-- início da região do conteúdo do modal -->
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                    <span class="badge badge-success p-2">Documentos a emitir</span><br>
+                    <% if r.belaborado_relatorio_inspecao %>
+                        *Relatório de inspeção;<br>
+                    <% end %>
+                    <% if r.belaborado_registro_inspecao %>
+                        *Registro de inspeção;<br>
+                    <% end %>
+                    <% if r.belaborado_registro_inspecao_dispseg %>
+                        *Registro de inspeção de dispositivo de segurança;<br>
+                    <% end %>
+                    <% if r.belaborado_reg_seg %>
+                        *Registro de segurança;<br>
+                    <% end %>
+                    <% if r.belaborado_prontuario %>
+                        *Prontuário;<br>
+                    <% end %>
+                    <% if r.belaborado_laudo_th %>
+                        *Laudo de teste hidrostático;<br>
+                    <% end %>
+                    <% if r.belaborado_desenho_plaqueta %>
+                        *Desenho da plaqueta;<br>
+                    <% end %>
+                    <% if r.belaborado_mapa_espessura %>
+                        *Mapa de espessura;<br>
+                    <% end %>            
+                    <% if r.serv_contratado_dispseg_calibracao %>
+                        *Certificado de calibração do dispositivo de segurança;<br>
+                    <% end %>
+                    <% if r.belaborado_memorial_calculo %>
+                        *Memorial de cálculo;<br>
+                    <% end %>
+                    <% if r.belaborado_laudo_vaso_condenado %>
+                        *Laudo de vaso condenado;<br>
+                    <% end %>
+                    </div>
+                    <div class="col-md-6">
+                    <span class="badge badge-warning p-2">Peças a emitir cobrança</span><br>
+                    <% if r.belaborada_placa_local_inst %>
+                        *Placa local de instalação;<br>
+                    <% end %>
+                    <% if r.belaborado_plaqueta_identificacao %>
+                        *Plaqueta de identificação do vaso;<br>
+                    <% end %>
+                    <% if r.bman_foi_substituido %>
+                        *Manômetro;<br>
+                    <% end %>
+                    <% if r.bdispseg_foisubstituido %>
+                        *Válvula de segurança;<br>
+                    <% end %>
+                    <% if r.bpressostato_foisubstituido %>
+                        *Pressostato;<br>
+                    <% end %>
+                    <% if r.bdreno_foisubstituido %>
+                        *Dreno;<br>
+                    <% end %>
+                    </div>
+                </div>
+            </div>
+
+        </div> <!-- fim da região do conteúdo do modal -->
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        </div>
+        </div>
+    </div>
+    </div>
+<% end %>
+    

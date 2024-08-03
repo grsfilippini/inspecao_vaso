@@ -70,6 +70,9 @@ txtIntervencoes.value = '';
 
 // Intervenções feitas após a inspeção
 //
+var cbxRelatorioInspecao   = document.getElementById("RelatorioInspecaoCheckbox")
+var cbxRegistroInspecao    = document.getElementById("RegistroInspecaoCheckbox")
+var cbxRegistroInspDispSeg = document.getElementById("RegistroInspecaoDispSegCheckbox")
 var cbxRegistroSeg      = document.getElementById("RegSegCheckbox")
 var cbxProntuario       = document.getElementById("ProntuarioCheckbox")
 var cbxLaudoTH          = document.getElementById("LaudoTHCheckbox")
@@ -80,7 +83,12 @@ var cbxMapaEspessura    = document.getElementById("MapaEspessuraCheckbox")
 var cbxPlacaLocal       = document.getElementById("PlacaLocalCheckbox")
 var cbxPlaqueta         = document.getElementById("ElaboradaPlaquetaCheckbox")
 var cbxAjusteInclinacao = document.getElementById("AjusteInclinacaoVasoCheckbox")
+var cbxMemorialCalculo  = document.getElementById("MemorialCalculoCheckbox")
+var cbxVasoCondenado    = document.getElementById("LaudoVasoCondenadoCheckbox")
 
+if (cbxRelatorioInspecao.checked) { txtIntervencoes.value += "# Foi elaborado este relatório de inspeção;\n"; }
+if (cbxRegistroInspecao.checked) { txtIntervencoes.value += "# Foi emitido o registro de inspeção a ser afixado no registro de segurança;\n"; }
+if (cbxRegistroInspDispSeg.checked) { txtIntervencoes.value += "# Foi emitido o registro de inspeção do dispositivo de segurança a ser afixado no registro de segurança;\n"; }
 if (cbxRegistroSeg.checked) { txtIntervencoes.value += "# Foi elaborado o registro de segurança do vaso de pressão cfme NR13. Livro entregue junto deste relatório;\n"; }
 if (cbxProntuario.checked)  { txtIntervencoes.value += "# Foi elaborado o prontuário do vaso de pressão cfme NR13. Documento entregue junto deste relatório;\n" }
 if (cbxLaudoTH.checked ) { 
@@ -94,6 +102,8 @@ if (cbxLaudoTH.checked ) {
 if (cbxProgramaInsp.checked)    { txtIntervencoes.value += "# Foi definida a programação das inspeções do vaso e seus elementos. Consta no final deste relatório;\n" }
 if (cbxDesenhoPlaqueta.checked) { txtIntervencoes.value += "# Foi elaborado o desenho técnico da plaqueta de identificação do vaso cfme NR13. Documento entregue junto deste relatório;\n" }
 if (cbxMapaEspessura.checked)   { txtIntervencoes.value += "# Foi feito levantamento de espessura das paredes do vaso. Este consta em documento entregue junto deste relatório;\n" }
+if (cbxMemorialCalculo.checked) { txtIntervencoes.value += "# Foi elaborado o memorial de cálculo que acompanha a documentação do vaso de pressão;\n" }
+if (cbxVasoCondenado.checked)   { txtIntervencoes.value += "# FOI EMITIDO UM LAUDO QUE CONDENA ESTE VASO DE PRESSÃO;\n" }
 if (cbxPlacaLocal.checked)      { txtIntervencoes.value += "# Foi elaborada placa de identificação do local de instalação. A mesma foi entregue junto deste relatório. Deve ser fixada junto ao vaso de forma que seja visível a quem esteja chegando próximo ao ambiente;\n" }
 if (cbxPlaqueta.checked)        { txtIntervencoes.value += "# Foi elaborada plaqueta de identificação do vaso conforme NR13. A plaqueta foi entregue junto deste relatório. Deve ser fixada junto ao vaso, na base do motor ou na estrutura de sustentação do vaso. Tomar a precaução de que o vaso NÃO SEJA PERFURADO em hipótese alguma;\n" }
 

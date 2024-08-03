@@ -41,10 +41,6 @@
                 <th>Fabricante</th>
                 <th>Proprietaria</th>
                 <th align="center">Avaliado PH</th>                
-                <%if @para_imprimir %>
-                    <th>Impresso</th>
-                <% end %>
-                <th>RgI</th>
             </tr>
         </thead>
         <tbody> 
@@ -71,19 +67,9 @@
                         <%= link_to "SIM", admins_backoffice_avaliarph_path(r) %>
                         <% else %>
                         <%= link_to "NÃO", admins_backoffice_avaliarph_path(r) %>
-                        <% end %> </td>
-                    
-                    <%if @para_imprimir %>
-                        <td>                        
-                            <%= link_to "Marcar", marcar_como_impresso_admins_backoffice_relatorio_path(r), method: :post, class: "btn btn-primary" %>
-                        </td>
-                    <% end %>
-                    <td style="width: 50px">
-                        <%= link_to admins_backoffice_relatorios_imprime_registro_inspecao_path(r.id, format: :html), class: "btn btn-info btn-circle btn-sm" do %>
-                            <img src="<%= asset_path('ticket.svg') %>" alt="Registro de inspeção" style="width: 1em; height: 1em;">
-                        <% end %>
-
+                        <% end %> 
                     </td>
+                    
                 </tr>
             <% end %>
         </tbody>
