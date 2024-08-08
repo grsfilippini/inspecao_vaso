@@ -116,6 +116,17 @@
             <%= form.label :fone %>
             <%= form.text_field :fone, placeholder: t('placeholders.entre_fone_empresa'), class:'form-control form-control-sm'%>
         </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-6 mb-3 mb-sm-0">
+            <%= form.label 'Url Google Maps' %>
+            <%= form.url_field :url, placeholder: 'Entre com o link do Google Maps', class: 'form-control form-control-sm' %>
+            <% if @cadastro.url.present? %>
+                <%= link_to 'Visitar URL', @cadastro.url, target: '_blank', class: 'btn btn-primary mt-2' %>
+            <% end %>
+        </div>
+    </div>
+    <div class="form-group row">
         <div class="col-sm-6 mb-3 mb-sm-0">
             <%= form.label :website %>
             <%= form.text_field :website, placeholder: t('placeholders.entre_website_empresa'), class:'form-control form-control-sm'%>

@@ -161,6 +161,7 @@ class AdminsBackoffice::CadastrosController < AdminsBackofficeController
                                        :email,
                                        :fone,
                                        :contato,
+                                       :url,
                                        :website,
                                        :observacoes,
                                        :eh_fabricante,

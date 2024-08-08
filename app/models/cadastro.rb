@@ -7,6 +7,7 @@ class Cadastro < ApplicationRecord
     validates :nome_curto, presence: true
     validates :cnpj, presence: true
     validates :corp_id, presence: true
+    validates :url, format: URI::DEFAULT_PARSER.make_regexp(%w[http https])
     validates_length_of :nome, maximum: 100
     validates_length_of :nome_curto, maximum: 50
     validates_length_of :cnpj, maximum: 18

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_08_02_223110) do
+ActiveRecord::Schema.define(version: 2024_08_08_221241) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_repack"
@@ -102,6 +102,7 @@ ActiveRecord::Schema.define(version: 2024_08_02_223110) do
     t.bigint "cidade_id"
     t.integer "seq_roteiro"
     t.string "im", limit: 12
+    t.string "url"
     t.index ["cidade_id"], name: "index_cadastros_on_cidade_id"
     t.index ["user_id"], name: "index_cadastros_on_user_id"
   end
