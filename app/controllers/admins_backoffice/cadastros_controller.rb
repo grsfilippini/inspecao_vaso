@@ -49,6 +49,7 @@ class AdminsBackoffice::CadastrosController < AdminsBackofficeController
   
   
     def edit # Ação de edição 
+      # Faz com que após a edição, no update vá para cadastros_path
       @bListIndexCadastro = params[:bListIndexCadastro]=="true"   
     end
   
@@ -61,6 +62,8 @@ class AdminsBackoffice::CadastrosController < AdminsBackofficeController
         end
       else
         get_cidades_corps
+        # Faz com que após a edição, no update vá para cadastros_path
+        @bListIndexCadastro = params[:bListIndexCadastro]=="true" 
         render :edit
       end
     end
