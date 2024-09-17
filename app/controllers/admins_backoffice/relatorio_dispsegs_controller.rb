@@ -126,7 +126,8 @@ class AdminsBackoffice::RelatorioDispsegsController < AdminsBackofficeController
                                                 :pressao_ajuste,
                                                 :pressao_vedacao,
                                                 :bimpresso,
-                                                :data_prox_insp)
+                                                :data_prox_insp,
+                                                :brascunho)
     end
   
     def set_relatorio_dispseg

@@ -45,21 +45,69 @@
                                     <%= form.collection_select(:user_id, @users, :id, :nome_completo, {include_blank: 'Selecione um usuário'}, {selected: nil, class: 'form-control'}) %>
                                 </div>
                             </div>
-                                
+
+                            <!-- Estilo da lupa para plaqueta -->   
+                            <style>
+                                .lupa {
+                                display: none;
+                                position: absolute;
+                                border: 1px solid #000;
+                                width: 200px;
+                                height: 200px;
+                                overflow: hidden;
+                                pointer-events: none;
+                                }
+
+                                .lupa img {
+                                position: absolute;
+                                }
+                            </style>
+
                             <div class="form-group row">
                                 <%= form.label :foto_plaqueta, 'Plaqueta', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
-                                <div class="form-label col-sm-4 mb-0 mb-sm-0">                                    
+                                <div class="form-label col-sm-4 mb-0 mb-sm-0 lupa-container" style="position: relative;">
                                     <% if @vaso.foto_plaqueta.present? && @vaso.id.present? %>
-                                      <img src="data:image/jpeg;base64,<%= Base64.encode64(@vaso.foto_plaqueta) %>" width="auto" height="120">
-                                      <%= form.label :remove_foto_plaqueta %>
-                                      <%= form.check_box :remove_foto_plaqueta %>
+                                    <img id="img-plaqueta" src="data:image/jpeg;base64,<%= Base64.encode64(@vaso.foto_plaqueta) %>" width="auto" height="120" style="display: block;">
+                                    <div id="lupa" class="lupa"></div>
+                                    <%= form.label :remove_foto_plaqueta %>
+                                    <%= form.check_box :remove_foto_plaqueta %>
                                     <% end %>
-                                </div>                                
-                                <div class="form-label col-sm-3 mb-0 mb-sm-0">                                    
+                                </div>
+                                <div class="form-label col-sm-3 mb-0 mb-sm-0">
                                     <%= form.file_field :foto_plaqueta, id: 'foto-plaqueta', class: 'input-file', accept: "image/*" %>
                                 </div>
-                                
                             </div>
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const img = document.getElementById('img-plaqueta');
+                                    const lupa = document.getElementById('lupa');
+                                    const zoom = 5; // Define o nível de zoom da lupa
+
+                                    img.addEventListener('mousemove', function(event) {
+                                        const rect = img.getBoundingClientRect();
+                                        const x = event.clientX - rect.left;
+                                        const y = event.clientY - rect.top;
+
+                                        // Exibe a lupa
+                                        lupa.style.display = 'block';
+
+                                        // Posiciona a lupa
+                                        lupa.style.left = `${x - lupa.offsetWidth / 2}px`;
+                                        lupa.style.top = `${y - lupa.offsetHeight / 2}px`;
+
+                                        // Posiciona a imagem dentro da lupa
+                                        lupa.style.backgroundImage = `url(${img.src})`;
+                                        lupa.style.backgroundSize = `${img.width * zoom}px ${img.height * zoom}px`;
+                                        lupa.style.backgroundPosition = `-${x * zoom - lupa.offsetWidth / 2}px -${y * zoom - lupa.offsetHeight / 2}px`;
+                                    });
+
+                                    img.addEventListener('mouseleave', function() {
+                                        // Esconde a lupa ao sair da imagem
+                                        lupa.style.display = 'none';
+                                    });
+                                });
+                            </script>
 
                             <div class="form-group row">
                                 <%= form.label :foto_instalacao, 'Instalação', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
