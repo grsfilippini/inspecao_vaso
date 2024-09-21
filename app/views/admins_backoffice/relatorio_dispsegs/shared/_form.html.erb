@@ -278,7 +278,7 @@
                             <div class="form-group row">
                                 <%= form.label :data_prox_insp, 'Data próxima inspeção externa', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
                                 <div class="col-sm-3 mb-0 mb-sm-0">                                    
-                                    <%= form.date_field :data_prox_insp, value: @relatorio_dispseg.brascunho? ? (@relatorio_dispseg.data || Date.today) + 1.year - 1.day : @relatorio_dispseg.data_prox_insp, class: "form-control" %>
+                                    <%= form.date_field :data_prox_insp, value: @relatorio_dispseg.data_prox_insp.nil? ? (@relatorio_dispseg.data || Date.today) + 1.year - 1.day : @relatorio_dispseg.data_prox_insp, class: "form-control" %>
                                 </div>
                             </div>
                         </fieldset>
