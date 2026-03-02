@@ -7,7 +7,7 @@ class AdminsBackoffice::DispSegurancasController < AdminsBackofficeController
       # O includes abaixo inclui na query a busca por disp_seguranca      
       @disp_segurancas = DispSeguranca.includes(:cadastro, :tipo_dispositivo_seguranca, :user)
                  .all
-                 .order(serie: :desc)
+                 .order(id: :desc)
                  .page(params[:page])
                  .per(20)
     end
