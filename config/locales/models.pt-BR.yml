@@ -157,7 +157,7 @@
         descricao: Descrição
       disp_seguranca:
         serie: Série
-        cadastro: Proprietário
+        cadastro: Fabricante
         tipo_dispositivo_seguranca: Tipo de dispositivo de segurança
         castelo: Castelo
         bitola: Bitola
