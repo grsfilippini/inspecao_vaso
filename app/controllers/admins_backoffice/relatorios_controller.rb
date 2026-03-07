@@ -217,7 +217,7 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
       format.pdf do      
         if params[:b_assinar] == 'false'
           render template: 'admins_backoffice/relatorios/imprime_registro_inspecao_pdf',
-                  pdf: 'registro_inspecao',
+                  pdf: 'registro_inspecao',                  
                   locals: { asset_path: "#{Rails.root.join('app/assets/images')}" },
                   disposition: 'inline',
                   layout: 'recorte_pdf.html',
@@ -229,7 +229,36 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
 
       end
     end
+  end
 
+  #**********************
+  # RELATÓRIO DE INSPEÇÃO
+  #**********************
+  def imprime_relatorio_inspecao
+    
+    @relatorio = Relatorio.find(params[:id])
+    #@vaso = @relatorio.vaso
+    
+    respond_to do |format|
+      format.html{          
+      }
+
+      format.pdf do      
+        if params[:b_assinar] == 'false'
+          render template: 'admins_backoffice/relatorios/imprime_relatorio_inspecao_pdf',                 
+                 footer: { right: "Página [page]/[topage]", font_size: 9 },
+                  pdf: 'relatorio_inspecao',
+                  locals: { asset_path: "#{Rails.root.join('app/assets/images')}" },
+                  disposition: 'inline',
+                  layout: 'pdf.html',
+                  page_size: 'A4'
+        else
+          path_doc_assinado = gera_pdf_empresa_equipamento_assinado(current_admin, @relatorio.vaso.proprietaria, @relatorio.vaso, "admins_backoffice/relatorios/imprime_relatorio_inspecao_pdf", "relatorio_inspecao_assinado.pdf", "pdf.html", "Portrait")
+          send_file path_doc_assinado, type: 'application/pdf', disposition: 'attachment'
+        end
+
+      end
+    end
   end
 
   def update   

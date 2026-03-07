@@ -3,78 +3,741 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MANTINSP - Inspeção de Compressores NR13 - Teste hidrostático</title>
-  <meta name="description" content="Inspeção de segurança segundo a norma NR13. Compressores, caldeiras e outros vasos de pressão. Executamos teste hidrostático. Emitimos laudos e toda documentação segundo a NR13. Fazemos a inspeção inicial, periódica, interna, externa, de parada e retorno de operação.">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-    <%= stylesheet_link_tag    'application' %>
-    <%= stylesheet_link_tag    'site' %>     
+  <title>Mantinsp Engenharia | Inspeção NR-13 em Vasos de Pressão</title>
+  <meta name="description" content="Mantinsp Engenharia Ltda: inspeção NR-13 em vasos de pressão, prontuário, análise de integridade, inspeção interna, medição de espessura e assessoria técnica.">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag 'application' %>
+  <style>
+    :root {
+      --bg: #f5f7fa;
+      --surface: #ffffff;
+      --surface-2: #eef3f8;
+      --text: #1f2a37;
+      --muted: #5d6b7a;
+      --line: #d9e2ec;
+      --primary: #0d3b66;
+      --primary-2: #155a96;
+      --accent: #d97706;
+      --shadow: 0 18px 45px rgba(13, 59, 102, 0.10);
+      --radius: 18px;
+      --container: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #f8fafc 0%, #edf3f8 100%);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .container {
+      width: min(calc(100% - 32px), var(--container));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      background: var(--primary);
+      color: #fff;
+      font-size: 14px;
+    }
+
+    .topbar .container {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 10px 0;
+      flex-wrap: wrap;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(217, 226, 236, 0.8);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 18px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .brand-logo img{
+      height: 68px;
+      width: auto;
+    }
+
+    .footer-logo img{
+      height: 70px;
+      width: auto;
+      margin-bottom: 14px;
+    }
+
+    .brand-text {
+      min-width: 0;
+    }
+
+    .brand-text strong {
+      display: block;
+      font-size: 20px;
+      color: var(--primary);
+    }
+
+    .brand-text span {
+      display: block;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 24px;
+      margin: 0;
+      padding: 0;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    nav a {
+      color: var(--text);
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    nav a:hover { color: var(--primary-2); }
+
+    .access-links {
+      padding: 10px 0 0;
+    }
+
+    .access-links .container {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .access-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 0 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.78);
+      border: 1px solid #dbe5ee;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      box-shadow: 0 8px 24px rgba(13, 59, 102, 0.05);
+      transition: .2s ease;
+    }
+
+    .access-link:hover {
+      color: var(--primary);
+      border-color: #c8d9ea;
+      background: #fff;
+    }
+
+    .hero {
+      padding: 18px 0 46px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 34px;
+      align-items: stretch;
+    }
+
+    .hero-card,
+    .panel,
+    .service-card,
+    .info-card,
+    .contact-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card {
+      padding: 44px;
+      background:
+        radial-gradient(circle at top right, rgba(21,90,150,.10), transparent 28%),
+        linear-gradient(135deg, #ffffff, #f5f9fd);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: #eaf2fb;
+      color: var(--primary-2);
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    h1, h2, h3 { margin: 0 0 14px; line-height: 1.2; }
+    h1 { font-size: 46px; color: var(--primary); max-width: 11ch; }
+    h2 { font-size: 34px; color: var(--primary); }
+    h3 { font-size: 22px; color: var(--primary); }
+
+    .hero p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 18px;
+      max-width: 60ch;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 26px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 20px;
+      border-radius: 12px;
+      font-weight: 700;
+      transition: .2s ease;
+      border: 2px solid transparent;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover { background: var(--primary-2); }
+
+    .btn-secondary {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: #fff;
+    }
+
+    .btn-secondary:hover { background: #eef5fb; }
+
+    .hero-side { display: grid; gap: 18px; }
+    .panel { padding: 26px; }
+
+    .checklist {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 8px;
+    }
+
+    .stat {
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 28px;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+
+    .section { padding: 34px 0; }
+
+    .section-heading {
+      max-width: 760px;
+      margin-bottom: 24px;
+    }
+
+    .section-heading p { margin: 0; color: var(--muted); }
+
+    .about-grid,
+    .audience-grid,
+    .contact-grid,
+    .footer-grid {
+      display: grid;
+      gap: 22px;
+    }
+
+    .about-grid { grid-template-columns: 1fr 1fr; }
+    .audience-grid { grid-template-columns: repeat(3, 1fr); }
+    .contact-grid { grid-template-columns: repeat(4, 1fr); }
+    .footer-grid { grid-template-columns: 1.2fr .8fr .8fr; }
+
+    .info-card { padding: 28px; }
+
+    .info-card p,
+    .info-card li,
+    .contact-card p,
+    footer p,
+    footer li { color: var(--muted); margin: 0; }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .service-card { padding: 24px; }
+    .service-card h3 { font-size: 20px; margin-bottom: 10px; }
+
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .pill {
+      background: #fff7ed;
+      color: #9a5807;
+      border: 1px solid #f5d4a6;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .regions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .region {
+      padding: 12px 16px;
+      border-radius: 12px;
+      background: #eff6ff;
+      color: var(--primary-2);
+      border: 1px solid #d2e4fb;
+      font-weight: 700;
+    }
+
+    .contact-card {
+      padding: 24px;
+      text-align: center;
+    }
+
+    .contact-card strong {
+      display: block;
+      color: var(--primary);
+      margin-bottom: 6px;
+      font-size: 18px;
+    }
+
+    footer {
+      margin-top: 34px;
+      background: #0f2237;
+      color: #fff;
+      padding: 52px 0 20px;
+    }
+
+    footer h3 {
+      color: #fff;
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+
+    footer a { color: #dbe8f4; }
+    footer a:hover { color: #fff; }
+
+    .footer-brand { max-width: 440px; }
+
+    .footer-bottom {
+      margin-top: 28px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      text-align: center;
+      font-size: 13px;
+      color: #b4c6d6;
+    }
+
+    @media (max-width: 1080px) {
+      .hero-grid,
+      .about-grid,
+      .footer-grid,
+      .contact-grid,
+      .services-grid,
+      .audience-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .footer-grid > :first-child,
+      .services-grid > :first-child { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 780px) {
+      .nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      nav ul {
+        justify-content: flex-start;
+        gap: 14px 18px;
+      }
+
+      .access-links .container { justify-content: flex-start; }
+
+      h1 { font-size: 34px; }
+      h2 { font-size: 28px; }
+      .hero-card { padding: 28px; }
+
+      .hero-grid,
+      .about-grid,
+      .footer-grid,
+      .contact-grid,
+      .services-grid,
+      .audience-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stats { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 520px) {
+      .topbar .container { flex-direction: column; }
+      .stats { grid-template-columns: 1fr; }
+      .hero { padding-top: 14px; }
+      .hero p { font-size: 16px; }
+      .btn { width: 100%; }
+    }
+  </style>
 </head>
 <body>
-
-<div class="container-fluid">
-  <div class="row">
-    <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
-      <div class="position-sticky">
-        <div class="px-3 py-4">
-          <h4 class="fw-bold">MANTINSP</h4>
-        </div>
-        <ul class="nav flex-column">
-          
-          <%# unless user_signed_in? %>
-            <!--
-            <li class="nav-item">                
-                < = link_to 'Área de usuário', new_user_session_path, class:"nav-link" %>
-            </li>
-
-            <li class="nav-item">                
-                < = link_to 'Cadastro de usuário', new_user_registration_path, class:"nav-link" %>
-            </li>
-            -->
-          <%# else %>
-            <!--
-            <li class="nav-item">                
-                < = link_to current_user.email, users_backoffice_welcome_index_path, class:"nav-link" %>
-            </li>
-
-            <li class="nav-item">                      
-                < = link_to 'Sair', destroy_user_session_path, method: :delete, class: "nav-link" %>
-            </li>
-            -->
-          <%# end %>
-          <li class="nav-item">                
-              <%= link_to 'Área do administrador', admin_path, class:"nav-link" %>
-              <%= link_to 'Área do inspetor', inspetor_path, class:"nav-link" %>
-              <%= link_to 'Área da empresa', empresa_path, class:"nav-link" %>
-          </li>
-        </ul>        
-      </div>
-    </nav>
-
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-    
-      <%= yield %>
-    
-    </main>
+  <div class="topbar">
+    <div class="container">
+      <div>Engenharia Mantinsp Ltda • Inspeção de segurança em vasos de pressão</div>
+      <div>Atendimento em PR, SC, RS, MS e MT</div>
+    </div>
   </div>
-</div> 
 
-    <%= javascript_include_tag 'application' %>
-    <%= javascript_include_tag 'site' %>
-    
-    <%if notice %>
-        <%= javascript_tag do %>
-            $.bootstrapGrowl("<%= notice %>", {
-            ele: 'body', // which element to append to
-            type: 'success', // (null, 'info', 'error', 'success')
-            offset: {from: 'top', amount: 20}, // 'top', or 'bottom'
-            align: 'right', // ('left', 'right', or 'center')
-            width: 250, // (integer, or 'auto')
-            delay: 4000,
-            allow_dismiss: true,
-            stackup_spacing: 10 // spacing between consecutively stacked growls.
-            });
-        <%end%>
-    <%end%>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="brand-logo">
+          <%= image_tag 'logo.png', alt: 'Mantinsp Engenharia' %>
+        </div>
+        <div class="brand-text">
+          <strong>Mantinsp Engenharia</strong>
+          <span>Inspeção NR-13 em Vasos de Pressão</span>
+        </div>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#servicos">Serviços</a></li>
+          <li><a href="#diferenciais">Diferenciais</a></li>
+          <li><a href="#atuacao">Atuação</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="access-links">
+    <div class="container">
+      <%= link_to 'Área do administrador', admin_path, class: 'access-link' %>
+      <%= link_to 'Área do inspetor', inspetor_path, class: 'access-link' %>
+      <%= link_to 'Área da empresa', empresa_path, class: 'access-link' %>
+    </div>
+  </div>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-card">
+          <span class="eyebrow">Desde 2011</span>
+          <h1>Segurança, conformidade e confiança técnica.</h1>
+          <p>
+            A <strong>Mantinsp Engenharia Ltda</strong> atua na área de <strong>inspeção de segurança em vasos de pressão</strong>,
+            de acordo com a <strong>NR-13</strong>, oferecendo soluções técnicas para empresas que buscam segurança operacional,
+            regularidade documental e redução de riscos.
+          </p>
+          <p>
+            Fundada por <strong>Gerson Filippini</strong>, em <strong>Cascavel - PR</strong>, a Mantinsp nasceu com um propósito claro:
+            <strong>MANTer a INSPeção</strong> e auxiliar as empresas na manutenção regular das inspeções de seus equipamentos.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#contato">Solicitar orçamento</a>
+            <a class="btn btn-secondary" href="#servicos">Conhecer serviços</a>
+          </div>
+        </div>
+
+        <div class="hero-side">
+          <div class="panel">
+            <h3>Resumo institucional</h3>
+            <ul class="checklist">
+              <li>Especialização em inspeção NR-13 em vasos de pressão</li>
+              <li>Documentação técnica física e/ou digital</li>
+              <li>Rápida emissão de relatórios e segundas vias</li>
+              <li>Sistema informatizado de inspeção em campo</li>
+            </ul>
+          </div>
+
+          <div class="panel">
+            <h3>Números que transmitem confiança</h3>
+            <div class="stats">
+              <div class="stat">
+                <strong>2011</strong>
+                <span>ano de fundação</span>
+              </div>
+              <div class="stat">
+                <strong>+30</strong>
+                <span>anos de experiência na engenharia</span>
+              </div>
+              <div class="stat">
+                <strong>5</strong>
+                <span>estados atendidos</span>
+              </div>
+              <div class="stat">
+                <strong>NR-13</strong>
+                <span>foco técnico e conformidade normativa</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sobre" class="section">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">Quem somos</span>
+          <h2>Histórico e compromisso técnico</h2>
+          <p>
+            A Mantinsp foi fundada em 2011 com foco em inspeção de segurança em vasos de pressão.
+            Nossa missão é apoiar empresas na prevenção de riscos, na conformidade com a legislação e na manutenção regular das inspeções.
+          </p>
+        </div>
+        <div class="about-grid">
+          <div class="info-card">
+            <h3>Nossa missão</h3>
+            <p>
+              Conforme o próprio nome sugere, <strong>MANTINSP</strong> significa <strong>MANTer a INSPeção</strong>.
+              Trabalhamos para auxiliar as empresas a diminuir riscos operacionais por meio da manutenção regular
+              das inspeções dos vasos de pressão, promovendo segurança e responsabilidade técnica.
+            </p>
+          </div>
+          <div class="info-card">
+            <h3>Público atendido</h3>
+            <p>
+              Atendemos <strong>concessionárias de veículos, cooperativas agrícolas, oficinas mecânicas, indústrias de alimentos,
+              indústrias mecânicas</strong> e, de forma ampla, toda empresa que possua vasos de pressão,
+              sendo os <strong>compressores de ar</strong> um dos equipamentos mais comuns em nossos atendimentos.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="servicos" class="section">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">Serviços</span>
+          <h2>Soluções técnicas para vasos de pressão</h2>
+          <p>
+            Prestamos serviços especializados com foco em segurança, conformidade normativa e organização da documentação do equipamento.
+          </p>
+        </div>
+
+        <div class="services-grid">
+          <article class="service-card">
+            <h3>Inspeção conforme NR-13</h3>
+            <p>Execução de inspeções técnicas em conformidade com os requisitos da Norma Regulamentadora NR-13.</p>
+          </article>
+          <article class="service-card">
+            <h3>Prontuário de vaso de pressão</h3>
+            <p>Organização e elaboração de prontuários para apoiar a rastreabilidade e a regularidade documental do equipamento.</p>
+          </article>
+          <article class="service-card">
+            <h3>Análise de integridade</h3>
+            <p>Avaliação técnica das condições do vaso de pressão para apoiar decisões de manutenção e continuidade operacional.</p>
+          </article>
+          <article class="service-card">
+            <h3>Inspeção interna</h3>
+            <p>Verificação interna do equipamento para identificar condições de uso, desgaste e necessidades de intervenção.</p>
+          </article>
+          <article class="service-card">
+            <h3>Medição de espessura de parede</h3>
+            <p>Levantamento técnico da espessura para avaliação das condições estruturais e monitoramento do equipamento.</p>
+          </article>
+          <article class="service-card">
+            <h3>Inspeção de válvula de segurança</h3>
+            <p>Análise do dispositivo de segurança com foco na confiabilidade operacional e no atendimento aos requisitos normativos.</p>
+          </article>
+        </div>
+
+        <div class="info-card" style="margin-top: 20px;">
+          <h3>Assessoria técnica</h3>
+          <p>
+            Também oferecemos <strong>assessoria quanto a dúvidas técnicas</strong> relacionadas a vasos de pressão e possíveis fiscalizações,
+            auxiliando a empresa na interpretação de exigências e na organização da documentação necessária.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="diferenciais" class="section">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">Diferenciais</span>
+          <h2>Uma atuação técnica, ágil e organizada</h2>
+          <p>
+            Nossos diferenciais foram estruturados para transmitir segurança ao cliente e facilitar a gestão documental dos equipamentos.
+          </p>
+        </div>
+
+        <div class="pill-list">
+          <span class="pill">Profissionais com mais de 30 anos de experiência</span>
+          <span class="pill">Procedimentos e relatórios conforme ABNT e NR-13</span>
+          <span class="pill">Sistema informatizado de inspeção em campo</span>
+          <span class="pill">Rápida emissão da documentação</span>
+          <span class="pill">Documentação física e/ou digital</span>
+          <span class="pill">Facilidade para emissão de 2ª via</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">Segmentos atendidos</span>
+          <h2>Atendimento para diferentes tipos de empresa</h2>
+          <p>
+            Nossa atuação atende empresas com perfis operacionais distintos, sempre com foco em equipamentos que exigem inspeção periódica e controle documental.
+          </p>
+        </div>
+        <div class="audience-grid">
+          <div class="info-card"><h3>Automotivo</h3><p>Concessionárias de veículos e oficinas mecânicas com compressores e outros equipamentos pressurizados.</p></div>
+          <div class="info-card"><h3>Agroindustrial</h3><p>Cooperativas agrícolas e operações ligadas ao agronegócio que utilizam sistemas com vasos de pressão.</p></div>
+          <div class="info-card"><h3>Industrial</h3><p>Indústrias de alimentos, indústrias mecânicas e demais empresas que necessitam de conformidade com a NR-13.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="atuacao" class="section">
+      <div class="container">
+        <div class="info-card">
+          <span class="eyebrow">Área de atuação</span>
+          <h2>Presença regional</h2>
+          <p>
+            A Mantinsp atua nos estados do Sul e Centro-Oeste, levando atendimento técnico especializado para empresas de diferentes portes e segmentos.
+          </p>
+          <div class="regions">
+            <span class="region">Paraná</span>
+            <span class="region">Santa Catarina</span>
+            <span class="region">Rio Grande do Sul</span>
+            <span class="region">Mato Grosso do Sul</span>
+            <span class="region">Mato Grosso</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contato" class="section">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">Contato</span>
+          <h2>Fale com a Mantinsp</h2>
+          <p>
+            Entre em contato para solicitar orçamento, esclarecer dúvidas técnicas ou organizar a documentação de seus vasos de pressão.
+          </p>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-card">
+            <strong>Telefone / WhatsApp</strong>
+            <p>45 98807-2020</p>
+          </div>
+          <div class="contact-card">
+            <strong>Email</strong>
+            <p>mantinsp@gmail.com</p>
+          </div>
+          <div class="contact-card">
+            <strong>Empresa</strong>
+            <p>Engenharia Mantinsp Ltda</p>
+          </div>
+          <div class="contact-card">
+            <strong>Base de atendimento</strong>
+            <p>Toledo - PR</p>
+          </div>
+        </div>
+
+        <div class="hero-actions" style="justify-content: center; margin-top: 24px;">
+          <a class="btn btn-primary" href="https://wa.me/5545988072020" target="_blank" rel="noopener noreferrer">Solicitar orçamento</a>
+          <a class="btn btn-secondary" href="mailto:mantinsp@gmail.com">Enviar email</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <%= image_tag 'logo_branco.png', alt: 'Mantinsp Engenharia' %>
+          </div>
+          <h3>Mantinsp Engenharia Ltda</h3>
+          <p>
+            Especialista em inspeção de segurança em vasos de pressão conforme a NR-13,
+            com foco em confiabilidade técnica, documentação organizada e atendimento ágil.
+          </p>
+        </div>
+        <div>
+          <h3>Links rápidos</h3>
+          <p><a href="#sobre">Sobre a empresa</a></p>
+          <p><a href="#servicos">Serviços</a></p>
+          <p><a href="#diferenciais">Diferenciais</a></p>
+          <p><a href="#contato">Contato</a></p>
+        </div>
+        <div>
+          <h3>Contato</h3>
+          <p>WhatsApp: 45 98807-2020</p>
+          <p>Email: mantinsp@gmail.com</p>
+          <p>Atendimento regional em PR, SC, RS, MS e MT</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        © 2026 Engenharia Mantinsp Ltda - Todos os direitos reservados.
+      </div>
+    </div>
+  </footer>
+
+  <%= javascript_include_tag 'application' %>
 </body>
 </html>

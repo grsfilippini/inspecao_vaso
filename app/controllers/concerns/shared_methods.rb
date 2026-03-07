@@ -58,7 +58,8 @@ module SharedMethods
         layout: "pdf.html",
         orientation: orientation,
         page_size: "A4",
-        margin: {top: 10, bottom: 10, left: 10, right: 10}
+        margin: {top: 10, bottom: 10, left: 10, right: 10},
+        footer: { right: "Página [page]/[topage]", font_size: 9 }
       )
       # Caminho para o arquivo que você deseja assinar
       path_doc_assinado_pdfs = Rails.root.join(pdfs_path, nome_arquivo_assinado)

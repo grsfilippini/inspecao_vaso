@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_08_08_221241) do
+ActiveRecord::Schema.define(version: 2026_03_05_145711) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_repack"
@@ -613,6 +613,7 @@ ActiveRecord::Schema.define(version: 2024_08_08_221241) do
   add_foreign_key "relatorios", "cadastros", column: "inspetora_id", name: "sys_fk_187"
   add_foreign_key "relatorios", "cadastros", column: "proprietaria_id", name: "sys_fk_181"
   add_foreign_key "relatorios", "cidades"
+  add_foreign_key "relatorios", "finalidade_vasos"
   add_foreign_key "relatorios", "inspetors"
   add_foreign_key "relatorios", "phs", name: "sys_fk_178"
   add_foreign_key "relatorios", "tipo_drenos"

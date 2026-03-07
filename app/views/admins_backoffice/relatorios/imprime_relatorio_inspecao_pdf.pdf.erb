@@ -1,0 +1,349 @@
+<div class="container page">
+    <table class="tableCabecalho" style="margin-bottom: 2pt;">
+        <tr>
+            <td class="col1"><%= image_tag asset_url('logo.png'), width: '94.5px' %></td>
+            <td class="col2">
+                <span style="font-size: 18pt; font-weight: bold;">ENGENHARIA MANTINSP LTDA</span><br>
+                <span style="font-size: 9pt;">CNPJ 23.526.523/0001-71</span><br>
+                <span style="font-size: 9pt;">Rua Guaira, 515 / Fone: 45-98807-2020</span><br>
+                <span style="font-size: 9pt;">Toledo/PR / e-mail: mantinsp@gmail.com</span><br>                
+            </td>
+            <td class="col3">
+                <span style="display: block; text-align: center; font-size: 12pt; font-weight: bold">RELATÓRIO N°</span><br>
+                <span style="display: block; text-align: center; font-size: 30pt; font-weight: bold; color: #B22222"><%= @relatorio.id %></span><br>
+            </td>            
+        </tr>
+    </table>
+    <span style="display: block; text-align: right; font-size: 8pt;">Relatório atende: ABNT NBR 15417:2007 e MTE NR13</span>
+    <br>
+    <div style='text-align: center'>
+        <span style="font-size: 16pt; font-weight: bold;">RELATÓRIO DE INSPEÇÃO <%=@relatorio.tipo_inspecao.nome%></span><br>
+    </div>
+    <br>
+    <span style="font-size: 12pt; font-weight: bold;">1 – IDENTIFICAÇÃO DO EQUIPAMENTO</span><br>
+    <span style="font-size: 10pt;">Identificação do equipamento após inspeção (os dados gerais indicados nesta página, incluindo PMTA, são caracterizados após inspeção, significando que se trata dos dados mais atuais do vaso, extraídos do prontuário final).</span><br>
+    
+    <div style="font-size:0;"> <!-- zera o “espaço” entre inline-blocks -->
+        <div style="display:inline-block; vertical-align: top; width:45%; font-size:10pt;">
+            <span style="font-size: 10pt;">Fabricante:</span>
+            <span style="font-size: 10pt; font-weight: bold;"><%= @relatorio.vaso.fabricante.nome %></span><br>
+
+            <span style="font-size: 10pt;">Número de série:</span>
+            <span style="font-size: 10pt; font-weight: bold; color: #B22222"><%= @relatorio.vaso.num_serie %></span><br>
+
+            <span style="font-size: 10pt;">Data de fabricação:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.vaso.dt_fabricacao_reconstituicao.strftime("%d/%m/%Y") %></span>
+            <span style="font-size: 8pt;">
+            <% if @relatorio.vaso.bsem_data_fabricacao %>
+                <%= "(Reconstituição de prontuário)" %>
+            <% end %>
+            </span><br>
+
+            <span style="font-size: 10pt;">Volume:</span>
+            <span style="font-size: 10pt; font-weight: bold; color: #B22222">
+            <%= number_with_precision(@relatorio.vaso.volume || 0, precision: 3) %> m&sup3
+            </span><br>
+
+            <span style="font-size: 10pt;">Pressão de projeto:</span>
+            <span style="font-size: 10pt; font-weight: bold;">
+            <%= number_with_precision(@relatorio.vaso.p_projeto || 0, precision: 3) %> MPa
+            </span><br>
+
+            <span style="font-size: 10pt;">PMTA:</span>
+            <span style="font-size: 10pt; font-weight: bold; color: #B22222">
+            <%= number_with_precision(@relatorio.vaso.pmta_atual || 0, precision: 3) %> MPa
+            </span><br>
+
+            <span style="font-size: 10pt;">PTH:</span>
+            <span style="font-size: 10pt; font-weight: bold;">
+            <%= number_with_precision(@relatorio.vaso.pth_atual || 0, precision: 3) %> MPa
+            </span><br>
+        </div>
+
+        <div style="display:inline-block; vertical-align: top; width:55%; font-size:10pt;">
+            <span style="font-size: 10pt;">Código de construção:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.vaso.codigo_construcao.codigo %></span><br>
+            <span style="font-size: 10pt;">Categoria NR13:</span>
+            <span style="font-size: 10pt; font-weight: bold; color: #B22222"><%= @relatorio.vaso.catnr13.categoria %></span><br>            
+            <span style="font-size: 10pt;">Fluído de serviço:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.vaso.fluido_servico.descricao%></span><br>
+            <span style="font-size: 10pt;">Classe de fluído:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.vaso.classe_fluido.descricao%></span><br>
+            <span style="font-size: 10pt;">Potencial de risco:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.vaso.potencial_risco.descricao%></span><br>
+            <span style="font-size: 10pt;">Finalidade do vaso:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.finalidade_vaso.finalidade%></span><br>
+            <span style="font-size: 10pt;">Tipo do vaso:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.vaso.tipo_vaso.tipo_vaso%></span><br>
+        </div>
+
+    </div>
+    <br>
+    <span style="font-size: 12pt; font-weight: bold;">2 – PROFISSIONAL HABILITADO RESPONSÁVEL PELO RELATÓRIO</span><br>
+    <div style="font-size:0;"> <!-- zera o “espaço” entre inline-blocks -->
+        <div style="display:inline-block; vertical-align: top; width:20%; font-size:10pt;">
+            <br>
+            <span style="font-size: 10pt;">Nome:</span>
+            <span style="font-size: 10pt; font-weight: bold;"><%= @relatorio.ph.nome %></span><br>
+
+            <span style="font-size: 10pt;">CREA:</span>
+            <span style="font-size: 10pt; font-weight: bold"><%= @relatorio.ph.crea %></span><br>
+
+            <span style="font-size: 10pt;">ART:</span>
+            <span style="font-size: 10pt; font-weight: bold"><%= @relatorio.art.art %></span><br>
+
+        </div>
+
+        <div style="display:inline-block; vertical-align: top; width:80%; font-size:10pt;">
+            <table class="tableAssinatura" style="width:100%;">
+                <tr>
+                    <td class="col1" style="text-align: center; width:45%; vertical-align: middle;">
+                        <div style="display: inline-block; text-align: center;">
+                            <span style="font-size: 10pt;">Local e data: <%= @relatorio.inspetora.cidade.nome %>, <%= @relatorio.data_relatorio.strftime("%d/%m/%Y") %></span><br>
+                            <br>
+                            <span style="font-size: 10pt;">.................................................</span><br>
+                            <span style="font-size: 6pt;">(Carimbo e assinatura)</span>
+                            <br>
+                            <br>
+                            <br>
+                        </div>
+                    </td>            
+                    <td class="col2" style="text-align: center; width:10%; vertical-align: middle;">
+                        <div style="display: inline-block; text-align: center;">
+                            <span style="font-size: 10pt;">ou</span>
+                        </div>
+                    </td>
+                    <td class="col3" style="width:45%;">
+                        <span style="font-size: 10pt;">DOCUMENTO ASSINADO DIGITALMENTE</span><br>
+                        <span style="font-size: 10pt; font-weight: bold;"><%=@relatorio.ph.nome%> </span> <span style="font-size: 10pt;"> - <%= Time.now.strftime("%d de %b de %Y") %></span><br>
+                        <span style="font-size: 10pt; font-weight: bold;"><%=@relatorio.ph.titulo%> </span> <span style="font-size: 10pt;"> CREA <%=@relatorio.ph.crea%></span><br>                
+                        <span style="font-size: 10pt;">Verifique em https://validar.iti.gov.br</span><br>
+                    </td>            
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+    <span style="font-size: 12pt; font-weight: bold;">ÍNDICE DO RELATÓRIO</span><br>
+        <div style="font-size:0;"> <!-- zera o “espaço” entre inline-blocks -->
+        <div style="display:inline-block; vertical-align: top; text-align: left; width:2%; font-size:10pt;">
+            <span style="font-size: 10pt;">1</span><br>
+            <span style="font-size: 10pt;">2</span><br>
+            <span style="font-size: 10pt;">3</span><br>
+            <span style="font-size: 10pt;">4</span><br>
+            <span style="font-size: 10pt;">5</span><br>
+            <span style="font-size: 10pt;">6</span><br>
+            <span style="font-size: 10pt;">7</span><br>
+            <span style="font-size: 10pt;">8</span><br>
+            <span style="font-size: 10pt;">9</span><br>
+            <span style="font-size: 10pt;">10</span><br>
+            <span style="font-size: 10pt;">11</span><br>
+            <span style="font-size: 10pt;">12</span><br>
+            <span style="font-size: 10pt;">13</span><br>
+            <span style="font-size: 10pt;">14</span><br>
+            <span style="font-size: 10pt;">15</span><br>
+            <span style="font-size: 10pt;">16</span><br>
+            <span style="font-size: 10pt;">17</span><br>
+            <span style="font-size: 10pt;">18</span><br>
+            <span style="font-size: 10pt;">19</span><br>
+            <span style="font-size: 10pt;"></span><br>
+                          
+        </div>
+
+        <div style="display:inline-block; vertical-align: top; text-align: left; width:88%; font-size:10pt;">
+            <span style="font-size: 10pt;">– IDENTIFICAÇÃO DO EQUIPAMENTO</span> <br>            
+            <span style="font-size: 10pt;">– PROFISSIONAL HABILITADO RESPONSÁVEL PELO RELATÓRIO</span> <br>            
+            <span style="font-size: 10pt;">– LOCAL DA INSTALAÇÃO DO VASO DE PRESSÃO</span> <br>            
+            <span style="font-size: 10pt;">– EMPRESA INSPETORA OU PROFISSIONAL HABILITADO</span> <br>
+            <span style="font-size: 10pt;">– VERIFICAÇÕES INICIAIS</span> <br>
+            <span style="font-size: 10pt;">– SERVIÇOS CONTRATADOS</span> <br>
+            <span style="font-size: 10pt;">– NORMAS DE REFERÊNCIA</span> <br>
+            <span style="font-size: 10pt;">– DOCUMENTAÇÃO EXISTENTE</span> <br>
+            <span style="font-size: 10pt;">– VERIFICAÇÃO DO LOCAL DE INSTALAÇÃO</span> <br>
+            <span style="font-size: 10pt;">– INSPEÇÃO E INTERVENÇÃO NOS CONTROLES INSTALADOS OU NÃO DIRETAMENTE SOBRE O VASO</span> <br>
+            <span style="font-size: 10pt;">– INSPEÇÃO NA ESTRUTURA DO VASO E INSTALAÇÕES ACESSÓRIAS</span> <br>
+            <span style="font-size: 10pt;">– FOTOS TIRADAS DURANTE A INSPEÇÃO</span> <br>
+            <span style="font-size: 10pt;">– RECOMENDAÇÕES DO PH AO USUÁRIO DO VASO DE PRESSÃO</span> <br>
+            <span style="font-size: 10pt;">– INTERVENÇÕES FEITAS PELO PH</span> <br>
+            <span style="font-size: 10pt;">– ITENS DE RISCO GRAVE E IMINENTE (RGI)</span> <br>
+            <span style="font-size: 10pt;">– RESULTADO DA INSPEÇÃO EXTERNA DO CORPO DO VASO</span> <br>
+            <span style="font-size: 10pt;">– RESULTADO DA INSPEÇÃO INTERNA DO CORPO DO VASO</span> <br>
+            <span style="font-size: 10pt;">– PROGRAMAÇÃO DAS PRÓXIMAS INSPEÇÕES</span> <br>
+            <span style="font-size: 10pt;">– PARECER QUANTO A INTEGRIDADE DO VASO DE PRESSÃO</span> <br>
+            <span style="font-size: 10pt;">ANEXO – SIGLAS E DEFINIÇÕES</span> <br>            
+        </div>
+
+        <div style="display:inline-block; vertical-align: top; width:10%; font-size:10pt; text-align:right;">
+            <span style="font-size: 10pt;">1</span><br>
+            <span style="font-size: 10pt;">1</span><br>
+            <span style="font-size: 10pt;">1</span><br>
+            <span style="font-size: 10pt;">1</span><br>
+            <span style="font-size: 10pt;">2</span><br>
+            <span style="font-size: 10pt;">2</span><br>
+            <span style="font-size: 10pt;">2</span><br>
+            <span style="font-size: 10pt;">2</span><br>
+            <span style="font-size: 10pt;">3</span><br>
+            <span style="font-size: 10pt;">3</span><br>
+            <span style="font-size: 10pt;">3</span><br>
+            <span style="font-size: 10pt;">4</span><br>
+            <span style="font-size: 10pt;">5</span><br>
+            <span style="font-size: 10pt;">5</span><br>
+            <span style="font-size: 10pt;">5</span><br>
+            <span style="font-size: 10pt;">6</span><br>
+            <span style="font-size: 10pt;">6</span><br>
+            <span style="font-size: 10pt;">7</span><br>
+            <span style="font-size: 10pt;">7</span><br>
+            <span style="font-size: 10pt;">7</span><br>
+                          
+        </div>
+
+    </div>
+    
+    <span style="display:block; font-size:10pt; text-align:right;">
+        Este relatório contém 7 páginas numeradas.
+    </span>
+    <br>    
+    
+    <span style="font-size: 12pt; font-weight: bold;">3 – LOCAL DA INSTALAÇÃO DO VASO DE PRESSÃO</span><br>
+    
+    <div style="font-size:0;"> <!-- zera o “espaço” entre inline-blocks -->
+        <div style="display:inline-block; vertical-align: top; width:50%; font-size:10pt;">
+            <span style="font-size: 10pt;">Empresa:</span>
+            <span style="font-size: 10pt; font-weight: bold;"><%= @relatorio.vaso.proprietaria.nome %></span><br>
+        
+            <span style="font-size: 10pt;">CNPJ/CPF:</span>
+            <span style="font-size: 10pt; font-weight: bold;"><%= @relatorio.vaso.proprietaria.cnpj %></span><br>
+
+            <span style="font-size: 10pt;">Endereço:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.vaso.proprietaria.endereco%>, &nbsp; <%= @relatorio.vaso.proprietaria.numero%></span><br>
+
+            <span style="font-size: 10pt;">Bairro:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.vaso.proprietaria.bairro%></span><br>
+
+            <span style="font-size: 10pt;">Cidade:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.vaso.proprietaria.cidade.nome%>, &nbsp; <%= @relatorio.vaso.proprietaria.cep%> </span><br>
+        </div>
+
+        <div style="display:inline-block; vertical-align: top; width:50%; font-size:10pt;">
+            <span style="font-size: 10pt;">Nome curto:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.vaso.proprietaria.nome_curto %></span><br>
+
+            <span style="font-size: 10pt;">Tag equipamento:</span>
+            <span style="font-size: 10pt; font-weight: bold;"><%= @relatorio.vaso.tag_proprietaria %></span><br>
+
+            <span style="font-size: 10pt;">Contato:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.vaso.proprietaria.contato %></span><br>
+
+            <span style="font-size: 10pt;">Fone:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.vaso.proprietaria.fone %></span><br>
+
+            <span style="font-size: 10pt;">e-mail:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.vaso.proprietaria.email %></span><br>
+        </div>
+    </div>
+    
+    <br>
+
+    <span style="font-size: 12pt; font-weight: bold;">4 – EMPRESA INSPETORA OU PROFISSIONAL HABILITADO</span><br>
+    
+    <div style="font-size:0;"> <!-- zera o “espaço” entre inline-blocks -->
+        <div style="display:inline-block; vertical-align: top; width:50%; font-size:10pt;">
+            <span style="font-size: 10pt;">Empresa:</span>
+            <span style="font-size: 10pt; font-weight: bold;"><%= @relatorio.inspetora.nome %></span><br>
+        
+            <span style="font-size: 10pt;">CNPJ/CPF:</span>
+            <span style="font-size: 10pt; font-weight: bold;"><%= @relatorio.inspetora.cnpj %></span><br>
+
+            <span style="font-size: 10pt;">Endereço:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.inspetora.endereco%>, &nbsp; <%= @relatorio.inspetora.numero%></span><br>
+
+            <span style="font-size: 10pt;">Bairro:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.inspetora.bairro%></span><br>
+
+            <span style="font-size: 10pt;">Cidade:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.inspetora.cidade.nome%>, &nbsp; <%= @relatorio.inspetora.cep%> </span><br>
+        </div>
+
+        <div style="display:inline-block; vertical-align: top; width:50%; font-size:10pt;">
+            <span style="font-size: 10pt;">Contato:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.inspetora.contato %></span><br>
+
+            <span style="font-size: 10pt;">Fone:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.inspetora.fone %></span><br>
+
+            <span style="font-size: 10pt;">e-mail:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.inspetora.email %></span><br>
+        </div>
+    </div>
+
+</div>
+
+<!-- quebra de página -->
+<div style="page-break-before: always;"></div>
+
+<div class="container page">
+    
+    <%= cabecalho_relatorio(@relatorio) %>
+
+    <span style="font-size: 12pt; font-weight: bold;">5 – VERIFICAÇÕES INICIAIS</span><br>
+    <div style="font-size:0;"> <!-- zera o “espaço” entre inline-blocks -->
+        <div style="display:inline-block; vertical-align: top; width:50%; font-size:10pt;">
+
+            <%= radio_grupo(@relatorio, :possui_acesso_visual_externo, {0=>"Não",1=>"Total",2=>"Parcial"}, "Existe acesso visual externo?", "220px") %>
+            
+            <%= radio_grupo(@relatorio, :tipo_fixacao_vaso, {0=>"Fixo",1=>"Móvel",2=>"Misto"}, "Quanto a fixação do vaso", "220px") %>
+
+            <%= radio_grupo(@relatorio, :tipo_houve_alteracao_local_instalacao, {0=>"Não",1=>"Sim",2=>"1ª inspeção",3=>"Vaso móvel"}, "Local de instalação foi alterado?", "350px") %>
+
+            <%= radio_grupo(@relatorio, :tipo_apresenta_sinais_reparo, {0=>"Não",1=>"Sim, com PAR(*)",2=>"Sim, sem PAR"}, "Apresenta alterações/reparos?", "350px") %>            
+            <div style="margin-bottom:0px;">
+                <span style="margin-right:4px;"><b>Data reparos:</b></span>
+                <span><%= @relatorio.data_reparos_alteracoes&.strftime("%d/%m/%Y") %></span>
+            </div>
+            <div style="margin-bottom:0px;">
+                <span style="margin-right:4px;"><b>Reparos observados:</b></span>
+                <span><%= @relatorio.reparos_observados %></span>
+            </div>
+            <span style="font-size:9pt; color:#444;"><i>(*) PAR - Projeto de Alteração ou Reparo</i></span>
+
+        </div>
+
+        <div style="display:inline-block; vertical-align: top; width:50%; font-size:10pt;">
+            coluna direira
+        </div>
+    </div>
+    
+</div>
+
+<!-- quebra de página -->
+<div style="page-break-before: always;"></div>
+
+<div class="container page">
+    <table class="tableAssinatura">
+        <tr>
+            <td class="col1" style="text-align: center; vertical-align: middle;">
+                <div style="display: inline-block; text-align: center;">
+                    <span style="font-size: 10pt;">Local e data: <%= @relatorio.inspetora.cidade.nome %>, <%= @relatorio.data_relatorio.strftime("%d/%m/%Y") %></span><br>
+                    <br>
+                    <span style="font-size: 10pt;">.................................................</span><br>
+                    <span style="font-size: 8pt;">(Carimbo e assinatura)</span>
+                    <br>
+                    <br>
+                    <br>
+                </div>
+            </td>            
+            <td class="col2" style="text-align: center; vertical-align: middle;">
+                <div style="display: inline-block; text-align: center;">
+                    <span style="font-size: 10pt;">ou</span>
+                </div>
+            </td>
+            <td class="col3">
+                <span style="font-size: 10pt;">DOCUMENTO ASSINADO DIGITALMENTE</span><br>
+                <span style="font-size: 10pt; font-weight: bold;"><%=@relatorio.ph.nome%> </span> <span style="font-size: 10pt;"> - <%= Time.now.strftime("%d de %b de %Y") %></span><br>
+                <span style="font-size: 10pt; font-weight: bold;"><%=@relatorio.ph.titulo%> </span> <span style="font-size: 10pt;"> CREA <%=@relatorio.ph.crea%></span><br>                
+                <span style="font-size: 10pt;">Verifique em https://validar.iti.gov.br</span><br>
+            </td>            
+        </tr>
+    </table>
+</div>

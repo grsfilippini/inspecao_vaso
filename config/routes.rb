@@ -81,8 +81,7 @@ Rails.application.routes.draw do
     get 'imprime_etiqueta_pdf/:id',                   to: 'vasos#imprime_etiqueta', as: 'vasos_imprime_etiqueta'
     get 'imprime_laudo_th_pdf/:id',                   to: 'vasos#imprime_laudo_th', as: 'vasos_imprime_laudo_th'
     get 'imprime_abertura_rs_pdf/:id',                to: 'vasos#imprime_abertura_rs', as: 'vasos_imprime_abertura_rs'
-    get 'imprime_plaqueta_pdf/:id',                   to: 'vasos#imprime_plaqueta', as: 'vasos_imprime_plaqueta'
-    #get 'imprime_registro_inspecao_pdf/:id',          to: 'vasos#imprime_registro_inspecao', as: 'vasos_imprime_registro_inspecao'
+    get 'imprime_plaqueta_pdf/:id',                   to: 'vasos#imprime_plaqueta', as: 'vasos_imprime_plaqueta'    
 
     resources :tipo_compressors
     resources :tipo_drenos
@@ -120,6 +119,7 @@ Rails.application.routes.draw do
     get 'relatorio_em_aberto',         to: 'relatorios#em_aberto'
     get 'pesquisa_relatorio',          to: 'relatorios#pesquisa'
     get 'imprime_registro_inspecao_pdf/:id', to: 'relatorios#imprime_registro_inspecao', as: 'relatorios_imprime_registro_inspecao'
+    get 'imprime_relatorio_inspecao_pdf/:id', to: 'relatorios#imprime_relatorio_inspecao', as: 'relatorios_imprime_relatorio_inspecao'
     get 'vence_vaso',       to: 'relatorios#index_vence_vaso', as: 'index_vence_vaso'
     get 'relatorios/nova_venda/:id',   to: 'relatorios#nova_venda', as: 'nova_venda'
     # Referente aos forms de inspeção

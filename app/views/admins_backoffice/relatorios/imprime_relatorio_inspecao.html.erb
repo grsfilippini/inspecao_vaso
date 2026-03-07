@@ -1,5 +1,5 @@
 <div class="container page">
-    <span style="font-size: 16pt; font-weight: bold;">INSPEÇÃO <%=@relatorio.tipo_inspecao.nome%></span>
+    <span style="font-size: 16pt; font-weight: bold;">RELATÓRIO DE INSPEÇÃO <%=@relatorio.id%></span>
     <span style="font-size: 10pt;">no vaso número de série: </span> <span style="font-size: 10pt; font-weight: bold;"><%=@relatorio.vaso.num_serie%></span><br>
     <div style="font-size: 10pt; text-align: justify">
         <span style="font-size: 10pt;">Em </span><span style="font-size: 10pt; font-weight: bold;"><%= @relatorio.data_relatorio.strftime("%d/%m/%Y") %></span> 
@@ -9,6 +9,12 @@
         <span style="font-size: 10pt;">A próxima inspeção externa deverá ser feita em </span><span style="font-size: 10pt; font-weight: bold;"><%=@relatorio.dt_prox_insp_externa.strftime("%d/%m/%Y")%></span><span style="font-size: 10pr;">.</span>
     </div>
     <br>
+</div>
+
+<!-- quebra de página -->
+<div style="page-break-before: always;"></div>
+
+<div class="container page">
     <table class="tableAssinatura">
         <tr>
             <td class="col1" style="text-align: center; vertical-align: middle;">
@@ -41,10 +47,10 @@
 
 <%= button_tag "Retornar", type: "button", class: "btn btn-secondary", onclick: "window.history.back();" %>
 
-<button class="btn btn-secondary" type="button" id="custom_submit_button" onclick="window.location.href='<%= admins_backoffice_relatorios_imprime_registro_inspecao_path(@relatorio.id, format: :pdf, b_assinar: false) %>';">
+<button class="btn btn-secondary" type="button" id="custom_submit_button" onclick="window.location.href='<%= admins_backoffice_relatorios_imprime_relatorio_inspecao_path(@relatorio.id, format: :pdf, b_assinar: false) %>';">
     <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF
 </button>
 
-<button class="btn btn-secondary" type="button" id="custom_submit_button" onclick="window.location.href='<%= admins_backoffice_relatorios_imprime_registro_inspecao_path(@relatorio.id, format: :pdf, b_assinar: true) %>';">
+<button class="btn btn-secondary" type="button" id="custom_submit_button" onclick="window.location.href='<%= admins_backoffice_relatorios_imprime_relatorio_inspecao_path(@relatorio.id, format: :pdf, b_assinar: true) %>';">
     <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF assinado
 </button>

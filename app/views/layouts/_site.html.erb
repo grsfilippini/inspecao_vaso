@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MANTINSP - Inspeção de Compressores NR13 - Teste hidrostático</title>
+  <meta name="description" content="Inspeção de segurança segundo a norma NR13. Compressores, caldeiras e outros vasos de pressão. Executamos teste hidrostático. Emitimos laudos e toda documentação segundo a NR13. Fazemos a inspeção inicial, periódica, interna, externa, de parada e retorno de operação.">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag    'application' %>
+    <%= stylesheet_link_tag    'site' %>     
+</head>
+<body>
+
+<div class="container-fluid">
+  <div class="row">
+    <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+      <div class="position-sticky">
+        <div class="px-3 py-4">
+          <h4 class="fw-bold">MANTINSP</h4>
+        </div>
+        <ul class="nav flex-column">
+          
+          <%# unless user_signed_in? %>
+            <!--
+            <li class="nav-item">                
+                < = link_to 'Área de usuário', new_user_session_path, class:"nav-link" %>
+            </li>
+
+            <li class="nav-item">                
+                < = link_to 'Cadastro de usuário', new_user_registration_path, class:"nav-link" %>
+            </li>
+            -->
+          <%# else %>
+            <!--
+            <li class="nav-item">                
+                < = link_to current_user.email, users_backoffice_welcome_index_path, class:"nav-link" %>
+            </li>
+
+            <li class="nav-item">                      
+                < = link_to 'Sair', destroy_user_session_path, method: :delete, class: "nav-link" %>
+            </li>
+            -->
+          <%# end %>
+          <li class="nav-item">                
+              <%= link_to 'Área do administrador', admin_path, class:"nav-link" %>
+              <%= link_to 'Área do inspetor', inspetor_path, class:"nav-link" %>
+              <%= link_to 'Área da empresa', empresa_path, class:"nav-link" %>
+          </li>
+        </ul>        
+      </div>
+    </nav>
+
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    
+      <%= yield %>
+    
+    </main>
+  </div>
+</div> 
+
+    <%= javascript_include_tag 'application' %>
+    <%= javascript_include_tag 'site' %>
+    
+    <%if notice %>
+        <%= javascript_tag do %>
+            $.bootstrapGrowl("<%= notice %>", {
+            ele: 'body', // which element to append to
+            type: 'success', // (null, 'info', 'error', 'success')
+            offset: {from: 'top', amount: 20}, // 'top', or 'bottom'
+            align: 'right', // ('left', 'right', or 'center')
+            width: 250, // (integer, or 'auto')
+            delay: 4000,
+            allow_dismiss: true,
+            stackup_spacing: 10 // spacing between consecutively stacked growls.
+            });
+        <%end%>
+    <%end%>
+</body>
+</html>
