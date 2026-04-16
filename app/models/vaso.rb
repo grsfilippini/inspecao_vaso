@@ -47,6 +47,7 @@ class Vaso < ApplicationRecord
     after_create :define_pressao_projeto
     before_save :define_diametro_externo
     before_update :define_diametro_externo
+    # before_save :corrigir_orientacao_fotos
       
     # Método para processar o arquivo carregado e convertê-lo para o formato necessário
     # def process_uploaded_foto_plaqueta
@@ -228,4 +229,17 @@ class Vaso < ApplicationRecord
       throw :abort
     end
   end
+
+  # def corrigir_orientacao_fotos
+  #   if foto_plaqueta.present?  
+  #     image = MiniMagick::Image.read(foto_plaqueta)
+  #     image.auto_orient
+  #     self.foto_plaqueta = image.to_blob
+  #   end
+  #   if foto_instalacao.present?  
+  #     image = MiniMagick::Image.read(foto_instalacao)
+  #     image.auto_orient
+  #     self.foto_instalacao = image.to_blob
+  #   end
+  # end
 end

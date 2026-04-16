@@ -102,12 +102,12 @@ module SharedMethods
       # Adiciona anotação de assinatura para ser visível no documento
       pagina = pdf_origami.get_page(1)
       #puts pdf_origami.pages.size
-      sigannot = Annotation::Widget::Signature.new
-      sigannot.Rect = Rectangle[:llx => 89.0, :lly => 386.0, :urx => 190.0, :ury => 353.0]
+      sigannot = Origami::Annotation::Widget::Signature.new
+      sigannot.Rect = Origami::Rectangle[:llx => 89.0, :lly => 386.0, :urx => 190.0, :ury => 353.0]
       pagina.add_annotation(sigannot)
 
       # Adiciona uma anotação qualquer
-      text_annotation = Annotation::Text.new
+      text_annotation = Origami::Annotation::Text.new
       text_annotation.Rect = [1, 34, 102, 1]
       text_annotation.Contents = "Assinado Digitalmente\nVerifique em http://validar.iti.gov.br"
       pagina.add_annotation(text_annotation)

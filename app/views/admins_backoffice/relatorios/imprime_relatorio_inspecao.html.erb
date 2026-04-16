@@ -1,46 +1,1130 @@
 <div class="container page">
-    <span style="font-size: 16pt; font-weight: bold;">RELATÓRIO DE INSPEÇÃO <%=@relatorio.id%></span>
-    <span style="font-size: 10pt;">no vaso número de série: </span> <span style="font-size: 10pt; font-weight: bold;"><%=@relatorio.vaso.num_serie%></span><br>
-    <div style="font-size: 10pt; text-align: justify">
-        <span style="font-size: 10pt;">Em </span><span style="font-size: 10pt; font-weight: bold;"><%= @relatorio.data_relatorio.strftime("%d/%m/%Y") %></span> 
-        <span style="font-size: 10pt;">executou-se inspeção de segurança  conforme descrito no relatório de inspeção número: </span>
-        <span style="font-size: 10pt; font-weight: bold;"><%=@relatorio.id%></span>
-        <span style="font-size: 10pt;">, pelo PH: <%=@relatorio.ph.nome%>, CREA <%=@relatorio.ph.crea%>, sendo que o equipamento foi liberado para operação com recomendações realizadas no  relatório  de  inspeção em referência, que faz parte integrante deste registro. A ART desta inspeção é <%=@relatorio.art.art%>.</span> <br>
-        <span style="font-size: 10pt;">A próxima inspeção externa deverá ser feita em </span><span style="font-size: 10pt; font-weight: bold;"><%=@relatorio.dt_prox_insp_externa.strftime("%d/%m/%Y")%></span><span style="font-size: 10pr;">.</span>
+    <table class="tableCabecalho" style="margin-bottom: 2pt;">
+        <tr>
+            <td class="col1"><%= image_tag asset_url('logo.png'), width: '94.5px' %></td>
+            <td class="col2">
+                <span style="font-size: 18pt; font-weight: bold;">ENGENHARIA MANTINSP LTDA</span><br>
+                <span style="font-size: 9pt;">CNPJ 23.526.523/0001-71</span><br>
+                <span style="font-size: 9pt;">Rua Guaira, 515 / Fone: 45-98807-2020</span><br>
+                <span style="font-size: 9pt;">Toledo/PR / e-mail: mantinsp@gmail.com</span><br>                
+            </td>
+            <td class="col3">
+                <span style="display: block; text-align: center; font-size: 12pt; font-weight: bold">RELATÓRIO N°</span><br>
+                <span style="display: block; text-align: center; font-size: 30pt; font-weight: bold; color: #B22222"><%= @relatorio.id %></span><br>
+            </td>            
+        </tr>
+    </table>
+    <span style="display: block; text-align: right; font-size: 8pt;">Relatório atende: ABNT NBR 15417:2007 e MTE NR13</span>
+    <br>
+    <div style='text-align: center'>
+        <span style="font-size: 16pt; font-weight: bold;">RELATÓRIO DE INSPEÇÃO <%=@relatorio.tipo_inspecao.nome%></span><br>
     </div>
     <br>
+    <span style="font-size: 12pt; font-weight: bold;">1 – IDENTIFICAÇÃO DO EQUIPAMENTO</span><br>
+    <span style="font-size: 10pt;">Identificação do equipamento após inspeção (os dados gerais indicados nesta página, incluindo PMTA, são caracterizados após inspeção, significando que se trata dos dados mais atuais do vaso, extraídos do prontuário final).</span><br>
+    
+    <div style="font-size:0;"> <!-- zera o “espaço” entre inline-blocks -->
+        <div style="display:inline-block; vertical-align: top; width:45%; font-size:10pt;">
+            <span style="font-size: 10pt;">Fabricante:</span>
+            <span style="font-size: 10pt; font-weight: bold;"><%= @relatorio.vaso.fabricante.nome %></span><br>
+
+            <span style="font-size: 10pt;">Número de série:</span>
+            <span style="font-size: 10pt; font-weight: bold; color: #B22222"><%= @relatorio.vaso.num_serie %></span><br>
+
+            <span style="font-size: 10pt;">Data de fabricação:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.vaso.dt_fabricacao_reconstituicao.strftime("%d/%m/%Y") %></span>
+            <span style="font-size: 8pt;">
+            <% if @relatorio.vaso.bsem_data_fabricacao %>
+                <%= "(Reconstituição de prontuário)" %>
+            <% end %>
+            </span><br>
+
+            <span style="font-size: 10pt;">Volume:</span>
+            <span style="font-size: 10pt; font-weight: bold; color: #B22222">
+            <%= number_with_precision(@relatorio.vaso.volume || 0, precision: 3) %> m&sup3
+            </span><br>
+
+            <span style="font-size: 10pt;">Pressão de projeto:</span>
+            <span style="font-size: 10pt; font-weight: bold;">
+            <%= number_with_precision(@relatorio.vaso.p_projeto || 0, precision: 3) %> MPa
+            </span><br>
+
+            <span style="font-size: 10pt;">PMTA:</span>
+            <span style="font-size: 10pt; font-weight: bold; color: #B22222">
+            <%= number_with_precision(@relatorio.vaso.pmta_atual || 0, precision: 3) %> MPa
+            </span><br>
+
+            <span style="font-size: 10pt;">PTH:</span>
+            <span style="font-size: 10pt; font-weight: bold;">
+            <%= number_with_precision(@relatorio.vaso.pth_atual || 0, precision: 3) %> MPa
+            </span><br>
+        </div>
+
+        <div style="display:inline-block; vertical-align: top; width:55%; font-size:10pt;">
+            <span style="font-size: 10pt;">Código de construção:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.vaso.codigo_construcao.codigo %></span><br>
+            <span style="font-size: 10pt;">Categoria NR13:</span>
+            <span style="font-size: 10pt; font-weight: bold; color: #B22222"><%= @relatorio.vaso.catnr13.categoria %></span><br>            
+            <span style="font-size: 10pt;">Fluído de serviço:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.vaso.fluido_servico.descricao%></span><br>
+            <span style="font-size: 10pt;">Classe de fluído:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.vaso.classe_fluido.descricao%></span><br>
+            <span style="font-size: 10pt;">Potencial de risco:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.vaso.potencial_risco.descricao%></span><br>
+            <span style="font-size: 10pt;">Finalidade do vaso:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.finalidade_vaso.finalidade%></span><br>
+            <span style="font-size: 10pt;">Tipo do vaso:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.vaso.tipo_vaso.tipo_vaso%></span><br>
+        </div>
+
+    </div>
+    <br>
+    <span style="font-size: 12pt; font-weight: bold;">2 – PROFISSIONAL HABILITADO RESPONSÁVEL PELO RELATÓRIO</span><br>
+    <div style="font-size:0;"> <!-- zera o “espaço” entre inline-blocks -->
+        <div style="display:inline-block; vertical-align: top; width:20%; font-size:10pt;">
+            <br>
+            <span style="font-size: 10pt;">Nome:</span>
+            <span style="font-size: 10pt; font-weight: bold;"><%= @relatorio.ph.nome %></span><br>
+
+            <span style="font-size: 10pt;">CREA:</span>
+            <span style="font-size: 10pt; font-weight: bold"><%= @relatorio.ph.crea %></span><br>
+
+            <span style="font-size: 10pt;">ART:</span>
+            <span style="font-size: 10pt; font-weight: bold"><%= @relatorio.art.art %></span><br>
+
+        </div>
+
+        <div style="display:inline-block; vertical-align: top; width:80%; font-size:10pt;">
+            <table class="tableAssinatura" style="width:95%;">
+                <tr>
+                    <td class="col1" style="text-align: center; width:45%; vertical-align: middle;">
+                        <div style="display: inline-block; text-align: center;">
+                            <span style="font-size: 10pt;">Local e data: <%= @relatorio.inspetora.cidade.nome %>, <%= @relatorio.data_relatorio.strftime("%d/%m/%Y") %></span><br>
+                            <br>
+                            <span style="font-size: 10pt;">.................................................</span><br>
+                            <span style="font-size: 6pt;">(Carimbo e assinatura)</span>
+                            <br>
+                            <br>
+                            <br>
+                        </div>
+                    </td>            
+                    <td class="col2" style="text-align: center; width:10%; vertical-align: middle;">
+                        <div style="display: inline-block; text-align: center;">
+                            <span style="font-size: 10pt;">ou</span>
+                        </div>
+                    </td>
+                    <td class="col3" style="width:45%;">
+                        <span style="font-size: 10pt;">DOCUMENTO ASSINADO DIGITALMENTE</span><br>
+                        <span style="font-size: 10pt; font-weight: bold;"><%=@relatorio.ph.nome%> </span> <span style="font-size: 10pt;"> - <%= Time.now.strftime("%d de %b de %Y") %></span><br>
+                        <span style="font-size: 10pt; font-weight: bold;"><%=@relatorio.ph.titulo%> </span> <span style="font-size: 10pt;"> CREA <%=@relatorio.ph.crea%></span><br>                
+                        <span style="font-size: 10pt;">Verifique em https://validar.iti.gov.br</span><br>
+                    </td>            
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+    <span style="font-size: 12pt; font-weight: bold;">ÍNDICE DO RELATÓRIO</span><br>
+        <div style="font-size:0;"> <!-- zera o “espaço” entre inline-blocks -->
+        <div style="display:inline-block; vertical-align: top; text-align: left; width:2%; font-size:10pt;">
+            <span style="font-size: 10pt;">1</span><br>
+            <span style="font-size: 10pt;">2</span><br>
+            <span style="font-size: 10pt;">3</span><br>
+            <span style="font-size: 10pt;">4</span><br>
+            <span style="font-size: 10pt;">5</span><br>
+            <span style="font-size: 10pt;">6</span><br>
+            <span style="font-size: 10pt;">7</span><br>
+            <span style="font-size: 10pt;">8</span><br>
+            <span style="font-size: 10pt;">9</span><br>
+            <span style="font-size: 10pt;">10</span><br>
+            <span style="font-size: 10pt;">11</span><br>
+            <span style="font-size: 10pt;">12</span><br>
+            <span style="font-size: 10pt;">13</span><br>
+            <span style="font-size: 10pt;">14</span><br>
+            <span style="font-size: 10pt;">15</span><br>
+            <span style="font-size: 10pt;">16</span><br>
+            <span style="font-size: 10pt;">17</span><br>
+            <span style="font-size: 10pt;">18</span><br>
+            <span style="font-size: 10pt;">19</span><br>
+            <span style="font-size: 10pt;"></span><br>
+                          
+        </div>
+
+        <div style="display:inline-block; vertical-align: top; text-align: left; width:88%; font-size:10pt;">
+            <span style="font-size: 10pt;">– IDENTIFICAÇÃO DO EQUIPAMENTO</span> <br>            
+            <span style="font-size: 10pt;">– PROFISSIONAL HABILITADO RESPONSÁVEL PELO RELATÓRIO</span> <br>            
+            <span style="font-size: 10pt;">– LOCAL DA INSTALAÇÃO DO VASO DE PRESSÃO</span> <br>            
+            <span style="font-size: 10pt;">– EMPRESA INSPETORA OU PROFISSIONAL HABILITADO</span> <br>
+            <span style="font-size: 10pt;">– VERIFICAÇÕES INICIAIS</span> <br>
+            <span style="font-size: 10pt;">– SERVIÇOS CONTRATADOS</span> <br>
+            <span style="font-size: 10pt;">– NORMAS DE REFERÊNCIA</span> <br>
+            <span style="font-size: 10pt;">– DOCUMENTAÇÃO EXISTENTE</span> <br>
+            <span style="font-size: 10pt;">– VERIFICAÇÃO DO LOCAL DE INSTALAÇÃO</span> <br>
+            <span style="font-size: 10pt;">– INSPEÇÃO E INTERVENÇÃO NOS CONTROLES INSTALADOS OU NÃO DIRETAMENTE SOBRE O VASO</span> <br>
+            <span style="font-size: 10pt;">– INSPEÇÃO NA ESTRUTURA DO VASO E INSTALAÇÕES ACESSÓRIAS</span> <br>
+            <span style="font-size: 10pt;">– FOTOS TIRADAS DURANTE A INSPEÇÃO</span> <br>
+            <span style="font-size: 10pt;">– RECOMENDAÇÕES DO PH AO USUÁRIO DO VASO DE PRESSÃO</span> <br>
+            <span style="font-size: 10pt;">– INTERVENÇÕES FEITAS PELO PH</span> <br>
+            <span style="font-size: 10pt;">– ITENS DE RISCO GRAVE E IMINENTE (RGI)</span> <br>
+            <span style="font-size: 10pt;">– RESULTADO DA INSPEÇÃO EXTERNA DO CORPO DO VASO</span> <br>
+            <span style="font-size: 10pt;">– RESULTADO DA INSPEÇÃO INTERNA DO CORPO DO VASO</span> <br>
+            <span style="font-size: 10pt;">– PROGRAMAÇÃO DAS PRÓXIMAS INSPEÇÕES</span> <br>
+            <span style="font-size: 10pt;">– PARECER QUANTO A INTEGRIDADE DO VASO DE PRESSÃO</span> <br>
+            <span style="font-size: 10pt;">ANEXO – SIGLAS E DEFINIÇÕES</span> <br>            
+        </div>
+
+        <div style="display:inline-block; vertical-align: top; width:10%; font-size:10pt; text-align:right;">
+            <span style="font-size: 10pt;">1</span><br>
+            <span style="font-size: 10pt;">1</span><br>
+            <span style="font-size: 10pt;">1</span><br>
+            <span style="font-size: 10pt;">1</span><br>
+            <span style="font-size: 10pt;">2</span><br>
+            <span style="font-size: 10pt;">2</span><br>
+            <span style="font-size: 10pt;">2</span><br>
+            <span style="font-size: 10pt;">2</span><br>
+            <span style="font-size: 10pt;">3</span><br>
+            <span style="font-size: 10pt;">3</span><br>
+            <span style="font-size: 10pt;">3</span><br>
+            <span style="font-size: 10pt;">4</span><br>
+            <span style="font-size: 10pt;">5</span><br>
+            <span style="font-size: 10pt;">5</span><br>
+            <span style="font-size: 10pt;">5</span><br>
+            <span style="font-size: 10pt;">5</span><br>
+            <span style="font-size: 10pt;">5</span><br>
+            <span style="font-size: 10pt;">6</span><br>
+            <span style="font-size: 10pt;">6</span><br>
+            <span style="font-size: 10pt;">6</span><br>
+                          
+        </div>
+
+    </div>
+    
+    <span style="display:block; font-size:10pt; text-align:right;">
+        Este relatório contém 7 páginas numeradas.
+    </span>
+    <br>    
+    
+    <span style="font-size: 12pt; font-weight: bold;">3 – LOCAL DA INSTALAÇÃO DO VASO DE PRESSÃO</span><br>
+    
+    <div style="font-size:0;"> <!-- zera o “espaço” entre inline-blocks -->
+        <div style="display:inline-block; vertical-align: top; width:50%; font-size:10pt;">
+            <span style="font-size: 10pt;">Empresa:</span>
+            <span style="font-size: 10pt; font-weight: bold;"><%= @relatorio.vaso.proprietaria.nome %></span><br>
+        
+            <span style="font-size: 10pt;">CNPJ/CPF:</span>
+            <span style="font-size: 10pt; font-weight: bold;"><%= @relatorio.vaso.proprietaria.cnpj %></span><br>
+
+            <span style="font-size: 10pt;">Endereço:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.vaso.proprietaria.endereco%>, &nbsp; <%= @relatorio.vaso.proprietaria.numero%></span><br>
+
+            <span style="font-size: 10pt;">Bairro:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.vaso.proprietaria.bairro%></span><br>
+
+            <span style="font-size: 10pt;">Cidade:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.vaso.proprietaria.cidade.nome%>, &nbsp; <%= @relatorio.vaso.proprietaria.cep%> </span><br>
+        </div>
+
+        <div style="display:inline-block; vertical-align: top; width:50%; font-size:10pt;">
+            <span style="font-size: 10pt;">Nome curto:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.vaso.proprietaria.nome_curto %></span><br>
+
+            <span style="font-size: 10pt;">Tag equipamento:</span>
+            <span style="font-size: 10pt; font-weight: bold;"><%= @relatorio.vaso.tag_proprietaria %></span><br>
+
+            <span style="font-size: 10pt;">Contato:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.vaso.proprietaria.contato %></span><br>
+
+            <span style="font-size: 10pt;">Fone:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.vaso.proprietaria.fone %></span><br>
+
+            <span style="font-size: 10pt;">e-mail:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.vaso.proprietaria.email %></span><br>
+        </div>
+    </div>
+    
+    <br>
+
+    <span style="font-size: 12pt; font-weight: bold;">4 – EMPRESA INSPETORA OU PROFISSIONAL HABILITADO</span><br>
+    
+    <div style="font-size:0;"> <!-- zera o “espaço” entre inline-blocks -->
+        <div style="display:inline-block; vertical-align: top; width:50%; font-size:10pt;">
+            <span style="font-size: 10pt;">Empresa:</span>
+            <span style="font-size: 10pt; font-weight: bold;"><%= @relatorio.inspetora.nome %></span><br>
+        
+            <span style="font-size: 10pt;">CNPJ/CPF:</span>
+            <span style="font-size: 10pt; font-weight: bold;"><%= @relatorio.inspetora.cnpj %></span><br>
+
+            <span style="font-size: 10pt;">Endereço:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.inspetora.endereco%>, &nbsp; <%= @relatorio.inspetora.numero%></span><br>
+
+            <span style="font-size: 10pt;">Bairro:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.inspetora.bairro%></span><br>
+
+            <span style="font-size: 10pt;">Cidade:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.inspetora.cidade.nome%>, &nbsp; <%= @relatorio.inspetora.cep%> </span><br>
+        </div>
+
+        <div style="display:inline-block; vertical-align: top; width:50%; font-size:10pt;">
+            <span style="font-size: 10pt;">Contato:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.inspetora.contato %></span><br>
+
+            <span style="font-size: 10pt;">Fone:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.inspetora.fone %></span><br>
+
+            <span style="font-size: 10pt;">e-mail:</span>
+            <span style="font-size: 10pt;"><%= @relatorio.inspetora.email %></span><br>
+        </div>
+    </div>
+
 </div>
 
 <!-- quebra de página -->
 <div style="page-break-before: always;"></div>
 
 <div class="container page">
-    <table class="tableAssinatura">
-        <tr>
-            <td class="col1" style="text-align: center; vertical-align: middle;">
-                <div style="display: inline-block; text-align: center;">
-                    <span style="font-size: 10pt;">Local e data: <%= @relatorio.inspetora.cidade.nome %>, <%= @relatorio.data_relatorio.strftime("%d/%m/%Y") %></span><br>
-                    <br>
-                    <span style="font-size: 10pt;">.................................................</span><br>
-                    <span style="font-size: 8pt;">(Carimbo e assinatura)</span>
-                    <br>
-                    <br>
-                    <br>
+    
+    <%= cabecalho_relatorio(@relatorio) %>
+    
+    <br>
+    <span style="font-size: 12pt; font-weight: bold;">5 – VERIFICAÇÕES INICIAIS</span><br>
+    <div style="font-size:0;"> <!-- zera o “espaço” entre inline-blocks -->
+        <div style="display:inline-block; vertical-align: top; width:50%; font-size:10pt;">
+
+            <%= radio_grupo(@relatorio, :possui_acesso_visual_externo, {0=>"Não",1=>"Total",2=>"Parcial"}, "Existe acesso visual externo?", "220px", :horizontal) %>
+            
+            <%= radio_grupo(@relatorio, :tipo_fixacao_vaso, {0=>"Fixo",1=>"Móvel",2=>"Misto"}, "Quanto a fixação do vaso", "220px", :horizontal) %>
+
+            <%= radio_grupo(@relatorio, :tipo_houve_alteracao_local_instalacao, {0=>"Não",1=>"Sim",2=>"1ª inspeção",3=>"Vaso móvel"}, "Local de instalação foi alterado?", "350px", :horizontal) %>
+
+            <%= radio_grupo(@relatorio, :tipo_apresenta_sinais_reparo, {0=>"Não",1=>"Sim, com PAR(*)",2=>"Sim, sem PAR"}, "Apresenta alterações/reparos?", "350px", :horizontal) %>            
+            <div style="margin-bottom:0px;">
+                <span style="margin-right:4px;">Data reparos:</span>
+                <span><%= @relatorio.data_reparos_alteracoes&.strftime("%d/%m/%Y") %></span>
+            </div>
+            <div style="margin-bottom:0px;">
+                <span style="margin-right:4px;">Reparos observados:</span>
+                <span><%= @relatorio.reparos_observados %></span>
+            </div>
+            <span style="font-size:9pt; color:#444;"><i>(*) PAR - Projeto de Alteração ou Reparo</i></span>
+
+        </div>
+
+        <div style="display:inline-block; vertical-align: top; width:50%; font-size:10pt;">
+            <%= radio_grupo(@relatorio, :tipo_acesso_interno, {0=>"Janela de visita",1=>"Pequena abertura",2=>"Não"}, "Existe acesso visual interno?", "350px", :horizontal) %>
+            <div style="margin-bottom:10px;">
+                <span style="margin-right:4px;">Método alternativo exame interno:</span>
+                <span><%= @relatorio.metodo_alternativo_exame_interno %></span>
+            </div>
+
+            <%= checkbox_boolean_sequence(
+                object: @relatorio,
+                direction: :vertical,
+                fields: [
+                    [:bvaso_emoperacao_mesmocom_deterioracao_atestada, "Vaso em operação mesmo com deterioração atestada"],
+                    [:b_vaso_inativo_mais_doze_meses, "Vaso inativo por mais de 12 meses"],
+                    [:possui_respiro, "Possui respiro"],
+                    [:possui_indicador_nivel, "Possui indicador de nível"],
+                    [:possui_indicador_temperatura, "Possui indicador de temperatura"]                
+                ]
+            ) %>
+        </div>
+
+    </div>
+    
+    <br>
+    <br>
+    <span style="font-size: 12pt; font-weight: bold;">6 – SERVIÇOS CONTRATADOS E REALIZADOS</span><br>
+    <div style="font-size:0;"> <!-- zera o “espaço” entre inline-blocks -->
+        <div style="display:inline-block; vertical-align: top; width:33%; font-size:10pt;">
+            <b>Vaso</b>
+            <%= checkbox_boolean_sequence(
+                object: @relatorio,
+                direction: :vertical,
+                fields: [
+                    [:insp_contratada_vaso_externa, "Exame externo"],
+                    [:insp_contratada_vaso_interna, "Exame interno"],
+                    [:insp_contratada_vaso_teste_hidrostatico, "Teste hidrostático"],
+                    [:insp_contratada_vaso_mapa_espessura, "Mapa espessura"],
+                    [:insp_contratada_vaso_inicial, "Inspeção inicial"],
+                    [:insp_contratada_vaso_problema_operacional, "Problema operacional"],
+                    [:insp_contratada_vaso_alteracao_operacional, "Alteração de parâmetros de operação"]                    
+                ]
+            ) %>
+        </div>
+
+        <div style="display:inline-block; vertical-align: top; width:33%; font-size:10pt;">
+            <br>
+            <%= checkbox_boolean_sequence(
+                object: @relatorio,
+                direction: :vertical,
+                fields: [
+                    [:insp_contratada_vaso_alteracao_estrutural, "Alteração na estrutura"],
+                    [:insp_contratada_vaso_alteracao_reparo, "Alteração ou reparo"],
+                    [:insp_contratada_vaso_reconstituicao_prontuario, "Reconstituição do prontuário"],
+                    [:insp_contratada_vaso_paradaretorno_operacao, "Parada ou retorno de operação"],
+                    [:insp_contratada_vaso_projeto_instalacao_geral, "Projeto de instalação geral"],
+                    [:insp_contratada_vaso_projeto_instalacao_dovaso_individual, "Projeto de instalação individual"]                    
+                ]
+            ) %>
+        </div>
+
+        <div style="display:inline-block; vertical-align: top; width:34%; font-size:10pt;">
+            <b>Dispositivos de Segurança</b>            
+            <%= checkbox_boolean_sequence(
+                object: @relatorio,
+                direction: :vertical,
+                fields: [
+                    [:insp_contratada_valvsegpop_interna, "Exame interno"],
+                    [:insp_contratada_valvsegpop_externa, "Exame externo"],
+                    [:insp_manometro, "Inspeção do manômetro"],
+                    [:insp_pressostato, "Inspeção do pressostato"],
+                    [:insp_dreno, "Inspeção do dreno"]                    
+                ]
+            ) %>
+        </div>
+    </div>
+    
+    <br>
+    <br>
+    <span style="font-size: 12pt; font-weight: bold;">7 – NORMAS DE REFERÊNCIA PARA AS INSPEÇÕES</span><br>
+    <div style="font-size:0;"> <!-- zera o “espaço” entre inline-blocks -->
+        <div style="display:inline-block; vertical-align: top; width:50%; font-size:10pt;">
+            <div style="margin-bottom:10px;">
+                <span style="margin-right:4px;">Norma Brasileira de construção:</span>
+                <span><%= @relatorio.norma_brasileira_construcao %></span>
+            </div>            
+            <div style="margin-bottom:10px;">
+                <span style="margin-right:4px;">Norma Brasileira de inspeção:</span>
+                <span><%= @relatorio.norma_brasileira_inspecao %></span>
+            </div>            
+        </div>
+
+        <div style="display:inline-block; vertical-align: top; width:50%; font-size:10pt;">
+            <div style="margin-bottom:10px;">
+                <span style="margin-right:4px;">Norma Regulamentadora Brasileira:</span>
+                <span><%= @relatorio.mte_norma.norma %></span>
+            </div>            
+            <div style="margin-bottom:10px;">
+                <span style="margin-right:4px;">Código usado na inspeção:</span>
+                <span><%= @relatorio.codigo_usado_inspecao %></span>
+            </div> 
+        </div>
+    </div>
+
+    <br>
+    <br>
+    <span style="font-size: 12pt; font-weight: bold;">8 – VERIFICAÇÃO DA DOCUMENTAÇÃO EXISTENTE</span><br>
+    <div style="font-size:0;"> <!-- zera o “espaço” entre inline-blocks -->
+        <div style="display:inline-block; vertical-align: top; width:50%; font-size:10pt;">
+                    
+            <div style="width:95%; font-size:10pt;">
+                <div style="display:inline-block; width:45%;">
+                    <%= check_box_tag "bexiste_prontuario", "1", @relatorio.bexiste_prontuario, disabled: true %>
+                    Prontuário
                 </div>
-            </td>            
-            <td class="col2" style="text-align: center; vertical-align: middle;">
-                <div style="display: inline-block; text-align: center;">
-                    <span style="font-size: 10pt;">ou</span>
+
+                <div style="display:inline-block; width:45%;">
+                    <%= check_box_tag "bprontuario_digital", "1", @relatorio.bprontuario_digital, disabled: true %>
+                    Digital
                 </div>
-            </td>
-            <td class="col3">
-                <span style="font-size: 10pt;">DOCUMENTO ASSINADO DIGITALMENTE</span><br>
-                <span style="font-size: 10pt; font-weight: bold;"><%=@relatorio.ph.nome%> </span> <span style="font-size: 10pt;"> - <%= Time.now.strftime("%d de %b de %Y") %></span><br>
-                <span style="font-size: 10pt; font-weight: bold;"><%=@relatorio.ph.titulo%> </span> <span style="font-size: 10pt;"> CREA <%=@relatorio.ph.crea%></span><br>                
-                <span style="font-size: 10pt;">Verifique em https://validar.iti.gov.br</span><br>
-            </td>            
-        </tr>
-    </table>
+            </div>
+            
+            <div style="width:95%; font-size:10pt;  margin-bottom:3px;">
+                <div style="display:inline-block; width:45%;">
+                    <%= check_box_tag "bpossui_registro_seguranca", "1", @relatorio.bpossui_registro_seguranca, disabled: true %>
+                    Registro de segurânça
+                </div>
+
+                <div style="display:inline-block; width:45%;">
+                    <%= check_box_tag "btem_data_instalacao_no_reg_seguranca", "1", @relatorio.btem_data_instalacao_no_reg_seguranca, disabled: true %>
+                    Data instalação do vaso
+                </div>
+            </div>
+
+            <%= checkbox_boolean_sequence(
+                object: @relatorio,
+                direction: :vertical,
+                fields: [
+                    [:bpossui_mapa_medicao_espessura, "Mapa da espessura do vaso"],
+                    [:bpossui_laudo_teste_hidrostatico, "Laudo de teste hidrostático (TH)"],
+                    [:bexiste_memorial_calculo_teste_hidrostatico, "Memorial de cálculo do TH"],
+                    [:bpossui_programacao_inspecoes, "Programação das inspeções"],
+                    [:bexiste_inspecao_periodica_interna_externa_teste_hidrostatico, "Inspeção periódica externa, interna e de TH"],
+                    [:bexiste_inspecao_alteracao_operacional, "Inspeção de alteração de parâmetros operacionais"],
+                    [:bexiste_inspecao_de_reparo, "Inspeção de reparo"],
+                    [:bexiste_inspecao_deretorno_ouparada_deoperacao, "Inspeção de retorno ou parada de operação"],
+                    [:bexiste_inspecao_reconstituicao_prontuario, "Inspeção de reconstituição de prontuário"],
+                    [:bexiste_inspecao_problema_operacional, "Inspeção devido a problema operacional"],
+                    [:bexiste_inspecao_de_alteracao, "Inspeção de alteração da estrutura do vaso"],
+                    [:bexiste_projeto_instalacao_individual_dovaso, "Projeto de instalação individual do vaso"],
+                    [:bexiste_projeto_instalacao_geral_localizacao_vasos, "Projeto de instalação geral"],
+                    [:bexiste_desenho_conjunto_geral, "Desenho de conjunto geral, layout da empresa"],
+                    [:bexiste_desenho_detalhes_de_todos_elementos, "Desenho de detalhes de todos elementos"]
+                ]
+            ) %>
+        </div>
+
+        <div style="display:inline-block; vertical-align: top; width:50%; font-size:10pt;">
+            <%= checkbox_boolean_sequence(
+                object: @relatorio,
+                direction: :vertical,
+                fields: [
+                    [:bexiste_desenho_plaqueta_identif_vaso, "Desenho da plaqueta de identificação do vaso"],
+                    [:bpossui_plaqueta_identificacao_nr13_dovaso, "Plaqueta de identificação NR13 do vaso"],
+                    [:bpossui_plaqueta_identificacao_fabricante_vaso, "Plaqueta de identificação do fabricante do vaso"]                    
+
+                ]
+            ) %>
+            <%= radio_grupo(@relatorio, :foi_executada_inspecao_inicial, {0=>"Não",1=>"Sim",2=>"Dispensado",3=>"1º Inspeção"}, "Foi executada a inspeção inicial?", "400px", :horizontal) %>
+            <%= radio_grupo(@relatorio, :possui_relatorios_inspecao, {0=>"Não",1=>"Sim",2=>"Dispensado, é inicial ou 1º periódica"}, "O vaso possui relatórios de inspeção?", "400px", :horizontal) %>
+            <%= radio_grupo(@relatorio, :possui_relatorios_inspecao, {0=>"Não",1=>"Sim",2=>"Dispensado"}, "Possui operador qualificado?", "400px", :horizontal) %>
+            <%= radio_grupo(@relatorio, :recomendacoes_insp_anterior_foram_realizadas, {0=>"Não",1=>"Sim",2=>"Parcialmente"}, "As recomendações de inspeções anteriores foram realizadas?", "400px", :horizontal) %>
+            <%= radio_grupo(@relatorio, :possui_certif_calibracao_dispositivos_seguranca, {0=>"Não",1=>"Sim",2=>"Dispensado cfme NR13"}, "Existe certificado calibração do dispositivo de segurança?", "400px", :horizontal) %>
+        </div>
+    </div>
+
+</div>
+
+<div class="container page">
+    
+    <%= cabecalho_relatorio(@relatorio) %>
+    
+    <br>
+    <span style="font-size: 12pt; font-weight: bold;">9 – VERIFICAÇÃO DO LOCAL DE INSTALAÇÃO</span><br>
+    <div style="width:95%; font-size:10pt; overflow:hidden;">
+
+        <div style="float:left; width:60%; margin-top:3px;">
+            <div style="margin-bottom:10px">
+                <span style="margin-right:4px;">Ambiente de instalação:</span>
+                <span><%= @relatorio.ambiente_inst.ambiente %></span>
+            </div>
+
+            <%= radio_grupo(@relatorio, :tipo_cobetura,
+                {0=>"Não tem",1=>"Tem cobertura",2=>"Cobertura improvisada"},
+                "Cobertura",
+                "400px",
+                :horizontal) %>
+
+            <%= checkbox_boolean_sequence(
+                object: @relatorio,
+                direction: :vertical,
+                fields: [
+                    [:bdispoe_duassaidas_amplas_sinalizadas_desobstruidas, "Dispõe de pelo menos 2 (duas) saídas amplas, permanentemente desobstruídas, sinalizadas e dispostas em direções distintas"],
+                    [:bdispor_acesso_facil_seguro_paraoperacao_manutencao, "Dispõe de acesso fácil e seguro para as atividades de manutenção, operação e inspeção, sendo que, para guarda-corpos vazados, os vãos devem ter dimensões que impeçam a queda de pessoas"],
+                    [:bdispor_ventilacao_permanente, "Dispõe ventilação permanente com entradas de ar que não possam ser bloqueadas"],
+                    [:bdispor_iluminacao_artificial, "Dispõe de iluminação conforme normas oficiais vigentes"],
+                    [:bpossui_iluminacao_emergencia, "Possui sistema de iluminação de emergência"],
+                    [:bpossui_placa_dolocal_deinstalacao, "Existe placa de identificação do local de instalação do vaso conforme modelo ao lado?"]
+                ]
+            ) %>
+        </div>
+
+        <div style="float:right; width:300px; height:200px; margin-top:3px; border:1px solid #000; padding:8px; background-color:yellow; overflow:hidden;">
+            <div style="font-weight:bold; text-align:center; margin-bottom:6px; font-size:20pt;">
+                VASO DE PRESSÃO
+            </div>
+
+            <div style="font-size:12pt;">
+                <b>Categoria:</b> <%= @relatorio.vaso.catnr13.categoria %>
+                <br><br>
+            </div>
+
+            <div style="font-size:12pt;">
+                <b>Fabricante:</b> <%= @relatorio.vaso.fabricante.nome_curto %>
+                <br><br>
+            </div>
+
+            <div style="font-size:12pt;">
+                <b>Núm. Série:</b> <%= @relatorio.vaso.num_serie %>
+                <br>
+                <br>
+            </div>
+
+            <div style="text-align:center;">
+                <%= @relatorio.vaso.proprietaria.nome_curto %>
+            </div>
+
+            <div style="text-align:center;">
+                <%= @relatorio.vaso.proprietaria.cidade.nome %>
+            </div>
+        </div>
+
+        <div style="float:right; width:300px; font-size:8pt; text-align:center; margin-top:3px;">
+            Tamanho aproximado: largura = 300 x altura = 200 mm
+        </div>
+
+    </div>
+    
+    <br>
+
+    <span style="font-size: 12pt; font-weight: bold;">10 – INSPEÇÃO E INTERVENÇÃO NOS CONTROLES INSTALADOS OU NÃO DIRETAMENTE SOBRE O VASO</span><br>
+    <div style="font-size:0; margin-top:3px;"> <!-- zera o “espaço” entre inline-blocks -->
+
+        <div style="margin-bottom: 6px;">
+            <label style="display: flex; align-items: flex-start; gap: 6px; font-size: 10pt;">
+                <input
+                type="checkbox"
+                <%= 'checked' if @relatorio.belementos_facilmente_acessiveis_drenosrespiroseoutros %>
+                disabled
+                >
+                <span>
+                    Estão acessíveis os drenos, respiros, bocas de visita, indicadores de nível, pressão e temperatura.
+                </span>
+            </label>
+        </div>
+
+        <div style="display:inline-block; vertical-align: top; width:50%; font-size:10pt;">
+            <fieldset style="border:1px solid #000; padding:8px; margin-bottom:8px;">
+                <legend style="font-size:10pt; font-weight:bold; padding:0 6px;">
+                    Dispositivo de Segurança
+                </legend>
+
+                <div style="display:inline-block; vertical-align: top; width:49%; font-size:10pt;">
+                    <%= radio_grupo(@relatorio, :possui_dispositivo_deseguranca, {0=>"Não possui",1=>"Válvula de seg. e alívio",2=>"Válvula de alívio",3=>"Válvula de segurança"}, "", "185px", :vertical) %>                    
+                </div>      
+
+                <div style="display:inline-block; vertical-align: top; width:49%; font-size:10pt;">
+                    <%= checkbox_boolean_sequence(
+                        object: @relatorio,
+                        direction: :vertical,
+                        fields: [
+                            [:bdispseg_foifeito_ajuste, "Feito ajuste (Limpo e lubrific.)"],
+                            [:bdispseg_foisubstituido, "Foi substituído"],
+                            [:serv_contratado_dispseg_calibracao, "Foi calibrado"]
+                        ]
+                    ) %>
+                </div>
+            
+                <div style="display:inline-block; width:95%; font-size:10pt; vertical-align:top;">
+                    
+                    <span style="display:inline-block; margin-top:4px;">Pressão de abertura:</span>
+                    <span style="display:inline-block; margin-top:4px; font-weight:bold; font-size:11pt;">
+                        <%= '%.3f' % (@relatorio.dispositivoseg_pabertura || 0) %>
+                    </span>
+                    <span style="display:inline-block; margin-top:4px;">MPa</span>
+
+                    <span style="display:inline-block; margin-top:4px; width:95%; box-sizing:border-box;">
+                        <%= @relatorio.dispositivoseg_observacoes %>
+                    </span>
+
+                </div>
+
+                <%= radio_grupo(@relatorio, :possui_dispositivo_contra_bloqueio_dodisp_seg, {0=>"Não",1=>"Sim",2=>"Disp. seg. instalado diretamente no vaso"}, "Possui dispositivo anti-bloqueio", "400px", :horizontal) %>
+                
+            
+            </fieldset>
+             
+            <fieldset style="border:1px solid #000; padding:8px; margin-bottom:8px;">
+                <legend style="font-size:10pt; font-weight:bold; padding:0 6px;">
+                    Manômetro
+                </legend>
+
+                <%= checkbox_boolean_sequence(
+                    object: @relatorio,
+                    direction: :vertical,
+                    fields: [
+                        [:bpossui_manometro_ousimilar, "Existe"],
+                        [:bmanometro_ehmantido_calibrado_eemboas_condicoes_operacao, "Mantido calibrado e em boas condições operação"],
+                        [:bman_foi_substituido, "Foi substituído"],
+                        [:bman_foifeito_ajuste, "Feito ajuste (aberto, limpo e lubrific.)"],
+                        [:bman_foifeita_calibracao, "Foi calibrado"]
+                    ]
+                ) %>
+
+                <span style="display:inline-block; margin-top:4px; width:95%; box-sizing:border-box;">
+                    <%= @relatorio.manometro_observacoes %>
+                </span>
+
+            </fieldset>
+
+        </div>
+        
+
+        <div style="display:inline-block; vertical-align: top; width:50%; font-size:10pt;">
+            <fieldset style="border:1px solid #000; padding:8px; margin-bottom:8px;">
+                <legend style="font-size:10pt; font-weight:bold; padding:0 6px;">
+                    Dreno
+                </legend>
+
+                <%= checkbox_boolean_sequence(
+                    object: @relatorio,
+                    direction: :vertical,
+                    fields: [
+                        [:bdreno_existe, "Existe"],
+                        [:bdreno_foisubstituido, "Foi substituído"],
+                        [:bdreno_foifeita_manutencao, "Foi executada a manutenção (remoção e limpeza)"],
+                        [:bdreno_posicionado_ptomais_baixo, "Está no ponto mais baixo"],
+                        [:bdreno_inclinacao_positiva, "Inclinação positiva"],
+                        [:bdreno_foiacionado_paradrenar_liqacumulado, "Dreno foi acionado"]                            
+                    ]
+                ) %>
+
+                <span style="display:inline-block; margin-top:3px;"> Volume drenado: </span>
+
+                <span style="display:inline-block; font-weight:bold; margin-top:3px; ">
+                    <%= (@relatorio.dreno_qtdadeliquido_drenado || 0).to_i %>
+                </span>
+
+                <span style="display:inline-block; margin-top:3px;"> ml </span>
+                
+                <%= radio_grupo(@relatorio, :tipo_dreno_id, {0=>"Manual",1=>"Automático",2=>"Misto"}, "Tipo de acionamento", "400px", :horizontal) %>
+
+                <span style="display:inline-block; margin-top:4px; width:95%; box-sizing:border-box;">
+                    <%= @relatorio.dreno_observacoes %>
+                </span>
+
+            </fieldset>
+
+            <fieldset style="border:1px solid #000; padding:8px; margin-bottom:8px;">
+                <legend style="font-size:10pt; font-weight:bold; padding:0 6px;">
+                    Pressostato 
+                </legend>
+
+                <%= checkbox_boolean_sequence(
+                    object: @relatorio,
+                    direction: :vertical,
+                    fields: [
+                        [:bpressostato_existe, "Existe"],
+                        [:bpressostato_ehmantido_calibrado_eemboas_condicoes_operacao, "Mantido calibrado e em boas condições operação"],
+                        [:bpressostato_foisubstituido, "Foi substituído"],
+                        [:bpressostato_foifeito_ajuste, "Feito ajuste (aberto, limpo e lubrific.)"],
+                        [:bpressostato_foiverificada_faixadetrabalho, "Foi verificada e/ou ajustada a faixa de trabalho"]
+                    ]
+                ) %>
+
+                <span style="display:inline-block; margin-top:4px;">Liga com:</span>
+                <span style="display:inline-block; margin-top:4px; font-weight:bold; font-size:11pt;">
+                    <%= '%.3f' % (@relatorio.pressostato_pliga || 0) %>
+                </span>
+                <span style="display:inline-block; margin-top:4px;">MPa</span>
+
+                <span style="display:inline-block; margin-left:8px; margin-top:4px;">Desliga com:</span>
+                <span style="display:inline-block; margin-top:4px; font-weight:bold; font-size:11pt;">
+                    <%= '%.3f' % (@relatorio.pressostato_pdesliga || 0) %>
+                </span>
+                <span style="display:inline-block; margin-top:4px;">MPa</span>
+                <br>
+                <span style="display:inline-block; margin-top:4px; width:95%; box-sizing:border-box;">
+                    <%= @relatorio.pressostato_observacoes %>
+                </span>
+            </fieldset>
+        </div>
+        
+    </div>
+
+    <span style="display:inline-block; margin-top:4px; width:95%; box-sizing:border-box; font-size:10pt;">        
+        <%= checkbox_boolean_sequence(
+            object: @relatorio,
+            direction: :vertical,
+            fields: [
+                [:boutros_elementos_controle_ehmantido_calib_eemboas_condicoes_op, "Outros elementos de controle são mantidos calibrados e em boas condições de operacao."]
+            ]
+        ) %>
+    </span>
+
+    <span style="display:inline-block; margin-top:4px; width:95%; box-sizing:border-box; font-size:10pt;">
+        <%= @relatorio.anotacoes_elementos_controle_calibrados_eemboas_condicoes_opera %>
+    </span>
+
+    <br>
+
+    <span style="font-size: 12pt; font-weight: bold;">11 – INSPEÇÃO NA ESTRUTURA DO VASO E INSTALAÇÕES ACESSÓRIAS</span><br>
+    <div style="font-size:0; margin-top:3px;"> <!-- zera o “espaço” entre inline-blocks -->
+
+        <div style="display:inline-block; vertical-align: top; width:50%; font-size:10pt;">
+            <%= radio_grupo(@relatorio, :tipo_degrausacesso_eguardacorpo_boascondicoes, {0=>"Não",1=>"Sim",2=>"Não necessário",3=>"Não existe"}, "Degraus e guarda corpo estão em boas condições?", "400px", :horizontal) %>
+            <%= checkbox_boolean_sequence(
+                object: @relatorio,
+                direction: :vertical,
+                fields: [
+                    [:bexiste_falha_nasolda_entreberco_ecasco_dovaso, "Existe falha na solda entre o berço e o casco do vaso de pressão"],
+                    [:bexiste_deformacoes_trincas_vazamentos_vaso, "Existem deformações, trincas, vazamentos ou outros que comprometam a integridade estrutural do vaso"],
+                    [:bexiste_corrosaoacentuada_trincas_oupartes_soltas, "Existe corrosão acentuada, trincas ou partes soltas"],
+                    [:bexiste_corrosao_outrincas_noselementos_fixacao, "Há corrosão, deformação ou trincas nos elementos de fixação"]
+                ]
+            ) %>
+        </div>        
+
+        <div style="display:inline-block; vertical-align: top; width:50%; font-size:10pt;">
+            <%= radio_grupo(@relatorio, :partesup_pisos_passarelas_platafor_eos_perfis_sustent_emboascon, {0=>"Não",1=>"Sim",2=>"Não necessário",3=>"Não existe"}, "Pisos das passarelas, plataformas e perfís de sustentação estão em boas condições?", "400px", :horizontal) %>
+            <%= checkbox_boolean_sequence(
+                object: @relatorio,
+                direction: :vertical,
+                fields: [
+                    [:bpintura_emboas_condicoes, "A pintura está em boas condições"],
+                    [:basconexoes_eacessorios_estao_emboas_condicoesfisicas, "As conexões e acessórios estão em boas condições físicas"],
+                    [:basconexoes_acessorios_apresentamvazamentos, "As conexões e acessórios apresentam vazamentos"],
+                    [:baspartes_moveis_estao_protegidas, "As partes móveis estão protegidas"]
+                ]
+            ) %>            
+        </div>
+
+    </div>
+
+    <span style="display:inline-block; margin-top:4px; width:95%; box-sizing:border-box; font-size:10pt;">
+        <%= @relatorio.obs_inspecao_elementos_sobre_o_vaso_ou_nao %>
+    </span>
+
+</div>
+
+
+<div class="container page">
+    
+    <%= cabecalho_relatorio(@relatorio) %>
+    
+    <span style="font-size: 12pt; font-weight: bold;">12 – FOTOS TIRADAS DURANTE A INSPEÇÃO</span><br>
+    <div style="font-size:0; margin-top:3px;"> <!-- zera o “espaço” entre inline-blocks -->
+
+        <div style="display:inline-block; vertical-align:top; width:49%; font-size:10pt; box-sizing:border-box;">
+            <div style="font-weight:bold; margin-bottom:4px; text-align:center;">
+                ANTES DA INSPEÇÃO
+            </div>
+
+            <% if @relatorio.foto_antes_inspecao.present? %>
+                <div style="width:100%; text-align:center; margin-bottom:8px; overflow:hidden;">
+                <%= image_tag(
+                        "data:image/jpeg;base64,#{Base64.strict_encode64(@relatorio.foto_antes_inspecao)}",
+                        style: "
+                        max-width:100%;
+                        max-height:110mm;
+                        width:auto;
+                        height:auto;
+                        border:1px solid #000;
+                        display:inline-block;
+                        "
+                    ) %>
+                </div>
+            <% else %>
+                <span style="font-size:8pt; color:#777;">Sem imagem</span>
+            <% end %>
+
+            <br>
+
+            <div style="font-weight:bold; margin-bottom:4px; text-align:center;">
+                INSTALAÇÃO DO RESERVATÓRIO
+            </div>
+
+            <% if @relatorio.foto_instalacao.present? %>
+                <div style="width:100%; text-align:center; margin-bottom:8px; overflow:hidden;">
+                <%= image_tag(
+                        "data:image/jpeg;base64,#{Base64.strict_encode64(@relatorio.foto_instalacao)}",
+                        style: "
+                        max-width:100%;
+                        max-height:110mm;
+                        width:auto;
+                        height:auto;
+                        border:1px solid #000;
+                        display:inline-block;
+                        "
+                    ) %>
+                </div>
+            <% else %>
+                <span style="font-size:8pt; color:#777;">Sem imagem</span>
+            <% end %>
+            </div>
+
+            <div style="display:inline-block; vertical-align:top; width:49%; font-size:10pt; box-sizing:border-box;">
+            <div style="font-weight:bold; margin-bottom:4px; text-align:center;">
+                APÓS A INSPEÇÃO
+            </div>
+
+            <% if @relatorio.foto_pos_inspecao.present? %>
+                <div style="width:100%; text-align:center; margin-bottom:8px; overflow:hidden;">
+                <%= image_tag(
+                        "data:image/jpeg;base64,#{Base64.strict_encode64(@relatorio.foto_pos_inspecao)}",
+                        style: "
+                        max-width:100%;
+                        max-height:110mm;
+                        width:auto;
+                        height:auto;
+                        border:1px solid #000;
+                        display:inline-block;
+                        "
+                    ) %>
+                </div>
+            <% else %>
+                <span style="font-size:8pt; color:#777;">Sem imagem</span>
+            <% end %>
+
+            <br>
+
+            <div style="font-weight:bold; margin-bottom:4px; text-align:center;">
+                TESTE HIDROSTÁTICO (Se houver)
+            </div>
+
+            <% if @relatorio.foto_th.present? %>
+                <div style="width:100%; text-align:center; margin-bottom:8px; overflow:hidden;">
+                <%= image_tag(
+                        "data:image/jpeg;base64,#{Base64.strict_encode64(@relatorio.foto_th)}",
+                        style: "
+                        max-width:100%;
+                        max-height:110mm;
+                        width:auto;
+                        height:auto;
+                        border:1px solid #000;
+                        display:inline-block;
+                        "
+                    ) %>
+                </div>
+            <% else %>
+                <span style="font-size:8pt; color:#777;">Sem imagem</span>
+            <% end %>
+        </div>
+
+    </div>
+
+    <br>
+    <div style="font-weight:bold; margin-bottom:4px; text-align:center;">
+        PLAQUETA DE IDENTIFICAÇÃO DO VASO
+    </div>
+    <% if @relatorio.vaso.foto_plaqueta.present? %>
+    <div style="width:100%; text-align:center; margin-bottom:8px; overflow:hidden;">
+    <%= image_tag(
+            "data:image/jpeg;base64,#{Base64.strict_encode64(@relatorio.vaso.foto_plaqueta)}",
+            style: "
+            max-width:100%;
+            max-height:50mm;
+            width:auto;
+            height:auto;
+            border:1px solid #000;
+            display:inline-block;
+            "
+        ) %>
+    </div>
+    <% else %>
+    <span style="font-size:8pt; color:#777; text-align:center;">Sem imagem</span>
+    <% end %>
+
+</div>
+
+
+<div class="container page">
+    
+    <%= cabecalho_relatorio(@relatorio) %>
+    
+    <span style="font-size: 12pt; font-weight: bold;">13 – RECOMENDAÇÕES AO USUÁRIO DO VASO DE PRESSÃO</span>
+    <div style="font-size:0; margin-top:3px;"> <!-- zera o “espaço” entre inline-blocks -->
+        <div style="font-size:10pt; width:100%; box-sizing:border-box;">
+            <%= simple_format(@relatorio.recomendacoes_ao_usuario) %>
+            <span style="font-size: 10pt; font-weight: bold;">
+                Estipulo um prazo de <%= @relatorio.prazo_recomendacoes.to_i %> dias para implementar as recomendações acima listadas.
+            </span>
+        </div>
+    </div>
+    
+    <br>
+
+    <span style="font-size: 12pt; font-weight: bold;">14 – INTERVENÇÕES FEITAS PELO INSPETOR</span>
+    <div style="font-size:0; margin-top:3px;"> <!-- zera o “espaço” entre inline-blocks -->
+        <div style="font-size:10pt; width:100%; box-sizing:border-box;">
+            <%= simple_format(@relatorio.intervencoes_feitas_pelo_ph) %>            
+        </div>
+    </div>
+    
+    <br>
+
+    <span style="font-size: 12pt; font-weight: bold;">15 – ITENS DE RISCO GRAVE E IMINENTE (RGI)</span>
+    <div style="font-size:0; margin-top:3px;"> <!-- zera o “espaço” entre inline-blocks -->
+        <div style="font-size:10pt; width:100%; box-sizing:border-box;">
+            <%= simple_format(@relatorio.relacao_rgi) %>            
+        </div>
+    </div>
+    
+    <br>
+
+    <span style="font-size: 12pt; font-weight: bold;">16 – RESULTADO DA INSPEÇÃO EXTERNA DO CORPO DO VASO</span>
+    <div style="font-size:0; margin-top:3px;"> <!-- zera o “espaço” entre inline-blocks -->
+    
+        <div style="display:inline-block;vertical-align:top;font-size:10pt;width:65%;box-sizing:border-box;">  
+            <%= simple_format(@relatorio.result_insp_externa) %>            
+        </div>
+
+        <% if @relatorio.foto_corpo.present? %>
+            <div style="display:inline-block;vertical-align:top;font-size:10pt;width:35%;box-sizing:border-box;">  
+                <%= image_tag(
+                "data:image/jpeg;base64,#{Base64.strict_encode64(@relatorio.foto_corpo)}",
+                style: "
+                max-width:100%;
+                max-height:80mm;
+                width:auto;
+                height:auto;
+                border:1px solid #000;
+                display:inline-block;
+                ") %>
+            </div>
+        <% else %>
+            <span style="font-size:8pt; color:#777; text-align:center;">Sem imagem</span>
+        <% end %>
+
+    </div>
+    <br>
+    <span style="font-size: 12pt; font-weight: bold;">17 – RESULTADO DA INSPEÇÃO INTERNA DO CORPO DO VASO</span>
+    <div style="font-size:0; margin-top:3px;"> <!-- zera o “espaço” entre inline-blocks -->
+    
+        <div style="display:inline-block;vertical-align:top;font-size:10pt;width:66%;box-sizing:border-box;">  
+            <%= simple_format(@relatorio.result_insp_interna) %>            
+        </div>
+
+        <% if @relatorio.foto_interna1.present? %>
+            <div style="display:inline-block;vertical-align:top;font-size:10pt;width:33%;box-sizing:border-box;">  
+                <%= image_tag(
+                "data:image/jpeg;base64,#{Base64.strict_encode64(@relatorio.foto_interna1)}",
+                style: "
+                max-width:100%;
+                max-height:50mm;
+                width:auto;
+                height:auto;
+                border:1px solid #000;
+                display:inline-block;
+                ") %>
+            </div
+        <% else %>
+            <span style="font-size:8pt; color:#777; text-align:center;">Sem imagem</span>
+        <% end %>>
+    </div>
+
+    <div style="font-size:0; margin-top:3px;"> <!-- zera o “espaço” entre inline-blocks -->            
+        <% if @relatorio.foto_interna2.present? %>
+            <div style="display:inline-block;vertical-align:top;font-size:10pt;width:33%;box-sizing:border-box;">  
+                <%= image_tag(
+                "data:image/jpeg;base64,#{Base64.strict_encode64(@relatorio.foto_interna2)}",
+                style: "
+                max-width:100%;
+                max-height:50mm;
+                width:auto;
+                height:auto;
+                border:1px solid #000;
+                display:inline-block;
+                ") %>
+            </div
+        <% else %>
+            <span style="font-size:8pt; color:#777; text-align:center;">Sem imagem</span>
+        <% end %>>
+    
+
+        <% if @relatorio.foto_interna3.present? %>
+            <div style="display:inline-block;vertical-align:top;font-size:10pt;width:33%;box-sizing:border-box;">  
+                <%= image_tag(
+                "data:image/jpeg;base64,#{Base64.strict_encode64(@relatorio.foto_interna3)}",
+                style: "
+                max-width:100%;
+                max-height:50mm;
+                width:auto;
+                height:auto;
+                border:1px solid #000;
+                display:inline-block;
+                ") %>
+            </div
+        <% else %>
+            <span style="font-size:8pt; color:#777; text-align:center;">Sem imagem</span>
+        <% end %>>
+    
+
+        <% if @relatorio.foto_interna4.present? %>
+            <div style="display:inline-block;vertical-align:top;font-size:10pt;width:33%;box-sizing:border-box;">  
+                <%= image_tag(
+                "data:image/jpeg;base64,#{Base64.strict_encode64(@relatorio.foto_interna4)}",
+                style: "
+                max-width:100%;
+                max-height:50mm;
+                width:auto;
+                height:auto;
+                border:1px solid #000;
+                display:inline-block;
+                ") %>
+            </div
+        <% else %>
+            <span style="font-size:8pt; color:#777; text-align:center;">Sem imagem</span>
+        <% end %>>
+    </div>
+
+</div>
+
+
+<div class="container page">
+    
+    <%= cabecalho_relatorio(@relatorio) %>
+    
+    <span style="font-size: 12pt; font-weight: bold;">18 – PROGRAMAÇÃO DAS PRÓXIMAS INSPEÇÕES</span>
+    <fieldset style="border:1px solid #000; padding:8px; margin-bottom:8px; font-size:10pt;">
+        <legend style="font-weight:bold; padding:0 6px;">
+            Vaso de pressão
+        </legend>
+
+        <span style="display:inline-block; margin-top:4px;">Externa:</span>
+        <span style="display:inline-block; margin-top:4px; font-weight:bold; font-size:11pt; color: #B22222;">
+            <%= @relatorio.dt_prox_insp_externa&.strftime("%d/%m/%Y") %>
+        </span>
+
+        <span style="display:inline-block; margin-left: 20px; margin-top:4px;">Interna:</span>
+        <span style="display:inline-block; margin-top:4px; font-weight:bold; font-size:11pt; color: #B22222;">
+            <%= @relatorio.dt_prox_insp_interna&.strftime("%d/%m/%Y") %>
+        </span>
+    </fieldset>
+
+    <fieldset style="border:1px solid #000; padding:8px; margin-bottom:8px; font-size:10pt;">
+        <legend style="font-weight:bold; padding:0 6px;">
+            Dispositivo de segurança
+        </legend>            
+        <span style="display:inline-block; margin-top:4px; width:95%; box-sizing:border-box;">
+            Ver data na anotação do (livro) Registro de Segurança do Vaso de Pressão.
+        </span>
+    </fieldset>
+    <br>
+    <br>
+    <span style="font-size: 12pt; font-weight: bold;">19 – PARECER QUANTO A INTEGRIDADE DO VASO DE PRESSÃO</span>
+    <div style="display:inline-block;vertical-align:top;font-size:10pt;width:100%;box-sizing:border-box;">  
+        <%= simple_format(@relatorio.parecer_quanto_integridade_vaso) %>
+    </div>
+    
+    <br>
+    <br>
+
+    <span style="font-size: 12pt; font-weight: bold;">ANEXO – SIGLAS E DEFINIÇÕES</span>
+    <div style="font-size:10pt; width:100%;">
+
+        <div style="font-weight:bold; margin-top:10px; margin-bottom:6px;">
+            SIGLAS
+        </div>
+
+        <div style="font-size:0;"> <!-- remove espaço entre colunas -->
+
+            <!-- Coluna esquerda -->
+            <div style="display:inline-block; width:49%; font-size:10pt; vertical-align:top;">
+                <div>DESC. - Desconhecido;</div>
+                <div>INT - Intervenção;</div>
+                <div>N/A - Não Aplicável;</div>
+                <div>PAR - Projeto de Alteração ou Reparo.</div>
+                <div>PMTA - Pressão Máxima de Trabalho;</div>
+                <div>PH - Profissional Habilitado;</div>
+            </div>
+
+            <!-- Coluna direita -->
+            <div style="display:inline-block; width:49%; font-size:10pt; vertical-align:top;">
+                <div>RI – Relatório de Inspeção;</div>
+                <div>RGI - Risco Grave e Iminente;</div>
+                <div>RCO – Recomendação;</div>
+                <div>S/E – Sem Escala;</div>
+                <div>TH – Teste Hidrostático;</div>
+                <div>VS – Válvula de Segurança.</div>
+            </div>
+
+        </div>
+
+        <div style="font-weight:bold; margin-top:10px; margin-bottom:6px;">
+            DEFINIÇÕES
+        </div>
+
+        <div style="font-size:10pt; vertical-align:top;"> <!-- remove espaço entre colunas -->
+            <div>Dispositivo de Segurança: Dispositivo encarregado de impedir que a pressão no vaso não ultrapasse a PMTA, normalmente são: Válvula de Segurança, Válvula de Segurança e Alívio ou Válvula de Alívio;</div>
+            <div>Calibração: comparação com padrão;</div>
+            <div>Ajuste: manutenção / conserto dos equipamentos para melhorar resultados;</div>
+            <div>Verificação: comparação periódica para verificar se houve significativa mudança nos resultados do equipamento, muitas vezes com um equipamento padrão, mas sem a formalidade e controle de processo da atividade de calibração.</div>
+        </div>
+
+    </div>
+
 </div>
 
 <hr>

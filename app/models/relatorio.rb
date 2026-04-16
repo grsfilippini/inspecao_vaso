@@ -9,15 +9,20 @@ class Relatorio < ApplicationRecord
   validates :proprietaria_id,               presence: true
   validates :inspetora_id,                  presence: true
   validates :fluido_servico_id,             presence: true
-    
+  # Limite de caracteres
+  validates :dreno_observacoes, length: { maximum: 100 }
+  validates :manometro_observacoes, length: { maximum: 100 }
+  validates :pressostato_observacoes, length: { maximum: 100 }
+  validates :anotacoes_elementos_controle_calibrados_eemboas_condicoes_opera, length: { maximum: 100 }  
+  validates :obs_inspecao_elementos_sobre_o_vaso_ou_nao, length: { maximum: 100 }  
+  
   # Relações  
   belongs_to :tipo_inspecao
   belongs_to :art
-  belongs_to :cidade  
-  #belongs_to :vaso  
+  belongs_to :cidade
   belongs_to :proprietaria,  class_name: 'Cadastro'
   belongs_to :inspetora, class_name: 'Cadastro'
-  #belongs_to :ambiente_inst
+  belongs_to :ambiente_inst
   #belongs_to :tipo_dreno
   belongs_to :ph
   belongs_to :finalidade_vaso
@@ -32,6 +37,7 @@ class Relatorio < ApplicationRecord
   accepts_nested_attributes_for :vaso, reject_if: :all_blank
   
   # Callback method, RoR
+  # before_save :corrigir_orientacao_fotos
   after_create :seta_relatorio_ini_vaso
   after_create :seta_estatistica
   after_destroy :dec_estatistica  
@@ -154,4 +160,52 @@ class Relatorio < ApplicationRecord
       vaso_relacionado.update(p_sup_operacao_fabricante: self.pressostato_pdesliga)
     end
   end
+
+  # def corrigir_orientacao_fotos
+  #   if foto_antes_inspecao.present?  
+  #     image = MiniMagick::Image.read(foto_antes_inspecao)
+  #     image.auto_orient
+  #     self.foto_antes_inspecao = image.to_blob
+  #   end
+  #   if foto_pos_inspecao.present?  
+  #     image = MiniMagick::Image.read(foto_pos_inspecao)
+  #     image.auto_orient
+  #     self.foto_pos_inspecao = image.to_blob
+  #   end
+  #   if foto_instalacao.present?  
+  #     image = MiniMagick::Image.read(foto_instalacao)
+  #     image.auto_orient
+  #     self.foto_instalacao = image.to_blob
+  #   end
+  #   if foto_th.present?  
+  #     image = MiniMagick::Image.read(foto_th)
+  #     image.auto_orient
+  #     self.foto_th = image.to_blob
+  #   end
+  #   if foto_corpo.present?  
+  #     image = MiniMagick::Image.read(foto_corpo)
+  #     image.auto_orient
+  #     self.foto_corpo = image.to_blob
+  #   end
+  #   if foto_interna1.present?  
+  #     image = MiniMagick::Image.read(foto_interna1)
+  #     image.auto_orient
+  #     self.foto_interna1 = image.to_blob
+  #   end
+  #   if foto_interna2.present?  
+  #     image = MiniMagick::Image.read(foto_interna2)
+  #     image.auto_orient
+  #     self.foto_interna2 = image.to_blob
+  #   end
+  #   if foto_interna3.present?  
+  #     image = MiniMagick::Image.read(foto_interna3)
+  #     image.auto_orient
+  #     self.foto_interna3 = image.to_blob
+  #   end
+  #   if foto_interna4.present?  
+  #     image = MiniMagick::Image.read(foto_interna4)
+  #     image.auto_orient
+  #     self.foto_interna4 = image.to_blob
+  #   end
+  # end
 end
