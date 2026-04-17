@@ -56,7 +56,7 @@ gem 'terser'
 
 # Gerador de pdf
 gem 'wicked_pdf', '~> 2.7'
-gem 'wkhtmltopdf-binary', '~> 0.12.6' # Instala o binário que processa html para pdf
+#gem 'wkhtmltopdf-binary', '~> 0.12.6' # Instala o binário que processa html para pdf
 
 # Utiliza o timer cron do linux
 # usado para definir tarefas de tempos em tempos
