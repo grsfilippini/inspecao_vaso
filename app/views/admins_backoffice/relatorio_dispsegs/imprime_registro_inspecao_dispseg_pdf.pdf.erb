@@ -1,0 +1,44 @@
+<div class="container page">
+    <span style="font-size: 16pt; font-weight: bold;">INSPEÇÃO DO DISPOSITIVO DE SEGURANÇA</span>
+    <span style="font-size: 10pt;"># série: </span> <span style="font-size: 10pt; font-weight: bold;"><%=@relatorio_dispseg.disp_seguranca.serie%></span><br>
+    <div style="font-size: 10pt; text-align: justify">
+        <span style="font-size: 10pt;">Em </span><span style="font-size: 10pt; font-weight: bold;"><%= @relatorio_dispseg.data.strftime("%d/%m/%Y") %></span> 
+        <span style="font-size: 10pt;">executou-se inspeção do dispositivo de segurança pertencente ao vaso de pressão do fabricante </span>
+        <span style="font-size: 10pt; font-weight: bold;"><%=@relatorio_dispseg.vaso.fabricante.nome_curto%></span>
+        <span style="font-size: 10pt;">, número de série</span>
+        <span style="font-size: 10pt; font-weight: bold;"><%=@relatorio_dispseg.vaso.num_serie%>.&nbsp</span>        
+        <span style="font-size: 10pt;">Inpeção feita pelo PH: <%=@relatorio_dispseg.ph.nome%>, CREA <%=@relatorio_dispseg.ph.crea%>, sendo que o dispositivo foi liberado para operação com a pressão de abertura.</span>
+        <span style="font-size: 10pt; font-weight: bold;"><%=@relatorio_dispseg.pressao_ajuste%></span>
+        <span style="font-size: 10pt;">MPa, compatível com a PMTA: </span>
+        <span style="font-size: 10pt; font-weight: bold;"><%=@relatorio_dispseg.vaso.pmta_atual%></span><span style="font-size: 10pt;"> MPa. </span><br>
+        <span style="font-size: 10pt;">A próxima inspeção externa deverá ser feita em </span><span style="font-size: 10pt; font-weight: bold;"><%=@relatorio_dispseg.data_prox_insp.strftime("%d/%m/%Y")%></span><span style="font-size: 10pt;">.</span>
+        <span style="font-size: 10pt;">ART desta inspeção: <%=@relatorio_dispseg.art.art%>.</span>
+    </div>
+    <br>
+    <table class="tableAssinatura">
+        <tr>
+            <td class="col1" style="text-align: center; vertical-align: middle;">
+                <div style="display: inline-block; text-align: center;">
+                    <span style="font-size: 10pt;">Local e data: <%= @relatorio_dispseg.ph.cidade.nome %>, <%= @relatorio_dispseg.data.strftime("%d/%m/%Y") %></span><br>
+                    <br>
+                    <span style="font-size: 10pt;">.................................................</span><br>
+                    <span style="font-size: 8pt;">(Carimbo e assinatura)</span>
+                    <br>
+                    <br>
+                    <br>
+                </div>
+            </td>            
+            <td class="col2" style="text-align: center; vertical-align: middle;">
+                <div style="display: inline-block; text-align: center;">
+                    <span style="font-size: 10pt;">ou</span>
+                </div>
+            </td>
+            <td class="col3">
+                <span style="font-size: 10pt;">DOCUMENTO ASSINADO DIGITALMENTE</span><br>
+                <span style="font-size: 10pt; font-weight: bold;"><%=@relatorio_dispseg.ph.nome%> </span> <span style="font-size: 10pt;"> - <%= @relatorio_dispseg.data.strftime("%d de %b de %Y") %></span><br>
+                <span style="font-size: 10pt; font-weight: bold;"><%=@relatorio_dispseg.ph.titulo%> </span> <span style="font-size: 10pt;"> CREA <%=@relatorio_dispseg.ph.crea%></span><br>                
+                <span style="font-size: 10pt;">Verifique em https://validar.iti.gov.br</span><br>
+            </td>            
+        </tr>
+    </table>
+</div>

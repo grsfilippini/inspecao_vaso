@@ -14,6 +14,8 @@ class RelatorioDispseg < ApplicationRecord
   belongs_to :vaso
   belongs_to :cadastro
   belongs_to :disp_seguranca
+  belongs_to :ph
+  belongs_to :art
   
    # Callback method, RoR
   after_create :seta_estatistica

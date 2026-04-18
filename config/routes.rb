@@ -159,6 +159,7 @@ Rails.application.routes.draw do
     get 'relatorio_dispseg_a_imprimir', to: 'relatorio_dispsegs#a_imprimir'
     get 'inicia_inspecao_dispseg_proprietario',to: 'relatorio_dispsegs#inicia_inspecao_proprietario'
     get 'get_relatorios_dispseg_by_vaso/:vaso_id', to: 'relatorio_dispsegs#get_relatorios_by_vaso'
+    get 'imprime_registro_inspecao_dispseg_pdf/:id', to: 'relatorio_dispsegs#imprime_registro_inspecao_dispseg', as: 'relatorios_imprime_registro_inspecao_dispseg'
   end
 
   namespace :site do

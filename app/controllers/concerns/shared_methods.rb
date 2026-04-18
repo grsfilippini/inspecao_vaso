@@ -101,14 +101,31 @@ module SharedMethods
     
       # Adiciona anotação de assinatura para ser visível no documento
       pagina = pdf_origami.get_page(1)
-      #puts pdf_origami.pages.size
+      # widget invisível (necessário para assinatura)
       sigannot = Origami::Annotation::Widget::Signature.new
-      sigannot.Rect = Origami::Rectangle[:llx => 89.0, :lly => 386.0, :urx => 190.0, :ury => 353.0]
+      sigannot.Rect = Origami::Rectangle[
+        llx: 89.0,
+        lly: 353.0,
+        urx: 190.0,
+        ury: 386.0
+      ]
       pagina.add_annotation(sigannot)
+
+      # retângulo visível
+      # square = Origami::Annotation::Square.new
+      # square.Rect = Origami::Rectangle[
+      #   llx: 89.0,
+      #   lly: 353.0,
+      #   urx: 190.0,
+      #   ury: 386.0
+      # ]
+      # square.C = [0,0,0]
+      # square.Border = [0,0,1]
+      # pagina.add_annotation(square)
 
       # Adiciona uma anotação qualquer
       text_annotation = Origami::Annotation::Text.new
-      text_annotation.Rect = [1, 34, 102, 1]
+      text_annotation.Rect = [20, 780, 220, 820]
       text_annotation.Contents = "Assinado Digitalmente\nVerifique em http://validar.iti.gov.br"
       pagina.add_annotation(text_annotation)
       

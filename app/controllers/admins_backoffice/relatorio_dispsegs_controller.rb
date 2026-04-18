@@ -1,4 +1,5 @@
 class AdminsBackoffice::RelatorioDispsegsController < AdminsBackofficeController
+    include SharedMethods
     before_action :set_relatorio_dispseg, only: [:edit, :update, :destroy]
     before_action :get_relacoes, only: [:new, :edit]
     
@@ -74,6 +75,37 @@ class AdminsBackoffice::RelatorioDispsegsController < AdminsBackofficeController
       @para_imprimir = TRUE
       @em_aberto = FALSE
     end
+
+    
+    #*********************
+    # REGISTRO DE INSPEÇÃO
+    #*********************
+    def imprime_registro_inspecao_dispseg
+      
+      @relatorio_dispseg = RelatorioDispseg.find(params[:id])
+      @vaso = @relatorio_dispseg.vaso
+      
+      respond_to do |format|
+        format.html{          
+        }
+        
+        format.pdf do      
+          if params[:b_assinar] == 'false'
+            render template: 'admins_backoffice/relatorio_dispsegs/imprime_registro_inspecao_dispseg_pdf',
+                    pdf: 'registro_inspecao_dispseg',
+                    locals: { asset_path: "#{Rails.root.join('app/assets/images')}" },
+                    disposition: 'inline',
+                    layout: 'recorte_pdf.html',
+                    page_size: 'A4'
+          else
+            path_doc_assinado = gera_pdf_empresa_equipamento_assinado(current_admin, @relatorio_dispseg.vaso.proprietaria, @relatorio_dispseg.vaso, "admins_backoffice/relatorio_dispsegs/imprime_registro_inspecao_dispseg_pdf", "registro_inspecao_dispseg_assinado.pdf", "recorte_pdf.html", "Portrait")
+            send_file path_doc_assinado, type: 'application/pdf', disposition: 'attachment'
+          end
+
+        end
+      end
+    end
+
 
     def inicia_inspecao_proprietario
       @proprietarias = Cadastro.where(eh_fabricante: false, eh_empresa_inspetora: false).order(:nome_curto)

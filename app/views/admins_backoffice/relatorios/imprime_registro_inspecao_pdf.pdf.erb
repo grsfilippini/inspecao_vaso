@@ -29,7 +29,7 @@
             </td>
             <td class="col3">
                 <span style="font-size: 10pt;">DOCUMENTO ASSINADO DIGITALMENTE</span><br>
-                <span style="font-size: 10pt; font-weight: bold;"><%=@relatorio.ph.nome%> </span> <span style="font-size: 10pt;"> - <%= Time.now.strftime("%d de %b de %Y") %></span><br>
+                <span style="font-size: 10pt; font-weight: bold;"><%=@relatorio.ph.nome%> </span> <span style="font-size: 10pt;"> - <%= @relatorio.data_relatorio.strftime("%d de %b de %Y") %></span><br>
                 <span style="font-size: 10pt; font-weight: bold;"><%=@relatorio.ph.titulo%> </span> <span style="font-size: 10pt;"> CREA <%=@relatorio.ph.crea%></span><br>                
                 <span style="font-size: 10pt;">Verifique em https://validar.iti.gov.br</span><br>
             </td>            

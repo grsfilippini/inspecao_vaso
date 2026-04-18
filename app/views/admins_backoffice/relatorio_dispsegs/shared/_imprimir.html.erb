@@ -1,0 +1,92 @@
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800"><%= t('mensagens.lista_de', model: @relatorio_dispsegs.model_name.human(count: @relatorio_dispsegs.count)) %> - <%= @relatorio_dispsegs.total_count %> </h1>
+
+    <%= form_with(url:admins_backoffice_pesquisa_relatorio_dispseg_path, local: true, method: :get) do |form| %>
+        <div class="row">
+        
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                <div class="input-group">      
+                    <%= form.text_field :serie_dispseg, class:"bg-light border-0 small", placeholder: "# série disp. segurança ...", class:"form-control" %>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                <div class="input-group">      
+                    <%= form.text_field :serie_vaso, class:"bg-light border-0 small", placeholder: "# série vaso ...", class:"form-control" %>
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fas fa-search fa-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    <%end%>
+</div> <!-- FIM DO CONTAINER DO FORM -->
+
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover">    
+        <thead>
+            <tr>
+                <th>
+                    <%= link_to  new_admins_backoffice_relatorio_dispseg_path, class:"btn btn-success btn-circle btn-sm" do %>
+                        <i class="fas fa-plus"></i>
+                    <% end %>
+                </th>
+                <th>#</th>
+                <th>Data</th>
+                <th>Disp. Segurança</th>
+                <th>Vaso</th>
+                <th>Proprietária</th>
+                <%if @em_aberto %>
+                    <th>Revisar</th>
+                <% end %>
+                <%if @para_imprimir %>
+                    <th>Impresso</th>
+                <% end %>                
+                <th>RgI</th>
+            </tr>
+        </thead>
+        <tbody> 
+            <% @relatorio_dispsegs.each do |r|%>
+                <tr>
+                    <td style="width: 50px">
+                        <%= link_to edit_admins_backoffice_relatorio_dispseg_path(r.id), class:"btn btn-info btn-circle btn-sm" do %> 
+                            <i class="fas fa-edit"></i>
+                        <%end%>                        
+                    </td>
+                    <td><%= r.id %></td>
+                    <td><%= r.data %></td>
+                    <td><%= r.disp_seguranca.serie %></td>
+                    <td><%= r.vaso.num_serie %></td>
+                    <td><%= r.cadastro.nome_curto %></td>
+                    
+                    <%if @para_imprimir %>
+                        <td>                        
+                            <%= link_to "Marcar", marcar_como_impresso_admins_backoffice_relatorio_dispseg_path(r), method: :post, class: "btn btn-primary" %>
+                        </td>
+                    <% end %>
+
+                    <%if @em_aberto %>
+                        <td>                        
+                            <%= link_to "Revisado", marcar_como_revisado_admins_backoffice_relatorio_dispseg_path(r), method: :post, class: "btn btn-primary" %>
+                        </td>
+                    <% end %>
+
+                    <td style="width: 50px">
+                        <%= link_to admins_backoffice_relatorios_imprime_registro_inspecao_dispseg_path(r.id, format: :html), class: "btn btn-info btn-circle btn-sm" do %>
+                            <img src="<%= asset_path('ticket.svg') %>" alt="Registro de inspeção" style="width: 1em; height: 1em;">
+                        <% end %>
+
+                    </td>  
+
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+
+    <%= paginate @relatorio_dispsegs %>
+    
+</div>

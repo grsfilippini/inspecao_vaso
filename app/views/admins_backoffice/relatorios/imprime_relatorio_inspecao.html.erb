@@ -1,3 +1,15 @@
+<%= button_tag "Retornar", type: "button", class: "btn btn-secondary", onclick: "window.history.back();" %>
+
+<button class="btn btn-secondary" type="button" id="custom_submit_button" onclick="window.location.href='<%= admins_backoffice_relatorios_imprime_relatorio_inspecao_path(@relatorio.id, format: :pdf, b_assinar: false) %>';">
+    <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF
+</button>
+
+<button class="btn btn-secondary" type="button" id="custom_submit_button" onclick="window.location.href='<%= admins_backoffice_relatorios_imprime_relatorio_inspecao_path(@relatorio.id, format: :pdf, b_assinar: true) %>';">
+    <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF assinado
+</button>
+
+<hr>
+
 <div class="container page">
     <table class="tableCabecalho" style="margin-bottom: 2pt;">
         <tr>
@@ -1126,15 +1138,3 @@
     </div>
 
 </div>
-
-<hr>
-
-<%= button_tag "Retornar", type: "button", class: "btn btn-secondary", onclick: "window.history.back();" %>
-
-<button class="btn btn-secondary" type="button" id="custom_submit_button" onclick="window.location.href='<%= admins_backoffice_relatorios_imprime_relatorio_inspecao_path(@relatorio.id, format: :pdf, b_assinar: false) %>';">
-    <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF
-</button>
-
-<button class="btn btn-secondary" type="button" id="custom_submit_button" onclick="window.location.href='<%= admins_backoffice_relatorios_imprime_relatorio_inspecao_path(@relatorio.id, format: :pdf, b_assinar: true) %>';">
-    <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF assinado
-</button>
