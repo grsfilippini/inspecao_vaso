@@ -1,9 +1,8 @@
 <div class="container-fluid">
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800"><%= t('mensagens.lista_de', model: @espessura_vasos.model_name.human(count: @espessura_vasos.count)) %> em aberto - <%= @espessura_vasos.total_count %> </h1>
+    <h1 class="h3 mb-4 text-gray-800"><%= t('mensagens.lista_de', model: @espessura_vasos.model_name.human(count: @espessura_vasos.count)) %> impressos - <%= @espessura_vasos.total_count %> </h1>
 
-    <%= form_with(url:admins_backoffice_espessura_em_aberto_path, local: true, method: :get) do |form| %>        
-
+    <%= form_with(url:admins_backoffice_espessura_impressos_path, local: true, method: :get) do |form| %>
         <div class="row">
             <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                 <div class="input-group">      
@@ -78,31 +77,22 @@
                 <th>Usuário</th>
                 <th>Data</th>                
                 <th>Vaso</th>
-                <th>Proprietária</th> 
-                <th align="center">Avaliação PH</th>               
+                <th>Proprietária</th>                
             </tr>
         </thead>
         <tbody> 
             <% @espessura_vasos.each do |e|%>
                 <tr>
                     <td style="width: 100px">
-                        <%= link_to edit_admins_backoffice_espessura_vaso_path(e.id, origem: :em_aberto), class:"btn btn-info btn-circle btn-sm" do %> 
+                        <%= link_to edit_admins_backoffice_espessura_vaso_path(e.id, origem: :impressos), class:"btn btn-info btn-circle btn-sm" do %> 
                             <i class="fas fa-edit"></i>
-                        <%end%>
-                        <%= link_to admins_backoffice_espessura_vaso_path(e.id), 
-                                    method: :delete, class:"btn btn-danger btn-circle btn-sm", 
-                                    data: { confirm: t('mensagens.confirmar_exclusao', item: e.id)} do %>
-                            <i class="fas fa-minus"></i> 
-                        <%end%>
+                        <%end%>                        
                     </td>
                     <td><%= e.id %></td>
                     <td><%= e.user.nome %></td>
                     <td><%= e.data %></td>                    
                     <td><%= e.vaso.num_serie %></td>
-                    <td><%= e.vaso.proprietaria.nome_curto %></td>                    
-                    <td align="center">                        
-                        <%= link_to "Avaliar", avaliarph_admins_backoffice_espessura_vaso_path(e, origem: :em_aberto), class: "btn btn-primary" %>
-                    </td>
+                    <td><%= e.vaso.proprietaria.nome_curto %></td>
                 </tr>
             <% end %>
         </tbody>

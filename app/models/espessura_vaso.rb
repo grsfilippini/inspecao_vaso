@@ -21,11 +21,12 @@ class EspessuraVaso < ApplicationRecord
   # ***************************************************
   # Método de classe, pode ser chamado sem instanciar    
   # ***************************************************    
-  def self.pesquisa(page, num_serie, proprietaria_id, rascunho)      
+  def self.pesquisa(page, num_serie, proprietaria_id, rascunho, impresso)      
     if !num_serie.blank?
       joins(:vaso).includes(:vaso, :inspetora, :user)
                   .where("lower(vasos.num_serie) LIKE ?", "%#{num_serie.downcase}%")
                   .where(b_rascunho: rascunho)
+                  .where(bimpresso: impresso)
                   .order(id: :desc)
                   .page(page)
                   .per(10)
@@ -33,6 +34,7 @@ class EspessuraVaso < ApplicationRecord
       joins(:vaso).includes(:vaso, :inspetora, :user)
                   .where("vasos.proprietaria_id = ?", proprietaria_id) 
                   .where(b_rascunho: rascunho)   
+                  .where(bimpresso: impresso)
                   .order(id: :desc)
                   .page(page)
                   .per(10)
@@ -40,6 +42,7 @@ class EspessuraVaso < ApplicationRecord
       includes(:vaso, :inspetora, :user).all
                                         .order(id: :desc)
                                         .where(b_rascunho: rascunho)
+                                        .where(bimpresso: impresso)
                                         .page(page)
                                         .per(10)
     end

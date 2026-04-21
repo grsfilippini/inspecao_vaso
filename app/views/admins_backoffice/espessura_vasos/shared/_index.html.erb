@@ -2,7 +2,7 @@
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800"><%= t('mensagens.lista_de', model: @espessura_vasos.model_name.human(count: @espessura_vasos.count)) %> - <%= @espessura_vasos.total_count %> </h1>
 
-    <%= form_with(url:admins_backoffice_pesquisa_espessura_vaso_path, local: true, method: :get) do |form| %>
+    <%= form_with(url:admins_backoffice_espessura_vasos_path, local: true, method: :get) do |form| %>
         <div class="row">
             <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                 <div class="input-group">      

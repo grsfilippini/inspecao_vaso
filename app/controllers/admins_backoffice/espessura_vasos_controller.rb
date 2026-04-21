@@ -1,20 +1,27 @@
 class AdminsBackoffice::EspessuraVasosController < AdminsBackofficeController    
-    before_action :set_espessura_vaso, only: [:edit, :update, :destroy]    
+    before_action :set_espessura_vaso, only: [:edit, :update, :destroy, :avaliarph]    
     before_action :get_relacoes, only: [:new, :edit]
-
+    
+    require "zip"
+    
     def index
-        @espessura_vasos = EspessuraVaso.pesquisa(params[:page], nil, nil, false)
+        @espessura_vasos = EspessuraVaso.pesquisa(params[:page], nil, nil, false, true)
         @proprietarias = Cadastro.order(:nome_curto)
     end
 
-    def pesquisa        
-        @espessura_vasos = EspessuraVaso.pesquisa(params[:page], params[:num_serie], params[:proprietaria_id], false)                
+    def impressos        
+        @espessura_vasos = EspessuraVaso.pesquisa(params[:page], params[:num_serie], params[:proprietaria_id], false, true)
         @proprietarias = Cadastro.order(:nome_curto)
     end
 
     def em_aberto
-        @espessura_vasos = EspessuraVaso.pesquisa(params[:page], nil, nil, true)                
+        @espessura_vasos = EspessuraVaso.pesquisa(params[:page], params[:num_serie], params[:proprietaria_id], true, false)                
         @proprietarias = Cadastro.order(:nome_curto)
+    end
+
+    def a_imprimir        
+        @espessura_vasos = EspessuraVaso.pesquisa(params[:page], params[:num_serie], params[:proprietaria_id], false, false)
+        @proprietarias = Cadastro.order(:nome_curto)        
     end
 
     def new
@@ -34,9 +41,29 @@ class AdminsBackoffice::EspessuraVasosController < AdminsBackofficeController
     def edit
     end
 
-    def update        
+    def update
         if @espessura_vaso.update(params_espessura_vaso)
-            redirect_to admins_backoffice_espessura_em_aberto_path, notice: "Espessura vaso atualizada com sucesso!"
+        
+            Rails.logger.debug "ORIGEM = #{params[:origem]}"
+            
+            case params[:origem]
+            when "impressos"
+            redirect_to admins_backoffice_espessura_impressos_path,
+                        notice: "Atualizado com sucesso!"
+        
+            when "em_aberto"
+            redirect_to admins_backoffice_espessura_em_aberto_path,
+                        notice: "Atualizado com sucesso!"
+        
+            when "a_imprimir"
+            redirect_to admins_backoffice_espessura_a_imprimir_path,
+                        notice: "Atualizado com sucesso!"
+        
+            else
+            redirect_to admins_backoffice_espessura_vasos_path,
+                        notice: "Atualizado com sucesso!"
+            end
+        
         else
             get_relacoes
             render :edit
@@ -51,12 +78,53 @@ class AdminsBackoffice::EspessuraVasosController < AdminsBackofficeController
         end
     end
 
+    def avaliarph        
+        get_relacoes        
+    end
+
+    def marcar_como_impresso
+        @espessura_vaso = EspessuraVaso.find(params[:id])
+        @espessura_vaso.update(bimpresso: true)
+        
+        redirect_back fallback_location: admins_backoffice_espessura_a_imprimir_path,
+                        notice: "Registro marcado como impresso."
+    end
+
+    def imprime_espessura
+        @espessura_vaso = EspessuraVaso.find(params[:id])
+    end
+
+    def ajustar_memorial
+        vaso_id = params[:vaso_id]
+      
+        template_path = Rails.root.join("lib", "templates", "memorial_rails.ods")
+        output_path   = Rails.root.join("tmp", "memorial_vaso_#{vaso_id}.ods")
+      
+        FileUtils.cp(template_path, output_path)
+      
+        Zip::File.open(output_path) do |zip|
+          entry = zip.glob("content.xml").first
+          content = entry.get_input_stream.read
+      
+          # substituição exemplo
+          content.gsub!("ID_VASO_PLACEHOLDER", vaso_id.to_s)
+      
+          zip.get_output_stream("content.xml") { |f| f.write(content) }
+        end
+      
+        send_file output_path,
+            filename: "memorial_vaso_#{vaso_id}.ods",
+            type: "application/vnd.oasis.opendocument.spreadsheet",
+            disposition: "attachment"
+    end
+
 
     private
     
 
     def params_espessura_vaso        
         params.require(:espessura_vaso).permit(:b_rascunho,
+                                               :bimpresso,
                                                :user_id, 
                                                :vaso_id,
                                                :data,
@@ -87,4 +155,5 @@ class AdminsBackoffice::EspessuraVasosController < AdminsBackofficeController
     def set_espessura_vaso
         @espessura_vaso = EspessuraVaso.find(params[:id])
     end
+
 end

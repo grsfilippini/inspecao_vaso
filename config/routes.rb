@@ -61,10 +61,21 @@ Rails.application.routes.draw do
     resources :cidades
     
     resources :catnr13s
-
-    resources :espessura_vasos
-    get 'pesquisa_espessura_vaso', to: 'espessura_vasos#pesquisa'
+    
+    resources :espessura_vasos do
+      member do
+        get :avaliarph
+        patch :marcar_como_impresso
+        get :imprime_espessura
+        get :ajustar_memorial
+      end
+    end
+    get 'pesquisa_espessura_vaso', to: 'espessura_vasos#index'
     get 'espessura_em_aberto',     to: 'espessura_vasos#em_aberto' 
+    get 'espessura_a_imprimir',    to: 'espessura_vasos#a_imprimir'
+    get 'espessura_impressos',     to: 'espessura_vasos#impressos'
+    #get 'espessura_avaliarph/:id', to: 'espessura_vasos#avaliarph', as: :espessura_avaliarph
+    
 
     resources :finalidade_vasos    
 

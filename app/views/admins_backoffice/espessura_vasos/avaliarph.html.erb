@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800"> <%= action_messege %> </h1>
+    <h1 class="h3 mb-4 text-gray-800"> PH - Avaliação da Espessura de Vaso - <%= @espessura_vaso.id %></h1>
 </div>
 
 <!-- Se tiver algum erro dentro de @admin, erro devido a processo de salvamento por exemplo, entra no alerta abaixo -->
@@ -11,10 +11,9 @@
             <% @espessura_vaso.errors.full_messages.each do |message| %>
             <li> <%= message -%> </li>
             <% end %>
-        </ul> 
+        </ul>
     </div>
 <% end %>
-
 
 <!-- CONTAINER PARA O FORM -->
 <div class="container">
@@ -29,30 +28,8 @@
                         <!--div class="text-center">
                             <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                         </div-->
-
-                        <%= form_with(model: [ :admins_backoffice, @espessura_vaso ], local: true) do |form| %>
+                        <%= form_with(model: [ :admins_backoffice, @espessura_vaso], local: true) do |form| %>                        
                             <%= hidden_field_tag :origem, params[:origem] %>
-
-                            <div class="form-group">
-                                <label class="checkbox-inline">
-                                    <%= form.check_box :b_rascunho %>
-                                    Em aberto
-                                </label>
-                                &nbsp &nbsp
-                                <label class="checkbox-inline">
-                                    <%= form.check_box :bimpresso %>
-                                    Impresso
-                                </label>
-                            </div>
-
-                            <div class="form-group row">
-                                <%= form.label :user_id, "Usr", {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
-                                <div class="col-sm-4 mb-0 mb-sm-0">                                    
-                                    <%= form.collection_select(:user_id, @users, :id, :nome_completo, {include_blank: 'Selecione um usuário'}, {selected: nil, class: 'form-control'}) %>
-                                </div>
-                            </div>
-
-                            <hr>   
                             
                             <div class="form-group row">
                                 <%= form.label :data, 'Data', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
@@ -60,19 +37,22 @@
                                     <%= form.date_field :data, value: @espessura_vaso.id.present? ? @espessura_vaso.data : Date.current, class: "form-control" %>
                                 </div>
                                 
-                                <%= form.label :inspetora_id, 'Inspetora', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
-                                <div class="col-sm-4 mb-0 mb-sm-0">                                    
-                                    <%= form.collection_select(:inspetora_id, @inspetoras, :id, :nome_curto, { include_blank: 'Selecione a empresa inspetora'}, {class: 'form-control' }) %>
-                                </div>
-
                             </div>
 
                             <hr>
 
                             <div class="form-group row">
                                 <%= form.label :vaso_id, 'Vaso', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
-                                <div class="col-sm-3 mb-0 mb-sm-0">                                    
-                                    <%= form.collection_select(:vaso_id, @vasos, :id, lambda { |vaso| "#{vaso.num_serie} - #{vaso.fabricante.nome_curto}" }, { include_blank: 'Selecione um vaso' }, {class: 'form-control' }) %>
+
+                                <div class="col-sm-7 mb-0 mb-sm-0">                                    
+                                    <%= form.collection_select(
+                                        :vaso_id,
+                                        @vasos,
+                                        :id,
+                                        lambda { |vaso| "#{vaso.num_serie} - #{vaso.fabricante.nome_curto} | PMTA: #{vaso.pmta_atual} MPa" },
+                                        { include_blank: 'Selecione um vaso' },
+                                        { class: 'form-control' }
+                                        ) %>
                                 </div>
                             </div>
 
@@ -153,15 +133,35 @@
                             <fieldset class="Medidas_Minimas">
                             <legend>Medidas mínimas em [mm]</legend>
                                 <div class="form-group row">   
-                                    <%= form.label :esp_min_corpo, "Corpo", class: "col-sm-1 col-form-label text-sm-left text-lg-right" %>
-                                    <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
-                                        <%= form.number_field :esp_min_corpo, step: 0.001, min: 0.000, class: "form-control", id: "esp_min_corpo", readonly: true %>
+                                    <%= form.label :esp_min_corpo, "Corpo", class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                    <div class="col-sm-2 mb-2 mb-sm-0">
+                                        <%= form.number_field :esp_min_corpo,
+                                            value: number_with_precision(@espessura_vaso.esp_min_corpo, precision: 2),
+                                            step: 0.01,
+                                            min: 0.00,
+                                            class: "form-control",
+                                            id: "esp_min_corpo",
+                                            readonly: true %>
                                     </div>
 
-                                    <%= form.label :esp_min_tampo, "Tampo", class: "col-sm-1 col-form-label text-sm-left text-lg-right" %>
-                                    <div class="col-sm-2 mb-2 mb-sm-0">                                                                         
-                                        <%= form.number_field :esp_min_tampo, step: 0.001, min: 0.000, class: "form-control", id: "esp_min_tampo", readonly: true %>
+                                    <%= form.label :esp_min_tampo, "Tampo", class: "col-sm-2 col-form-label text-sm-left text-lg-right" %>
+                                    <div class="col-sm-2 mb-2 mb-sm-0">                                        
+                                        <%= form.number_field :esp_min_tampo,
+                                            value: number_with_precision(@espessura_vaso.esp_min_tampo, precision: 2),
+                                            step: 0.01,
+                                            min: 0.00,
+                                            class: "form-control",
+                                            id: "esp_min_tampo",
+                                            readonly: true %>
                                     </div>
+
+                                    <div class="col-sm-2 mb-2 mb-sm-0">
+                                        <%= link_to "Memorial",
+                                            ajustar_memorial_admins_backoffice_espessura_vaso_path(@espessura_vaso, vaso_id: @espessura_vaso.vaso_id),
+                                            class: "btn btn-success btn-sm" %>
+                                    </div>
+                                    <%=@espessura_vaso.vaso_id%>
+
                                 </div>                                
                             </fieldset>
 
@@ -190,6 +190,17 @@
                                 }
                             </script>
 
+                            <hr>   
+
+                            <div class="form-group">
+                                <label class="checkbox-inline">
+                                    <%= form.check_box :b_rascunho,
+                                        { checked: !@espessura_vaso.b_rascunho },
+                                        false, true %>
+                                    Avaliado PH
+                                </label>
+                            </div>
+
                             <hr>
                             
                             <button type="submit" class="btn btn-primary"><%=t('botoes.gravar')%></button>
@@ -202,3 +213,5 @@
         </div>
     </div>
 </div> <!-- FIM DO CONTAINER DO FORM -->
+
+

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_03_05_145711) do
+ActiveRecord::Schema.define(version: 2026_04_18_200156) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_repack"
@@ -181,6 +181,7 @@ ActiveRecord::Schema.define(version: 2026_03_05_145711) do
     t.boolean "b_rascunho", default: true
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.boolean "bimpresso", default: false
     t.index ["user_id"], name: "index_espessura_vasos_on_user_id"
   end
 
