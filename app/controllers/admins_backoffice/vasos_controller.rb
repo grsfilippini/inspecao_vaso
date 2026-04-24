@@ -232,7 +232,7 @@ class AdminsBackoffice::VasosController < AdminsBackofficeController
         format.html{          
         }
 
-        format.pdf do      
+        format.pdf do
           render template: 'admins_backoffice/vasos/imprime_etiqueta_pdf',
                   pdf: 'etiqueta',
                   locals: { asset_path: "#{Rails.root.join('app/assets/images')}" },

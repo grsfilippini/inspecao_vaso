@@ -33,6 +33,8 @@ Rails.application.config.assets.precompile += %w( sb-admin-2.js sb-admin-2.css
                                                   journal-text.svg
                                                   logo_mantinsp.png
                                                   logo_branco.png
+                                                  vaso_horizonta.png
+                                                  vaso_vertical.png
                                                   navbar.css)
 
 # vendor/assets/stylesheets e javascripts

@@ -1,4 +1,7 @@
 class AdminsBackoffice::EspessuraVasosController < AdminsBackofficeController    
+    
+    include SharedMethods
+
     before_action :set_espessura_vaso, only: [:edit, :update, :destroy, :avaliarph]    
     before_action :get_relacoes, only: [:new, :edit]
     
@@ -90,8 +93,29 @@ class AdminsBackoffice::EspessuraVasosController < AdminsBackofficeController
                         notice: "Registro marcado como impresso."
     end
 
-    def imprime_espessura
-        @espessura_vaso = EspessuraVaso.find(params[:id])
+    def imprime_espessura      
+      @espessura_vaso = EspessuraVaso.find(params[:id])      
+      @vaso = @espessura_vaso.vaso
+      
+      respond_to do |format|
+        format.html{          
+        }
+        
+        format.pdf do      
+          if params[:b_assinar] == 'false'
+            render template: 'admins_backoffice/espessura_vasos/imprime_espessura_pdf',
+                    pdf: 'espessura_vaso',
+                    locals: { asset_path: "#{Rails.root.join('app/assets/images')}" },
+                    disposition: 'inline',
+                    layout: 'pdf.html',
+                    page_size: 'A4'
+          else
+            path_doc_assinado = gera_pdf_empresa_equipamento_assinado(current_admin, @espessura_vaso.vaso.proprietaria, @espessura_vaso.vaso, "admins_backoffice/espessura_vasos/imprime_espessura_pdf", "espessura_vaso_assinado.pdf", "pdf.html", "Portrait")
+            send_file path_doc_assinado, type: 'application/pdf', disposition: 'attachment'
+          end
+
+        end
+      end
     end
 
     def ajustar_memorial

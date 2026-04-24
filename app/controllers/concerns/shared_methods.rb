@@ -51,7 +51,7 @@ module SharedMethods
       end
 
       # Cria o arquivo pdf e armazena em pdf
-      pdf_content = render_to_string(template: template, layout: layout)
+      pdf_content = render_to_string(template: template, layout: layout, formats: [:pdf])
       pdf = WickedPdf.new.pdf_from_string(
         pdf_content,
         encoding: 'UTF-8',

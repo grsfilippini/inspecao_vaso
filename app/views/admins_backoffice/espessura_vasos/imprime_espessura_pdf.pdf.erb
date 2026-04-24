@@ -1,13 +1,3 @@
-<%= button_tag "Retornar", type: "button", class: "btn btn-secondary", onclick: "window.history.back();" %>
-
-<button class="btn btn-secondary" type="button" id="custom_submit_button" onclick="window.location.href='<%= imprime_espessura_admins_backoffice_espessura_vaso_path(@espessura_vaso.id, format: :pdf, b_assinar: false) %>';">
-    <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF
-</button>
-
-<button class="btn btn-secondary" type="button" id="custom_submit_button" onclick="window.location.href='<%= imprime_espessura_admins_backoffice_espessura_vaso_path(@espessura_vaso.id, format: :pdf, b_assinar: true) %>';">
-    <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF assinado
-</button>
-<hr>
 <div class="container page">
     <table class="tableCabecalho">
         <tr>
@@ -103,12 +93,12 @@
         </tr>
     </table>
     <hr>
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped" style="width: 100%; table-layout: fixed;">
         <thead>
             <tr>
-            <th>Corpo</th>
-            <th>Tampo</th>
-            <th>Mínimas</th>
+                <th style="width:33.33%;">Corpo</th>
+                <th style="width:33.33%;">Tampo</th>
+                <th style="width:33.33%;">Mínimas</th>
             </tr>
         </thead>
 
@@ -148,6 +138,13 @@
     </table>
 
     <br>    
+    <br>    
+    <br>    
+    <br>    
+    <br> 
+    <% if @espessura_vaso.vaso.tipo_vaso_id == 0 %>
+        <br><br><br><br><br>
+    <% end %>
     <% imagem =
         case @espessura_vaso.vaso.tipo_vaso_id
         when 0 then "vaso_horizontal.png"
@@ -155,10 +152,18 @@
         else nil
     end %>
 
-    <%= image_tag imagem,
-        alt: "Tipo de vaso",
-        style: "max-width: 400px; max-height: 400px;" if imagem.present? %>
-    
+    <div style="text-align: center;">
+        <%= image_tag asset_url(imagem),
+            alt: "Tipo de vaso",
+            style: "max-width: 400px; max-height: 400px;" if imagem.present? %>
+    </div>
+    <% if @espessura_vaso.vaso.tipo_vaso_id == 0 %>
+        <br><br><br><br><br>
+    <% end %>
+    <br>    
+    <br>    
+    <br>    
+    <br>    
     <br>
     <br>
     <table class="tableAssinatura">
