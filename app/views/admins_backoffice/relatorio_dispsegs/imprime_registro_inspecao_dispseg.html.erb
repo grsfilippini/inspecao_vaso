@@ -1,3 +1,15 @@
+<%= button_tag "Retornar", type: "button", class: "btn btn-secondary", onclick: "window.history.back();" %>
+
+<button class="btn btn-secondary" type="button" id="custom_submit_button" onclick="window.location.href='<%= admins_backoffice_relatorios_imprime_registro_inspecao_dispseg_path(@relatorio_dispseg.id, format: :pdf, b_assinar: false) %>';">
+    <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF
+</button>
+
+<button class="btn btn-secondary" type="button" id="custom_submit_button" onclick="window.location.href='<%= admins_backoffice_relatorios_imprime_registro_inspecao_dispseg_path(@relatorio_dispseg.id, format: :pdf, b_assinar: true) %>';">
+    <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF assinado
+</button>
+
+<hr>
+
 <div class="container page">
     <span style="font-size: 16pt; font-weight: bold;">INSPEÇÃO DO DISPOSITIVO DE SEGURANÇA</span>
     <span style="font-size: 10pt;"># série: </span> <span style="font-size: 10pt; font-weight: bold;"><%=@relatorio_dispseg.disp_seguranca.serie%></span><br>
@@ -42,15 +54,3 @@
         </tr>
     </table>
 </div>
-
-<hr>
-
-<%= button_tag "Retornar", type: "button", class: "btn btn-secondary", onclick: "window.history.back();" %>
-
-<button class="btn btn-secondary" type="button" id="custom_submit_button" onclick="window.location.href='<%= admins_backoffice_relatorios_imprime_registro_inspecao_dispseg_path(@relatorio_dispseg.id, format: :pdf, b_assinar: false) %>';">
-    <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF
-</button>
-
-<button class="btn btn-secondary" type="button" id="custom_submit_button" onclick="window.location.href='<%= admins_backoffice_relatorios_imprime_registro_inspecao_dispseg_path(@relatorio_dispseg.id, format: :pdf, b_assinar: true) %>';">
-    <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF assinado
-</button>

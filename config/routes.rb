@@ -82,9 +82,15 @@ Rails.application.routes.draw do
     resources :vasos do
       member do
         get :json_data, defaults: { format: 'json' }
-        #delete :remove_photo # Rota para deletar a foto do vaso
+        # delete :remove_photo
+        get :foto_instalacao
       end
-    end       
+      collection do
+        get :vasos_com_pendencias_impressao
+        post :imprimir_pendencias
+        get :docs_pendentes_por_vaso        
+      end
+    end
     get 'pesquisa_vaso',                              to: 'vasos#pesquisa'    
     get '/obter_ultima_serie_mtp',                    to: 'vasos#obter_ultima_serie_mtp'
     get 'get_vasos_by_proprietaria/:proprietaria_id', to: 'vasos#get_vasos_by_proprietaria'

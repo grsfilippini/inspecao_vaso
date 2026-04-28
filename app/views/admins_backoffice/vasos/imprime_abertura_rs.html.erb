@@ -1,3 +1,15 @@
+<%= button_tag "Retornar", type: "button", class: "btn btn-secondary", onclick: "window.history.back();" %>
+
+<button class="btn btn-secondary" type="button" id="custom_submit_button" onclick="window.location.href='<%= admins_backoffice_vasos_imprime_abertura_rs_path(@vaso.id, format: :pdf, b_assinar: false) %>';">
+    <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF
+</button>
+
+<button class="btn btn-secondary" type="button" id="custom_submit_button" onclick="window.location.href='<%= admins_backoffice_vasos_imprime_abertura_rs_path(@vaso.id, format: :pdf, b_assinar: true) %>';">
+    <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF assinado
+</button>
+
+<hr>
+
 <div class="container page">
     <div style='text-align: center'>
         <span style="font-size: 16pt; font-weight: bold;">REGISTRO DE SEGURANÇA DO VASO DE PRESSÃO</span><br>
@@ -98,15 +110,3 @@
     </table>
 
 </div>
-
-<hr>
-
-<%= button_tag "Retornar", type: "button", class: "btn btn-secondary", onclick: "window.history.back();" %>
-
-<button class="btn btn-secondary" type="button" id="custom_submit_button" onclick="window.location.href='<%= admins_backoffice_vasos_imprime_abertura_rs_path(@vaso.id, format: :pdf, b_assinar: false) %>';">
-    <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF
-</button>
-
-<button class="btn btn-secondary" type="button" id="custom_submit_button" onclick="window.location.href='<%= admins_backoffice_vasos_imprime_abertura_rs_path(@vaso.id, format: :pdf, b_assinar: true) %>';">
-    <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF assinado
-</button>

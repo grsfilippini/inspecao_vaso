@@ -1,0 +1,201 @@
+<h4>Vasos com relatórios pendentes de impressão</h4>
+
+<%= form_tag imprimir_pendencias_admins_backoffice_vasos_path, method: :post, id: "form_impressao" do %>
+
+    <div class="row">
+
+        <!-- COLUNA LISTBOX -->
+        <div class="col-md-6">
+
+            <div class="form-group">
+            <label>Selecione um vaso:</label>
+
+            <%= select_tag :vaso_id,
+                options_from_collection_for_select(
+                    @vasos,
+                    :id,
+                    ->(v) { "#{v.num_serie} - #{v.fabricante.nome_curto} - #{v.proprietaria.nome_curto}" }
+                ),
+                size: 10,
+                class: "form-control",
+                id: "vaso_select" %>
+            </div>
+
+        </div>
+
+
+        <!-- COLUNA IMAGEM -->
+        <div class="col-md-6 text-center">
+
+            <label>Foto da instalação:</label><br>
+
+            <img id="foto_vaso"
+            src=""
+            style="max-width: 100%; max-height: 250px; border: 1px solid #ccc; padding: 5px;">
+
+        </div>
+
+    </div>
+
+
+    <hr>
+
+    <h5>Documentos disponíveis para impressão</h5>
+
+    <div id="documentos_container">
+
+    <% docs = [
+        [:belaborado_relatorio_inspecao, "Relatório de Inspeção"],
+        [:belaborado_registro_inspecao, "Registro de Inspeção"],
+        [:belaborado_registro_inspecao_dispseg, "Reg. Insp. DispSeg"],
+        [:belaborado_reg_seg, "Abertura Reg. Segurança"],
+        [:belaborado_prontuario, "Prontuário"],
+        [:belaborado_laudo_th, "Laudo TH"],
+        [:belaborado_desenho_plaqueta, "Desenho Plaqueta"],
+        [:belaborado_mapa_espessura, "Mapa de Espessura"]
+    ] %>
+
+    <% docs.each do |campo, label| %>
+        <button
+        type="button"
+        class="btn btn-outline-primary toggle-doc"
+        data-field="<%= campo %>">
+        <%= label %>
+        </button>
+
+        <%= hidden_field_tag "docs[#{campo}]", false, id: campo %>
+    <% end %>
+
+    </div>
+
+
+    <br>
+
+    <%= submit_tag "Imprimir", class: "btn btn-success" %>
+
+<% end %>
+
+
+
+
+
+<script>
+
+function atualizarBotoes(data){
+
+  document.querySelectorAll(".toggle-doc").forEach(btn => {
+
+    const campo = btn.dataset.field
+    const hidden = document.getElementById(campo)
+
+    if(!hidden) return
+
+    const valor = data[campo]
+
+    if(valor === true){
+
+      hidden.value = "true"
+
+      btn.classList.remove("btn-outline-primary")
+      btn.classList.add("btn-primary")
+
+    } else {
+
+      hidden.value = "false"
+
+      btn.classList.remove("btn-primary")
+      btn.classList.add("btn-outline-primary")
+
+    }
+
+  })
+
+}
+
+
+document.getElementById("vaso_select").addEventListener("change", function(){
+
+  fetch("/admins_backoffice/vasos/docs_pendentes_por_vaso?vaso_id=" + this.value)
+    .then(resp => resp.json())
+    .then(data => atualizarBotoes(data))
+
+})
+
+
+document.querySelectorAll(".toggle-doc").forEach(btn => {
+
+  btn.addEventListener("click", function(){
+
+    const field = this.dataset.field
+    const hidden = document.getElementById(field)
+
+    if(hidden.value === "true"){
+
+      hidden.value = "false"
+      this.classList.remove("btn-primary")
+      this.classList.add("btn-outline-primary")
+
+    } else {
+
+      hidden.value = "true"
+      this.classList.remove("btn-outline-primary")
+      this.classList.add("btn-primary")
+
+    }
+
+  })
+
+})
+
+
+document.addEventListener("DOMContentLoaded", function(){
+
+  const select = document.getElementById("vaso_select")
+
+  if(select.value){
+
+    fetch("/admins_backoffice/vasos/docs_pendentes_por_vaso?vaso_id=" + select.value)
+      .then(resp => resp.json())
+      .then(data => atualizarBotoes(data))
+
+  }
+
+})
+
+document.getElementById("vaso_select").addEventListener("change", function(){
+
+  fetch("/admins_backoffice/vasos/docs_pendentes_por_vaso?vaso_id=" + this.value)
+    .then(resp => resp.json())
+    .then(data => atualizarBotoes(data))
+
+  atualizarFoto(this.value)
+
+})
+
+function atualizarFoto(vasoId){
+
+  const img = document.getElementById("foto_vaso")
+
+  img.src = "/admins_backoffice/vasos/" + vasoId + "/foto_instalacao"
+
+}
+
+
+document.addEventListener("DOMContentLoaded", function(){
+
+  const select = document.getElementById("vaso_select")
+
+  if(select.value){
+
+    fetch("/admins_backoffice/vasos/docs_pendentes_por_vaso?vaso_id=" + select.value)
+      .then(resp => resp.json())
+      .then(data => atualizarBotoes(data))
+
+    atualizarFoto(select.value)
+
+  }
+
+})
+
+
+</script>

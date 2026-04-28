@@ -1,0 +1,28 @@
+<h4>Executando impressão...</h4>
+
+<script>
+
+let urls = <%= raw @urls.to_json %>
+
+let i = 0
+
+function abrirProximo(){
+
+  if(i >= urls.length){
+
+    alert("Impressão bem sucedida!")
+    window.location.href = "<%= vasos_com_pendencias_impressao_admins_backoffice_vasos_path %>"
+    return
+  }
+
+  let win = window.open(urls[i], "_blank")
+
+  i++
+
+  setTimeout(abrirProximo, 1500)
+
+}
+
+abrirProximo()
+
+</script>

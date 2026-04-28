@@ -312,7 +312,163 @@ class AdminsBackoffice::VasosController < AdminsBackofficeController
     #   @vaso.foto_plaqueta = nil # Define o atributo foto_plaqueta como nil para remover a foto
     #   @vaso.save
     #   redirect_to edit_admins_backoffice_vaso_path(@vaso), notice: 'Foto da plaqueta removida com sucesso!'
-    # end    
+    # end  
+    
+    def vasos_com_pendencias_impressao
+
+      relatorios_ids = Relatorio
+        .where(brel_impresso: false, avaliadoph: true)
+        .pluck(:vaso_id)
+
+      dispseg_ids = RelatorioDispseg
+        .where(bimpresso: false, brascunho: false)
+        .pluck(:vaso_id)
+
+      espessura_ids = EspessuraVaso
+        .where(bimpresso: false, b_rascunho: false)
+        .pluck(:vaso_id)
+
+
+      vasos_ids = (relatorios_ids + dispseg_ids + espessura_ids).uniq
+
+
+      @vasos = Vaso
+        .where(id: vasos_ids)
+        .includes(:fabricante)
+        .includes(:proprietaria)
+        .order(:num_serie)
+
+    end
+
+    def imprimir_pendencias
+      vaso = Vaso.find(params[:vaso_id])
+      docs = params[:docs] || {}
+
+      relatorio = vaso.relatorios
+                      .where(brel_impresso: false, avaliadoph: true)
+                      .first
+
+      dispseg = vaso.relatorio_dispsegs
+                    .where(bimpresso: false, brascunho: false)
+                    .first
+
+      espessura = vaso.espessura_vasos
+                      .where(b_rascunho: false, bimpresso: false)
+                      .first
+
+
+      @urls = []
+
+      if docs["belaborado_relatorio_inspecao"] == "true"
+        @urls << admins_backoffice_relatorios_imprime_relatorio_inspecao_path(relatorio.id, format: :pdf, b_assinar: true)
+      end
+
+      if docs["belaborado_registro_inspecao"] == "true"
+        @urls << admins_backoffice_relatorios_imprime_registro_inspecao_path(relatorio.id, format: :pdf, b_assinar: true)
+      end
+
+      if docs["belaborado_registro_inspecao_dispseg"] == "true" && dispseg.present?
+        @urls << admins_backoffice_relatorios_imprime_registro_inspecao_dispseg_path(dispseg.id, format: :pdf, b_assinar: true)
+      end
+
+      if docs["belaborado_reg_seg"] == "true"
+        @urls << admins_backoffice_vasos_imprime_abertura_rs_path(vaso.id, format: :pdf, b_assinar: true)
+      end
+
+      if docs["belaborado_prontuario"] == "true"
+        @urls << admins_backoffice_vasos_imprime_prontuario_path(vaso.id, format: :pdf, b_assinar: true)
+      end
+
+      if docs["belaborado_laudo_th"] == "true"
+        @urls << admins_backoffice_vasos_imprime_laudo_th_path(vaso.id, format: :pdf, b_assinar: true)
+      end
+
+      if docs["belaborado_desenho_plaqueta"] == "true"
+        @urls << admins_backoffice_vasos_imprime_plaqueta_path(vaso.id, format: :pdf, b_assinar: true)
+      end
+
+      if docs["belaborado_mapa_espessura"] == "true" && espessura.present?
+        @urls << imprime_espessura_admins_backoffice_espessura_vaso_path(espessura.id, format: :pdf, b_assinar: true)
+      end
+
+
+      # atualiza flags após montar lista
+
+      # if relatorio.present?
+      #   relatorio.update(brel_impresso: true)
+      # end
+
+      # if dispseg.present?
+      #   dispseg.update(bimpresso: true)
+      # end
+
+      # if espessura.present?
+      #   espessura.update(bimpresso: true)
+      # end
+
+      Rails.logger.debug "*********************DISPSEG = #{dispseg.inspect}"
+      Rails.logger.debug "*********************ESPESSURA = #{espessura.inspect}"
+
+      render :executar_impressao
+    end
+
+    def docs_pendentes_por_vaso
+
+      Rails.logger.debug "VASO_ID RECEBIDO = #{params[:vaso_id]}"
+
+      vaso = Vaso.find(params[:vaso_id])
+
+      relatorio = vaso.relatorios
+                      .where(brel_impresso: false, avaliadoph: true)
+                      .first
+
+      relatorio_dispseg = vaso.relatorio_dispsegs
+                              .where(bimpresso: false, brascunho: false)
+                              .first
+
+      espessura_vaso = vaso.espessura_vasos
+                          .where(b_rascunho: false, bimpresso: false)
+                          .first
+
+
+      dados = {
+
+        belaborado_relatorio_inspecao: relatorio&.belaborado_relatorio_inspecao || false,
+
+        belaborado_registro_inspecao: relatorio&.belaborado_registro_inspecao || false,
+
+        belaborado_registro_inspecao_dispseg: relatorio_dispseg.present?,
+
+        belaborado_reg_seg: relatorio&.belaborado_reg_seg || false,
+
+        belaborado_prontuario: relatorio&.belaborado_prontuario || false,
+
+        belaborado_laudo_th: relatorio&.belaborado_laudo_th || false,
+
+        belaborado_desenho_plaqueta: relatorio&.belaborado_desenho_plaqueta || false,
+
+        belaborado_mapa_espessura: espessura_vaso.present?
+
+      }
+
+      Rails.logger.debug "************************JSON RETORNADO = #{dados.inspect}"
+
+      render json: dados
+
+    end
+    
+    def foto_instalacao
+      vaso = Vaso.find(params[:id])
+
+      if vaso.foto_instalacao.present?
+        send_data vaso.foto_instalacao,
+                  type: "image/jpeg",
+                  disposition: "inline"
+      else
+        head :not_found
+      end
+    end
+    
 
     ##########
     # PRIVATE
