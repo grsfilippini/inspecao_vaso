@@ -2,6 +2,7 @@ require 'openssl'
 #require 'hexapdf'
 require 'origami'
 include Origami
+require 'csv'
 
 class AdminsBackoffice::CadastrosController < AdminsBackofficeController
     include SharedMethods
@@ -12,7 +13,7 @@ class AdminsBackoffice::CadastrosController < AdminsBackofficeController
     def index
       # O includes abaixo inclui na query a busca por cadastro_corp
       # Se não for usado, e usar diretamente na view da index, ele fará a cada cadastro uma nova query para buscar a corporação
-      @mostrar_botao_pdf = TRUE
+      @mostrar_botao_pdf = true
       respond_to do |format|
         format.html{
           @cadastros = Cadastro.includes(:corp, :user)
@@ -26,9 +27,26 @@ class AdminsBackoffice::CadastrosController < AdminsBackofficeController
         format.pdf {
           @cadastros = Cadastro.includes(:corp, :user).all.order(:nome_curto)               
           @corps = Corp.all.order(:nome)
-          render template: 'admins_backoffice/cadastros/relatorio', 
-                 pdf: 'cadastro_relatorio', 
-                 layout: 'pdf.html' 
+          # render template: 'admins_backoffice/cadastros/relatorio', 
+                #  pdf: 'cadastro_relatorio', 
+                #  layout: 'pdf.html' 
+          pdf = render_to_string(
+                  pdf: "cadastro_relatorio",
+                  template: "admins_backoffice/cadastros/relatorio",
+                  layout: "pdf.html",
+                  page_size: "A4"
+          )
+          caminho_pdf = Rails.root.join(
+                                        "tmp",
+                                        "cadastro_relatorio.pdf"
+                                       ).to_s
+          File.binwrite(caminho_pdf, pdf)
+          gerar_csv_cadastros(@cadastros, caminho_pdf)
+
+          send_data pdf,
+                    filename: "cadastro_relatorio.pdf",
+                    type: "application/pdf",
+                    disposition: "inline"        
         }
       end
     end
@@ -77,7 +95,7 @@ class AdminsBackoffice::CadastrosController < AdminsBackofficeController
     end
   
     def pesquisa
-      @mostrar_botao_pdf = FALSE
+      @mostrar_botao_pdf = false
       respond_to do |format|
         format.html{          
           @cadastros = Cadastro.pesquisa_nome_corp(params[:page], params[:termo_nome], params[:corp_id])      
@@ -86,11 +104,43 @@ class AdminsBackoffice::CadastrosController < AdminsBackofficeController
         format.pdf{
           @cadastros = Cadastro.pesquisa_nome_corp_pdf(params[:termo_nome], params[:corp_id])
           @corps = Corp.all.order(:nome)
-          render template: 'admins_backoffice/cadastros/pesquisa', 
-                 pdf: 'pesquisa_cadastro_relatorio', # Excluding ".pdf" extension.
-                 disposition: 'inline', # Valor default, se usar attachment, irá abrir um popup para salvar o pdf
-                 layout: 'pdf.html',
-                 page_size: 'A4'
+          # render template: 'admins_backoffice/cadastros/pesquisa', 
+          #        pdf: 'pesquisa_cadastro_relatorio', # Excluding ".pdf" extension.
+          #        disposition: 'inline', # Valor default, se usar attachment, irá abrir um popup para salvar o pdf
+          #        layout: 'pdf.html',
+          #        page_size: 'A4'
+          
+          pdf = render_to_string(
+                  pdf: "pesquisa_cadastro_relatorio",
+                  template: "admins_backoffice/cadastros/pesquisa",
+                  disposition: 'inline',
+                  layout: "pdf.html",
+                  page_size: "A4"
+          )
+          caminho_pdf = Rails.root.join(
+                                        "tmp",
+                                        "pesquisa_cadastro_relatorio.pdf"
+                                       ).to_s
+          File.binwrite(caminho_pdf, pdf)
+          
+          if params[:tipo] == "CSV"
+
+            caminho_csv = gerar_csv_cadastros(@cadastros, caminho_pdf)
+
+            send_file caminho_csv,
+                      filename: "pesquisa_cadastro_relatorio.csv",
+                      type: "text/csv",
+                      disposition: "attachment"
+
+          else
+
+            send_data pdf,
+                      filename: "pesquisa_cadastro_relatorio.pdf",
+                      type: "application/pdf",
+                      disposition: "inline"
+
+          end
+
         }
       end
     end
@@ -186,6 +236,30 @@ class AdminsBackoffice::CadastrosController < AdminsBackofficeController
       @cidades = Cidade.all.order(:nome)
       @corps   = Corp.all.order(:nome)
       @users   = User.order(:nome).order(:sobrenome)
+    end
+
+    def gerar_csv_cadastros(cadastros, caminho_pdf)
+
+      caminho_csv = caminho_pdf.sub(/\.pdf$/i, ".csv")
+
+      CSV.open(caminho_csv,
+              "w",
+              col_sep: ";",
+              force_quotes: true,
+              write_headers: true,
+              headers: ["NOME", "CNPJ"]) do |csv|
+
+        cadastros.each do |cadastro|
+
+          csv << [
+            cadastro.nome_curto.to_s.strip,
+            cadastro.cnpj.to_s.gsub(/\D/, "")
+          ]
+
+        end
+      end
+
+      caminho_csv
     end
   
   end

@@ -23,34 +23,54 @@
 
             <div class="col-lg-4 col-md-2 col-sm-12 mb-3">                
                 <button class="btn btn-secondary" type="button" id="custom_submit_button">
-                    <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF
+                    <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF/CSV
                 </button>
             </div>
+
         </div>
     <%end%>
 </div>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function() {
+
     const customSubmitButton = document.getElementById("custom_submit_button");
 
     customSubmitButton.addEventListener("click", function() {
-      const termoNome = document.getElementById("termo_nome").value;
-      const corpId = document.getElementById("corp_id").value;
-      
-      // Construa a URL personalizada com os valores dos campos
-      const customUrl = `/admins_backoffice/pesquisa_cadastro_pdf.pdf?termo_nome=${termoNome}&corp_id=${corpId}`;
 
-      // Redirecione o usuário para a URL personalizada
-      window.location.href = customUrl;
+        const termoNome = document.getElementById("termo_nome").value;
+        const corpId    = document.getElementById("corp_id").value;
+
+        let tipo = prompt("Digite o formato desejado (PDF ou CSV):", "PDF");
+
+        if (tipo == null)
+            return;
+
+        tipo = tipo.trim().toUpperCase();
+
+        if (tipo != "PDF" && tipo != "CSV") {
+            alert("Formato inválido.");
+            return;
+        }
+
+        // Construa a URL personalizada com os valores dos campos
+        const customUrl =
+            `/admins_backoffice/pesquisa_cadastro_pdf.pdf?` +
+            `termo_nome=${encodeURIComponent(termoNome)}` +
+            `&corp_id=${corpId}` +
+            `&tipo=${tipo}`;
+
+        window.location.href = customUrl;
+
     });
-  });
+
+});
 </script>
 
 <% if @mostrar_botao_pdf %>
   <div class="text-right">
     <%= link_to admins_backoffice_cadastros_path(format: :pdf), class: "btn btn-primary btn-sm" do %>
-      <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF
+      <i class="fas fa-file-pdf fa-sm"></i> Gerar PDF/CSV
     <% end %>
   </div>
 <% end %>
@@ -204,4 +224,4 @@
     </div>
     </div>
 <% end %>
-    
+
