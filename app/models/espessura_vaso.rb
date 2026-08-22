@@ -27,7 +27,7 @@ class EspessuraVaso < ApplicationRecord
                   .where("lower(vasos.num_serie) LIKE ?", "%#{num_serie.downcase}%")
                   .where(b_rascunho: rascunho)
                   .where(bimpresso: impresso)
-                  .order(id: :desc)
+                  .order(id: :asc)
                   .page(page)
                   .per(10)
     elsif !proprietaria_id.blank?
@@ -35,12 +35,12 @@ class EspessuraVaso < ApplicationRecord
                   .where("vasos.proprietaria_id = ?", proprietaria_id) 
                   .where(b_rascunho: rascunho)   
                   .where(bimpresso: impresso)
-                  .order(id: :desc)
+                  .order(id: :asc)
                   .page(page)
                   .per(10)
     else
       includes(:vaso, :inspetora, :user).all
-                                        .order(id: :desc)
+                                        .order(id: :asc)
                                         .where(b_rascunho: rascunho)
                                         .where(bimpresso: impresso)
                                         .page(page)
