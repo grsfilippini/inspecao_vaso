@@ -985,6 +985,13 @@
 
                             <hr>
 
+                            <div id="alerta-espessura"
+                                class="alert alert-danger"
+                                style="display:none;font-weight:bold;">
+                            </div>
+
+                            <hr>
+
                             <%= button_tag "Gravar", type: "submit", class: "btn btn-primary" %>
                             <%= button_tag "Cancelar", type: "button", class: "btn btn-secondary", onclick: "window.history.back();" %>
                                                         
@@ -1010,14 +1017,42 @@
                 fetch('/inspetors_backoffice/vasos/' + vasoId + '/json_data')
                 .then(response => response.json())
                 .then(data => {
+                    console.log(data);
+                    console.log("Antes:", proprietariaSelect.value);
+
                     proprietariaSelect.value = data.proprietaria_id;
+
+                    console.log("Depois:", proprietariaSelect.value);
+
                     // Dispara o evento de mudança no proprietariaSelect
                     proprietariaSelect.dispatchEvent(new Event('change'));
+
+                    // ==========================
+                    // ALERTA DE ESPESSURA
+                    // ==========================
+
+                    const alerta = document.getElementById("alerta-espessura");
+                    const chkEspessura = document.getElementById("relatorio_insp_contratada_vaso_mapa_espessura");
+
+                    if (data.alerta_espessura) {
+
+                        alerta.innerHTML = data.alerta_espessura;
+                        alerta.style.display = "block";
+
+                        // Marca automaticamente o serviço                        
+                        chkEspessura.checked = true;
+                    } else {
+
+                        alerta.style.display = "none";
+                        chkEspessura.checked = false;
+
+                    }               
                 })
                 .catch(error => console.error(error));                                
             }
         });
     });
+
 
     // Seleciona a cidade automáticamente pela proprietária
     document.addEventListener('DOMContentLoaded', function() {

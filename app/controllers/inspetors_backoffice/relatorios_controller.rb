@@ -140,6 +140,7 @@ class InspetorsBackoffice::RelatoriosController < InspetorsBackofficeController
       @relatorio = Relatorio.find(params[:id])      
     end
    
+    
     def params_relatorio
         params.require(:relatorio).permit(:tipo_inspecao_id,
                                           :cidade_id,

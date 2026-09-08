@@ -127,12 +127,43 @@ class InspetorsBackoffice::VasosController < InspetorsBackofficeController
         render json: { serie: serie }
     end
 
-    def json_data      
-      @vaso = Vaso.find(params[:id])
-      render json: { pmta_atual: @vaso.pmta_atual, proprietaria_id: @vaso.proprietaria_id }
+    def json_data
+      vaso = Vaso.find(params[:id])
+
+      alerta = nil
+
+      if vaso.dt_fabricacao_reconstituicao.present?
+
+        idade = ((Date.today - vaso.dt_fabricacao_reconstituicao) / 365.25).floor
+
+        if idade >= 10
+
+          ultima = vaso.espessura_vasos
+                      .order(data: :desc)
+                      .first          
+
+          if ultima.nil?
+
+            alerta = "ATENÇÃO: Este vaso possui mais de 10 anos e nunca foi realizada medição de espessura."
+
+          elsif ultima.data <= 5.years.ago.to_date
+
+            alerta = "ATENÇÃO: A última medição de espessura foi realizada há mais de 5 anos."
+          end
+
+        end
+      end
+
+      render json: { 
+        pmta_atual: vaso.pmta_atual, 
+        proprietaria_id: vaso.proprietaria_id,
+        alerta_espessura: alerta
+       }
     end
 
+
     private
+
 
     def set_vaso
       @vaso = Vaso.find(params[:id])      
