@@ -38,6 +38,7 @@
                 <th>#</th>
                 <!--<th>Usuário</th>-->
                 <th># série</th>
+                <th>Data cad. vaso</td>
                 <th>Fabricante</th>
                 <th>Proprietaria</th>
                 <th align="center">Avaliado PH</th>                 
@@ -60,6 +61,7 @@
                     <% end %>
                     -->
                     <td><%= r.vaso.num_serie %></td>
+                    <td><%= r.vaso.created_at.strftime("%d/%m/%Y") %></td>
                     <td><%= r.vaso.fabricante.nome_curto.truncate(20) %></td>
                     <td><%= r.proprietaria.nome_curto %></td>
 
