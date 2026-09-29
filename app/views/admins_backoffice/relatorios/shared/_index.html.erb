@@ -41,6 +41,7 @@
                 <th>Data cad. vaso</td>
                 <th>Fabricante</th>
                 <th>Proprietaria</th>
+                <th>Espessura</th>
                 <th align="center">Avaliado PH</th>                 
             </tr>
         </thead>
@@ -63,8 +64,11 @@
                     <td><%= r.vaso.num_serie %></td>
                     <td><%= r.vaso.created_at.strftime("%d/%m/%Y") %></td>
                     <td><%= r.vaso.fabricante.nome_curto.truncate(20) %></td>
-                    <td><%= r.proprietaria.nome_curto %></td>
-
+                    <td><%= r.proprietaria.nome_curto %></td>                    
+                    <% ultimo_espessura = r.vaso.espessura_vasos.order(id: :desc).first %>
+                    <td>
+                    <%= ultimo_espessura&.b_rascunho ? "SIM" : "-" %>
+                    </td>
                     <td align="center"><% if r.avaliadoph == true %>
                         <%= link_to "SIM", admins_backoffice_avaliarph_path(r) %>
                         <% else %>
