@@ -131,6 +131,11 @@ class InspetorsBackoffice::VasosController < InspetorsBackofficeController
       vaso = Vaso.find(params[:id])
 
       alerta = nil
+      alerta_foto_plaqueta = nil
+
+      unless vaso.foto_plaqueta.present?
+        alerta_foto_plaqueta = "ATENÇÃO: Este vaso falta a foto da plaqueta."
+      end
 
       if vaso.dt_fabricacao_reconstituicao.present?
 
@@ -157,7 +162,8 @@ class InspetorsBackoffice::VasosController < InspetorsBackofficeController
       render json: { 
         pmta_atual: vaso.pmta_atual, 
         proprietaria_id: vaso.proprietaria_id,
-        alerta_espessura: alerta
+        alerta_espessura: alerta,
+        alerta_foto_plaqueta: alerta_foto_plaqueta
        }
     end
 
