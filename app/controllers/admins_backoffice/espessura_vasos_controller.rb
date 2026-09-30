@@ -6,6 +6,7 @@ class AdminsBackoffice::EspessuraVasosController < AdminsBackofficeController
     before_action :get_relacoes, only: [:new, :edit]
     
     require "zip"
+    require "open3"
     
     def index
         @espessura_vasos = EspessuraVaso.pesquisa(params[:page], nil, nil, false, true)
@@ -118,29 +119,114 @@ class AdminsBackoffice::EspessuraVasosController < AdminsBackofficeController
       end
     end
 
+    # def ajustar_memorial
+    #     vaso_id = params[:vaso_id]
+      
+    #     template_path = Rails.root.join("lib", "templates", "memorial_rails.ods")
+    #     output_path   = Rails.root.join("tmp", "memorial_vaso_#{vaso_id}.ods")
+      
+    #     FileUtils.cp(template_path, output_path)
+      
+    #     Zip::File.open(output_path) do |zip|
+    #       entry = zip.glob("content.xml").first
+    #       content = entry.get_input_stream.read
+      
+    #       # substituição exemplo
+    #       #content.gsub!("ID_VASO_PLACEHOLDER", vaso_id.to_s)
+    #       placeholder = "ID_VASO_PLACEHOLDER"
+    #       vaso_id_str = vaso_id.to_s.ljust(placeholder.length)
+    #       content.gsub!(placeholder, vaso_id_str)
+      
+    #       zip.get_output_stream("content.xml") { |f| f.write(content) }
+    #     end
+      
+    #     send_file output_path,
+    #         filename: "memorial_vaso_#{vaso_id}.ods",
+    #         type: "application/vnd.oasis.opendocument.spreadsheet",
+    #         disposition: "attachment"
+    # end
     def ajustar_memorial
         vaso_id = params[:vaso_id]
-      
-        template_path = Rails.root.join("lib", "templates", "memorial_rails.ods")
-        output_path   = Rails.root.join("tmp", "memorial_vaso_#{vaso_id}.ods")
-      
-        FileUtils.cp(template_path, output_path)
-      
-        Zip::File.open(output_path) do |zip|
-          entry = zip.glob("content.xml").first
-          content = entry.get_input_stream.read
-      
-          # substituição exemplo
-          content.gsub!("ID_VASO_PLACEHOLDER", vaso_id.to_s)
-      
-          zip.get_output_stream("content.xml") { |f| f.write(content) }
+
+        template_path = Rails.root.join(
+            "lib", "templates", "memorial_rails.ods"
+        )
+
+        output_path = Rails.root.join(
+            "tmp", "memorial_vaso_#{vaso_id}.ods"
+        )
+
+        placeholder = "ID_VASO_PLACEHOLDER"
+
+        # O ID terá exatamente o mesmo tamanho do placeholder
+        vaso_id_str = vaso_id.to_s.ljust(placeholder.length)
+
+        Dir.mktmpdir("memorial_ods") do |temp_dir|
+
+            # --------------------------------------------------
+            # 1. Copia o template válido
+            # --------------------------------------------------
+            FileUtils.cp(template_path, output_path)
+
+            # --------------------------------------------------
+            # 2. Extrai SOMENTE o content.xml
+            # --------------------------------------------------
+            content_xml = File.join(temp_dir, "content.xml")
+
+            stdout, stderr, status = Open3.capture3(
+            "unzip",
+            "-p",
+            output_path.to_s,
+            "content.xml"
+            )
+
+            unless status.success?
+            raise "Erro ao extrair content.xml: #{stderr}"
+            end
+
+            # Grava exatamente os bytes recebidos
+            File.binwrite(content_xml, stdout)
+
+            # --------------------------------------------------
+            # 3. Altera SOMENTE o content.xml
+            # --------------------------------------------------
+            content = File.binread(content_xml)
+
+            unless content.include?(placeholder)
+            raise "Placeholder #{placeholder} não encontrado no content.xml"
+            end
+
+            content.gsub!(placeholder, vaso_id_str)
+
+            File.binwrite(content_xml, content)
+
+            # --------------------------------------------------
+            # 4. Atualiza SOMENTE content.xml dentro do ODS
+            # --------------------------------------------------
+            Dir.chdir(temp_dir) do
+
+            stdout, stderr, status = Open3.capture3(
+                "zip",
+                "-q",
+                output_path.to_s,
+                "content.xml"
+            )
+
+            unless status.success?
+                raise "Erro ao atualizar content.xml: #{stderr}"
+            end
+            end
         end
-      
+
+        # --------------------------------------------------
+        # 5. Envia o arquivo
+        # --------------------------------------------------
         send_file output_path,
             filename: "memorial_vaso_#{vaso_id}.ods",
             type: "application/vnd.oasis.opendocument.spreadsheet",
             disposition: "attachment"
-    end
+    end    
+
 
 
     private
