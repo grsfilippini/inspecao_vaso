@@ -1,0 +1,176 @@
+<div class="container">
+
+    <h1>Vaso de Pressão</h1>
+
+    <h2>Identificação</h2>
+
+    <!-- Estilo da lupa para plaqueta -->   
+    <style>
+        .lupa {
+        display: none;
+        position: absolute;
+        border: 1px solid #000;
+        width: 250px;
+        height: 250px;
+        overflow: hidden;
+        pointer-events: none;
+        }
+
+        .lupa img {
+        position: absolute;
+        }
+    </style>
+
+    <div class="form-group row">        
+        <div class="form-label col-sm-4 mb-0 mb-sm-0 lupa-container" style="position: relative;">
+            <% if @vaso.foto_plaqueta.present? && @vaso.id.present? %>
+            <img id="img-plaqueta" src="data:image/jpeg;base64,<%= Base64.encode64(@vaso.foto_plaqueta) %>" width="auto" height="180" style="display: block;">
+            <div id="lupa" class="lupa"></div>            
+            <% end %>
+        </div>
+
+        <div class="form-label col-sm-4 mb-0 mb-sm-0 lupa-container" style="position: relative;">
+            <% if @vaso.foto_instalacao.present? && @vaso.id.present? %>
+                <img id="img-instalacao" src="data:image/jpeg;base64,<%= Base64.encode64(@vaso.foto_instalacao) %>" width="auto" height="180" style="display: block;">
+            <% end %>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const img = document.getElementById('img-plaqueta');
+            const lupa = document.getElementById('lupa');
+            const zoom = 4; // Define o nível de zoom da lupa
+
+            img.addEventListener('mousemove', function(event) {
+                const rect = img.getBoundingClientRect();
+                const x = event.clientX - rect.left;
+                const y = event.clientY - rect.top;
+
+                // Exibe a lupa
+                lupa.style.display = 'block';
+
+                // Posiciona a lupa
+                lupa.style.left = `${x - lupa.offsetWidth / 2}px`;
+                lupa.style.top = `${y - lupa.offsetHeight / 2}px`;
+
+                // Posiciona a imagem dentro da lupa
+                lupa.style.backgroundImage = `url(${img.src})`;
+                lupa.style.backgroundSize = `${img.width * zoom}px ${img.height * zoom}px`;
+                lupa.style.backgroundPosition = `-${x * zoom - lupa.offsetWidth / 2}px -${y * zoom - lupa.offsetHeight / 2}px`;
+            });
+
+            img.addEventListener('mouseleave', function() {
+                // Esconde a lupa ao sair da imagem
+                lupa.style.display = 'none';
+            });
+        });
+    </script>
+
+    <label><strong>Número do vaso:</strong> <%= @vaso.id %></label>
+    <br>
+
+    <label><strong>Número de série:</strong> <%= @vaso.num_serie %></label>
+    <br>
+
+    <label><strong>Fabricante:</strong> <%= @vaso.fabricante&.nome_curto %></label>
+    <br>
+
+    <label><strong>Proprietária:</strong> <%= @vaso.proprietaria&.nome_curto %></label>
+    <br>
+
+    <label><strong>Data de fabricação:</strong> <%= @vaso.dt_fabricacao_reconstituicao&.strftime("%d/%m/%Y") %></label>
+    <br>
+
+    <label><strong>Data de criação do cadastro:</strong> <%= @vaso.created_at&.strftime("%d/%m/%Y") %></label>
+    <br>
+
+    <hr>
+
+    <h2>Características</h2>
+    
+    <label><strong>Categoria:</strong> <%= @vaso.catnr13&.categoria %></label>
+    <br>
+
+    <label><strong>Volume:</strong> <%= @vaso.volume %> m³</label>
+    <br>
+
+    <label><strong>Diâmetro externo:</strong> <%= @vaso.diametro_externo_corpo %> cm</label>
+    <br>
+
+    <label><strong>Comprimento entre soldas:</strong> <%= @vaso.entre_soladas_corpo %> cm</label>
+    <br>
+
+    <label><strong>Profundidade tampo:</strong> <%= @vaso.profundidade_tampo %> cm</label>
+    <br>
+
+    <label><strong>Espessura de projeto corpo:</strong> <%= @vaso.esp_projeto_corpo %> mm</label>
+    <br>
+
+    <label><strong>Espessura de projeto tampo:</strong> <%= @vaso.esp_projeto_tampo %> mm</label>
+    <br>
+
+    <label><strong>Tipo de vaso:</strong> <%= @vaso.tipo_vaso&.tipo_vaso %></label>
+    <br>
+    
+    <label><strong>Tipo de compressor:</strong> <%= @vaso.tipo_compressor&.tipo_compressor %></label>
+    <br>
+
+    <label><strong>Fluido de serviço:</strong> <%= @vaso.fluido_servico&.descricao %></label>
+    <br>
+
+    <label><strong>Material:</strong> <%= @vaso.material&.descricao %></label>
+    <br>
+
+    <label><strong>Material:</strong> <%= @vaso.codigo_construcao&.codigo %></label>
+    <br>
+    
+
+    <hr>
+
+    <h2>Pressões</h2>
+
+    <label><strong>PMTA original:</strong> <%= @vaso.pmta_original %> MPa</label>
+    <br>
+
+    <label><strong>PMTA atual:</strong> <%= @vaso.pmta_atual%> MPa </label>
+    <br>
+
+    <label><strong>PTH original:</strong> <%= @vaso.pth_original %> MPa</label>
+    <br>
+
+    <label><strong>PTH atual:</strong> <%= @vaso.pth_atual %> MPa</label>
+    <br>
+
+    <label><strong>Pressão de projeto:</strong> <%= @vaso.p_projeto %> MPa</label>
+    <br>
+
+    <label><strong>Pressão de inferior de operação:</strong> <%= @vaso.p_inf_operacao_fabricante %> MPa</label>
+    <br>
+    <label><strong>Pressão de superior de operação:</strong> <%= @vaso.p_sup_operacao_fabricante %> MPa</label>
+    <br>
+
+    <hr>
+
+    <h2>Instalação</h2>
+
+    <label><strong>Data de instalação:</strong>
+        <%= @vaso.data_instalacao&.strftime("%d/%m/%Y") %>
+    </label>
+    <br>
+
+    <label><strong>Setor:</strong> <%= @vaso.setor_instalacao_vaso %></label>
+    <br>
+
+    <label><strong>Observações:</strong> <%= @vaso.observacoes %></label>
+    <br>
+
+    <hr>
+
+    <%= button_tag "Retornar",
+        type: "button",
+        class: "btn btn-secondary",
+        onclick: "window.history.back();" %>
+
+</div>
+```

@@ -75,20 +75,19 @@ Rails.application.routes.draw do
     get 'espessura_a_imprimir',    to: 'espessura_vasos#a_imprimir'
     get 'espessura_impressos',     to: 'espessura_vasos#impressos'
     #get 'espessura_avaliarph/:id', to: 'espessura_vasos#avaliarph', as: :espessura_avaliarph
-    
 
     resources :finalidade_vasos    
 
     resources :vasos do
       member do
-        get :json_data, defaults: { format: 'json' }
-        # delete :remove_photo
+        get :json_data, defaults: { format: 'json' }        
         get :foto_instalacao
       end
       collection do
         get :vasos_com_pendencias_impressao
         post :imprimir_pendencias
         get :docs_pendentes_por_vaso        
+        get :index_fabricante
       end
     end
     get 'pesquisa_vaso',                              to: 'vasos#pesquisa'    

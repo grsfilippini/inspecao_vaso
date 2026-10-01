@@ -20,11 +20,42 @@ class AdminsBackoffice::VasosController < AdminsBackofficeController
       @proprietarios = Cadastro.where(eh_fabricante: false, eh_empresa_inspetora: false).order(:nome_curto)
       @corps = Corp.all.order(:nome)
     end
+
+    def index_fabricante
+      # O includes abaixo inclui na query a busca por cadastro_corp
+      # Se não for usado, e usar diretamente na view da index, ele fará a cada cadastro uma nova query para buscar a corporação      
+      @vasos = Vaso
+        .joins(:fabricante)
+        .includes(:fabricante, :user)
+
+      if params[:num_serie].present?
+        @vasos = @vasos.where("vasos.num_serie ILIKE ?", "%#{params[:num_serie]}%")
+      end
+
+      if params[:proprietaria_id].present?
+        @vasos = @vasos.where(proprietaria_id: params[:proprietaria_id])
+      end
+
+      if params[:corp_id].present?
+        @vasos = @vasos.where(fabricante_id: params[:corp_id])
+      end
+
+      @vasos = @vasos
+          .order('cadastros.nome_curto ASC, vasos.volume ASC')
+          .page(params[:page])
+          .per(100)
+      @fabricantes = Cadastro.where(eh_fabricante: true, eh_empresa_inspetora: false).order(:nome_curto)
+      @proprietarios = Cadastro.where(eh_fabricante: false, eh_empresa_inspetora: false).order(:nome_curto)
+    end
   
     def new
       @vaso = Vaso.new     
     end
   
+    def show
+      @vaso = Vaso.find(params[:id])
+    end
+
     def create      
       @vaso = Vaso.new(params_vaso)
       
@@ -406,8 +437,8 @@ class AdminsBackoffice::VasosController < AdminsBackofficeController
       #   espessura.update(bimpresso: true)
       # end
 
-      Rails.logger.debug "*********************DISPSEG = #{dispseg.inspect}"
-      Rails.logger.debug "*********************ESPESSURA = #{espessura.inspect}"
+      #Rails.logger.debug "*********************DISPSEG = #{dispseg.inspect}"
+      #Rails.logger.debug "*********************ESPESSURA = #{espessura.inspect}"
 
       render :executar_impressao
     end
