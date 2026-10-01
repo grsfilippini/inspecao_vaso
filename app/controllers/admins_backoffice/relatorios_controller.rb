@@ -223,7 +223,9 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
                   layout: 'recorte_pdf.html',
                   page_size: 'A4'
         else
-          path_doc_assinado = gera_pdf_empresa_equipamento_assinado(current_admin, @relatorio.vaso.proprietaria, @relatorio.vaso, "admins_backoffice/relatorios/imprime_registro_inspecao_pdf", "registro_inspecao_assinado.pdf", "recorte_pdf.html", "Portrait")
+          path_doc_assinado = gera_pdf_empresa_equipamento_assinado(current_admin, @relatorio.vaso.proprietaria, @relatorio.vaso, 
+                                                                    "admins_backoffice/relatorios/imprime_registro_inspecao_pdf", 
+                                                                    "registro_inspecao_assinado.pdf", "recorte_pdf.html", "Portrait")
           send_file path_doc_assinado, type: 'application/pdf', disposition: 'attachment'
         end
 
@@ -262,44 +264,46 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
   end
 
   def update   
+    if params[:relatorio].present?
+      if (params[:relatorio][:remove_foto_antes]      == '1' || params[:relatorio][:remove_foto_antes]      == 'true')
+        @relatorio.update_attribute(:foto_antes_inspecao, nil)          
+      end
+      if (params[:relatorio][:remove_foto_pos]        == '1' || params[:relatorio][:remove_foto_pos]        == 'true')
+        @relatorio.update_attribute(:foto_pos_inspecao, nil)          
+      end
+      if (params[:relatorio][:remove_foto_corpo]      == '1' || params[:relatorio][:remove_foto_corpo]      == 'true')
+        @relatorio.update_attribute(:foto_corpo, nil)     
+      end
+      if (params[:relatorio][:remove_foto_instalacao] == '1' || params[:relatorio][:remove_foto_instalacao] == 'true')
+        @relatorio.update_attribute(:foto_instalacao, nil)
+      end
+      if (params[:relatorio][:remove_foto_th]         == '1' || params[:relatorio][:remove_foto_th]         == 'true')
+        @relatorio.update_attribute(:foto_th, nil)          
+      end
+      if (params[:relatorio][:remove_foto_interna1]   == '1' || params[:relatorio][:remove_foto_interna1]   == 'true')
+        @relatorio.update_attribute(:foto_interna1, nil)          
+      end
+      if (params[:relatorio][:remove_foto_interna2]   == '1' || params[:relatorio][:remove_foto_interna2]   == 'true')
+        @relatorio.update_attribute(:foto_interna2, nil)          
+      end
+      if (params[:relatorio][:remove_foto_interna3]   == '1' || params[:relatorio][:remove_foto_interna3]   == 'true')
+        @relatorio.update_attribute(:foto_interna3, nil)          
+      end
+      if (params[:relatorio][:remove_foto_interna4]   == '1' || params[:relatorio][:remove_foto_interna4]   == 'true')
+        @relatorio.update_attribute(:foto_interna4, nil)          
+      end
     
-    if (params[:relatorio][:remove_foto_antes]      == '1' || params[:relatorio][:remove_foto_antes]      == 'true')
-      @relatorio.update_attribute(:foto_antes_inspecao, nil)          
+      params[:relatorio].delete(:remove_foto_antes)      if params[:relatorio].key?(:remove_foto_antes)
+      params[:relatorio].delete(:remove_foto_pos)        if params[:relatorio].key?(:remove_foto_pos)
+      params[:relatorio].delete(:remove_foto_corpo)      if params[:relatorio].key?(:remove_foto_corpo)
+      params[:relatorio].delete(:remove_foto_instalacao) if params[:relatorio].key?(:remove_foto_instalacao)
+      params[:relatorio].delete(:remove_foto_th)         if params[:relatorio].key?(:remove_foto_th)
+      params[:relatorio].delete(:remove_foto_interna1)   if params[:relatorio].key?(:remove_foto_interna1)
+      params[:relatorio].delete(:remove_foto_interna2)   if params[:relatorio].key?(:remove_foto_interna2)
+      params[:relatorio].delete(:remove_foto_interna3)   if params[:relatorio].key?(:remove_foto_interna3)
+      params[:relatorio].delete(:remove_foto_interna4)   if params[:relatorio].key?(:remove_foto_interna4)
+      
     end
-    if (params[:relatorio][:remove_foto_pos]        == '1' || params[:relatorio][:remove_foto_pos]        == 'true')
-      @relatorio.update_attribute(:foto_pos_inspecao, nil)          
-    end
-    if (params[:relatorio][:remove_foto_corpo]      == '1' || params[:relatorio][:remove_foto_corpo]      == 'true')
-      @relatorio.update_attribute(:foto_corpo, nil)     
-    end
-    if (params[:relatorio][:remove_foto_instalacao] == '1' || params[:relatorio][:remove_foto_instalacao] == 'true')
-      @relatorio.update_attribute(:foto_instalacao, nil)
-    end
-    if (params[:relatorio][:remove_foto_th]         == '1' || params[:relatorio][:remove_foto_th]         == 'true')
-      @relatorio.update_attribute(:foto_th, nil)          
-    end
-    if (params[:relatorio][:remove_foto_interna1]   == '1' || params[:relatorio][:remove_foto_interna1]   == 'true')
-      @relatorio.update_attribute(:foto_interna1, nil)          
-    end
-    if (params[:relatorio][:remove_foto_interna2]   == '1' || params[:relatorio][:remove_foto_interna2]   == 'true')
-      @relatorio.update_attribute(:foto_interna2, nil)          
-    end
-    if (params[:relatorio][:remove_foto_interna3]   == '1' || params[:relatorio][:remove_foto_interna3]   == 'true')
-      @relatorio.update_attribute(:foto_interna3, nil)          
-    end
-    if (params[:relatorio][:remove_foto_interna4]   == '1' || params[:relatorio][:remove_foto_interna4]   == 'true')
-      @relatorio.update_attribute(:foto_interna4, nil)          
-    end
-
-    params[:relatorio].delete(:remove_foto_antes)      if params[:relatorio].key?(:remove_foto_antes)
-    params[:relatorio].delete(:remove_foto_pos)        if params[:relatorio].key?(:remove_foto_pos)
-    params[:relatorio].delete(:remove_foto_corpo)      if params[:relatorio].key?(:remove_foto_corpo)
-    params[:relatorio].delete(:remove_foto_instalacao) if params[:relatorio].key?(:remove_foto_instalacao)
-    params[:relatorio].delete(:remove_foto_th)         if params[:relatorio].key?(:remove_foto_th)
-    params[:relatorio].delete(:remove_foto_interna1)   if params[:relatorio].key?(:remove_foto_interna1)
-    params[:relatorio].delete(:remove_foto_interna2)   if params[:relatorio].key?(:remove_foto_interna2)
-    params[:relatorio].delete(:remove_foto_interna3)   if params[:relatorio].key?(:remove_foto_interna3)
-    params[:relatorio].delete(:remove_foto_interna4)   if params[:relatorio].key?(:remove_foto_interna4)
 
     if params_relatorio.present?      
       if @relatorio.update(params_relatorio)                
