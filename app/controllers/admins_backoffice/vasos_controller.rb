@@ -36,14 +36,23 @@ class AdminsBackoffice::VasosController < AdminsBackofficeController
         @vasos = @vasos.where(proprietaria_id: params[:proprietaria_id])
       end
 
-      if params[:corp_id].present?
-        @vasos = @vasos.where(fabricante_id: params[:corp_id])
+      if params[:fabricante_id].present?
+        @vasos = @vasos.where(fabricante_id: params[:fabricante_id])
+      end
+
+      if params[:volume].present?
+        @vasos = @vasos.where(volume: params[:volume])
       end
 
       @vasos = @vasos
           .order('cadastros.nome_curto ASC, vasos.volume ASC')
           .page(params[:page])
           .per(100)
+      @volumes = Vaso
+          .where.not(volume: nil)
+          .distinct
+          .order(:volume)
+          .pluck(:volume)
       @fabricantes = Cadastro.where(eh_fabricante: true, eh_empresa_inspetora: false).order(:nome_curto)
       @proprietarios = Cadastro.where(eh_fabricante: false, eh_empresa_inspetora: false).order(:nome_curto)
     end

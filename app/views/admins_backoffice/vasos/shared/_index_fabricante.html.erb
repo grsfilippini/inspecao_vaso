@@ -1,30 +1,35 @@
 <div class="col-lg-12">    
     <h1 class="h3 mb-2 text-gray-800"><%= t('mensagens.lista_de', model: @vasos.model_name.human(count: @vasos.count)) %> - <%= @vasos.total_count %> </h1>
 
-    <%= form_with(url:index_fabricante_admins_backoffice_vasos_path, local: true, method: :get) do |form| %>
-        <div class="row">
-            <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                <div class="input-group">      
-                    <%= form.text_field :num_serie, class:"bg-light border-0 small", placeholder: "# série...", class:"form-control" %>
+    <%= form_with(url:index_fabricante_admins_backoffice_vasos_path, local: true, method: :get,
+        html: { onkeydown: "if(event.key === 'Enter') { event.preventDefault(); this.submit(); }" }) do |form| %>
+        <div class="row">            
+            <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
+                <div class="input-group">                   
+                    <%= form.text_field :num_serie, value: params[:num_serie], class:"bg-light border-0 small", placeholder: "# série...", class:"form-control" %>
                 </div>
             </div>
 
-            <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                <div class="input-group">      
-                    <%= form.collection_select :proprietaria_id, @proprietarios, :id, :nome_curto, {include_blank: true }, {class:"form-control"} %>
+            <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
+                <div class="input-group">                                       
+                    <%= form.collection_select :fabricante_id, @fabricantes, :id, :nome_curto, { selected: params[:fabricante_id], include_blank: "Fabricante" }, {class:"form-control"} %>
                 </div>
             </div>
 
-            <div class="col-lg-4 col-md-6 col-sm-12 mb-3">                    
+            <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
                 <div class="input-group">                    
-                    <%= form.collection_select :corp_id, @fabricantes, :id, :nome, {include_blank: true }, {class:"form-control"} %>
-                    
+                    <%= form.collection_select :proprietaria_id, @proprietarios, :id, :nome_curto, { selected: params[:proprietaria_id], include_blank: "Proprietária" }, {class:"form-control"} %>                                        
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
+                <div class="input-group">
+                    <%= form.select :volume, options_for_select(@volumes, params[:volume]), { include_blank: "Volume" }, { class: "form-control" } %>
                     <div class="input-group-append">
                         <button class="btn btn-primary" type="submit">
                             <i class="fas fa-search fa-sm"></i>
                         </button>
                     </div>
-                    
                 </div>
             </div>
         </div>
