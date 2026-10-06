@@ -669,6 +669,7 @@ end
                                           :foto_pos_inspecao,
                                           :foto_corpo,
                                           :foto_instalacao,
+                                          :foto_pressao_abertura_valvula,
                                           # teste hidrostático
                                           :foto_th,
                                           # inspeção interna                                          

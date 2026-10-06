@@ -781,134 +781,237 @@
 </div>
 
 
+
 <div class="container page">
-    
+
     <%= cabecalho_relatorio(@relatorio) %>
-    
-    <span style="font-size: 12pt; font-weight: bold;">12 – FOTOS TIRADAS DURANTE A INSPEÇÃO</span><br>
-    <div style="font-size:0; margin-top:3px;"> <!-- zera o “espaço” entre inline-blocks -->
+
+    <span style="font-size: 12pt; font-weight: bold;">
+        12 – FOTOS TIRADAS DURANTE A INSPEÇÃO
+    </span>
+    <br>
+
+    <div style="font-size:0; margin-top:3px;">
+
+        <!-- ===================================================== -->
+        <!-- COLUNA ESQUERDA -->
+        <!-- ===================================================== -->
 
         <div style="display:inline-block; vertical-align:top; width:49%; font-size:10pt; box-sizing:border-box;">
-            <div style="font-weight:bold; margin-bottom:4px; text-align:center;">
-                ANTES DA INSPEÇÃO
-            </div>
 
+            <!-- FOTO ANTES DA INSPEÇÃO -->
             <% if @relatorio.foto_antes_inspecao.present? %>
+
+                <div style="font-weight:bold; margin-bottom:4px; text-align:center;">
+                    ANTES DA INSPEÇÃO
+                </div>
+
                 <div style="width:100%; text-align:center; margin-bottom:8px; overflow:hidden;">
-                <%= image_tag(
+                    <%= image_tag(
                         "data:image/jpeg;base64,#{Base64.strict_encode64(@relatorio.foto_antes_inspecao)}",
                         style: "
-                        max-width:100%;
-                        max-height:110mm;
-                        width:auto;
-                        height:auto;
-                        border:1px solid #000;
-                        display:inline-block;
+                            max-width:100%;
+                            max-height:110mm;
+                            width:auto;
+                            height:auto;
+                            border:1px solid #000;
+                            display:inline-block;
                         "
                     ) %>
                 </div>
-            <% else %>
-                <span style="font-size:8pt; color:#777;">Sem imagem</span>
+
             <% end %>
 
-            <br>
 
-            <div style="font-weight:bold; margin-bottom:4px; text-align:center;">
-                INSTALAÇÃO DO RESERVATÓRIO
-            </div>
-
+            <!-- FOTO DA INSTALAÇÃO -->
             <% if @relatorio.foto_instalacao.present? %>
+
+                <div style="font-weight:bold; margin-bottom:4px; text-align:center;">
+                    INSTALAÇÃO DO RESERVATÓRIO
+                </div>
+
                 <div style="width:100%; text-align:center; margin-bottom:8px; overflow:hidden;">
-                <%= image_tag(
+                    <%= image_tag(
                         "data:image/jpeg;base64,#{Base64.strict_encode64(@relatorio.foto_instalacao)}",
                         style: "
-                        max-width:100%;
-                        max-height:110mm;
-                        width:auto;
-                        height:auto;
-                        border:1px solid #000;
-                        display:inline-block;
+                            max-width:100%;
+                            max-height:110mm;
+                            width:auto;
+                            height:auto;
+                            border:1px solid #000;
+                            display:inline-block;
                         "
                     ) %>
                 </div>
-            <% else %>
-                <span style="font-size:8pt; color:#777;">Sem imagem</span>
+
             <% end %>
-            </div>
 
-            <div style="display:inline-block; vertical-align:top; width:49%; font-size:10pt; box-sizing:border-box;">
-            <div style="font-weight:bold; margin-bottom:4px; text-align:center;">
-                APÓS A INSPEÇÃO
-            </div>
+        </div>
 
+
+        <!-- ===================================================== -->
+        <!-- COLUNA DIREITA -->
+        <!-- ===================================================== -->
+
+        <div style="display:inline-block; vertical-align:top; width:49%; font-size:10pt; box-sizing:border-box;">
+
+            <!-- FOTO APÓS A INSPEÇÃO -->
             <% if @relatorio.foto_pos_inspecao.present? %>
+
+                <div style="font-weight:bold; margin-bottom:4px; text-align:center;">
+                    APÓS A INSPEÇÃO
+                </div>
+
                 <div style="width:100%; text-align:center; margin-bottom:8px; overflow:hidden;">
-                <%= image_tag(
+                    <%= image_tag(
                         "data:image/jpeg;base64,#{Base64.strict_encode64(@relatorio.foto_pos_inspecao)}",
                         style: "
-                        max-width:100%;
-                        max-height:110mm;
-                        width:auto;
-                        height:auto;
-                        border:1px solid #000;
-                        display:inline-block;
+                            max-width:100%;
+                            max-height:110mm;
+                            width:auto;
+                            height:auto;
+                            border:1px solid #000;
+                            display:inline-block;
                         "
                     ) %>
                 </div>
-            <% else %>
-                <span style="font-size:8pt; color:#777;">Sem imagem</span>
+
             <% end %>
 
-            <br>
 
-            <div style="font-weight:bold; margin-bottom:4px; text-align:center;">
-                TESTE HIDROSTÁTICO (Se houver)
-            </div>
-
+            <!-- FOTO DO TESTE HIDROSTÁTICO -->
             <% if @relatorio.foto_th.present? %>
+
+                <div style="font-weight:bold; margin-bottom:4px; text-align:center;">
+                    TESTE HIDROSTÁTICO
+                </div>
+
                 <div style="width:100%; text-align:center; margin-bottom:8px; overflow:hidden;">
-                <%= image_tag(
+                    <%= image_tag(
                         "data:image/jpeg;base64,#{Base64.strict_encode64(@relatorio.foto_th)}",
                         style: "
-                        max-width:100%;
-                        max-height:110mm;
-                        width:auto;
-                        height:auto;
-                        border:1px solid #000;
-                        display:inline-block;
+                            max-width:100%;
+                            max-height:110mm;
+                            width:auto;
+                            height:auto;
+                            border:1px solid #000;
+                            display:inline-block;
                         "
                     ) %>
                 </div>
-            <% else %>
-                <span style="font-size:8pt; color:#777;">Sem imagem</span>
+
             <% end %>
+
         </div>
 
     </div>
 
-    <br>
-    <div style="font-weight:bold; margin-bottom:4px; text-align:center;">
-        PLAQUETA DE IDENTIFICAÇÃO DO VASO
-    </div>
-    <% if @relatorio.vaso.foto_plaqueta.present? %>
-    <div style="width:100%; text-align:center; margin-bottom:8px; overflow:hidden;">
-    <%= image_tag(
-            "data:image/jpeg;base64,#{Base64.strict_encode64(@relatorio.vaso.foto_plaqueta)}",
-            style: "
-            max-width:100%;
-            max-height:50mm;
-            width:auto;
-            height:auto;
-            border:1px solid #000;
-            display:inline-block;
-            "
-        ) %>
-    </div>
-    <% else %>
-    <span style="font-size:8pt; color:#777; text-align:center;">Sem imagem</span>
+
+    <!-- ========================================================= -->
+    <!-- FOTOS FINAIS: PLAQUETA E PRESSÃO DE ABERTURA DA VÁLVULA -->
+    <!-- ========================================================= -->
+
+    <% if @relatorio.vaso.foto_plaqueta.present? || @relatorio.foto_pressao_abertura_valvula.present? %>
+
+        <br>
+
+        <div style="font-size:0; margin-top:5px;">
+
+            <!-- ================================================= -->
+            <!-- PLAQUETA - ESQUERDA -->
+            <!-- ================================================= -->
+
+            <% if @relatorio.vaso.foto_plaqueta.present? %>
+
+                <div style="
+                    display:inline-block;
+                    vertical-align:top;
+                    width:49%;
+                    font-size:10pt;
+                    box-sizing:border-box;
+                    text-align:center;
+                ">
+
+                    <div style="font-weight:bold; margin-bottom:4px;">
+                        PLAQUETA DE IDENTIFICAÇÃO DO VASO
+                    </div>
+
+                    <div style="
+                        width:100%;
+                        text-align:center;
+                        margin-bottom:8px;
+                        overflow:hidden;
+                    ">
+
+                        <%= image_tag(
+                            "data:image/jpeg;base64,#{Base64.strict_encode64(@relatorio.vaso.foto_plaqueta)}",
+                            style: "
+                                max-width:100%;
+                                max-height:50mm;
+                                width:auto;
+                                height:auto;
+                                border:1px solid #000;
+                                display:inline-block;
+                            "
+                        ) %>
+
+                    </div>
+
+                </div>
+
+            <% end %>
+
+
+            <!-- ================================================= -->
+            <!-- PRESSÃO DE ABERTURA DA VÁLVULA - DIREITA -->
+            <!-- ================================================= -->
+
+            <% if @relatorio.foto_pressao_abertura_valvula.present? %>
+
+                <div style="
+                    display:inline-block;
+                    vertical-align:top;
+                    width:49%;
+                    font-size:10pt;
+                    box-sizing:border-box;
+                    text-align:center;
+                ">
+
+                    <div style="font-weight:bold; margin-bottom:4px;">
+                        PRESSÃO DE ABERTURA DA VÁLVULA
+                    </div>
+
+                    <div style="
+                        width:100%;
+                        text-align:center;
+                        margin-bottom:8px;
+                        overflow:hidden;
+                    ">
+
+                        <%= image_tag(
+                            "data:image/jpeg;base64,#{Base64.strict_encode64(@relatorio.foto_pressao_abertura_valvula)}",
+                            style: "
+                                max-width:100%;
+                                max-height:50mm;
+                                width:auto;
+                                height:auto;
+                                border:1px solid #000;
+                                display:inline-block;
+                            "
+                        ) %>
+
+                    </div>
+
+                </div>
+
+            <% end %>
+
+        </div>
+
     <% end %>
 
 </div>
+
 
 
 <div class="container page">

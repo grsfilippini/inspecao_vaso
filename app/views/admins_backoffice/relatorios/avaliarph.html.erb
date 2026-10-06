@@ -122,63 +122,184 @@
                                     </div>
                                 </div>
 
-                                <!-- Estilo da lupa para plaqueta -->   
+                                <!-- ========================================================= -->
+                                <!-- FOTOS: PLAQUETA E PRESSÃO DE ABERTURA DA VÁLVULA -->
+                                <!-- ========================================================= -->
+
                                 <style>
                                     .lupa {
-                                    display: none;
-                                    position: absolute;
-                                    border: 1px solid #000;
-                                    width: 250px;
-                                    height: 250px;
-                                    overflow: hidden;
-                                    pointer-events: none;
-                                    }
-
-                                    .lupa img {
-                                    position: absolute;
+                                        display: none;
+                                        position: absolute;
+                                        border: 1px solid #000;
+                                        width: 250px;
+                                        height: 250px;
+                                        overflow: hidden;
+                                        pointer-events: none;
+                                        z-index: 1000;
+                                        background-repeat: no-repeat;
                                     }
                                 </style>
 
+
                                 <div class="form-group row">
-                                    <%= form.label :foto_plaqueta, 'Plaqueta', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
-                                    <div class="form-label col-sm-5 mb-0 mb-sm-0">                                    
-                                        <% if @relatorio.vaso.foto_plaqueta.present? %>
-                                            <img id="img-plaqueta" src="data:image/jpeg;base64,<%= Base64.encode64(@relatorio.vaso.foto_plaqueta) %>" width="auto" height="170">
-                                            <div id="lupa" class="lupa"></div>
-                                        <% end %>
+
+                                    <!-- ===================================================== -->
+                                    <!-- FOTO DA PLAQUETA - ESQUERDA -->
+                                    <!-- ===================================================== -->
+
+                                    <div class="col-sm-6">
+
+                                        <%= form.label :foto_plaqueta,
+                                            'Plaqueta',
+                                            class: "col-form-label" %>
+
+                                        <div>
+
+                                            <% if @relatorio.vaso.foto_plaqueta.present? %>
+
+                                                <div style="position: relative; display: inline-block;">
+
+                                                    <img id="img-plaqueta"
+                                                        src="data:image/jpeg;base64,<%= Base64.encode64(@relatorio.vaso.foto_plaqueta) %>"
+                                                        width="auto"
+                                                        height="170">
+
+                                                    <div id="lupa-plaqueta"
+                                                        class="lupa"></div>
+
+                                                </div>
+
+                                            <% else %>
+
+                                                <span class="text-muted">
+                                                    Foto da plaqueta não cadastrada.
+                                                </span>
+
+                                            <% end %>
+
+                                        </div>
+
                                     </div>
+
+
+                                    <!-- ===================================================== -->
+                                    <!-- FOTO DA PRESSÃO DE ABERTURA DA VÁLVULA - DIREITA -->
+                                    <!-- ===================================================== -->
+
+                                    <div class="col-sm-6">
+
+                                        <%= form.label :foto_pressao_abertura_valvula,
+                                            'Pressão de abertura da válvula',
+                                            class: "col-form-label" %>
+
+                                        <div>
+
+                                            <% if @relatorio.foto_pressao_abertura_valvula.present? %>
+
+                                                <div style="position: relative; display: inline-block;">
+
+                                                    <img id="img-pressao-abertura-valvula"
+                                                        src="data:image/jpeg;base64,<%= Base64.encode64(@relatorio.foto_pressao_abertura_valvula) %>"
+                                                        width="auto"
+                                                        height="170">
+
+                                                    <div id="lupa-pressao-abertura-valvula"
+                                                        class="lupa"></div>
+
+                                                </div>
+
+                                            <% else %>
+
+                                                <span class="text-muted">
+                                                    Foto da pressão de abertura da válvula não cadastrada.
+                                                </span>
+
+                                            <% end %>
+
+                                        </div>
+
+                                    </div>
+
                                 </div>
+
+
+                                <!-- ========================================================= -->
+                                <!-- JAVASCRIPT DAS LUPAS -->
+                                <!-- ========================================================= -->
 
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {
-                                        const img = document.getElementById('img-plaqueta');
-                                        const lupa = document.getElementById('lupa');
-                                        const zoom = 4; // Define o nível de zoom da lupa
 
-                                        img.addEventListener('mousemove', function(event) {
-                                            const rect = img.getBoundingClientRect();
-                                            const x = event.clientX - rect.left;
-                                            const y = event.clientY - rect.top;
+                                        function configurarLupa(idImagem, idLupa) {
 
-                                            // Exibe a lupa
-                                            lupa.style.display = 'block';
+                                            const img = document.getElementById(idImagem);
+                                            const lupa = document.getElementById(idLupa);
 
-                                            // Posiciona a lupa
-                                            lupa.style.left = `${x - lupa.offsetWidth / 2}px`;
-                                            lupa.style.top = `${y - lupa.offsetHeight / 2}px`;
+                                            // Se a imagem não existir, não faz nada
+                                            if (!img || !lupa) {
+                                                return;
+                                            }
 
-                                            // Posiciona a imagem dentro da lupa
-                                            lupa.style.backgroundImage = `url(${img.src})`;
-                                            lupa.style.backgroundSize = `${img.width * zoom}px ${img.height * zoom}px`;
-                                            lupa.style.backgroundPosition = `-${x * zoom - lupa.offsetWidth / 2}px -${y * zoom - lupa.offsetHeight / 2}px`;
-                                        });
+                                            const zoom = 4;
 
-                                        img.addEventListener('mouseleave', function() {
-                                            // Esconde a lupa ao sair da imagem
-                                            lupa.style.display = 'none';
-                                        });
+                                            img.addEventListener('mousemove', function(event) {
+
+                                                const rect = img.getBoundingClientRect();
+
+                                                const x = event.clientX - rect.left;
+                                                const y = event.clientY - rect.top;
+
+                                                // Exibe a lupa
+                                                lupa.style.display = 'block';
+
+                                                // Posiciona a lupa
+                                                lupa.style.left =
+                                                    `${x - lupa.offsetWidth / 2}px`;
+
+                                                lupa.style.top =
+                                                    `${y - lupa.offsetHeight / 2}px`;
+
+                                                // Define a imagem ampliada
+                                                lupa.style.backgroundImage =
+                                                    `url(${img.src})`;
+
+                                                // Define o tamanho da imagem dentro da lupa
+                                                lupa.style.backgroundSize =
+                                                    `${img.width * zoom}px ${img.height * zoom}px`;
+
+                                                // Posiciona a imagem ampliada
+                                                lupa.style.backgroundPosition =
+                                                    `-${x * zoom - lupa.offsetWidth / 2}px ` +
+                                                    `-${y * zoom - lupa.offsetHeight / 2}px`;
+                                            });
+
+
+                                            img.addEventListener('mouseleave', function() {
+
+                                                // Esconde a lupa
+                                                lupa.style.display = 'none';
+
+                                            });
+
+                                        }
+
+
+                                        // Configura a lupa da plaqueta
+                                        configurarLupa(
+                                            'img-plaqueta',
+                                            'lupa-plaqueta'
+                                        );
+
+
+                                        // Configura a lupa da pressão de abertura da válvula
+                                        configurarLupa(
+                                            'img-pressao-abertura-valvula',
+                                            'lupa-pressao-abertura-valvula'
+                                        );
+
                                     });
                                 </script>
+
 
                             </fieldset>
 
