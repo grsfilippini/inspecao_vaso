@@ -1058,74 +1058,198 @@
         });
     });
 
-    // Usado na restrição de tamanho das imagens carregadas
-    // Redimensiona a imagem
-    document.getElementById('form_inspecao').addEventListener('submit', function(event) {
-        event.preventDefault();
 
-        let form = this;
-        let inputs = ['foto-antes-inspecao-input', 'foto-corpo-input', 'foto-pos-inspecao-input', 'foto-instalacao-input', 'foto-pressao-abertura-valvula-input'];
-        let promises = [];
+    // ============================================================
+    // REDIMENSIONAMENTO DAS FOTOS
+    // A foto é redimensionada imediatamente após ser selecionada.
+    // Limite: 1600 x 1200 pixels
+    // Qualidade JPEG: 75%
+    // ============================================================
 
-        inputs.forEach(function(id) {
-            let input = document.getElementById(id);
-            if (input && input.files[0]) {
-                promises.push(resizeImage(input.files[0], 1600, 1200, 0.75).then(blob => {
-                    let newFile = new File([blob], input.files[0].name, {type: blob.type});
-                    let container = new DataTransfer();
-                    container.items.add(newFile);
-                    input.files = container.files;
-                }));
+    document.addEventListener('DOMContentLoaded', function() {
+
+        const camposFotos = [
+            'foto-antes-inspecao-input',
+            'foto-corpo-input',
+            'foto-pos-inspecao-input',
+            'foto-instalacao-input',
+            'foto-pressao-abertura-valvula-input'
+        ];
+
+        camposFotos.forEach(function(id) {
+
+            const input = document.getElementById(id);
+
+            if (!input) {
+                console.warn('Campo de foto não encontrado:', id);
+                return;
             }
-        });
 
-        Promise.all(promises).then(() => {
-            form.submit();
-        }).catch(error => {
-            console.error("Erro ao processar imagens: ", error);
-            alert('Houve um erro ao processar as imagens. Por favor, tente novamente.');
+            input.addEventListener('change', function(event) {
+
+                const file = event.target.files[0];
+
+                if (!file) {
+                    return;
+                }
+
+                console.log('----------------------------------');
+                console.log('Foto selecionada:', id);
+                console.log('Arquivo original:', file.name);
+                console.log('Tamanho original:', file.size, 'bytes');
+                console.log('Tipo:', file.type);
+
+                resizeImage(file, 1600, 1200, 0.75)
+                    .then(function(blob) {
+
+                        console.log(
+                            'Tamanho após redimensionamento:',
+                            blob.size,
+                            'bytes'
+                        );
+
+                        // Cria um novo arquivo com a imagem reduzida
+                        const newFile = new File(
+                            [blob],
+                            file.name.replace(/\.[^/.]+$/, '.jpg'),
+                            {
+                                type: 'image/jpeg',
+                                lastModified: Date.now()
+                            }
+                        );
+
+                        // Substitui o arquivo original no input
+                        const dataTransfer = new DataTransfer();
+
+                        dataTransfer.items.add(newFile);
+
+                        input.files = dataTransfer.files;
+
+                        console.log(
+                            'NOVO ARQUIVO NO INPUT:',
+                            input.files[0].name,
+                            input.files[0].size,
+                            'bytes'
+                        );
+
+                        console.log('----------------------------------');
+                    })
+                    .catch(function(error) {
+
+                        console.error(
+                            'Erro ao redimensionar a imagem:',
+                            error
+                        );
+
+                        alert(
+                            'Não foi possível redimensionar a imagem.'
+                        );
+                    });
+            });
         });
     });
 
-    // Usado na restrição de tamanho das imagens carregadas
-    // Redimensiona a imagem
+
+    // ============================================================
+    // FUNÇÃO DE REDIMENSIONAMENTO
+    // ============================================================
+
     function resizeImage(file, maxWidth, maxHeight, quality) {
-        return new Promise((resolve, reject) => {
+
+        return new Promise(function(resolve, reject) {
+
             const reader = new FileReader();
+
             reader.onload = function(event) {
+
                 const img = new Image();
+
                 img.onload = function() {
-                    const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
 
                     let width = img.width;
                     let height = img.height;
 
-                    if (width > maxWidth || height > maxHeight) {
-                        if (width > height) {
-                            height *= maxWidth / width;
-                            width = maxWidth;
-                        } else {
-                            width *= maxHeight / height;
-                            height = maxHeight;
-                        }
-                    }
+                    console.log(
+                        'Dimensões originais:',
+                        width + ' x ' + height
+                    );
+
+                    // Calcula a proporção necessária
+                    const proporcao = Math.min(
+                        maxWidth / width,
+                        maxHeight / height,
+                        1
+                    );
+
+                    width = Math.round(width * proporcao);
+                    height = Math.round(height * proporcao);
+
+                    console.log(
+                        'Dimensões novas:',
+                        width + ' x ' + height
+                    );
+
+                    const canvas = document.createElement('canvas');
 
                     canvas.width = width;
                     canvas.height = height;
-                    ctx.drawImage(img, 0, 0, width, height);
 
-                    canvas.toBlob(blob => {
-                        resolve(blob);
-                    }, file.type, quality);
+                    const ctx = canvas.getContext('2d');
+
+                    ctx.drawImage(
+                        img,
+                        0,
+                        0,
+                        width,
+                        height
+                    );
+
+                    // Sempre gera JPEG
+                    canvas.toBlob(
+                        function(blob) {
+
+                            if (!blob) {
+                                reject(
+                                    new Error(
+                                        'canvas.toBlob() não conseguiu gerar a imagem.'
+                                    )
+                                );
+
+                                return;
+                            }
+
+                            resolve(blob);
+
+                        },
+                        'image/jpeg',
+                        quality
+                    );
                 };
+
+                img.onerror = function() {
+
+                    reject(
+                        new Error(
+                            'Não foi possível carregar a imagem.'
+                        )
+                    );
+                };
+
                 img.src = event.target.result;
             };
-            reader.onerror = reject;
+
+            reader.onerror = function() {
+
+                reject(
+                    new Error(
+                        'Não foi possível ler o arquivo.'
+                    )
+                );
+            };
+
             reader.readAsDataURL(file);
         });
     }
-
 
     // Restringe o tamanho da foto para 400 k
     // document.getElementById('form_inspecao').addEventListener('submit', function(event) {
