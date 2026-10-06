@@ -277,6 +277,9 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
       if (params[:relatorio][:remove_foto_instalacao] == '1' || params[:relatorio][:remove_foto_instalacao] == 'true')
         @relatorio.update_attribute(:foto_instalacao, nil)
       end
+      if (params[:relatorio][:remove_foto_pressao_abertura_valvula] == '1' || params[:relatorio][:remove_foto_pressao_abertura_valvula] == 'true')
+        @relatorio.update_attribute(:foto_pressao_abertura_valvula, nil)
+      end      
       if (params[:relatorio][:remove_foto_th]         == '1' || params[:relatorio][:remove_foto_th]         == 'true')
         @relatorio.update_attribute(:foto_th, nil)          
       end
@@ -297,6 +300,7 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
       params[:relatorio].delete(:remove_foto_pos)        if params[:relatorio].key?(:remove_foto_pos)
       params[:relatorio].delete(:remove_foto_corpo)      if params[:relatorio].key?(:remove_foto_corpo)
       params[:relatorio].delete(:remove_foto_instalacao) if params[:relatorio].key?(:remove_foto_instalacao)
+      params[:relatorio].delete(:remove_foto_pressao_abertura_valvula) if params[:relatorio].key?(:remove_foto_pressao_abertura_valvula)
       params[:relatorio].delete(:remove_foto_th)         if params[:relatorio].key?(:remove_foto_th)
       params[:relatorio].delete(:remove_foto_interna1)   if params[:relatorio].key?(:remove_foto_interna1)
       params[:relatorio].delete(:remove_foto_interna2)   if params[:relatorio].key?(:remove_foto_interna2)
@@ -326,6 +330,11 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
         if params[:relatorio][:foto_instalacao].present?
           # Atualizar o campo de imagem diretamente com o novo arquivo
           @relatorio.update_attribute(:foto_instalacao, params[:relatorio][:foto_instalacao].read)
+        end
+
+        if params[:relatorio][:foto_pressao_abertura_valvula].present?
+          # Atualizar o campo de imagem diretamente com o novo arquivo
+          @relatorio.update_attribute(:foto_pressao_abertura_valvula, params[:relatorio][:foto_pressao_abertura_valvula].read)
         end
 
         if params[:relatorio][:foto_th].present?

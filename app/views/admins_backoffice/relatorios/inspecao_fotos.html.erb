@@ -65,6 +65,25 @@
                             
                             </fieldset>
 
+                            <fieldset class="Dispositivo_seguranca">
+                            <legend>Inspeção do dispositivo de segurança</legend>
+                            
+                            <div class="form-group row">
+                                <%= form.label :foto_pressao_abertura_valvula, 'Foto da pressão de abertura da válvula', {class: "col-sm-2 col-form-label text-sm-left text-lg-right"} %>
+                                <div class="form-label col-sm-5 mb-0 mb-sm-0">                                    
+                                    <% if @relatorio.foto_pressao_abertura_valvula.present? %>
+                                      <img src="data:image/jpeg;base64,<%= Base64.encode64(@relatorio.foto_pressao_abertura_valvula) %>" width="auto" height="150">
+                                      <%= form.label :remove_foto_pressao_abertura_valvula %>
+                                      <%= form.check_box :remove_foto_pressao_abertura_valvula %>
+                                    <% end %>
+                                </div>                                
+                                <div class="form-label col-sm-6 mb-0 mb-sm-0">                                    
+                                    <%= form.file_field :foto_pressao_abertura_valvula %>
+                                </div>
+                            </div>                                                      
+                            
+                            </fieldset>
+
                             <fieldset class="Vaso_externa">
                             <legend>Teste hidrostático</legend>
                             

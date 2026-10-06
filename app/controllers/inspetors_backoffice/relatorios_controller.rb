@@ -27,42 +27,22 @@ class InspetorsBackoffice::RelatoriosController < InspetorsBackofficeController
             if params[:relatorio][:foto_antes_inspecao].present?
                 @relatorio.update_attribute(:foto_antes_inspecao, params[:relatorio][:foto_antes_inspecao].read)
             end
-            # if params[:relatorio][:foto_antes_inspecao].present?
-            #     original_filename = params[:relatorio][:foto_antes_inspecao].original_filename
-            #     processed_image_data = process_image(params[:relatorio][:foto_antes_inspecao].read, original_filename)
-            #     #@relatorio.foto_antes_inspecao = processed_image_data
-            #     @relatorio.update_attribute(:foto_antes_inspecao, processed_image_data)    
-            # end
-
+            
             if params[:relatorio][:foto_corpo].present?
                 @relatorio.update_attribute(:foto_corpo, params[:relatorio][:foto_corpo].read)
             end
-            # if params[:relatorio][:foto_corpo].present?
-            #     original_filename = params[:relatorio][:foto_corpo].original_filename
-            #     processed_image_data = process_image(params[:relatorio][:foto_corpo].read, original_filename)
-            #     #@relatorio.foto_antes_inspecao = processed_image_data
-            #     @relatorio.update_attribute(:foto_corpo, processed_image_data)    
-            # end
-
+            
             if params[:relatorio][:foto_pos_inspecao].present?
                 @relatorio.update_attribute(:foto_pos_inspecao, params[:relatorio][:foto_pos_inspecao].read)
             end
-            # if params[:relatorio][:foto_pos_inspecao].present?
-            #     original_filename = params[:relatorio][:foto_pos_inspecao].original_filename
-            #     processed_image_data = process_image(params[:relatorio][:foto_pos_inspecao].read, original_filename)
-            #     #@relatorio.foto_antes_inspecao = processed_image_data
-            #     @relatorio.update_attribute(:foto_pos_inspecao, processed_image_data)    
-            # end
-
+            
             if params[:relatorio][:foto_instalacao].present?
                 @relatorio.update_attribute(:foto_instalacao, params[:relatorio][:foto_instalacao].read)
             end
-            # if params[:relatorio][:foto_instalacao].present?
-            #     original_filename = params[:relatorio][:foto_instalacao].original_filename
-            #     processed_image_data = process_image(params[:relatorio][:foto_instalacao].read, original_filename)
-            #     #@relatorio.foto_antes_inspecao = processed_image_data
-            #     @relatorio.update_attribute(:foto_instalacao, processed_image_data)    
-            # end
+            
+            if params[:relatorio][:foto_pressao_abertura_valvula].present?
+                @relatorio.update_attribute(:foto_pressao_abertura_valvula, params[:relatorio][:foto_pressao_abertura_valvula].read)
+            end
 
             redirect_to inspetors_backoffice_relatorios_path, notice: "Relatório criado com sucesso!"
         else
@@ -71,6 +51,7 @@ class InspetorsBackoffice::RelatoriosController < InspetorsBackofficeController
             @vaso.foto_corpo = nil
             @vaso.foto_pos_inspecao = nil
             @vaso.foto_instalacao = nil
+            @vaso.foto_pressao_abertura_valvula = nil
             render :new
         end
     end
@@ -80,42 +61,22 @@ class InspetorsBackoffice::RelatoriosController < InspetorsBackofficeController
             if params[:relatorio][:foto_antes_inspecao].present?
                 @relatorio.update_attribute(:foto_antes_inspecao, params[:relatorio][:foto_antes_inspecao].read)
             end
-            # if params[:relatorio][:foto_antes_inspecao].present?
-            #     original_filename = params[:relatorio][:foto_antes_inspecao].original_filename
-            #     processed_image_data = process_image(params[:relatorio][:foto_antes_inspecao].read, original_filename)
-            #     #@relatorio.foto_antes_inspecao = processed_image_data
-            #     @relatorio.update_attribute(:foto_antes_inspecao, processed_image_data)    
-            # end
-
+           
             if params[:relatorio][:foto_corpo].present?
                 @relatorio.update_attribute(:foto_corpo, params[:relatorio][:foto_corpo].read)
             end
-            # if params[:relatorio][:foto_corpo].present?
-            #     original_filename = params[:relatorio][:foto_corpo].original_filename
-            #     processed_image_data = process_image(params[:relatorio][:foto_corpo].read, original_filename)
-            #     #@relatorio.foto_antes_inspecao = processed_image_data
-            #     @relatorio.update_attribute(:foto_corpo, processed_image_data)    
-            # end
-
+            
             if params[:relatorio][:foto_pos_inspecao].present?
                 @relatorio.update_attribute(:foto_pos_inspecao, params[:relatorio][:foto_pos_inspecao].read)
             end
-            # if params[:relatorio][:foto_pos_inspecao].present?
-            #     original_filename = params[:relatorio][:foto_pos_inspecao].original_filename
-            #     processed_image_data = process_image(params[:relatorio][:foto_pos_inspecao].read, original_filename)
-            #     #@relatorio.foto_antes_inspecao = processed_image_data
-            #     @relatorio.update_attribute(:foto_pos_inspecao, processed_image_data)    
-            # end
-
+           
             if params[:relatorio][:foto_instalacao].present?
                 @relatorio.update_attribute(:foto_instalacao, params[:relatorio][:foto_instalacao].read)
             end
-            # if params[:relatorio][:foto_instalacao].present?
-            #     original_filename = params[:relatorio][:foto_instalacao].original_filename
-            #     processed_image_data = process_image(params[:relatorio][:foto_instalacao].read, original_filename)
-            #     #@relatorio.foto_antes_inspecao = processed_image_data
-            #     @relatorio.update_attribute(:foto_instalacao, processed_image_data)    
-            # end
+            
+            if params[:relatorio][:foto_pressao_abertura_valvula].present?
+                @relatorio.update_attribute(:foto_pressao_abertura_valvula, params[:relatorio][:foto_pressao_abertura_valvula].read)
+            end            
 
             redirect_to inspetors_backoffice_relatorios_path, notice: "Relatório atualizado com sucesso!"
         else
@@ -238,7 +199,8 @@ class InspetorsBackoffice::RelatoriosController < InspetorsBackofficeController
                                           :foto_antes_inspecao,
                                           :foto_pos_inspecao,
                                           :foto_corpo,
-                                          :foto_instalacao#,
+                                          :foto_instalacao,
+                                          :foto_pressao_abertura_valvula#,
                                           #vaso_attributes: [:foto_plaqueta, 
                                           #                  :perimetro_diametro_externo,
                                                             # :entre_soladas_corpo,
