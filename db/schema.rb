@@ -10,10 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_04_18_200156) do
+ActiveRecord::Schema.define(version: 2026_10_06_133052) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "pg_repack"
   enable_extension "plpgsql"
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -479,6 +478,7 @@ ActiveRecord::Schema.define(version: 2026_04_18_200156) do
     t.boolean "belaborado_relatorio_inspecao", default: true
     t.boolean "belaborado_registro_inspecao"
     t.boolean "belaborado_registro_inspecao_dispseg"
+    t.binary "foto_pressao_abertura_valvula"
     t.index ["ambiente_inst_id"], name: "index_relatorios_on_ambiente_inst_id"
     t.index ["art_id"], name: "index_relatorios_on_art_id"
     t.index ["cidade_id"], name: "index_relatorios_on_cidade_id"
