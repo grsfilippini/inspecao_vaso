@@ -14,7 +14,7 @@
                 options_from_collection_for_select(
                     @vasos,
                     :id,
-                    ->(v) { "#{v.num_serie} - #{v.fabricante.nome_curto} - #{v.proprietaria.nome_curto}" }
+                    ->(v) { "#{v.proprietaria.nome_curto} - #{v.fabricante.nome_curto} - #{v.num_serie}" }
                 ),
                 size: 10,
                 class: "form-control",
