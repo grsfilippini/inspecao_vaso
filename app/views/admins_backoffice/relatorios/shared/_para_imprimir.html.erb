@@ -94,11 +94,15 @@
             <div class="modal-header" style="display: flex; flex-direction: column; align-items: flex-start; position: relative;">
 
                 <h5 class="modal-title">
+                    <%= r.data_relatorio.strftime("%d/%m/%Y")%>&nbsp;-&nbsp;Inspeção&nbsp;<%= r.tipo_inspecao.nome.upcase %>
+                </h5>
+
+                <h5 class="modal-title">
                     id=<%= r.proprietaria.id %>&nbsp;-&nbsp;<%= r.proprietaria.nome_curto.upcase %>
                 </h5>
 
                 <h5 class="modal-title">
-                    id=<%= r.vaso.id %>&nbsp;-&nbsp;#Série&nbsp;<%= r.vaso.num_serie %>&nbsp;-&nbsp;Inspeção&nbsp;<%= r.tipo_inspecao.nome.upcase %>
+                    id=<%= r.vaso.id %>&nbsp;-&nbsp;#Série&nbsp;<%= r.vaso.num_serie %>
                 </h5>
 
                 <button type="button" class="close"
