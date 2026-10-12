@@ -90,79 +90,93 @@
     <div class="modal fade" id="modalRelatorio<%= r.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel"><%= r.vaso.num_serie %>&nbsp;-&nbsp;Inspeção &nbsp;<%= r.tipo_inspecao.nome.upcase %></h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-            <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">  <!-- início da região do conteúdo do modal -->
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                    <span class="badge badge-success p-2">Documentos a emitir</span><br>
-                    <% if r.belaborado_relatorio_inspecao %>
-                        *Relatório de inspeção;<br>
-                    <% end %>
-                    <% if r.belaborado_registro_inspecao %>
-                        *Registro de inspeção;<br>
-                    <% end %>
-                    <% if r.belaborado_registro_inspecao_dispseg %>
-                        *Registro de inspeção de dispositivo de segurança;<br>
-                    <% end %>
-                    <% if r.belaborado_reg_seg %>
-                        *Registro de segurança;<br>
-                    <% end %>
-                    <% if r.belaborado_prontuario %>
-                        *Prontuário;<br>
-                    <% end %>
-                    <% if r.belaborado_laudo_th %>
-                        *Laudo de teste hidrostático;<br>
-                    <% end %>
-                    <% if r.belaborado_desenho_plaqueta %>
-                        *Desenho da plaqueta;<br>
-                    <% end %>
-                    <% if r.belaborado_mapa_espessura %>
-                        *Mapa de espessura;<br>
-                    <% end %>            
-                    <% if r.serv_contratado_dispseg_calibracao %>
-                        *Certificado de calibração do dispositivo de segurança;<br>
-                    <% end %>
-                    <% if r.belaborado_memorial_calculo %>
-                        *Memorial de cálculo;<br>
-                    <% end %>
-                    <% if r.belaborado_laudo_vaso_condenado %>
-                        *Laudo de vaso condenado;<br>
-                    <% end %>
-                    </div>
-                    <div class="col-md-6">
-                    <span class="badge badge-warning p-2">Peças a emitir cobrança</span><br>
-                    <% if r.belaborada_placa_local_inst %>
-                        *Placa local de instalação;<br>
-                    <% end %>
-                    <% if r.belaborado_plaqueta_identificacao %>
-                        *Plaqueta de identificação do vaso;<br>
-                    <% end %>
-                    <% if r.bman_foi_substituido %>
-                        *Manômetro;<br>
-                    <% end %>
-                    <% if r.bdispseg_foisubstituido %>
-                        *Válvula de segurança;<br>
-                    <% end %>
-                    <% if r.bpressostato_foisubstituido %>
-                        *Pressostato;<br>
-                    <% end %>
-                    <% if r.bdreno_foisubstituido %>
-                        *Dreno;<br>
-                    <% end %>
-                    </div>
-                </div>
+        
+            <div class="modal-header" style="display: flex; flex-direction: column; align-items: flex-start; position: relative;">
+
+                <h5 class="modal-title">
+                    id=<%= r.proprietaria.id %>&nbsp;-&nbsp;<%= r.proprietaria.nome_curto.upcase %>
+                </h5>
+
+                <h5 class="modal-title">
+                    id=<%= r.vaso.id %>&nbsp;-&nbsp;#Série&nbsp;<%= r.vaso.num_serie %>&nbsp;-&nbsp;Inspeção&nbsp;<%= r.tipo_inspecao.nome.upcase %>
+                </h5>
+
+                <button type="button" class="close"
+                        data-dismiss="modal" aria-label="Fechar"
+                        style="position: absolute; right: 15px; top: 15px;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
             </div>
 
-        </div> <!-- fim da região do conteúdo do modal -->
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-        </div>
+
+            <div class="modal-body">  <!-- início da região do conteúdo do modal -->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                        <span class="badge badge-success p-2">Documentos a emitir</span><br>
+                        <% if r.belaborado_relatorio_inspecao %>
+                            *Relatório de inspeção;<br>
+                        <% end %>
+                        <% if r.belaborado_registro_inspecao %>
+                            *Registro de inspeção;<br>
+                        <% end %>
+                        <% if r.belaborado_registro_inspecao_dispseg %>
+                            *Registro de inspeção de dispositivo de segurança;<br>
+                        <% end %>
+                        <% if r.belaborado_reg_seg %>
+                            *Registro de segurança;<br>
+                        <% end %>
+                        <% if r.belaborado_prontuario %>
+                            *Prontuário;<br>
+                        <% end %>
+                        <% if r.belaborado_laudo_th %>
+                            *Laudo de teste hidrostático;<br>
+                        <% end %>
+                        <% if r.belaborado_desenho_plaqueta %>
+                            *Desenho da plaqueta;<br>
+                        <% end %>
+                        <% if r.belaborado_mapa_espessura %>
+                            *Mapa de espessura;<br>
+                        <% end %>            
+                        <% if r.serv_contratado_dispseg_calibracao %>
+                            *Certificado de calibração do dispositivo de segurança;<br>
+                        <% end %>
+                        <% if r.belaborado_memorial_calculo %>
+                            *Memorial de cálculo;<br>
+                        <% end %>
+                        <% if r.belaborado_laudo_vaso_condenado %>
+                            *Laudo de vaso condenado;<br>
+                        <% end %>
+                        </div>
+                        <div class="col-md-6">
+                        <span class="badge badge-warning p-2">Peças a emitir cobrança</span><br>
+                        <% if r.belaborada_placa_local_inst %>
+                            *Placa local de instalação;<br>
+                        <% end %>
+                        <% if r.belaborado_plaqueta_identificacao %>
+                            *Plaqueta de identificação do vaso;<br>
+                        <% end %>
+                        <% if r.bman_foi_substituido %>
+                            *Manômetro;<br>
+                        <% end %>
+                        <% if r.bdispseg_foisubstituido %>
+                            *Válvula de segurança;<br>
+                        <% end %>
+                        <% if r.bpressostato_foisubstituido %>
+                            *Pressostato;<br>
+                        <% end %>
+                        <% if r.bdreno_foisubstituido %>
+                            *Dreno;<br>
+                        <% end %>
+                        </div>
+                    </div>
+                </div>
+
+            </div> <!-- fim da região do conteúdo do modal -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
         </div>
     </div>
     </div>
