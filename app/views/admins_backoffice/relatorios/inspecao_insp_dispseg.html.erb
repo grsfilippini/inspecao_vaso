@@ -67,13 +67,52 @@
                                 </div>
                             </div>                            
                            
-                           <div class="form-group row">
+                           
+                            <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <%= form.label :dispositivoseg_pabertura, "Pressão de abertura" , class: "red-label" %>
-                                    <%= form.number_field :dispositivoseg_pabertura, step: 0.001, min: -10, required: false, style: 'width: 100px;' %>
-                                    [MPa]
+                                    <%= form.label :dispositivoseg_pabertura,
+                                        "Pressão de abertura",
+                                        class: "red-label" %>
+
+                                    <div class="d-flex align-items-center">
+                                        <%= form.number_field :dispositivoseg_pabertura,
+                                            step: 0.001,
+                                            min: -10,
+                                            required: false,
+                                            style: 'width: 85px;',
+                                            class: 'form-control form-control-sm',
+                                            oninput: "this.closest('.form-group').querySelector('select').selectedIndex = 0;" %>
+
+                                        <span class="ml-1 mr-3">MPa</span>
+
+                                        <select class="form-control form-control-sm"
+                                                style="width: 115px;"
+                                                onchange="
+                                                    if (this.value !== '') {
+                                                        var campo = this.closest('.form-group').querySelector('input[type=number]');
+                                                        campo.value = (parseFloat(this.value) * 0.006894757293).toFixed(3);
+                                                    }
+                                                ">
+                                            <option value="">Selecione PSI</option>
+                                            <option value="120">120 psi</option>
+                                            <option value="125">125 psi</option>
+                                            <option value="130">130 psi</option>
+                                            <option value="135">135 psi</option>
+                                            <option value="140">140 psi</option>
+                                            <option value="145">145 psi</option>
+                                            <option value="150">150 psi</option>
+                                            <option value="175">175 psi</option>
+                                            <option value="180">180 psi</option>
+                                            <option value="185">185 psi</option>
+                                            <option value="200">200 psi</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
+
+
+
+
                             
                             <div class="form-group row">                                
                                 <%= form.label :dispositivoseg_observacoes, 'Obs.', {class: "col-sm-1 col-form-label text-sm-left text-lg-right"} %>
