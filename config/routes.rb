@@ -129,8 +129,12 @@ Rails.application.routes.draw do
       member do
         post 'marcar_como_impresso'
         patch :update_nova_venda
-      end
+      end      
+      collection do
+        get :placas_localizacao_csv
+      end      
     end
+    
     get 'relatorio_para_impressao',    to: 'relatorios#para_imprimir'
     get 'relatorio_em_aberto',         to: 'relatorios#em_aberto'
     get 'pesquisa_relatorio',          to: 'relatorios#pesquisa'

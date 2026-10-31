@@ -1,5 +1,6 @@
 class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
   include SharedMethods
+  require 'csv'
   
   before_action :set_relatorio, only: [:edit, :update, :destroy,
                                        :inspecao_doc_existente,
@@ -487,6 +488,48 @@ end
     @relatorio.update(brel_impresso: true)
     redirect_to admins_backoffice_relatorio_para_impressao_path, notice: "Relatório marcado como impresso."
   end
+
+  def placas_localizacao_csv
+    @relatorios = Relatorio
+    .where(
+      belaborada_placa_local_inst: true,
+      benviada_placa_local_para_confeccao: false,
+      avaliadoph: true,
+      brel_impresso: false
+    )
+    .includes(
+      vaso: [
+        :fabricante,
+        :catnr13,
+        { proprietaria: :cidade }
+      ]
+    )
+    .order(:id)
+
+    csv = CSV.generate(col_sep: ';', encoding: 'UTF-8') do |csv|
+      csv << ['FABRICANTE', 'N.SÉRIE', 'CAT', 'EMPRESA', 'CIDADE', 'Relatório']
+
+      @relatorios.each do |r|
+        vaso = r.vaso
+        proprietaria = vaso&.proprietaria
+
+        csv << [
+          vaso&.fabricante&.nome_curto,
+          vaso&.num_serie,
+          vaso&.catnr13&.categoria,
+          proprietaria&.nome_curto,
+          proprietaria&.cidade&.nome,
+          r.id
+        ]
+      end
+    end
+
+    send_data "\uFEFF#{csv}",
+              filename: "placas_localizacao_#{Date.current.strftime('%Y%m%d')}.csv",
+              type: 'text/csv; charset=utf-8',
+              disposition: 'attachment'
+  end
+
 
   ##########
   # PRIVATE
