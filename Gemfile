@@ -112,4 +112,7 @@ gem 'rubyzip', '~> 2.3'
 # Usada para reduzir tamanho de imagens (fotos) carregadas no relatório ...
 gem 'mini_magick'
 
+# Usada para manipular arquivos ods ...
+gem 'spreadsheet_architect'
+
 # Última linha

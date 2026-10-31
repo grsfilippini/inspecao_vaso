@@ -132,9 +132,10 @@ Rails.application.routes.draw do
       end      
       collection do
         get :placas_localizacao_csv
+        get :placas_localizacao_ods
       end      
     end
-    
+
     get 'relatorio_para_impressao',    to: 'relatorios#para_imprimir'
     get 'relatorio_em_aberto',         to: 'relatorios#em_aberto'
     get 'pesquisa_relatorio',          to: 'relatorios#pesquisa'

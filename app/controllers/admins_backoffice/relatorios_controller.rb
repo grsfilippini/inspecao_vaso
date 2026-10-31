@@ -515,7 +515,7 @@ end
 
         csv << [
           vaso&.fabricante&.nome_curto,
-          vaso&.num_serie,
+          vaso&.num_serie.present? ? vaso.num_serie : nil,
           vaso&.catnr13&.categoria,
           proprietaria&.nome_curto,
           proprietaria&.cidade&.nome,
@@ -529,6 +529,69 @@ end
               type: 'text/csv; charset=utf-8',
               disposition: 'attachment'
   end
+
+
+  def placas_localizacao_ods
+
+    relatorios = Relatorio
+      .where(
+        belaborada_placa_local_inst: true,
+        benviada_placa_local_para_confeccao: false,
+        avaliadoph: true,
+        brel_impresso: false
+      )
+      .includes(
+        vaso: [
+          :fabricante,
+          :catnr13,
+          { proprietaria: :cidade }
+        ]
+      )
+      .order(:id)
+
+    headers = [
+      'FABRICANTE',
+      'N.SÉRIE',
+      'CAT',
+      'EMPRESA',
+      'CIDADE',
+      'Relatório'
+    ]
+
+    data = relatorios.map do |r|
+      vaso = r.vaso
+      proprietaria = vaso&.proprietaria
+
+      [
+        vaso&.fabricante&.nome_curto.to_s,
+        vaso&.num_serie.to_s,
+        vaso&.catnr13&.categoria.to_s,
+        proprietaria&.nome_curto.to_s,
+        proprietaria&.cidade&.nome.to_s,
+        r.id
+      ]
+    end
+
+    ods = SpreadsheetArchitect.to_ods(
+      headers: headers,
+      data: data,
+      column_types: [
+        :string,
+        :string,
+        :string,
+        :string,
+        :string,
+        :float
+      ]
+    )
+
+    send_data ods,
+      filename: "placas_localizacao_#{Date.current.strftime('%Y%m%d')}.ods",
+      type: 'application/vnd.oasis.opendocument.spreadsheet',
+      disposition: 'attachment'
+
+  end
+
 
 
   ##########
