@@ -593,6 +593,82 @@ end
   end
 
 
+  
+
+  def livros_registro_dados_plaqueta
+
+    relatorios = Relatorio
+    .where(
+      avaliadoph: true,
+      brel_impresso: false
+    )
+    .where(
+      "insp_contratada_vaso_inicial = TRUE OR
+      insp_contratada_vaso_reconstituicao_prontuario = TRUE"
+    )
+    .includes(
+      vaso: [
+        :fabricante,
+        :codigo_construcao,
+        :catnr13
+      ]
+    )
+    .order(:id)
+
+    headers = [
+      'N.SÉRIE',
+      'FABRICANTE',
+      'ANO FABRICAÇÃO',
+      'PMTA [bar]',
+      'PTH [bar]',
+      'CÓDIGO PROJETO',
+      'VOLUME [litros]',
+      'CAT NR13'
+    ]
+
+    data = relatorios.map do |r|
+
+      vaso = r.vaso
+
+      [
+        vaso&.num_serie.to_s,
+        vaso&.fabricante&.nome_curto.to_s,
+        vaso&.dt_fabricacao_reconstituicao&.year&.to_s,
+        vaso&.pmta_atual.present? ? (vaso.pmta_atual * 10).round(1) : nil,
+        vaso&.pth_atual.present? ? (vaso.pth_atual * 10).round(1) : nil,
+        vaso&.codigo_construcao&.codigo.to_s,
+        vaso&.volume.present? ? (vaso.volume * 1000).round(0) : nil,
+        vaso&.catnr13&.categoria.to_s.strip
+      ]
+
+    end
+
+    ods = SpreadsheetArchitect.to_ods(
+      headers: headers,
+      data: data,
+      column_types: [
+        :string,
+        :string,
+        :string,
+        :float,
+        :float,
+        :string,
+        :float,
+        :string
+      ]
+    )
+
+    send_data ods,
+      filename: "dados_plaqueta_#{Date.current.strftime('%Y%m%d')}.ods",
+      type: 'application/vnd.oasis.opendocument.spreadsheet',
+      disposition: 'attachment'
+
+  end
+
+
+
+
+
 
   ##########
   # PRIVATE

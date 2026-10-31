@@ -133,6 +133,7 @@ Rails.application.routes.draw do
       collection do
         get :placas_localizacao_csv
         get :placas_localizacao_ods
+        get :livros_registro_dados_plaqueta
       end      
     end
 

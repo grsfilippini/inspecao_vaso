@@ -110,10 +110,19 @@
                     Plaquetas de identificação a elaborar
                 </h5>
 
-                <button type="button" class="close"
-                        data-dismiss="modal" aria-label="Fechar">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <div class="d-flex align-items-center" style="gap: 8px;">
+
+                    <%= link_to livros_registro_dados_plaqueta_admins_backoffice_relatorios_path,
+                                class: "btn btn-success btn-sm" do %>
+                        <i class="fas fa-file-excel"></i>
+                        ODS
+                    <% end %>
+
+                    <button type="button" class="close"
+                            data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
             </div>
 
             <div class="modal-body">
