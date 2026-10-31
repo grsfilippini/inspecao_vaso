@@ -371,12 +371,6 @@ class AdminsBackoffice::VasosController < AdminsBackofficeController
 
       vasos_ids = (relatorios_ids + dispseg_ids + espessura_ids).uniq
 
-
-      # @vasos = Vaso
-      #   .where(id: vasos_ids)
-      #   .includes(:fabricante)
-      #   .includes(:proprietaria)
-      #   .order(:num_serie)
       @vasos = Vaso
         .where(id: vasos_ids)
         .includes(:fabricante, :proprietaria)
