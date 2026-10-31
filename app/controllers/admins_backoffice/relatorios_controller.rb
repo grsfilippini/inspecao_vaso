@@ -600,11 +600,8 @@ end
     relatorios = Relatorio
     .where(
       avaliadoph: true,
-      brel_impresso: false
-    )
-    .where(
-      "insp_contratada_vaso_inicial = TRUE OR
-      insp_contratada_vaso_reconstituicao_prontuario = TRUE"
+      brel_impresso: false,
+      belaborado_plaqueta_identificacao: true
     )
     .includes(
       vaso: [
