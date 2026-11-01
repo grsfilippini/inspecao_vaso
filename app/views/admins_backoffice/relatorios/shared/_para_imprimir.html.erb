@@ -241,6 +241,12 @@
 
 <div class="d-flex align-items-center mb-3" style="gap: 10px;">
 
+    <%= link_to relatorios_a_imprimir_ods_admins_backoffice_relatorios_path,
+                class: "btn btn-success" do %>
+        <i class="fas fa-file-excel"></i>
+        Exportar ODS
+    <% end %>
+    
     <% if relatorios_livros_registro.any? %>
         <button type="button"
                 class="btn btn-warning"

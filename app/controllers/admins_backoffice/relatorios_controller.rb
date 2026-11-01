@@ -663,7 +663,68 @@ end
   end
 
 
+  def relatorios_a_imprimir_ods
+    relatorios = Relatorio
+    .where(
+      avaliadoph: true,
+      brel_impresso: false
+    )
+    .includes(
+      vaso: [
+        :proprietaria,
+        :fabricante
+      ]
+    )
+    .order(:id)
 
+    headers = [
+      'RELATÓRIO',
+      'CNPJ',
+      'NOME CURTO',
+      '#SÉRIE',
+      'FABRICANTE',
+      'VOLUME [litros]',
+      'SETOR INSTALAÇÃO VASO',
+      'TAG PROPRIETÁRIA'
+    ]
+
+    data = relatorios.map do |r|
+      vaso = r.vaso
+      proprietaria = vaso&.proprietaria
+
+      [
+        r.id.to_s,
+        proprietaria&.cnpj.to_s,
+        proprietaria&.nome_curto.to_s,
+        vaso&.num_serie.to_s,
+        vaso&.fabricante&.nome_curto.to_s,
+        vaso&.volume.present? ? (vaso.volume * 1000).round(0) : nil,
+        vaso&.setor_instalacao_vaso.to_s,
+        vaso&.tag_proprietaria.to_s
+      ]
+    end
+
+    ods = SpreadsheetArchitect.to_ods(
+      headers: headers,
+      data: data,
+      column_types: [
+        :string,
+        :string,
+        :string,
+        :string,
+        :string,
+        :float,
+        :string,
+        :string
+      ],
+      sheet_name: 'Relatórios a imprimir'
+    )
+
+    send_data ods,
+      filename: "relatorios_a_imprimir_#{Date.current.strftime('%Y%m%d')}.ods",
+      type: 'application/vnd.oasis.opendocument.spreadsheet',
+      disposition: 'attachment'
+  end
 
 
 
