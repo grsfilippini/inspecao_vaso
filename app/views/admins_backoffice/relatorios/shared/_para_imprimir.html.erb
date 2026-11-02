@@ -15,7 +15,7 @@
 
 <% relatorios_placa_local = @relatorios
     .except(:limit, :offset)
-    .where(belaborada_placa_local_inst: true)
+    .where(belaborada_placa_local_inst: true, benviada_placa_local_para_confeccao: false)
     .includes(vaso: :proprietaria) %>
 
 <!-- Modal de placas de localização -->
@@ -33,6 +33,16 @@
                 </h5>
 
                 <div class="d-flex align-items-center" style="gap: 8px;">
+
+                    <%= form_tag enviar_placas_localizacao_confeccao_admins_backoffice_relatorios_path,
+                                method: :post,
+                                class: "d-inline",
+                                data: { confirm: "Confirma o envio de todas as placas listadas para confecção?" } do %>
+                        <%= button_tag type: "submit", class: "btn btn-success btn-sm" do %>
+                            <i class="fas fa-check"></i>
+                            Enviar para confecção
+                        <% end %>
+                    <% end %>
 
                     <%= link_to placas_localizacao_csv_admins_backoffice_relatorios_path(format: :csv),
                                 class: "btn btn-success btn-sm" do %>

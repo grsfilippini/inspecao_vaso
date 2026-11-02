@@ -726,6 +726,23 @@ end
       disposition: 'attachment'
   end
 
+  def enviar_placas_localizacao_confeccao
+    quantidade = Relatorio.where(
+      avaliadoph: true,
+      brel_impresso: false,
+      belaborada_placa_local_inst: true,
+      benviada_placa_local_para_confeccao: false
+    ).update_all(
+      benviada_placa_local_para_confeccao: true
+    )
+
+    flash[:success] = "#{quantidade} placas enviadas para confecção."
+
+    redirect_back(
+      fallback_location: admins_backoffice_relatorios_path
+    )
+  end
+
 
 
   ##########
