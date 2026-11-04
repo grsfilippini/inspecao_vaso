@@ -31,6 +31,7 @@
                         </div-->
 
                         <%= form_with(model: [ :admins_backoffice, @relatorio ], local: true, :html => { :multipart => true }) do |form| %>
+                            <%= hidden_field_tag :return_to, @return_to %>
                             
                             <div class="form-group row">
                                 <div class="col-sm-4 mb-0 mb-sm-0">                                    

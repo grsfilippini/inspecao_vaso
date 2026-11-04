@@ -3,6 +3,8 @@
                        
                         <%= form_with(model: [ :admins_backoffice, @relatorio ], local: true, :html => { :multipart => true }) do |form| %>
                             
+                            <%= hidden_field_tag :return_to, params[:return_to] %>
+
                             <%= render partial: 'admins_backoffice/relatorios/shared/botoes_navegacao' %>                            
                             
                             <div class="form-group row">

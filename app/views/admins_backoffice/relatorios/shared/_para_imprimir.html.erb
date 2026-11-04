@@ -251,6 +251,21 @@
 
 <div class="d-flex align-items-center mb-3" style="gap: 10px;">
 
+    <%= form_tag marcar_relatorios_como_impressos_admins_backoffice_relatorios_path,
+                method: :post,
+                class: "d-inline",
+                data: {
+                confirm: "Deseja realmente marcar TODOS os relatórios avaliados e ainda não impressos como impressos?"
+                } do %>
+
+        <%= button_tag type: "submit", class: "btn btn-success" do %>
+            <i class="fas fa-check"></i>
+            Marcar todos como impressos
+        <% end %>
+
+    <% end %>
+    
+    
     <%= link_to relatorios_a_imprimir_ods_admins_backoffice_relatorios_path,
                 class: "btn btn-success" do %>
         <i class="fas fa-file-excel"></i>
@@ -315,8 +330,8 @@
         <tbody> 
             <% @relatorios.each do |r|%>
                 <tr>
-                    <td style="width: 50px">                        
-                        <%= link_to edit_admins_backoffice_relatorio_path(r), class:"btn btn-info btn-circle btn-sm" do %> 
+                    <td style="width: 50px">                       
+                        <%= link_to edit_admins_backoffice_relatorio_path(r, return_to: request.fullpath), class: "btn btn-info btn-circle btn-sm" do %> 
                             <i class="fas fa-edit"></i>
                         <%end%>                        
                     </td>
@@ -338,11 +353,13 @@
                     <td><%= r.vaso.fabricante.nome_curto.truncate(20) %></td>
                     <td><%= r.proprietaria.nome_curto %></td>
 
-                    <td align="center"><% if r.avaliadoph == true %>
-                        <%= link_to "SIM", admins_backoffice_avaliarph_path(r) %>
+                    <td align="center">
+                        <% if r.avaliadoph == true %>
+                            <%= link_to "SIM", admins_backoffice_avaliarph_path(r, return_to: request.fullpath) %>
                         <% else %>
-                        <%= link_to "NÃO", admins_backoffice_avaliarph_path(r) %>
-                        <% end %> </td>
+                            <%= link_to "NÃO", admins_backoffice_avaliarph_path(r, return_to: request.fullpath) %>
+                        <% end %>
+                    </td>
                     
                     <td>                        
                         <%= link_to "Marcar", marcar_como_impresso_admins_backoffice_relatorio_path(r), method: :post, class: "btn btn-primary" %>

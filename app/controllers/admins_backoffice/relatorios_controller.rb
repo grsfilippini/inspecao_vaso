@@ -99,19 +99,21 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
   end
 
 
-  def new    
+  def new
     @relatorio = Relatorio.new
-    # Verifica se o parâmetro sel_relatorio_id está presente e não é nil
-    # sel_relatorio_id contém dados a serem usados neste novo relatório
-    if params[:sel_relatorio_id].present? && params[:sel_relatorio_id] != nil      
-      # Faça suas atribuições aqui usando o valor de sel_relatorio_id
+    @return_to = retorno_local
+
+    if params[:sel_relatorio_id].present?
       relatorio_base = Relatorio.find(params[:sel_relatorio_id])
-      attributes_to_assign = relatorio_base.attributes.except("id", "data_relatorio", "b_rascunho", "avaliadoph", "brel_impresso")  # Excluindo o campo "id"
-      @relatorio.assign_attributes(attributes_to_assign)      
+      attributes_to_assign = relatorio_base.attributes.except(
+        "id", "data_relatorio", "b_rascunho", "avaliadoph", "brel_impresso"
+      )
+      @relatorio.assign_attributes(attributes_to_assign)
     end
   end
   
-  def edit # Ação de edição        
+  def edit
+    @return_to = retorno_local
   end
 
   def form_busca_um_relatorio
@@ -192,14 +194,19 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
     @etapa = 'Fotos'
   end
   
+  
   def avaliarph
-    get_relacoes    
+    get_relacoes
+
+    @return_to = retorno_local
+
     @ultimo_rel = Relatorio.where(vaso_id: @relatorio.vaso_id).order(id: :desc).offset(1).first
-    if @ultimo_rel.nil? 
+
+    if @ultimo_rel.nil?
       @ultimo_rel = Relatorio.new
       @ultimo_rel.dt_prox_insp_interna = Date.today
       @ultimo_rel.dt_prox_teste_hidrostatico = Date.today
-      @ultimo_rel.dt_prox_insp_interna_dispositivo_seguranca = Date.today      
+      @ultimo_rel.dt_prox_insp_interna_dispositivo_seguranca = Date.today
     end
   end
 
@@ -265,6 +272,8 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
   end
 
   def update   
+    @return_to = retorno_local
+
     if params[:relatorio].present?
       if (params[:relatorio][:remove_foto_antes]      == '1' || params[:relatorio][:remove_foto_antes]      == 'true')
         @relatorio.update_attribute(:foto_antes_inspecao, nil)          
@@ -375,49 +384,79 @@ class AdminsBackoffice::RelatoriosController < AdminsBackofficeController
     end    
   end
   
+
 # Redireciona para a guia conforme o button que estiver presente em params
 def redireciona_para_guia
+  # Preserva o destino original durante a navegação entre as guias
+  retorno = retorno_local
+
   # Direciona para próxima tela ou tela anterior conforme botão pressionado
   if params[:btn_gravar_sair] || params[:btn_gravar_avaliacaoph] || params[:btn_gravar]
-    redirect_to admins_backoffice_relatorio_em_aberto_path, notice: "Relatório atualizado com sucesso!"
+    destino = retorno || admins_backoffice_relatorio_em_aberto_path
+    redirect_to destino, notice: "Relatório atualizado com sucesso!"
+
   # Início da inspeção
   elsif params[:btn_insp_inicio]
-    redirect_to edit_admins_backoffice_relatorio_path(@relatorio.id), notice: "Relatório atualizado com sucesso!"        
+    redirect_to edit_admins_backoffice_relatorio_path(@relatorio.id, return_to: retorno),
+                notice: "Relatório atualizado com sucesso!"
+
   # Documentação existente
-  elsif params[:btn_doc_existente]          
-    redirect_to admins_backoffice_inspecao_doc_existente_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para documentação existente."
-  # Verificações iniciais  
-  elsif params[:btn_verif_iniciais]          
-    redirect_to admins_backoffice_inspecao_verif_iniciais_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para verificações iniciais."
+  elsif params[:btn_doc_existente]
+    redirect_to admins_backoffice_inspecao_doc_existente_path(id: @relatorio.id, return_to: retorno),
+                notice: "Relatório atualizado com sucesso! Indo para documentação existente."
+
+  # Verificações iniciais
+  elsif params[:btn_verif_iniciais]
+    redirect_to admins_backoffice_inspecao_verif_iniciais_path(id: @relatorio.id, return_to: retorno),
+                notice: "Relatório atualizado com sucesso! Indo para verificações iniciais."
+
   # Inspeções contratadas
-  elsif params[:btn_insp_contratadas]          
-    redirect_to admins_backoffice_inspecao_insp_contratadas_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para inspeções contratadas."
+  elsif params[:btn_insp_contratadas]
+    redirect_to admins_backoffice_inspecao_insp_contratadas_path(id: @relatorio.id, return_to: retorno),
+                notice: "Relatório atualizado com sucesso! Indo para inspeções contratadas."
+
   # Normas utilizadas na inspeção
-  elsif params[:btn_insp_normas]          
-    redirect_to admins_backoffice_inspecao_insp_normas_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para normas utilizadas na inspeção."
+  elsif params[:btn_insp_normas]
+    redirect_to admins_backoffice_inspecao_insp_normas_path(id: @relatorio.id, return_to: retorno),
+                notice: "Relatório atualizado com sucesso! Indo para normas utilizadas na inspeção."
+
   # Inspeções instalações
-  elsif params[:btn_insp_instalacoes]          
-    redirect_to admins_backoffice_inspecao_insp_instalacoes_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para inspeções das instalações."
+  elsif params[:btn_insp_instalacoes]
+    redirect_to admins_backoffice_inspecao_insp_instalacoes_path(id: @relatorio.id, return_to: retorno),
+                notice: "Relatório atualizado com sucesso! Indo para inspeções das instalações."
+
   # Manômetro
-  elsif params[:btn_insp_manometro]          
-    redirect_to admins_backoffice_inspecao_insp_manometro_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para inspeção do manômetro."
+  elsif params[:btn_insp_manometro]
+    redirect_to admins_backoffice_inspecao_insp_manometro_path(id: @relatorio.id, return_to: retorno),
+                notice: "Relatório atualizado com sucesso! Indo para inspeção do manômetro."
+
   # Dispositivo de segurança
-  elsif params[:btn_insp_dispseg]          
-    redirect_to admins_backoffice_inspecao_insp_dispseg_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para inspeções do dispositivo de segurança."
+  elsif params[:btn_insp_dispseg]
+    redirect_to admins_backoffice_inspecao_insp_dispseg_path(id: @relatorio.id, return_to: retorno),
+                notice: "Relatório atualizado com sucesso! Indo para inspeções do dispositivo de segurança."
+
   # Pressostato
-  elsif params[:btn_insp_pressostato]          
-    redirect_to admins_backoffice_inspecao_insp_pressostato_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para inspeção do pressostato."
+  elsif params[:btn_insp_pressostato]
+    redirect_to admins_backoffice_inspecao_insp_pressostato_path(id: @relatorio.id, return_to: retorno),
+                notice: "Relatório atualizado com sucesso! Indo para inspeção do pressostato."
+
   # Dreno
-  elsif params[:btn_insp_dreno]          
-    redirect_to admins_backoffice_inspecao_insp_dreno_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para inspeção do dreno."
+  elsif params[:btn_insp_dreno]
+    redirect_to admins_backoffice_inspecao_insp_dreno_path(id: @relatorio.id, return_to: retorno),
+                notice: "Relatório atualizado com sucesso! Indo para inspeção do dreno."
+
   # Vaso e outros
-  elsif params[:btn_insp_vaso_outros]          
-    redirect_to admins_backoffice_inspecao_insp_vaso_outros_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para inspeção do vaso e outros."
+  elsif params[:btn_insp_vaso_outros]
+    redirect_to admins_backoffice_inspecao_insp_vaso_outros_path(id: @relatorio.id, return_to: retorno),
+                notice: "Relatório atualizado com sucesso! Indo para inspeção do vaso e outros."
+
   # Fotos
-  elsif params[:btn_fotos]          
-    redirect_to admins_backoffice_inspecao_fotos_path(id: @relatorio.id), notice: "Relatório atualizado com sucesso! Indo para fotos."
+  elsif params[:btn_fotos]
+    redirect_to admins_backoffice_inspecao_fotos_path(id: @relatorio.id, return_to: retorno),
+                notice: "Relatório atualizado com sucesso! Indo para fotos."
   end
 end
+
 
   def preenche_intervencoes
     # Realize as operações necessárias para obter os dados    
@@ -744,6 +783,22 @@ end
   end
 
 
+  def marcar_relatorios_como_impressos
+    quantidade = Relatorio.where(
+      avaliadoph: true,
+      brel_impresso: false
+    ).update_all(
+      brel_impresso: true
+    )
+
+    flash[:success] = "#{quantidade} relatórios marcados como impressos."
+
+    redirect_back(
+      fallback_location: admins_backoffice_relatorios_path
+    )
+  end
+
+
 
   ##########
   # PRIVATE
@@ -999,4 +1054,12 @@ end
       @inspetoras         = Cadastro.where(eh_empresa_inspetora: true).order(:nome_curto)      
     end
   
+    def retorno_local
+      caminho = params[:return_to].presence
+      if caminho.present? && caminho.start_with?("/") && !caminho.start_with?("//")
+          caminho
+      end
+    end
+
+
 end

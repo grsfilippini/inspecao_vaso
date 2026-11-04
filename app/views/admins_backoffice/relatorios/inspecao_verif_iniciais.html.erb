@@ -3,10 +3,10 @@
                        
                         <%= form_with(model: [ :admins_backoffice, @relatorio ], local: true, :html => { :multipart => true }) do |form| %>
                             
+                            <%= hidden_field_tag :return_to, params[:return_to] %>
+
                             <%= render partial: 'admins_backoffice/relatorios/shared/botoes_navegacao' %>
                             
-                            
-
                             <div class="form-group row">
                                 <%= form.label :'relatorio[recomendacoes_insp_anterior_foram_realizadas]', 'Recomendações inspeção anterior foram realizadas', { class: "col-sm-5 col-form-label text-sm-left text-lg-right" } %>
                                 <div class="btn-group col-sm-6 mb-0 mb-sm-0" data-toggle="buttons">

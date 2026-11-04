@@ -136,6 +136,7 @@ Rails.application.routes.draw do
         get :livros_registro_dados_plaqueta
         get :relatorios_a_imprimir_ods
         post :enviar_placas_localizacao_confeccao
+        post :marcar_relatorios_como_impressos
       end      
     end
 
