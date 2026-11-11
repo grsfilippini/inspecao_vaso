@@ -77,8 +77,8 @@
                         <%= a.ph.nome.truncate(30) %>
                     <% end %>
                     </td>
-                    <td style="width: 50px">
-                        <%= link_to edit_admins_backoffice_art_path(a.id), class:"btn btn-info btn-circle btn-sm" do %> 
+                    <td style="width: 50px">                        
+                        <%= link_to edit_admins_backoffice_art_path(a.id, cadastro_id: params[:cadastro_id]), class: "btn btn-info btn-circle btn-sm" do %>
                             <i class="fas fa-edit"></i>
                         <%end%>
                     </td>

@@ -16,6 +16,7 @@
 <% end %>
 
 <%= form_with(model: [ :admins_backoffice, @art ], local: true) do |form| %>
+    <%= hidden_field_tag :cadastro_id, params[:cadastro_id] %>
 
     <div class="form-group row">
         <p><b>USUÁRIO</b></p>

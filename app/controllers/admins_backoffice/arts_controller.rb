@@ -40,9 +40,10 @@ class AdminsBackoffice::ArtsController < AdminsBackofficeController
     def edit # Ação de edição    
     end
   
-    def update        
+    def update
       if @art.update(params_art)
-        redirect_to admins_backoffice_arts_path, notice: "ART atualizada com sucesso!"    
+        redirect_to admins_backoffice_arts_path(cadastro_id: params[:cadastro_id]),
+                    notice: "ART atualizada com sucesso!"
       else
         get_relacoes
         render :edit
