@@ -3,14 +3,24 @@ class AdminsBackoffice::ArtsController < AdminsBackofficeController
     before_action :get_relacoes, only: [:new, :edit]
 
     
+    
     def index
-      # O includes abaixo inclui na query a busca por art      
+      @cadastros = Cadastro.where(
+        eh_fabricante: false,
+        eh_empresa_inspetora: false
+      ).order(:nome_curto)
+
       @arts = Art.includes(:cadastro, :ph, :user)
-                 .all
-                 .order(id: :desc)
-                 .page(params[:page])
-                 .per(15)
+
+      if params[:cadastro_id].present?
+        @arts = @arts.where(cadastro_id: params[:cadastro_id])
+      end
+
+      @arts = @arts.order(id: :desc)
+                  .page(params[:page])
+                  .per(15)
     end
+
   
     def new
       @art = Art.new

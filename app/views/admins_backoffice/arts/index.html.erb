@@ -3,6 +3,48 @@
     <h1 class="h3 mb-4 text-gray-800"><%= t('mensagens.lista_de', model: @arts.model_name.human(count: @arts.count)) %> </h1>
 </div>
 
+<div class="container-fluid mb-3">
+    <%= form_with url: admins_backoffice_arts_path,
+                  method: :get,
+                  local: true,
+                  id: "form_pesquisa_arts" do %>
+
+        <div class="form-group row">
+            <label class="col-sm-1 col-form-label">Cliente:</label>
+
+            <div class="col-sm-5">
+                <%= select_tag :cadastro_id,
+                    options_from_collection_for_select(
+                        @cadastros,
+                        :id,
+                        :nome_curto,
+                        params[:cadastro_id]
+                    ),
+                    prompt: "Selecione um cliente",
+                    class: "form-control",
+                    id: "pesquisa_cadastro_id" %>
+            </div>
+        </div>
+
+    <% end %>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var campo = document.getElementById("pesquisa_cadastro_id");
+
+    if (campo) {
+      campo.addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          document.getElementById("form_pesquisa_arts").requestSubmit();
+        }
+      });
+    }
+  });
+</script>
+
+
 <div class="table-responsive">
     <table class="table table-striped table-bordered table-hover">    
         <thead>
@@ -16,7 +58,7 @@
                     <%= link_to  new_admins_backoffice_art_path, class:"btn btn-success btn-circle btn-sm" do %>
                         <i class="fas fa-plus"></i>
                     <% end %>
-                </th>
+                </th> 
             </tr>
         </thead>
         <tbody> 
