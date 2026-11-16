@@ -152,12 +152,19 @@ class Relatorio < ApplicationRecord
   end
 
   def copiar_pressao_operacao
-    if self.pressostato_pliga.present? && self.pressostato_pdesliga.present?
-      # Encontra o Vaso associado pelo vaso_id
+    if self.pressostato_pliga.blank? ||
+      self.pressostato_pdesliga.blank? ||
+      self.pressostato_pliga.to_f.zero? ||
+      self.pressostato_pdesliga.to_f.zero?
+
       vaso_relacionado = Vaso.find_by(id: self.vaso_id)
-      # Atualiza o campo pressão pressostato do Vaso com a do Relatorio
-      vaso_relacionado.update(p_inf_operacao_fabricante: self.pressostato_pliga)
-      vaso_relacionado.update(p_sup_operacao_fabricante: self.pressostato_pdesliga)
+
+      if vaso_relacionado
+        vaso_relacionado.update(
+          p_inf_operacao_fabricante: self.pressostato_pliga,
+          p_sup_operacao_fabricante: self.pressostato_pdesliga
+        )
+      end
     end
   end
 
