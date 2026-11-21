@@ -451,7 +451,7 @@ class AdminsBackoffice::VasosController < AdminsBackofficeController
       render :executar_impressao
     end
 
-    def docs_pendentes_por_vaso
+    def docs_pendentes_por_vaso 
 
       Rails.logger.debug "VASO_ID RECEBIDO = #{params[:vaso_id]}"
 

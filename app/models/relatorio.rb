@@ -16,8 +16,8 @@ class Relatorio < ApplicationRecord
   validates :anotacoes_elementos_controle_calibrados_eemboas_condicoes_opera, length: { maximum: 100 }  
   validates :obs_inspecao_elementos_sobre_o_vaso_ou_nao, length: { maximum: 100 }  
   
-  # Relações  
-  belongs_to :tipo_inspecao
+  # Relações    
+  belongs_to :tipo_inspecao, optional: true
   belongs_to :art
   belongs_to :cidade
   belongs_to :proprietaria,  class_name: 'Cadastro'

@@ -10,11 +10,24 @@
             <div class="form-group">
             <label>Selecione um vaso:</label>
 
-            <%= select_tag :vaso_id,
-                options_from_collection_for_select(
-                    @vasos,
-                    :id,
-                    ->(v) { "#{v.proprietaria.nome_curto} - #{v.fabricante.nome_curto} - #{v.num_serie}" }
+              <%= select_tag :vaso_id,
+                options_for_select(
+                    @vasos.map do |v|
+
+                        tipos = v.relatorios
+                            .where(brel_impresso: false)
+                            .includes(:tipo_inspecao)
+                            .map { |r| r.tipo_inspecao&.nome }
+                            .compact
+                            .uniq
+                            .join(", ")
+
+                        [
+                            "#{v.proprietaria.nome_curto} - #{v.fabricante.nome_curto} - #{v.num_serie} - #{tipos}",
+                            v.id
+                        ]
+
+                    end
                 ),
                 size: 10,
                 class: "form-control",
