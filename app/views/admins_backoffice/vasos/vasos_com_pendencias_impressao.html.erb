@@ -1,4 +1,6 @@
-<h4>Vasos com relatórios pendentes de impressão</h4>
+<h4>
+    (<%= @vasos.count %>) Vasos com relatórios pendentes de impressão
+</h4>
 
 <%= form_tag imprimir_pendencias_admins_backoffice_vasos_path, method: :post, id: "form_impressao" do %>
 
